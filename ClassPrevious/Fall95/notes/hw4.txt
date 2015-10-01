@@ -1,0 +1,29 @@
+
+
+	Advanced Computer Graphics and Data Visualization
+
+
+Homework 4
+Due: December 5, 1995
+
+This homework requires you to use the VTK library in order to load and display a MRI data file. The template Makefile and data files are in:
+
+	~citrit/public/VisClass/C++/hw4
+
+You need to create source that will load the data file into a Scalar object and create a pipeline to render an isosurface. The objects you will need are:
+
+	vtkRenderMaster	vtkActor	
+	vtkRenderWindow	vtkStructuredPoints
+	vtkRenderer	vtkShortScalars
+	vtkMarchingCubes	vtkPolyMapper
+	vtkRenderWindowInteractor
+
+All these objects are described in the text in the man pages at the end of the book. There are example programs that use the VTK library in:
+
+	/locker/44/000644/vtk1.0/examples/cc
+
+directory. Look through these to get a feel for how to use the objects and to create the dependancy pipeline. The data file is called MRIdata.bin and 	it contains a subsampled version of an MRI scan of a human head. It is a 64 x 64 x 27 regularly spaced grid. The data values in the file are shorts and are in row major order.
+
+Use 225.0 as the initial isosurface value, this should render a recognizable image.
+
+Please shar up only your source code. Some people sent me the object code in the last homework and shar did not work.  Simply do a "make clean" before archiving and mailing your code. The Makefile's will place your object code in the /tmp directory, remeber to run it by using /tmp/hw4. If you are having problems with space, please see me.

@@ -1,0 +1,11 @@
+Dave Cooper
+Advanced Computer Graphics & Data Visualization
+Homework #4 Submission
+
+Files:  
+Ex63a.java
+Ex63b.java
+Ex94a.java
+Ex94b.java
+Ex94c.java
+Ex94d.java

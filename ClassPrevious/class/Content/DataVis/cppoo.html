@@ -1,0 +1,212 @@
+<!DOCTYPE HTML PUBLIC "-//W3O/DTD HTML//EN">
+
+<html>
+<head>
+<title>DataVis - Intro to C++ and Object Oriented Design</title>
+<meta name="GENERATOR" content="Microsoft FrontPage 1.1">
+<meta name="FORMATTER" content="Microsoft FrontPage 1.1">
+</head>
+<body bgcolor="#FFFFFF">
+<h3><img src="Speckled_Gradient1A5.gif" align="bottom"
+width="500" height="4"></h3>
+<h3><img src="images/head.gif" align="absmiddle" width="73"
+height="90">Advanced Computer Graphics and Data Visualization</h3>
+<p><img src="Speckled_Gradient1A5.gif" align="bottom" width="500"
+height="4"></p>
+<p>&#160; </p>
+<h3>Intro to C++ and Object Oriented Design</h3>
+<p>&#160; </p>
+<ul>
+    <li>terminology needed for C++ aspects of class projects:
+        <ul>
+            <li>class, derived class, base class, method, virtual
+                function, pure virtual function, overloaded
+                operator, <br>
+                polymorphism, templates</li>
+            <li>Basic code examples...</li>
+        </ul>
+        <p>&#160; </p>
+    </li>
+    <li>Object Oriented design changes the way you think about a
+        problem.
+        <ul>
+            <li>Think more about the problem in the pre-planning
+                stages</li>
+            <li>Create APIs to define how objects interact</li>
+            <li>Specific to our task, decide weather to
+                encapsulate behaviors and methods with data</li>
+        </ul>
+    </li>
+    <li>Objects are the main building blocks, we can think of
+        objects as<br>
+        <em>an abstraction that models the state and behavior of
+        entitities in a system</em></li>
+    <li>We need to map our program and its behavior, real world
+        or simulated, to objects</li>
+    <li>We will use terminology introduced by Rumbaugh where
+        objects have:
+        <ul>
+            <li><em><strong>attributes</strong></em> - also
+                called instance variables, these can be data
+                types of the language (i.e. char, float)</li>
+            <li><em><strong>methods</strong></em> - these define
+                behavior by the operation or transformations that
+                can be applied to the object.</li>
+            <li><em><strong>object classes</strong></em> -
+                grouping mechanism by which objects share similar
+                properties, these objects classes specify class
+                names, not specific values (<em>base classes</em>)</li>
+        </ul>
+    </li>
+    <li>Re-use becomes a major factor in planning your OO class
+        structure, why do things twice</li>
+    <li>Inheritance is also important in that it gives us the
+        ability to create new classes that differ slightly from
+        pre-existing class</li>
+    <li>After a lot of thought goes into your class structure,
+        you hope to have them organized into a meaningful
+        inheritance hierarchy, this can be accomplished in two
+        ways:
+        <ul>
+            <li><em><strong>Specialization</strong></em> -
+                creating the hierarchy from the top down</li>
+            <li><em><strong>Generalization</strong></em> -
+                creating the hierarchy from the bottom up</li>
+        </ul>
+    </li>
+    <li>In general if we use these methods, our end product will
+        consist of:
+        <ul>
+            <li>base classes - abstract classes that define
+                object attributes and methods</li>
+            <li>derived classes - classes that use/combine
+                various base classes through inheritance</li>
+        </ul>
+    </li>
+    <li>There are many OO languages available, each with its own
+        strengths and weaknesses</li>
+    <li>OO is a move away from procedural oriented systems by
+        encapsulating data with methods</li>
+    <li>If we were creating a drawing program that has many basic
+        shapes, a procedural approach would be:
+        <pre>Primative *aPrim;
+...
+DrawPrimative(aPrim);
+...
+procedure DrawPrimitive(Primative *aPrim) {
+   switch (aPrim-&gt;type) {
+   case SQUARE:
+	DrawSquare(aPrim);break;
+   case CIRCLE:
+	DrawCircle(aPrim);break;
+   ...
+   }
+} </pre>
+    </li>
+    <li>&#160;The obvious short fall of this method is if we add
+        more shapes, we will need to edit this fragment of code
+        to handle these new shapes</li>
+    <li>An OO approach would be to create a base class, lets call
+        it shape, and derive actual geometry primitives from this
+        one class</li>
+    <li>We can then create a collection object that will keep
+        track of these many shapes and will call each objects
+        draw method</li>
+    <li>We can then create new derived geometry shapes and the
+        collection object will require no changes</li>
+    <li>
+        <p align="left">A C++ example would be:<center> </p>
+    </li>
+</ul>
+<table border="1" cellpadding="2" width="90%">
+    <tr>
+        <td width="50%"><div align="left"> 
+        <pre>class Shape () {
+   virtual void Draw() = 0;
+}; </pre>
+        </div> <div align="left"> 
+        <pre>class Circle : public Shape {
+   void Draw() {
+        doSomethingToDrawACircle();
+   }
+}; </pre>
+        </div> </td>
+        <td width="50%"><div align="left"> 
+        <pre>class ShapeCollection {
+public:
+   void DrawShapes() {
+	for (i=0;i&gt;Shapes.Count();i++)
+	   Shapes[i]-&gt;Draw();
+   }
+   void AddShape(Shape *shp) {
+	Shapes.Add(shp);
+   }
+private:
+   CollectionClass&lt;Shape *&gt;  Shapes;
+}; </pre>
+        </div> </td>
+    </tr>
+</table>
+<p align="left"></center></p>
+<ul>
+    <li>
+        <p align="left">We can then create more shapes based on
+        the Shape base class and simply add them to the
+        ShapeCollection object </p>
+    </li>
+</ul>
+<blockquote>
+    <pre>class MeshClass : public Shape {
+public:
+   void Draw() {
+       doLotsofDrawingThings();
+   }
+};</pre>
+</blockquote>
+<ul>
+    <li>We can also create new classes based on previously
+        defined shapes, say we wanted to create a face with eyes</li>
+</ul>
+<blockquote>
+    <pre>class Face : public Circle {
+public:
+    void Draw() {
+	Circle::Draw();  // First draw the outside, this class has all circle data values
+	PositionLeftEye();
+	Eyes[0].Draw();
+	PositionRightEye();
+	Eyes[1].Draw();
+     }
+private:
+     Circle Eyes[2];
+};</pre>
+</blockquote>
+<ul>
+    <li>What is the shortcomming of this method? What are we
+        forgetting?</li>
+    <li>What else can be done to help this object implicitly
+        represent itself?</li>
+    <li>At run time we use the collection object to hold pointers
+        to all dynamically created shape objects</li>
+    <li>Whenever we need to redraw the screen, the collection
+        object sends each shape a Draw method</li>
+    <li>The next step is to take this abstraction and expand it
+        to extract more behaviors, such as:
+        <ul>
+            <li>How do shapes draw themselves?</li>
+            <li>Where do they draw to?</li>
+            <li>How does the graphics system get initialized?</li>
+            <li>How do the shape objects get initialized?</li>
+            <li>What about scale, orientation, movement, color,
+                material properties?</li>
+            <li>What other base classes do we need to render the
+                graphics to a final image?</li>
+        </ul>
+    </li>
+</ul>
+<p>&#160;</p>
+<p><img src="Speckled_Gradient1A5.gif" align="bottom" width="500"
+height="4"></p>
+<p>&#160;</p>
+</body>
+</html>

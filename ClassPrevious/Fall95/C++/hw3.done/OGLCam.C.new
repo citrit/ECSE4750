@@ -1,0 +1,176 @@
+
+#include <math.h>
+#include <iostream.h>
+#include <GL/gl.h>
+#include <GL/glu.h>
+#include "OGLCam.H"
+
+/*
+ * Convenience routine for computing cross product
+ */
+static void cross(float *dest, float *a, float*b)
+{
+  dest[0] = a[1]*b[2] - b[1]*a[2];
+  dest[1] = b[0]*a[2] - a[0]*b[2];
+  dest[2] = a[0]*b[1] - b[0]*a[1];
+}
+
+/*
+ * swing camera around focal point in plane perpendicular to view up
+ */
+void OGLCamera::Azimuth(double theta)
+{
+  float matrix[4][4];
+  float dist[4];
+  float new_dist[4];
+  int i;
+  int j;
+
+  /* compute distance vector from camera position to focal point. */
+  for (i=0; i<3; i++) {
+    dist[i] = position[i] - focal_point[i];
+  }
+  dist[3] = 1.0;
+
+  /* Save current matrix, and use a rotation */
+  glMatrixMode(GL_MODELVIEW);
+  glPushMatrix();
+  glLoadIdentity();
+  /* Rotate around the view up */
+  glRotatef((float)theta,view_up[0], view_up[1], view_up[2]);
+  /* Get the matrix */
+  glGetFloatv(GL_MODELVIEW_MATRIX,&matrix[0][0]);
+  /* restore the matrix */
+  glPopMatrix();
+
+  /* Now transform the distance vector by the rotation matrix */
+  for (i=0; i<4; i++) {
+    new_dist[i] = 0;
+    for (j=0; j<4; j++) {
+      /* Did I order these indices ok? */
+      new_dist[i] += matrix[j][i] * dist[j]; 
+    }
+  }
+  /* Normalize the resulting vector */
+  for (i=0; i<3; i++) {
+    new_dist[i] /= new_dist[3];
+  }
+
+  /* Add the new distance vector to the focal point to get the
+     new position */
+  for (i=0; i<3; i++) {
+    position[i] = focal_point[i] + new_dist[i];
+  }
+}
+
+/*
+ * Raise camera by rotation around vector perpendicular to view up and
+ * view plane normal
+ */
+void OGLCamera::Elevate(double theta)
+{
+  float vpn[4];
+  float new_vpn[4];
+  float rot_vec[3];
+  float matrix[4][4];
+  int i,j;
+
+  /* Compute vpn */
+  for (i=0; i<3; i++) {
+    vpn[i] = position[i] - focal_point[i];
+  }
+
+  /* Compute rotation vector */
+  cross(rot_vec,vpn,view_up);
+
+  /* We will eventually rotate the vpn, so make sure the homogeneous coords
+     are ok */
+  vpn[3] = 1.0;
+
+  /* Save current matrix, and use a rotation */
+  glMatrixMode(GL_MODELVIEW);
+  glPushMatrix();
+  glLoadIdentity();
+  /* Rotate around the rotation vector */
+  glRotatef((float)theta,rot_vec[0], rot_vec[1], rot_vec[2]);
+  /* Get the matrix */
+  glGetFloatv(GL_MODELVIEW_MATRIX,&matrix[0][0]);
+  /* restore the matrix */
+  glPopMatrix();
+
+  /* Now transform the vpn vector by the rotation matrix */
+  for (i=0; i<4; i++) {
+    new_vpn[i] = 0;
+    for (j=0; j<4; j++) {
+      /* Did I order these indices ok? */
+      new_vpn[i] += matrix[j][i] * vpn[j]; 
+    }
+  }
+  /* Normalize the resulting vector */
+  for (i=0; i<3; i++) {
+    new_vpn[i] /= new_vpn[3];
+  }
+
+  /* Add the new vpn vector to the focal point to get the
+     new position */
+  for (i=0; i<3; i++) {
+    position[i] = focal_point[i] + new_vpn[i];
+  }
+
+}
+
+void OGLCamera::Initialize(void)
+{
+  Camera::Initialize(); /* Do superclass initialization first */
+
+  /* Rest is no-op for now */
+}
+
+void OGLCamera::Zoom(double zoom_factor)
+{
+  double distance;
+
+// calculate the distance from eye to the center point
+  distance = sqrt(pow(position[0]-focal_point[0],2.0) +
+		  pow(position[1]-focal_point[1],2.0) +
+		  pow(position[2]-focal_point[2],2.0));
+  if(distance<=1.0 && zoom_factor>0)
+    {
+      cout << "Can't zoom any further!" << endl;
+      return;
+    }
+
+// want to move one unit close/further
+  position[0] += zoom_factor * (focal_point[0] - position[0]) / distance;
+  position[1] += zoom_factor * (focal_point[1] - position[1]) / distance;
+  position[2] += zoom_factor * (focal_point[2] - position[2]) / distance;
+  
+  LookAt();
+}
+
+void OGLCamera::LookAt()
+{
+  double pos_matrix[16];
+
+  glPopMatrix();  // get pre LookAt matrix off stack
+  glPushMatrix();  // put pre LookAt matrix back on stack
+  gluLookAt(position[0], position[1], position[2],
+	    focal_point[0], focal_point[1], focal_point[2],
+	    view_up[0], view_up[1], view_up[2]
+	    );
+  glGetDoublev(GL_PROJECTION_MATRIX,pos_matrix);
+  glMultMatrixd(pos_matrix);;  // now multiple by Rotation matrix
+}
+
+void OGLCamera::Render(Renderer *aren)
+{
+  glMatrixMode(GL_PROJECTION);
+  glLoadIdentity();
+  gluPerspective(view_angle, aspect_ratio, near, far);
+  gluLookAt(position[0], position[1], position[2],
+	    focal_point[0], focal_point[1], focal_point[2],
+	    view_up[0], view_up[1], view_up[2]
+	    );
+}
+
+

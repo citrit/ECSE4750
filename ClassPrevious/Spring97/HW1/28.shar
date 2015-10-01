@@ -1,0 +1,368 @@
+#!/bin/sh
+# This is a shell archive (produced by GNU sharutils 4.2).
+# To extract the files from this archive, save it to some FILE, remove
+# everything before the `!/bin/sh' line above, then type `sh FILE'.
+#
+# Made on 1997-02-09 20:27 EST by <cheny4@jec317>.
+# Source directory was `/afs/rpi.edu/home/04/cheny4/private/gnv/hw1'.
+#
+# Existing files will *not* be overwritten unless `-c' is specified.
+#
+# This shar contains:
+# length mode       name
+# ------ ---------- ------------------------------------------
+#   6725 -rw------- hw1.c
+#
+save_IFS="${IFS}"
+IFS="${IFS}:"
+gettext_dir=FAILED
+locale_dir=FAILED
+first_param="$1"
+for dir in $PATH
+do
+  if test "$gettext_dir" = FAILED && test -f $dir/gettext \
+     && ($dir/gettext --version >/dev/null 2>&1)
+  then
+    set `$dir/gettext --version 2>&1`
+    if test "$3" = GNU
+    then
+      gettext_dir=$dir
+    fi
+  fi
+  if test "$locale_dir" = FAILED && test -f $dir/shar \
+     && ($dir/shar --print-text-domain-dir >/dev/null 2>&1)
+  then
+    locale_dir=`$dir/shar --print-text-domain-dir`
+  fi
+done
+IFS="$save_IFS"
+if test "$locale_dir" = FAILED || test "$gettext_dir" = FAILED
+then
+  echo=echo
+else
+  TEXTDOMAINDIR=$locale_dir
+  export TEXTDOMAINDIR
+  TEXTDOMAIN=sharutils
+  export TEXTDOMAIN
+  echo="$gettext_dir/gettext -s"
+fi
+touch -am 1231235999 $$.touch >/dev/null 2>&1
+if test ! -f 1231235999 && test -f $$.touch; then
+  shar_touch=touch
+else
+  shar_touch=:
+  echo
+  $echo 'WARNING: not restoring timestamps.  Consider getting and'
+  $echo "installing GNU \`touch', distributed in GNU File Utilities..."
+  echo
+fi
+rm -f 1231235999 $$.touch
+#
+if mkdir _sh09776; then
+  $echo 'x -' 'creating lock directory'
+else
+  $echo 'failed to create lock directory'
+  exit 1
+fi
+# ============= hw1.c ==============
+if test -f 'hw1.c' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'hw1.c' '(file already exists)'
+else
+  $echo 'x -' extracting 'hw1.c' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'hw1.c' &&
+/*
+X *  hw1.c 
+X *  Drawing 3 objects and rotate and zoom them seperately
+X *
+X *  By: Yuping Chen
+X */
+X
+/* Includes required */
+#include <GL/gl.h>
+#include <GL/glut.h>
+#include <stdio.h>
+X
+typedef struct {
+X  int	rotate_h;
+X  int	rotate_j;
+X  int	rotate_k;
+X  int	rotate_l;
+X  int	zoom_in;
+X  int	zoom_out; 
+} actions;
+X
+X  int	zoom_in;
+X  int	zoom_out;
+enum geom {Cube, Sphere, Teapot};
+enum geom object;
+X
+actions	cube, sphere, teapot;
+X
+void drawCube(void) {
+X     GLfloat mat_ambient[] = { 0.8, 0.2, 0.1, 1.0 };
+X     GLfloat mat_diffuse[] = { 0.8, 0.1, 0.2, 1.0 };
+X     GLfloat mat_specular[] = { 0.9, 0.0, 0.0, 1.0 }; 
+X     GLfloat low_shininess[] = { 10.0 };
+X
+X     glTranslatef(0.0, 0.0, 0.0);
+X     glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
+X     glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+X     glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+X     glMaterialfv(GL_FRONT, GL_SHININESS, low_shininess);
+X     glutSolidCube(0.6);
+}  
+X
+void drawSphere(void)  {
+X     GLfloat mat_ambient[] = { 0.0, 0.0, 0.8, 1.0 };
+X     GLfloat mat_diffuse[] = { 0.1, 0.1, 0.8, 1.0 };
+X     GLfloat mat_specular[] = { 0.0, 0.0, 0.0, 0.1 }; 
+X     GLfloat no_shininess[] = { 0.0 };
+X
+X     glTranslatef(2.0, 0.0, 0.0);
+X     glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
+X     glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+X     glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+X     glMaterialfv(GL_FRONT, GL_SHININESS, no_shininess);
+X     glutSolidSphere(0.4, 20, 20);        
+}  
+X
+void drawTeapot(void) {
+X     GLfloat mat_ambient[] = { 0.7, 0.7, 0.1, 1.0 };
+X     GLfloat mat_diffuse[] = { 0.6, 0.6, 0.1, 1.0 };
+X     GLfloat mat_specular[] = { 0.4, 0.4, 0.2, 0.1 }; 
+X     GLfloat no_shininess[] = { 5.0 };
+X
+X     glTranslatef(-2.0, 0.0, 0.0);
+X     glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
+X     glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+X     glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+X     glMaterialfv(GL_FRONT, GL_SHININESS, no_shininess);
+X     glutWireTeapot(0.4);
+}   
+X     
+void display(void)
+{  
+X      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+X     /* glInitMatrix();*/
+X
+X      glPushMatrix();
+X         glRotatef(15*cube.rotate_h, 0.0, 1.0, 0.0);
+X         glRotatef(15*cube.rotate_j, 1.0, 0.0, 0.0);
+X         glRotatef(-15*cube.rotate_k, 1.0, 0.0, 0.0);
+X         glRotatef(-15*cube.rotate_l, 0.0, 1.0, 0.0);
+X      drawCube();
+X      glPopMatrix();
+X
+X      glPushMatrix();
+X         glRotatef(15*sphere.rotate_h, 0.0, 1.0, 0.0);
+X         glRotatef(15*sphere.rotate_j, 1.0, 0.0, 0.0);
+X         glRotatef(-15*sphere.rotate_k, 1.0, 0.0, 0.0);
+X         glRotatef(-15*sphere.rotate_l, 0.0, 1.0, 0.0);
+X      drawSphere();
+X      glPopMatrix();
+X
+X      glPushMatrix();
+X         glRotatef(15*teapot.rotate_h, 0.0, 1.0, 0.0);
+X         glRotatef(15*teapot.rotate_j, 1.0, 0.0, 0.0);
+X         glRotatef(-15*teapot.rotate_k, 1.0, 0.0, 0.0);
+X         glRotatef(-15*teapot.rotate_l, 0.0, 1.0, 0.0);
+X      drawTeapot();
+X      glPopMatrix();      
+X      glutSwapBuffers(); 
+}
+X
+/* Initialize shading model */
+void myInit(void)
+{
+X  
+X    cube.rotate_h=0;
+X    cube.rotate_j=0;
+X    cube.rotate_k=0;
+X    cube.rotate_l=0;
+X    cube.zoom_in=0;
+X    cube.zoom_out=0;
+X
+X    sphere.rotate_h=0;
+X    sphere.rotate_j=0;
+X    sphere.rotate_k=0;
+X    sphere.rotate_l=0;
+X    sphere.zoom_in=0;
+X    sphere.zoom_out=0; 
+X
+X    teapot.rotate_h=0;
+X    teapot.rotate_j=0;
+X    teapot.rotate_k=0;
+X    teapot.rotate_l=0;
+X    teapot.zoom_in=0;
+X    teapot.zoom_out=0;
+X  
+X      glEnable(GL_LIGHTING);
+X      glEnable(GL_LIGHT0);
+X      glEnable(GL_DEPTH_TEST);
+X      glShadeModel (GL_FLAT);
+X /*    glClearColor (0.0, 0.0, 0.0, 0.0);
+X */
+}
+X
+/*
+X *  Called when the window is first opened and whenever 
+X *  the window is reconfigured (moved or resized).
+X */
+void myReshape(int w, int h)
+{
+X      glViewport (0, 0, w, h);            /*  define the viewport */
+X      glMatrixMode(GL_PROJECTION);
+X      glLoadIdentity();
+X      gluPerspective(45.0, 1.0*(GLfloat)w/(GLfloat)h, 1.0, 10.0);
+X      glTranslatef (0.0, 0.0, -5.0);     /*  viewing transformation      */
+X      glMatrixMode (GL_MODELVIEW);        /* back to modelview matrix  */
+}
+X
+/*
+X * Keyboard handler
+X */
+void
+Key(unsigned char key, int x, int y)
+{
+X
+X    switch (key) {
+X    case 'h':
+X      
+X      glMatrixMode (GL_MODELVIEW);        /* manipulate modelview matrix  */
+X      if (object == Cube)  
+X	cube.rotate_h++;
+X      if (object == Sphere)
+X	sphere.rotate_h++;
+X      if (object == Teapot)
+X	teapot.rotate_h++;
+X      break;
+X    case 'j':
+X      glMatrixMode (GL_MODELVIEW);        /* manipulate modelview matrix  */
+X      if (object == Cube)  
+X	cube.rotate_j++;
+X      if (object == Sphere)
+X	sphere.rotate_j++;
+X      if (object == Teapot)
+X	teapot.rotate_j++;
+X      break;
+X    case 'k':
+X      glMatrixMode (GL_MODELVIEW);        /* manipulate modelview matrix  */
+X
+X      if (object == Cube)  
+X	cube.rotate_k++;
+X      if (object == Sphere)
+X	sphere.rotate_k++;
+X      if (object == Teapot)
+X	teapot.rotate_k++;
+X      break;
+X    case 'l':
+X      glMatrixMode (GL_MODELVIEW);        /* manipulate modelview matrix  */
+X      if (object == Cube)  
+X	cube.rotate_l++;
+X      if (object == Sphere)
+X	sphere.rotate_l++;
+X      if (object == Teapot)
+X	teapot.rotate_l++;
+X      break;
+X    case 'i':
+X	zoom_in++;
+X      break;
+X    case 'o':
+X	zoom_out++;
+X      break;      
+X      
+X    case 27:           /* Esc will quit */
+X        exit(1);
+X        break;
+X    default:
+X      break;
+X    }
+X    glutPostRedisplay();
+}
+X
+X
+X
+/*
+X *  Handle Menus
+X */
+void
+Select(int value)
+{
+X
+X    switch (value) {
+X    case 1:
+X      object=Cube;
+X      break;
+X    case 2:
+X      object=Sphere;
+X      break;
+X    case 3:
+X      object=Teapot;
+X      break;
+X    case 4:
+X        exit(0);
+X	break;
+X      }
+}
+X
+void addmenu(void)
+{
+X      glutAddMenuEntry("Cube", 1);
+X      glutAddMenuEntry("Sphere", 2);
+X      glutAddMenuEntry("Teapot", 3);
+X      glutAddMenuEntry("Quit", 4);
+}
+X
+X
+void intro(void) {
+X     printf("\n\n\n\t\t******* README *******\n\n");
+X     printf("To select an object, click the right mouse button;\n");
+X     printf("To rotate, press 'j' and 'k' to rotate about the\n");
+X     printf("y-axis, 'h' and 'l' to rotate about the x-axis\n\n\n");
+X
+X   }
+X     
+/*
+X *  Main Loop
+X *  Open window with initial window size, title bar, 
+X *  RGBA display mode, and handle input events.
+X */
+int main(int argc, char** argv) 
+{
+X      intro();
+X      glutInit(&argc, argv);
+X      glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGBA);
+X      glutInitWindowPosition(20, 560);
+X      glutInitWindowSize(600, 400);
+X      glutCreateWindow (argv[0]);
+X      myInit ();
+X
+X      glutReshapeFunc (myReshape);
+X      glutDisplayFunc(display); 
+X      glutCreateMenu(Select); 
+X      glutKeyboardFunc(Key);
+X      addmenu ();
+X      glutAttachMenu(GLUT_RIGHT_BUTTON);
+X      glutMainLoop();
+X      return 0;
+}
+X
+SHAR_EOF
+  $shar_touch -am 0209202597 'hw1.c' &&
+  chmod 0600 'hw1.c' ||
+  $echo 'restore of' 'hw1.c' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'hw1.c:' 'MD5 check failed'
+0cd0fff66334ec02de22bbe08b39bd02  hw1.c
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'hw1.c'`"
+    test 6725 -eq "$shar_count" ||
+    $echo 'hw1.c:' 'original size' '6725,' 'current size' "$shar_count!"
+  fi
+fi
+rm -fr _sh09776
+exit 0
+# From: Yuping Chen <cheny4>

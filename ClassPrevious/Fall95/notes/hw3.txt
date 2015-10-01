@@ -1,0 +1,27 @@
+
+	Advanced Computer Graphics and Data Visualization
+
+
+Homework 3
+Due: Midnight on Tues. Oct 31
+
+
+In this homework we are going to add a structured grid object to our visualization system. This structured grid object should act similar to the DataSet object in that we can include it in the DataSet collection in the Renderer.
+
+The Structured Grid should contain these methods:
+
+SetSize(int w = 0, int h = 0);          DisplayWireframe();
+SetStartPoint(PointType &pt);           DisplayPlane();
+SetDeltas(float deltax, float deltay);  DisplayContours();
+SetPoints(PointSet *pts);               SetContours(VectorType<float> *);
+SetData(DataObject *data);
+Contour();
+
+The DataObject is an abstract base class which defines behaviors for the concrete classes which will define the data type and structure (i.e. scalar, vector, int, float, etc.). The StructuredGrid object should behave according to its current state and should always draw something. The StructuredGrid should hold a bounding box for the data set so it can set the renderers viewpoint correctly. The output should toggle between displaying a wireframe grid, solid plane, or contours. These are the behaviors and expected results:
+ If there is no data defined, the StructuredGrid draws itself as a grid of white lines using its internal size variables and either the PointSet (if not NULL) or its own internally generated coordinates.
+If there is data, draw either the solid/wireframe grid or the contours based on the current state and color appropriately.
+
+You will need to add a time variable to the network so that the StructuredGrid object can tell weather to regenerate its contours based on the time of the DataObject and PointSet. There is an example.grid data file and its format will be:
+dimx dimy val0 val1 val2 val3 ... val[dimx*dimy]
+
+Extra Credit: Stretch the grid into the Z direction using the scalar value as the Z while still applying vertex coloring. Apply a Z value to the colored contours based on the current data value.

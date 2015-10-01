@@ -1,0 +1,14 @@
+! ** JCreator Workspace File (C)2000
+! ********** DO NOT EDIT *********
+
+VERSION := "1.00"
+LABEL := "vtkCone"
+
+! Start Project Structure
+#[BeginProject]SOURCE := "vtkCone.jcp" #[EndProject]
+
+! Start Last Document Structure
+#[BeginFile]SOURCE := "ConeExample.java" #[EndFile]
+#[BeginFile]SOURCE := "C:\\Program Files\\vtk31\\java\\vtk\\vtkPanel.java" #[EndFile]
+#[BeginFile]SOURCE := "C:\\Program Files\\vtk31\\java\\App2.java" #[EndFile]
+

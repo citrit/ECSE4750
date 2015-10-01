@@ -1,0 +1,13 @@
+Microsoft Visual Studio Solution File, Format Version 1.00
+Project("{66355F20-A65B-11D0-BFB5-00A0C91EBFA0}") = "Hw5", "Hw5.vjp", "{617EB002-4D2B-4755-A1D1-497C3166832F}"
+EndProject
+Global
+	GlobalSection(LocalDeployment) = postSolution
+		StartupProject = {617EB002-4D2B-4755-A1D1-497C3166832F}
+	EndGlobalSection
+	GlobalSection(BuildOrder) = postSolution
+		0 = {617EB002-4D2B-4755-A1D1-497C3166832F}
+	EndGlobalSection
+	GlobalSection(DeploymentRoot) = postSolution
+	EndGlobalSection
+EndGlobal

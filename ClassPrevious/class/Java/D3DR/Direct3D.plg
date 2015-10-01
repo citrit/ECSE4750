@@ -1,0 +1,18 @@
+--------------------Configuration: Direct3D - Java Virtual Machine Debug--------------------
+Begining build with project "D:\class\Java\Direct3D\Direct3D.dsp", at root.
+Active configuration is Java Virtual Machine Java Project (based on Java Virtual Machine Java Project)
+
+Project's tools are:
+			"Java Compiler" with flags "/g "
+			"Custom Build" with flags ""
+			"<Component 0xa>" with flags ""
+
+Creating temp file "c:\windows\TEMP\RSP40B6.TMP" with contents <D:\class\Java\Direct3D\D3DRenderer.java>
+Compiling...
+Microsoft (R) Visual J++ Compiler Version 1.01.7022
+Copyright (C) Microsoft Corp 1996. All rights reserved.
+
+
+
+
+Direct3D - 0 error(s), 0 warning(s)

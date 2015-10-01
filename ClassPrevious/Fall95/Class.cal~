@@ -1,0 +1,343 @@
+Calendar [v1.7]
+DayviewTimeFinish [18]
+NoticeHeight [6]
+PreviewCommand [ghostview -landscape -]
+PrintCommand [lpr]
+DefaultAlarms [0 5 10 15]
+ItemWidth [10]
+DayviewTimeStart [8]
+Note [
+Length [30]
+Uid [winston.its.rpi.edu_8071051c_4d0f_1]
+Owner [citrit]
+Text [36 [
+
+
+Introduction and course outline
+
+]]
+Remind [1]
+Hilite [always]
+Dates [Single 29/8/1995 End
+]
+]
+Note [
+Length [30]
+Uid [winston.its.rpi.edu_8071051c_4d0f_2]
+Owner [citrit]
+Text [30 [
+
+
+Graphics libraries OpenGL
+
+]]
+Remind [1]
+Hilite [always]
+Dates [Single 31/8/1995 End
+]
+]
+Note [
+Length [30]
+Uid [winston.its.rpi.edu_8071051c_50d7_3]
+Owner [citrit]
+Text [34 [
+
+
+Graphics Libraries and OpenGL
+
+]]
+Remind [1]
+Hilite [always]
+Dates [Single 5/9/1995 End
+]
+]
+Note [
+Length [30]
+Uid [winston.its.rpi.edu_8071051c_50d7_8]
+Owner [citrit]
+Text [39 [
+
+
+High Performance Graphics Engines.
+
+]]
+Remind [1]
+Hilite [always]
+Dates [Single 12/9/1995 End
+]
+]
+Note [
+Length [30]
+Uid [winston.its.rpi.edu_8071051c_50d7_c]
+Owner [citrit]
+Text [26 [
+
+
+What is Visualization
+
+]]
+Remind [1]
+Hilite [always]
+Dates [Single 19/9/1995 End
+]
+]
+Note [
+Length [30]
+Uid [winston.its.rpi.edu_8071051c_50d7_e]
+Owner [citrit]
+Text [26 [
+
+
+What is Visualization
+
+]]
+Remind [1]
+Hilite [always]
+Dates [Single 21/9/1995 End
+]
+]
+Note [
+Length [30]
+Uid [winston.its.rpi.edu_8071051c_50d7_12]
+Owner [citrit]
+Text [39 [
+
+
+High Performance Graphics Engines.
+
+]]
+Remind [1]
+Hilite [always]
+Dates [Single 14/9/1995 End
+]
+]
+Note [
+Length [30]
+Uid [winston.its.rpi.edu_8071051c_50d7_14]
+Owner [citrit]
+Text [34 [
+
+
+Graphics Libraries and OpenGL
+
+]]
+Remind [1]
+Hilite [always]
+Dates [Single 7/9/1995 End
+]
+]
+Note [
+Length [30]
+Uid [winston.its.rpi.edu_8071051c_50d7_15]
+Owner [citrit]
+Text [29 [
+
+
+Computer Graphics Primer
+
+]]
+Remind [1]
+Hilite [always]
+Dates [Single 3/10/1995 End
+]
+]
+Note [
+Length [30]
+Uid [winston.its.rpi.edu_8071051c_50d7_17]
+Owner [citrit]
+Text [27 [
+
+
+Object Oriented Design
+
+]]
+Remind [1]
+Hilite [always]
+Dates [Single 26/9/1995 End
+]
+]
+Note [
+Length [30]
+Uid [winston.its.rpi.edu_8071051c_50d7_1b]
+Owner [citrit]
+Text [22 [
+
+
+No Class Vacation
+
+]]
+Remind [1]
+Hilite [holiday]
+Dates [Single 10/10/1995 End
+]
+]
+Note [
+Length [30]
+Uid [winston.its.rpi.edu_8071051c_50d7_1c]
+Owner [citrit]
+Text [15 [
+
+
+Algorithms
+
+]]
+Remind [1]
+Hilite [always]
+Dates [Single 17/10/1995 End
+]
+]
+Note [
+Length [30]
+Uid [winston.its.rpi.edu_8071051c_50d7_1e]
+Owner [citrit]
+Text [15 [
+
+
+Algorithms
+
+]]
+Remind [1]
+Hilite [always]
+Dates [Single 24/10/1995 End
+]
+]
+Note [
+Length [30]
+Uid [winston.its.rpi.edu_8071051c_50d7_21]
+Owner [citrit]
+Text [32 [
+
+
+Computer Graphics Primer II
+
+]]
+Remind [1]
+Hilite [always]
+Dates [Single 31/10/1995 End
+]
+]
+Note [
+Length [30]
+Uid [winston.its.rpi.edu_8071051c_50d7_22]
+Owner [citrit]
+Text [22 [
+
+
+Applications [vl]
+
+]]
+Remind [1]
+Hilite [always]
+Dates [Single 7/11/1995 End
+]
+]
+Note [
+Length [30]
+Uid [winston.its.rpi.edu_8071051c_50d7_24]
+Owner [citrit]
+Text [24 [
+
+
+Applications [LYMB]
+
+]]
+Remind [1]
+Hilite [always]
+Dates [Single 14/11/1995 End
+]
+]
+Note [
+Length [30]
+Uid [winston.its.rpi.edu_8071051c_50d7_25]
+Owner [citrit]
+Text [32 [
+
+
+Applications [DataExplorer]
+
+]]
+Remind [1]
+Hilite [always]
+Dates [Single 21/11/1995 End
+]
+]
+Note [
+Length [30]
+Uid [winston.its.rpi.edu_8071051c_50d7_26]
+Owner [citrit]
+Text [40 [
+
+
+Creating Scientific Visualizations.
+
+]]
+Remind [1]
+Hilite [always]
+Dates [Single 28/11/1995 End
+]
+]
+Note [
+Length [30]
+Uid [winston.its.rpi.edu_8071051c_50d7_28]
+Owner [citrit]
+Text [40 [
+
+
+Creating Scientific Visualizations.
+
+]]
+Remind [1]
+Hilite [always]
+Dates [Single 5/12/1995 End
+]
+]
+Note [
+Length [30]
+Uid [winston.its.rpi.edu_8071051c_53b2_15]
+Owner [citrit]
+Text [9 [
+Holiday
+]]
+Remind [1]
+Hilite [holiday]
+Dates [Single 4/9/1995 End
+]
+]
+Appt [
+Start [540]
+Length [30]
+Uid [winston.its.rpi.edu_8071051c_53b2_16]
+Owner [citrit]
+Text [0 []]
+Remind [1]
+Hilite [always]
+Dates [Single 4/9/1995 End
+]
+]
+Note [
+Length [30]
+Uid [winston.its.rpi.edu_8071051c_53b2_17]
+Owner [citrit]
+Text [14 [
+Vacation Day
+]]
+Remind [1]
+Hilite [holiday]
+Dates [Single 23/11/1995 End
+]
+]
+Appt [
+Start [840]
+Length [75]
+Uid [winston.its.rpi.edu_8071051c_53b2_19]
+Owner [citrit]
+Text [8 [VisClass]]
+Remind [1]
+Hilite [always]
+Dates [WeekDays  3 5 Months  1 2 3 4 5 6 7 8 9 10 11 12
+Start 29/8/1995
+Finish 7/12/1995
+Deleted 12/12/1995
+Deleted 14/12/1995 End
+]
+]

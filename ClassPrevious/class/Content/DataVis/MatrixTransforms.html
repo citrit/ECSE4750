@@ -1,0 +1,436 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage Express 2.0">
+<title>DataVis - Matrix Transformations</title>
+</head>
+
+<body bgcolor="#FFFFFF">
+
+<hr width="75%">
+
+<h1 align="center"><font size="5">Advanced Computer Graphics and
+Data Visualization</font></h1>
+
+<hr width="75%">
+
+<p>&nbsp;</p>
+
+<h1>Two-Dimensional Geometric Transformations</h1>
+
+<h3>Basic Transformations:</h3>
+
+<ul>
+    <li>We will first look at the Cartesian coordinate
+        transformations and then apply matrix formulas which can
+        be expressed in a more convenient form that allows
+        efficient combination of object transformations. <br>
+        &nbsp; </li>
+    <li><b>Translation</b>: <ul>
+            <li>Translation is applied to an object by
+                repositioning it along a straight line path from
+                one coordinate to another. <br>
+                We translate a two-dimensional point by adding
+                translation distances tx and ty to the original
+                coordinate position (x,y) to move the point to a
+                new position (x',y') <pre><font size="5">(1)&nbsp;&nbsp;&nbsp; x' = x + tx&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; y' = y + ty</font></pre>
+                <p>&nbsp; </p>
+            </li>
+            <li>The translation distance pair (tx,ty) is called a
+                <b>translation vector </b>or <b>shift vector</b>.
+            </li>
+            <li>We can express the translation equations 1 as a
+                single matrix equation by using column vectors to
+                represent coordinate positions and the
+                translation vector: <pre><font size="5">(2)&nbsp;&nbsp;&nbsp; P = | x |&nbsp;&nbsp;&nbsp; P'= | x' |&nbsp;&nbsp;&nbsp; T = | tx |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | y |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | y' |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ty |</font></pre>
+            </li>
+            <li>This allows us to write the two-dimensional
+                translation as: <br>
+                &nbsp; <pre><font size="5">(3)&nbsp;&nbsp;&nbsp; P' = P + T</font></pre>
+            </li>
+            <li>Translation is a <i>rigid-body transformation</i>
+                that moves an object without deformation. </li>
+            <li>Every point on the object is translated by the
+                same amount. </li>
+            <li>A Line segment is translated by applying the
+                translation vector to each of the endpoints and
+                redrawing the object at these new points. </li>
+            <li>A Polygon is translated by applying the
+                translation vector to the coordinate of each
+                vertex and then regenerating the polygon at these
+                new points. </li>
+            <li>Similar methods can be used to translate circular
+                objects. The control points for these objects are
+                translated and then each object is redrawn using
+                these new control points. <br>
+                &nbsp;</li>
+        </ul>
+    </li>
+    <li><b>Rotation</b>: <ul>
+            <li>Rotations are applied to an object by
+                repositioning it along a circular path in the xy
+                plane. </li>
+            <li>To generate a rotation we specify a <b>rotation
+                angle</b> <b><i>0</i></b> and the position (xr,yr)
+                of the <b>rotation point</b> (or <b>pivot point)</b>
+                about which the object is to be rotated. </li>
+            <li>Positive values define counter clockwise
+                rotations and negative values specify clockwise
+                rotations. </li>
+            <li>We will first define rotation formula for
+                rotations about the origin </li>
+            <li>In this formula <b><i>r</i></b> is the distance
+                from the origin to the point, <b><i>@</i></b> is
+                the original rotation angle of the vector to the
+                original point, and <b><i>0 </i></b>is the
+                desired rotational angle. <pre><font size="5">(4)&nbsp;&nbsp;&nbsp; x' = </font><b><i>r</i></b><font
+size="5"> cos(</font><b><i>@</i></b><font size="5">+</font><b><i>0</i></b><font
+size="5">) = </font><b><i>r</i></b><font size="5"> cos(@)cos(</font><b><i>0</i></b><font
+size="5">) - </font><b><i>r</i></b><font size="5"> sin(@)sin(</font><b><i>0</i></b><font
+size="5">)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; y' = </font><b><i>r</i></b><font
+size="5"> sin(</font><b><i>@</i></b><font size="5">+</font><b><i>0</i></b><font
+size="5">) = </font><b><i>r</i></b><font size="5"> cos(@)sin(</font><b><i>0</i></b><font
+size="5">) - </font><b><i>r</i></b><font size="5"> sin(@)cos(</font><b><i>0</i></b><font
+size="5">)</font></pre>
+            </li>
+            <li>The original coordinates of the points in polar
+                coordinate are: <pre><font size="5">(5)&nbsp;&nbsp;&nbsp; x = </font><b><i>r</i></b><font
+size="5"> cos(</font><b><i>@</i></b><font size="5">)&nbsp;&nbsp;&nbsp; y = </font><b><i>r</i></b><font
+size="5"> sin(</font><b><i>@</i></b><font size="5">)</font></pre>
+            </li>
+            <li>Substituting expressions 5 into 4 we get an
+                equation for rotating a point through an angle <b><i>0</i></b>
+                about the origin: <pre><font size="5">(6)&nbsp;&nbsp;&nbsp; x' = x cos(</font><b><i>0</i></b><font
+size="5">) - y sin(</font><b><i>0</i></b><font size="5">)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; y' = x sin(</font><b><i>0</i></b><font
+size="5">) + y cos(</font><b><i>0</i></b><font size="5">)</font></pre>
+            </li>
+            <li>We can write these equations in a matrix form: <pre><font
+size="5">(7)&nbsp;&nbsp;&nbsp; P' = R<sup>.</sup>P</font></pre>
+            </li>
+            <li>Where the rotation matrix is <pre><font size="5">(8)&nbsp;&nbsp;&nbsp; R = |cos(</font><b><i>0</i></b><font
+size="5">)&nbsp; -sin(</font><b><i>0</i></b><font size="5">)|
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |sin(</font><b><i>0</i></b><font
+size="5">)&nbsp;&nbsp; cos(</font><b><i>0</i></b><font size="5">)|</font></pre>
+            </li>
+            <li>Rotation about an arbitrary pivot position is <pre><font
+size="5">(9)&nbsp;&nbsp;&nbsp; x' = xr + (x - xr)cos(</font><b><i>0</i></b><font
+size="5">) - (y - yr)sin(</font><b><i>0</i></b><font size="5">)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; y' = yr + (x - xr)sin(</font><b><i>0</i></b><font
+size="5">) + (y - yr)cos(</font><b><i>0</i></b><font size="5">)</font></pre>
+            </li>
+            <li>This equation introduces the pivot point as a
+                additive terms to the original points. </li>
+            <li>We could add these terms to the transformation
+                matrix by including the pivot point
+                transformation. We will see in a moment a better
+                way to handle this translation. </li>
+            <li>As with Translations, Rotations are rigid-body
+                transformations that move objects without
+                deformation. <br>
+                &nbsp;</li>
+        </ul>
+    </li>
+    <li><b>Scaling</b>: <ul>
+            <li>This transformation alters the size of an object
+                by multiplying the coordinate values of each
+                vertex by <b>scaling factors</b> sx and sy. <pre><font
+size="5">(10)&nbsp;&nbsp;&nbsp; x' = x * sx&nbsp;&nbsp;&nbsp; y' = y * sy</font></pre>
+            </li>
+            <li>Scaling factor sx scales in the x direction while
+                sy scales in the y direction. </li>
+            <li>These equations can be written using matrix form:
+                <pre><font size="5">(11)&nbsp;&nbsp;&nbsp; | x' | = | sx&nbsp; 0&nbsp; | . | x |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | y' |&nbsp;&nbsp; | 0&nbsp;&nbsp; sy |&nbsp;&nbsp; | y |</font></pre>
+            </li>
+            <li>or <pre><font size="5">(12)&nbsp;&nbsp;&nbsp; P' = S<sup>.</sup>P</font></pre>
+            </li>
+            <li>Where S is the two by two scaling matrix in 11. </li>
+            <li>Any positive scaling factors can be applied.
+                Values less than one reduce the size of the
+                object while values greater than one enlarge the
+                object. </li>
+            <li>Using a value of 1 leaves the object unchanged. </li>
+            <li>When sx and sy are assigned the same value,&nbsp;
+                a <b>uniform scaling</b> is produced keeping the
+                objects proportions equal. </li>
+            <li>Specifying different values for sx and sy results
+                in <b>differential scaling</b>. This can be used
+                in applications that specify a few basic building
+                blocks that can be modified and transformed using
+                scaling and transformations. This is an important
+                factor in our design criteria concerning </li>
+            <li>The scaling performed by equation 11 both scales
+                and translates objects. Again because the scaling
+                is performed about the coordinate origin. </li>
+            <li>We can control where the scaling origin is by
+                specifying a position, called the <b>fixed point,</b>
+                that will remain unchanged after the scaling
+                procedure. </li>
+            <li>Similar to to the rotation equation, we will add
+                the fixed point to equation 10: <pre><font
+size="5">(13)&nbsp;&nbsp;&nbsp; x' = xf + (x - xf)sx&nbsp;&nbsp;&nbsp; y' = yf + (y - yf)sx</font></pre>
+            </li>
+            <li>We can rewrite these to separate the
+                multiplicative and additive terms: <pre><font
+size="5">(14)&nbsp;&nbsp;&nbsp; x' = x<sup>.</sup>sx + xf(1 - sx)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; y' = y<sup>.</sup>sy + yf(1 - sy)</font></pre>
+            </li>
+            <li>where the additive terms xf(1-sx) and yf(1-sy)
+                are constant for all points in the object. </li>
+            <li>Including coordinates for the fixed point int he
+                scaling equation is similar o including
+                coordinates for a pivot point in the rotations
+                equations. </li>
+            <li>We can setup a column vector whose elements are
+                the constant terms in 14, then we add this column
+                vector to the product <b>S</b><sup><b>.</b></sup><b>P</b>
+                in 12. </li>
+            <li>We of course would like to reduce this to matrix
+                multiplication to reduce our work and combine all
+                operations into matrix multiplication. </li>
+            <li>Polygons and lines are scaled by applying
+                transformations 14 to each vertex and then
+                regenerating or drawing the objects. </li>
+            <li>Other objects are scaled by applying the
+                appropriate equations to the term defining the
+                object. An ellipse is resized by scaling the semi
+                major and semi minor axes and redrawing the
+                object. Uniform scaling of a circle is done by
+                adjusting the radius. </li>
+        </ul>
+    </li>
+</ul>
+
+<h3>Matrix Representations and Homogeneous Coordinates:</h3>
+
+<ul>
+    <li>Animation and simulation systems require many changes to
+        an objects appearance for every step of the animation. </li>
+    <li>If there are many objects in your animation then you will
+        have a great deal of work for each frame. </li>
+    <li>First we look at the general matrix form of our
+        transformations: <pre><font size="5">(15)&nbsp;&nbsp;&nbsp; P' = M1<sup>.</sup>P + M2</font></pre>
+    </li>
+    <li>where positions P and P' are represented as column
+        vectors. </li>
+    <li>Matrix M1 is a 2 by 2 array containing multiplicitive
+        factors and M2 is a 2 element column matrix containing
+        translational terms. </li>
+    <li>For translation, Matrix M1 is the identity matrix. </li>
+    <li>For rotation or scaling, M2 contains the translational
+        terms associated with the pivot point or scaling fixed
+        point. </li>
+    <li>To reproduce a transformation, these equations have to be
+        applied in a specific sequence to produce the desired
+        effect. </li>
+    <li>We must calculate the transformed coordinates one step at
+        a time. </li>
+    <li>First coordinate positions are scaled, then these scaled
+        coordinates are rotated, and finally the scaled
+        coordinates are rotated. </li>
+    <li>A more efficient approach would be to combine
+        transformations so that the final coordinate
+        transformations are obtained directly from the initial
+        coordinates. </li>
+    <li>To do this we need to reformulate 15 to eliminate the
+        matrix addition associated with the translational terms. </li>
+    <li>We can combine the multiplicative and translational terms
+        for two-dimensional geometric transformations into a
+        single matrix representation by expanding the 2 by 2
+        matrix representations to a 3 by 3 matrices. </li>
+    <li>We can then express all transformations as matrix
+        multiplication provided we expand the matrix
+        representations for coordinate positions. </li>
+    <li>The coordinate position (x,y) will be replaced with the
+        homogeneous coordinate triple <i>(xh,yh,h)</i>, where: <pre><font
+size="5">(16)&nbsp;&nbsp;&nbsp; x = xh&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; y = yh
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; --&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; --
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; h&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; h</font></pre>
+    </li>
+    <li>This representation can also be written as <i>(h.x,h.y,h)</i>.
+    </li>
+    <li>For two-dimensional geometric transformations we can
+        choose any value for h thus giving an infinite number of
+        representations for coordinate point <i>(x,y)</i> </li>
+    <li>An obvious choice is to pick h=1 and our coordinates
+        reduce to <i>(x,y,1)</i>. </li>
+    <li>Using homogenous representations of coordinates allows us
+        to represent equations containing x and y as homogeneous
+        equations using x,y, and h. </li>
+    <li>This simply means that if each of the three parameters is
+        replaced by any value v times that parameter, the value v
+        can be factored out of the equations. </li>
+    <li>This frees us to reduce all transformations to matrix
+        multiplication. </li>
+    <li>Coordinates are represented as a three element column
+        vector and transformation operations as 3 by 3 matrices. </li>
+    <li>For translation we have: <pre><font size="5">(17)&nbsp;&nbsp;&nbsp; | x' |&nbsp;&nbsp; | 1&nbsp; 0&nbsp; tx |&nbsp;&nbsp; | x |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | y' | = | 0&nbsp; 1&nbsp; ty | . | y |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 1&nbsp; |&nbsp;&nbsp; | 0&nbsp; 0&nbsp;&nbsp; 1 |&nbsp;&nbsp; | 1 |</font></pre>
+    </li>
+    <li>which can be expressed as: <pre><font size="5">(18)&nbsp;&nbsp;&nbsp; P' = T(tx,ty)<sup>.</sup>P</font></pre>
+    </li>
+    <li>where T(tx,ty) is the 3 by 3 translation matrix in 17.The
+        inverse is obtained by replacing tx and ty with -tx and -ty.
+    </li>
+    <li>The rotation transformation equations about the
+        coordinate origin can be expressed <pre><font size="5">(19)&nbsp;&nbsp;&nbsp; | x' |&nbsp;&nbsp; | cos(@) -sin(@) 0 |&nbsp;&nbsp; | x |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | y' | = | sin(@)&nbsp; cos(@) 0 | . | y |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 1&nbsp; |&nbsp;&nbsp; |&nbsp; 0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0&nbsp;&nbsp;&nbsp; 1 |&nbsp;&nbsp; | 1 |</font></pre>
+    </li>
+    <li>or as <pre><font size="5">(20)&nbsp;&nbsp;&nbsp; P' = R(@)<sup>.</sup>P</font></pre>
+    </li>
+    <li>where R(@) is the 3 by 3 translation matrix in 17. The
+        inverse rotations is obtained by using -@ </li>
+    <li>Finally the scaling transformation relative to the
+        coordinate origin is: <pre><font size="5">(21)&nbsp;&nbsp;&nbsp; | x' |&nbsp;&nbsp; | sx&nbsp; 0&nbsp; 0 |&nbsp;&nbsp; | x |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | y' | = | 0&nbsp; sy&nbsp; 0 | . | y |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 1&nbsp; |&nbsp;&nbsp; | 0&nbsp;&nbsp; 0&nbsp; 1 |&nbsp;&nbsp; | 1 |</font></pre>
+    </li>
+    <li>or <pre><font size="5">(22)&nbsp;&nbsp;&nbsp; P' = S(sx,sy)<sup>.</sup>P</font></pre>
+    </li>
+    <li>where S(sx,sy) is the 3 by 3 matrix in 21. Replacind sx
+        and sy with 1/sx and 1/sy produces the inverse scaling
+        matrix. </li>
+    <li>Matrix representations are standard methods for
+        implementing transformaitons in graphics systems. </li>
+    <li>Some APIs provide these functions which only produce
+        transformations about the coordinate origin. </li>
+    <li>We are then forced to translate our objects to the
+        coordinate origin , sclale, rotate, and then transform
+        back to the final position. </li>
+    <li>Alternately we would like to specify our fixed and pivot
+        point coordinates to our transforms to minimize
+        operations. </li>
+</ul>
+
+<h3>Composite Transformations:</h3>
+
+<ul>
+    <li>Composite transformations allow us to combine succesive
+        transforms by calculating the matrix product of the
+        individual transformations. </li>
+    <li>forming products of transformation matrices is often
+        refered to as a <b>concatenation</b>, or <b>composition</b>,
+        of matrices. </li>
+    <li>For column matrix representaions of coordinate positions
+        we form these composite transformations by multiplying
+        matrices in order from right to left. </li>
+    <li>Each successive transformation matrix premultiplies the
+        product of the preceding transformaiton matrices. <br>
+        &nbsp; </li>
+    <li><b>Translations</b>: <ul>
+            <li>If two successive translation vectors (tx1,ty1)
+                and (tx2,ty2) are applied to position P, P' is
+                calculated as: <pre><font size="5">(23)&nbsp;&nbsp;&nbsp; P' = T(tx2,ty2).{T(tx1,ty1).P}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = {T(tx2,ty2).T(tx1,ty1)}.P</font></pre>
+            </li>
+            <li>where P and P' homogenous coordinate column
+                vectors. <br>
+                &nbsp;</li>
+        </ul>
+    </li>
+    <li><b>Rotations</b>: <ul>
+            <li>Two succesive rotations applied to point P
+                produce the transformed position: <pre><font
+size="5">(26)&nbsp;&nbsp;&nbsp; P' = R(@2)<sup>.</sup>{R(@1)<sup>.</sup>P}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = {R(@2)<sup>.</sup>R(@1)}<sup>.</sup>P</font></pre>
+            </li>
+            <li>By multiplying the the two rotation matrices, we
+                can verify that two succesive rotations are
+                additive: <pre><font size="5">(27)&nbsp;&nbsp;&nbsp; R(@2)<sup>.</sup>R(@1) = R(@1 + @2)</font></pre>
+            </li>
+            <li>so the final rotated coordinates can can be
+                calculated with the composite rotation matrix as <pre><font
+size="5">(28)&nbsp;&nbsp;&nbsp; P' = R(@1 + @2)<sup>.</sup>P</font></pre>
+            </li>
+        </ul>
+    </li>
+    <li><b>Scalings:</b> <ul>
+            <li>Concatenating transformation matrices for two
+                succesive scaling operations produces the
+                following: <pre><font size="5">(30)&nbsp;&nbsp;&nbsp; S(sx2,sy2)<sup>.</sup>S(sx1,sy1) = S(sx1<sup>.</sup>sx2,sy1<sup>.</sup>sy2)</font></pre>
+            </li>
+            <li>The resulting matrix indicates that succesive
+                scaling operations are multiplicative. </li>
+            <li>That is, if we were to triple the size of an
+                object twice in succesion, the final object would
+                be nine times the original. <br>
+                &nbsp;</li>
+        </ul>
+    </li>
+    <li><b>General Pivot-Point Rotation:</b> <ul>
+            <li>Again some graphics packages only supply
+                rotations about the coordinate origin. </li>
+            <li>We can generate rotations about pivot points by
+                using the following sequence of steps: <ol>
+                    <li>Translate the object so the pivot point
+                        is at the origin. </li>
+                    <li>Rotate the object about the origin </li>
+                    <li>Translate the object from the origin to
+                        the original pivot point. </li>
+                </ol>
+            </li>
+            <li>This can be expressed as: <pre><font size="5">(32)&nbsp;&nbsp;&nbsp; T(xr,tr)<sup>.</sup>R(@)<sup>.</sup>T(-xr,-yr) = R(xr,yr,@)</font></pre>
+            </li>
+        </ul>
+    </li>
+    <li><b>General Fixed-Point Scaling:</b> <ul>
+            <li>Similar to fixed point rotation, we can perform
+                scaling about a fixed point by following these
+                steps: <ol>
+                    <li>Translate the object so the pivot point
+                        is at the origin. </li>
+                    <li>Scale the object about the origin </li>
+                    <li>Translate the object from the origin to
+                        the original pivot point. </li>
+                </ol>
+            </li>
+            <li>Which produces the following sequence: <pre><font
+size="5">(34)&nbsp;&nbsp;&nbsp; T(xf,yf)<sup>.</sup>S(sx,sy)<sup>.</sup>T(-xf,-yf) = S(xf,yf,sx,sy)</font></pre>
+            </li>
+        </ul>
+    </li>
+    <li><b>Concatenation Properites:</b> <ul>
+            <li>Matrix multiplication is associative. <pre><font
+size="5">(36)&nbsp;&nbsp;&nbsp; A<sup>.</sup>B<sup>.</sup>C = (A<sup>.</sup>B)<sup>.</sup>C = A<sup>.</sup>(B<sup>.</sup>C)</font></pre>
+            </li>
+            <li>Conversely matrix products are not commutative. A.B
+                is not equal to B.A, in general. </li>
+            <li>This means we need to be careful of the order
+                with which the composite matrix is evaluated.
+                Some transformations are commutative, for
+                instance two successive rotations can be
+                performed in either order. The same is true for
+                scaling. </li>
+            <li>Concatenating the matrices also reduces the total
+                number of operations needed to transform
+                positions. </li>
+            <li>Standard matrix dot products requires nine
+                multiplications and six additions. Our matrix
+                representaion with homogenous coordinates reduces
+                the transform equations to: <pre><font size="5">(39)&nbsp;&nbsp;&nbsp; x' = x<sup>.</sup>rsxx + y<sup>.</sup>rsxy + trsx&nbsp;&nbsp;&nbsp; y' = x<sup>.</sup>rsyx + y<sup>.</sup>rsyy + trsy</font></pre>
+            </li>
+            <li>This requires four multiplications and four
+                additions, greatly reducing our processing
+                requirements. </li>
+            <li>This is also the maximum number of computations
+                required for any transformation sequence, once
+                the individual matrices have been concatenated
+                and the elements of the compoosite matrix are
+                evaluated. (Kinda cool). </li>
+            <li>An implementation would be to formulate
+                transformational matrices, concatentate any
+                transformation sequence, and calculate
+                transformed coordinates using 39. <br>
+                </li>
+        </ul>
+    </li>
+</ul>
+</body>
+</html>

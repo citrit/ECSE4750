@@ -1,0 +1,12 @@
+file = MRIdata.bin
+grid = 64 x 64 x 27
+format = msb binary
+interleaving = series-vector
+majority = row
+field = data
+structure = scalar
+type = short
+dependency = positions
+positions = 0, 1, 0, 1, 0, 1
+
+end

@@ -1,0 +1,427 @@
+%!PS-Adobe-3.0
+%%Creator: enscript
+%%For: winston.its.rpi.edu:citrit (Thomas D Citriniti)
+%%Title: intArr.C
+%%CreationDate: Tue Sep 19 11:11:35 1995
+%%DocumentNeededResources: font Courier-Bold Courier-Bold
+%+ Times-Roman Times-Bold Helvetica-Bold
+%%Pages: (atend)
+%%BeginProlog
+% Start of enscript.pro -- prolog for text file translator
+% Copyright (c) 1984,1985,1987 Adobe Systems Incorporated. All Rights Reserved. 
+% GOVERNMENT END USERS: See Notice file in TranScript library directory
+% -- probably /usr/lib/ps/Notice
+% RCSID: $Header: /disks/hobo/vp6/snichols/rel3.0/transcript/lib/RCS/enscript.pro,v 3.0 1991/06/17 17:08:31 snichols Exp $
+/$enscript 50 dict def $enscript begin
+/S/show load def
+/bd { bind def } bind def
+/X{exch 0 rmoveto S} bd
+/Y{exch 0 exch rmoveto S} bd
+/B{3 1 roll moveto S} bd
+/F{$fd exch get setfont} def
+/U{1440 mul}def
+/UP{U 72 div}def
+/StartPage{/svpg save def .05 dup scale} bd
+/EndPage{svpg restore showpage} bd
+/DoPreFeed{/statusdict where{pop
+ statusdict/prefeed known{statusdict exch/prefeed exch put 0}if}if pop} bd
+/SetUpFonts
+ {dup/$fd exch array def{findfont exch scalefont $fd 3 1 roll put}repeat}def
+/InitGaudy{/Columns exch def
+ /ftD /Times-Bold findfont 12 UP scalefont def
+ /ftF /Times-Roman findfont 14 UP scalefont def
+ /ftP /Helvetica-Bold findfont 30 UP scalefont def} bd
+/LB{/pts exch UP def /charcolor exch def /boxcolor exch def /font exch def
+ /label exch def /dy exch def /dx exch def /lly exch def /llx exch def
+ gsave boxcolor setgray
+ llx lly moveto dx 0 rlineto 0 dy rlineto dx neg 0 rlineto closepath fill
+ /lines label length def
+ /yp lly dy add dy lines pts mul sub 2 div sub pts .85 mul sub def
+ font setfont charcolor setgray
+ label {dup stringwidth pop 2 div llx dx 2 div add exch sub yp moveto show
+   /yp yp pts sub def}forall grestore} bd
+/Gaudy{/plength exch def /BarLength exch def /hy exch def /hx exch def
+ /Page exch def /Date exch def  /File exch def /Comment exch def
+ hx hy  BarLength 144 sub .25 U [File] ftF .97 0 14 LB
+ hx hy 360 add BarLength 144 sub .25 U [Comment] ftF 1 0 14 LB
+ hx hy 1 U .5 U Date ftD .7 0 12 LB
+ BarLength 1080 sub hy 1 U .5 U [Page] ftP .7 1 30 LB
+ 2 1 Columns {1 sub plength Columns div mul 172.80 sub hy moveto 0 0 hy sub rlineto
+ stroke}for } bd
+/Landscape { 90 rotate 0 exch translate } bd
+%%EndProlog
+%%BeginSetup
+%%IncludeResource: font Courier-Bold
+1    200.000 /Courier-Bold
+%%IncludeResource: font Courier-Bold
+0    200.000 /Courier-Bold
+2 SetUpFonts
+1 InitGaudy
+%%EndSetup
+%%Page: ? 1
+StartPage
+()(intArr.C)[(95/09/18)(21:44:27)](1) 360 14760 11500 12240 Gaudy
+0 F
+900 14380(#include <iostream.h>)B
+900 13940(#include "IArray.H")B
+900 13500(int main\(int argc, char *argv[]\))B
+900 13280({)B
+1140 12840(IntArray intArr\(10\);)B
+1140 12400(for \(int i=0;i<10;i++\) {)B
+1380 12180(intArr[i] = int\(rand\(\)\);)B
+1140 11960(})B
+1140 11520(for \(i=0;i<10;i++\) {)B
+1380 11300(cout << "intArr[" << i << "]: " << intArr[i] << endl;)B
+1140 11080(})B
+900 10860(})B
+900 10200(/*  Output:)B
+900 9760(a.out)B
+900 9540(intArr[0]: 16838)B
+900 9320(intArr[1]: 5758)B
+900 9100(intArr[2]: 10113)B
+900 8880(intArr[3]: 17515)B
+900 8660(intArr[4]: 31051)B
+900 8440(intArr[5]: 5627)B
+900 8220(intArr[6]: 23010)B
+900 8000(intArr[7]: 7419)B
+900 7780(intArr[8]: 16212)B
+900 7560(intArr[9]: 4086)B
+900 7120(*/)B
+EndPage
+%%Page: ? 2
+StartPage
+()(IArray.H)[(95/09/18)(15:07:41)](1) 360 14760 11500 12240 Gaudy
+0 F
+900 14380(/*#################################################################)B
+900 14160(# Copyright \(c\) 1991 AT&T Bell Laboratories, All Rights Reserved   )B
+900 13940(# Published in ``A C++ Primer''  by Stanley Lippman, Addison-Wesley)B
+900 13720(#################################################################*/)B
+900 13280(#ifndef INT_ARRAY_H)B
+900 13060(#define INT_ARRAY_H)B
+900 12840(#include <stdlib.h>)B
+900 12620(#include <stream.h>)B
+900 12180(const int ArraySize = 12; // default size)B
+900 11740(class IntArray {)B
+900 11520(public: )B
+900 11300(// operations performed on arrays)B
+1380 11080(IntArray\(int sz = ArraySize\) { init\(0,sz\); })B
+1380 10860(IntArray\(const int *iar, int sz\) { init\(iar,sz\); })B
+1380 10640(IntArray\( const IntArray &iA\) { init\(iA.ia,iA.size\); })B
+1380 10420(~IntArray\(\) { delete ia; })B
+1380 10200(IntArray& operator=\(const IntArray&\);)B
+1380 9980(virtual int& operator[]\(int ix\); )B
+1380 9760(int getSize\(\) { return size; })B
+900 9540(protected: )B
+1380 9320(void init\( const int*, int \);)B
+900 9100(// internal data representation)B
+1380 8880(int size;  )B
+1380 8660(int *ia;)B
+900 8440(};)B
+900 8000(#include <assert.h>)B
+900 7560(void IntArray::init\(const int *array, int sz\))B
+900 7340({)B
+1380 7120(ia = new int[size=sz]; )B
+1380 6900(assert\( ia != 0 \);)B
+1380 6460(for \(int ix = 0; ix < size; ++ix\))B
+1980 6240(ia[ix] = \(array!=0\) ? array[ix] : 0;)B
+900 6020(})B
+900 5580(IntArray& IntArray::operator=\( const IntArray &iA \))B
+900 5360({)B
+1380 5140(// test for assignment to itself: iA = iA)B
+1380 4920(if \(this == &iA\) return *this;)B
+1380 4480(delete ia; // free up existing memory)B
+1380 4260(init\( iA.ia, iA.size \);)B
+1380 3820(return *this;)B
+900 3600(})B
+900 3160(int& )B
+900 2940(IntArray::operator[]\(int index\) { )B
+1380 2720(return ia[ index ]; )B
+900 2500(})B
+900 2280(#endif)B
+EndPage
+%%Page: ? 3
+StartPage
+()(intArrT.C)[(95/09/18)(21:46:57)](1) 360 14760 11500 12240 Gaudy
+0 F
+900 14380(#include <iostream.h>)B
+900 14160(#include <stdlib.h>)B
+900 13720(#include "ArrayT.H")B
+900 13280(int main\(int argc, char *argv[]\))B
+900 13060({)B
+1140 12620(Array<int> intArr\(10\);)B
+1140 12400(ArrayRC<int> intArrRC\(10\);)B
+1140 11960(for \(int i=0;i<10;i++\) {)B
+1380 11740(intArr[i] = int\(rand\(\)\);)B
+1380 11520(intArrRC[i] = int\(rand\(\)\);)B
+1140 11300(})B
+1140 10860(for \(i=0;i<=13;i++\) {)B
+1380 10640(cout << "intArr[" << i << "]: " << intArr[i] << endl;)B
+1380 10420(cout << "intArrRC[" << i << "]: " << intArrRC[i] << endl;)B
+1140 10200(})B
+900 9980(})B
+900 9540(/*  Output:)B
+900 9100(a.out)B
+900 8880(intArr[0]: 16838)B
+900 8660(intArrRC[0]: 5758)B
+900 8440(intArr[1]: 10113)B
+900 8220(intArrRC[1]: 17515)B
+900 8000(intArr[2]: 31051)B
+900 7780(intArrRC[2]: 5627)B
+900 7560(intArr[3]: 23010)B
+900 7340(intArrRC[3]: 7419)B
+900 7120(intArr[4]: 16212)B
+900 6900(intArrRC[4]: 4086)B
+900 6680(intArr[5]: 2749)B
+900 6460(intArrRC[5]: 12767)B
+900 6240(intArr[6]: 9084)B
+900 6020(intArrRC[6]: 12060)B
+900 5800(intArr[7]: 32225)B
+900 5580(intArrRC[7]: 17543)B
+900 5360(intArr[8]: 25089)B
+900 5140(intArrRC[8]: 21183)B
+900 4920(intArr[9]: 25137)B
+900 4700(intArrRC[9]: 25566)B
+900 4480(intArr[10]: 0)B
+900 4260(Assertion failed: index >= 0 && index < size, file  ArrayT.H, line 33)B
+900 4040(IOT/Abort trap \(core dumped\))B
+900 3600(*/)B
+EndPage
+%%Page: ? 4
+StartPage
+()(ArrayT.H)[(95/09/18)(15:47:30)](1) 360 14760 11500 12240 Gaudy
+0 F
+900 14380(/*#################################################################)B
+900 14160(# Copyright \(c\) 1991 AT&T Bell Laboratories, All Rights Reserved   )B
+900 13940(# Published in ``A C++ Primer''  by Stanley Lippman, Addison-Wesley)B
+900 13720(#################################################################*/)B
+900 13280(#ifndef ARRAY_H)B
+900 13060(#define ARRAY_H)B
+900 12620(const int ArraySize = 12; )B
+900 12180(template <class Type>)B
+900 11960(class Array {)B
+900 11740(public: )B
+1380 11520(Array\(int sz=ArraySize\) )B
+1860 11300({ size=sz; ia=new Type[ size ]; })B
+1380 11080(virtual ~Array\(\) { delete [] ia; })B
+1380 10640(int getSize\(\) { return size; })B
+1380 10420(virtual Type& )B
+1860 10200(operator[]\(int index\) { return ia[index]; })B
+900 9980(protected: )B
+1380 9760(int size;  )B
+1380 9540(Type *ia;)B
+900 9320(};)B
+900 8880(#include <assert.h>)B
+900 8440(template <class Type>)B
+900 8220(class ArrayRC : public Array<Type> {)B
+900 8000(public:)B
+1260 7780(ArrayRC\(int sz = ArraySize\) : Array<Type>\( sz \){};)B
+1260 7560(Type& operator[]\(int index\) { )B
+1980 7340(assert\( index >= 0 && index < size \);)B
+1980 7120(return ia[ index ];)B
+1380 6900(})B
+900 6680(};)B
+900 6240(#endif)B
+EndPage
+%%Page: ? 5
+StartPage
+()(simpleVec.C)[(95/09/18)(21:52:16)](1) 360 14760 11500 12240 Gaudy
+0 F
+900 14380(#include <iostream.h>)B
+900 14160(#include <stdlib.h>)B
+900 13720(#include "VectorT.H")B
+900 13060(void main\(int argc, char *argv[]\))B
+900 12840({)B
+1140 12400(VectorType<float> floatVec;)B
+1140 12180(VectorType<int>   intVec;)B
+1140 11740(for \(int i=0;i<10;i++\) {)B
+1380 11520(floatVec += rand\(\);)B
+1380 11300(intVec += i;)B
+1140 11080(})B
+1140 10640(cout << "Floats\\t\\tInts" << endl;)B
+1140 10420(for \(i=0;i<floatVec.Count\(\);i++\) {)B
+1380 10200(cout << "floatVec[" << i << "]: " << floatVec[i] << "\\t" )B
+1980 9980(<< "intVec[" << i << "]: " << intVec[i] << endl;)B
+1140 9760(})B
+900 9540(})B
+900 9100(/* Output:)B
+900 8440(a.out)B
+900 8220(Floats)B
+1200(Ints)X
+900 8000(floatVec[0]: 16838)B
+720(intVec[0]: 0)X
+900 7780(floatVec[1]: 5758)B
+840(intVec[1]: 1)X
+900 7560(floatVec[2]: 10113)B
+720(intVec[2]: 2)X
+900 7340(floatVec[3]: 17515)B
+720(intVec[3]: 3)X
+900 7120(floatVec[4]: 31051)B
+720(intVec[4]: 4)X
+900 6900(floatVec[5]: 5627)B
+840(intVec[5]: 5)X
+900 6680(floatVec[6]: 23010)B
+720(intVec[6]: 6)X
+900 6460(floatVec[7]: 7419)B
+840(intVec[7]: 7)X
+900 6240(floatVec[8]: 16212)B
+720(intVec[8]: 8)X
+900 6020(floatVec[9]: 4086)B
+840(intVec[9]: 9)X
+900 5580(*/)B
+EndPage
+%%Page: ? 6
+StartPage
+()(simpleArr.C)[(95/09/18)(21:49:20)](1) 360 14760 11500 12240 Gaudy
+0 F
+900 14380(#include <iostream.h>)B
+900 14160(#include <stdlib.h>)B
+900 13720(#include "VectorT.H")B
+900 13280(typedef VectorType<float> floatVecType;)B
+900 12840(void main\(int argc, char *argv[]\))B
+900 12620({)B
+1140 12180(VectorType<floatVecType> floatArr;)B
+1140 11740(for \(int i=0;i<10;i++\) {)B
+1380 11520(for \(int j=0;j<\(rand\(\)%10\);j++\) {)B
+1620 11300(floatArr[i] += float\(i+j\);)B
+1380 11080(})B
+1140 10860(})B
+1140 10420(cout << "Float Array" << endl;)B
+1140 10200(for \(i=0;i<floatArr.Count\(\);i++\) {)B
+1380 9980(for \(int j=0;j<floatArr[i].Count\(\);j++\) {)B
+1620 9760(cout << floatArr[i][j] << "\\t";)B
+1380 9540(})B
+1380 9320(cout << endl;)B
+1140 9100(})B
+900 8880(})B
+900 8440(/* Output:)B
+900 8000(a.out)B
+900 7780(Float Array)B
+900 7560(0)B
+840(1)X
+840(2)X
+840(3)X
+900 7340(1)B
+900 7120(2)B
+840(3)X
+840(4)X
+840(5)X
+840(6)X
+900 6680(4)B
+840(5)X
+840(6)X
+900 6460(5)B
+840(6)X
+840(7)X
+840(8)X
+840(9)X
+900 6240(6)B
+840(7)X
+900 6020(7)B
+840(8)X
+840(9)X
+840(10)X
+720(11)X
+900 5800(8)B
+900 5360(*/)B
+EndPage
+%%Page: ? 7
+StartPage
+()(VectorT.H)[(95/09/18)(11:40:09)](1) 360 14760 11500 12240 Gaudy
+0 F
+900 14380(// Vector.H)B
+900 13940(#ifndef Vector_H)B
+900 13720(#define Vector_H)B
+900 13280(#include <string.h>)B
+900 12840(#define)B
+120(DEFAULTINCREMENT)X
+960(100)X
+900 12400(template <class T> class VectorType)B
+900 12180({)B
+900 11960(protected:)B
+1260 11740(T *Data;)B
+1260 11520(int Allocated;)B
+1260 11300(int Used;)B
+1260 11080(int Display;)B
+900 10860(public:)B
+1260 10640(VectorType\(int display=0\))B
+1260 10420({)B
+1620 10200(Allocated=DEFAULTINCREMENT;)B
+1620 9980(Data=new T[Allocated];)B
+1620 9760(Used=0;)B
+1620 9540(Display=display;)B
+1260 9320(})B
+1260 8880(~VectorType\(void\))B
+1260 8660({)B
+1620 8440(delete[] Data;)B
+1260 8220(})B
+1260 7780(VectorType<T>& operator!\(void\))B
+1260 7560({)B
+1620 7340(int i;)B
+1620 7120(if\(Data\))B
+1620 6900({)B
+1980 6680(for\(i=0;i<Allocated;i++\))B
+2340 6460(!Data[i];)B
+1620 6240(})B
+1620 6020(Data=NULL;)B
+1620 5800(Allocated=0;)B
+1620 5580(Used=0;)B
+1620 5360(return *this;)B
+1260 5140(})B
+1260 4700(void Reserve\(int newSize\))B
+1260 4480({)B
+1620 4260(T *temp;)B
+1620 4040(int i,oldSize;)B
+1620 3600(if\(newSize >= Allocated\))B
+1620 3380({)B
+1980 3160(oldSize=Allocated;)B
+1980 2940(Allocated=newSize+DEFAULTINCREMENT;)B
+1980 2720(temp=Data;)B
+1980 2500(Data=new T[Allocated];)B
+1980 2280(if\(Data==NULL\))B
+1980 2060({)B
+2340 1840(cout << "Vector.Reserve failed.  newSize=" << newSize << endl;)B
+2340 1620(return;)B
+1980 1400(})B
+1980 1180(memcpy\(\(void*\)Data, \(void*\)temp, oldSize*sizeof\(T\)\);)B
+1980 960(for\(i=0;i<oldSize;i++\))B
+2340 740(!temp[i];)B
+EndPage
+%%Page: ? 8
+StartPage
+()(VectorT.H)[(95/09/18)(11:40:09)](2) 360 14760 11500 12240 Gaudy
+0 F
+1980 14380(delete[] temp;)B
+1620 14160(})B
+1260 13940(})B
+1260 13500(void Demand\(int newSize\))B
+1260 13280({)B
+1620 13060(Reserve\(newSize\);)B
+1620 12840(Used=newSize;)B
+1260 12620(})B
+1260 12180(int Count\(void\))B
+1260 11960({)B
+1620 11740(return Used;)B
+1260 11520(})B
+1260 11080(T& operator[]\(int index\))B
+1260 10860({)B
+1500 10640(if \(index > Used\))B
+1740 10420(Demand\(index\);)B
+1500 10200(return Data[index];)B
+1260 9980(})B
+1260 9540(operator T*\(\))B
+1260 9320({)B
+1620 9100(return Data;)B
+1260 8880(})B
+1260 8440(VectorType<T>& operator+=\(T datum\))B
+1260 8220({)B
+1620 8000(Reserve\(Used+1\);)B
+1620 7780(Data[Used]=datum;)B
+1620 7560(Used++;)B
+1620 7340(return *this;)B
+1260 7120(})B
+900 6900(};)B
+900 6460(#endif)B
+EndPage
+%%Trailer
+end
+%%Pages: 8

@@ -1,0 +1,466 @@
+#!/bin/sh
+# This is a shell archive (produced by GNU sharutils 4.2).
+# To extract the files from this archive, save it to some FILE, remove
+# everything before the `!/bin/sh' line above, then type `sh FILE'.
+#
+# Made on 1997-02-06 19:54 EST by <conway@vccsouth-03>.
+# Source directory was `/afs/rpi.edu/home/17/conway/DataVis/hw1'.
+#
+# Existing files will *not* be overwritten unless `-c' is specified.
+#
+# This shar contains:
+# length mode       name
+# ------ ---------- ------------------------------------------
+#  11057 -rw------- hw1.c
+#
+save_IFS="${IFS}"
+IFS="${IFS}:"
+gettext_dir=FAILED
+locale_dir=FAILED
+first_param="$1"
+for dir in $PATH
+do
+  if test "$gettext_dir" = FAILED && test -f $dir/gettext \
+     && ($dir/gettext --version >/dev/null 2>&1)
+  then
+    set `$dir/gettext --version 2>&1`
+    if test "$3" = GNU
+    then
+      gettext_dir=$dir
+    fi
+  fi
+  if test "$locale_dir" = FAILED && test -f $dir/shar \
+     && ($dir/shar --print-text-domain-dir >/dev/null 2>&1)
+  then
+    locale_dir=`$dir/shar --print-text-domain-dir`
+  fi
+done
+IFS="$save_IFS"
+if test "$locale_dir" = FAILED || test "$gettext_dir" = FAILED
+then
+  echo=echo
+else
+  TEXTDOMAINDIR=$locale_dir
+  export TEXTDOMAINDIR
+  TEXTDOMAIN=sharutils
+  export TEXTDOMAIN
+  echo="$gettext_dir/gettext -s"
+fi
+touch -am 1231235999 $$.touch >/dev/null 2>&1
+if test ! -f 1231235999 && test -f $$.touch; then
+  shar_touch=touch
+else
+  shar_touch=:
+  echo
+  $echo 'WARNING: not restoring timestamps.  Consider getting and'
+  $echo "installing GNU \`touch', distributed in GNU File Utilities..."
+  echo
+fi
+rm -f 1231235999 $$.touch
+#
+if mkdir _sh26000; then
+  $echo 'x -' 'creating lock directory'
+else
+  $echo 'failed to create lock directory'
+  exit 1
+fi
+# ============= hw1.c ==============
+if test -f 'hw1.c' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'hw1.c' '(file already exists)'
+else
+  $echo 'x -' extracting 'hw1.c' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'hw1.c' &&
+/*
+X *  Laurie Conway
+X *  Advanced Computer Graphics and Data Visualization
+X *  Homework 1, February 6, 1997
+X *
+X *  hw1.c
+X *
+X *  Using OpenGL and GLUT library...
+X *  Draw shiney cube, solid blue sphere and yellow Teapot
+X *
+X *  This was successfully compiled and tested on Irix 5.3
+X *  On AIX 4.1.4, it built after I changed the Makefile to find 
+X *  glut includes in /campus/visualization/mesa-ogl/1.2.7/distrib/src/include
+X *  On Solaris 2.5, it failed to build because it couldn't find -lGL and -lGLU
+X */
+X
+/* Includes required */
+X
+#include <GL/gl.h>
+#include <GL/glut.h>
+X
+void ShowPosition(int);
+X
+#define TEAPOT 0
+#define CUBE   1
+#define SPHERE 2 
+#define CAMERA 3
+#define NUMOBJECTS 4
+#define W_WIDTH  500
+#define W_HEIGHT 250
+#define TEAPOT_TRANSPARENT 5
+#define DEBUG 99
+X
+int CurrentObject = SPHERE;
+int TransparentTeapot = 1;
+int Debug = 0;
+static char *curr_buff = "Current object: ";
+char menu_item[24];
+X
+char *object_names[] = {"teapot", "cube", "sphere", "camera" }; 
+X
+X
+/* Notes from Insight:
+X   Diffuse reflectance plays the most important role in determining 
+X   what you perceive the color of an object to be.
+*/
+X
+struct My {
+X	float x;
+X	float y;
+X	float z;
+X	float rotx;
+X	float roty;
+X	float rotz;
+X	float size; 
+X	float shiny[2];  /* Set to 2 so initialization works better */
+X	float amb_diff[4];
+X	float specular[4];
+} My[NUMOBJECTS] = { {-2.0, 0.0, 0.0,  0.0, 0.0, 0.0,  1.0, 
+X					  0.6, 0.6, 0.8, 0.8, 0.0, 0.7, 0.0, 0.0, 0.0, 1.0},
+X                     {0.0, 0.0, 0.0,  90.0, 105.0, -30.0,  1.0, 
+X					  127.0, 127.0, 0.9, 0.0, 0.0, 1.0, 0.9, 0.9, 0.9, 1.0},
+X                     {2.0, 0.0, 0.0,  0.0, 0.0, 0.0,  1.0, 
+X					  0.0, 0.0, 0.0, 0.1, 0.8, 1.0, 0.0, 0.0, 0.0, 1.0,} };
+X
+void SetMaterialProperties(int object)
+{
+X	  glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, My[object].amb_diff);
+X	  glMaterialfv(GL_FRONT, GL_SPECULAR, My[object].specular);
+X	  glMaterialfv(GL_FRONT, GL_SHININESS, My[object].shiny);
+}
+void display_sphere(void)
+{
+X	if (Debug) ShowPosition(SPHERE);
+X	SetMaterialProperties(SPHERE);
+X	glMatrixMode (GL_MODELVIEW);
+X	glPushMatrix();
+X	glTranslatef(My[SPHERE].x,My[SPHERE].y,My[SPHERE].z);
+X	glRotatef(My[SPHERE].rotx, 1.0, 0.0, 0.0);
+X	glRotatef(My[SPHERE].roty, 0.0, 1.0, 0.0);
+X	glRotatef(My[SPHERE].rotz, 0.0, 0.0, 1.0);
+X	glutSolidSphere(My[SPHERE].size, 16, 16);
+X	glPopMatrix();
+}
+X
+void display_cube(void)
+{
+X	if (Debug) ShowPosition(CUBE);
+X	SetMaterialProperties(CUBE);
+X	glMatrixMode (GL_MODELVIEW);
+X	glPushMatrix();
+X	glTranslatef(My[CUBE].x,My[CUBE].y,My[CUBE].z);
+X	glRotatef(My[CUBE].rotx, 1.0, 0.0, 0.0);
+X	glRotatef(My[CUBE].roty, 0.0, 1.0, 0.0);
+X	glRotatef(My[CUBE].rotz, 0.0, 0.0, 1.0);
+X	glutSolidCube(My[CUBE].size);	/*  draw the cube       */
+X	glPopMatrix();
+}
+X
+void display_teapot(void)
+{
+int i;
+X
+X	if (TransparentTeapot)
+X		glEnable(GL_BLEND);
+X
+X	if (Debug) ShowPosition(TEAPOT);
+X	SetMaterialProperties(TEAPOT);
+X	glMatrixMode (GL_MODELVIEW);
+X	glPushMatrix();
+X	glTranslatef(My[TEAPOT].x,My[TEAPOT].y,My[TEAPOT].z);
+X	glRotatef(My[TEAPOT].rotx, 1.0, 0.0, 0.0);
+X	glRotatef(My[TEAPOT].roty, 0.0, 1.0, 0.0);
+X	glRotatef(My[TEAPOT].rotz, 0.0, 0.0, 1.0);
+X	glutSolidTeapot(My[TEAPOT].size);   
+X	glDisable(GL_BLEND);
+X	glPopMatrix();
+}
+X
+/*
+X *  Clear the screen.  Set the current color to white.
+X *  Draw the cube.
+X */
+void display(void)
+{
+X	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+X	display_cube();
+X	display_sphere();
+X	display_teapot();
+X	glutSwapBuffers(); 
+}
+X
+void ShowPosition(int object)
+{
+X	
+X	  printf("%s:\t", object_names[object]);
+X	  printf("translation: %3.1f,%3.1f,%3.1f\t", My[object].x,
+X	  		My[object].y,My[object].z);
+X	  printf("rotation: %3.0f,%3.0f,%3.0f\t", My[object].rotx,
+X	  		My[object].roty,My[object].rotz);
+X	  printf("size: %3.1f\n", My[object].size); 
+X
+}
+X
+/* Initialize shading model */
+void myInit(void)
+{
+X      static float lightPos[4] = {-2.0, 4.0, 2.0, 1.0};
+X      static float lightDir[4] = {2.0, -4.0, -2.0, 1.0};
+X      static float lightAmb[4] = {0.6, 0.6, 0.6, 1.0};
+X      static float lightDiff[4] = {0.8, 0.8, 0.8, 1.0};
+X      static float lightSpec[4] = {0.4, 0.4, 0.4, 1.0};
+X
+X      glEnable(GL_LIGHTING);
+X      glEnable(GL_LIGHT0);
+X      glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
+X      glLightfv(GL_LIGHT0, GL_AMBIENT, lightAmb);
+X      glLightfv(GL_LIGHT0, GL_DIFFUSE, lightDiff);
+X      glLightfv(GL_LIGHT0, GL_SPECULAR, lightSpec);
+X      glEnable(GL_DEPTH_TEST);
+X	  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+X      glShadeModel (GL_FLAT);
+X      glClearColor (0.0, 0.0, 0.0, 1.0);
+}
+X
+/*
+X *  Called when the window is first opened and whenever 
+X *  the window is reconfigured (moved or resized).
+X */
+void myReshape(int w, int h)
+{
+X      glViewport (0, 0, w, h);            /*  define the viewport */
+X      glMatrixMode(GL_PROJECTION);
+X      glLoadIdentity();
+X      gluPerspective(45.0, 1.0*(GLfloat)w/(GLfloat)h, 1.0, 10.0);
+X      glTranslatef (0.0, 0.0, -5.0);     /*  viewing transformation      */
+X      glMatrixMode (GL_MODELVIEW);        /* back to modelview matrix  */
+}
+X
+/*
+X * Keyboard handler
+X */
+void
+Key(unsigned char key, int x, int y)
+{
+X	if (CurrentObject == CAMERA)
+X		glMatrixMode(GL_PROJECTION);
+X
+X    switch (key) {
+X    case 'x':   /* Rotate about X axis in positive direction */
+X		if (CurrentObject != CAMERA) 
+X			My[CurrentObject].rotx = (int) (My[CurrentObject].rotx+15.0) % 360;
+X		else 
+X			glRotatef(15.0, 1.0,0.0,0.0);
+X		break;
+X    case 'X':   /* Rotate about X axis in negative direction */
+X		if (CurrentObject != CAMERA)
+X			My[CurrentObject].rotx = (int) (My[CurrentObject].rotx-15.0) % 360;
+X		else 
+X			glRotatef(-15.0, 1.0,0.0,0.0);
+X		break;
+X    case 'y':   /* Rotate about Y axis in positive direction */
+X		if (CurrentObject != CAMERA)
+X			My[CurrentObject].roty = (int) (My[CurrentObject].roty+15.0) % 360;
+X		else
+X			glRotatef(15.0, 0.0,1.0,0.0);
+X      break;
+X    case 'Y':  /* Rotate about Y axis in negative direction */
+X		if (CurrentObject != CAMERA) 
+X			My[CurrentObject].roty = (int) (My[CurrentObject].roty-15.0) % 360;
+X		else 
+X			glRotatef(-15.0, 0.0,1.0,0.0);
+X		break;
+X    case 'z':  /* Rotate about Z axis in positive direction */
+X		if (CurrentObject != CAMERA) 
+X			My[CurrentObject].rotz = (int) (My[CurrentObject].rotz+15.0) % 360;
+X		else
+X			glRotatef(15.0, 0.0,0.0,1.0);
+X		break;
+X    case 'Z':  /* Rotate about Z axis in negative direction */
+X		if (CurrentObject != CAMERA) 
+X			My[CurrentObject].rotz = (int) (My[CurrentObject].rotz-15.0) % 360;
+X		else 
+X			glRotatef(-15.0, 0.0,0.0,1.0);
+X		break;
+X	case 45:  /* '-' and '_' scale object down */
+X	case 95:
+X		My[CurrentObject].size *= .9;
+X		break;
+X	case 43:  /* '+' and '=' scale object up */
+X	case 61:
+X		My[CurrentObject].size *= 1.1;
+X		break;
+X	case 'h':  /* Move object -.1 along x  */
+X		My[CurrentObject].x -= .1;
+X		break;
+X	case 'l':  /* Move object .1 along x */
+X		My[CurrentObject].x += .1;
+X		break;
+X	case 'k':  /* Move object up .1 along y */
+X		My[CurrentObject].y += .1;
+X		break;
+X	case 'j':  /* Move object down .1 along y */
+X		My[CurrentObject].y -= .1;
+X		break;
+X	case 'o':  /* Move object up .1 along z */
+X		My[CurrentObject].z += .1;
+X		break;
+X	case 'i':  /* Move object down .1 along z */
+X		My[CurrentObject].z -= .1;
+X		break;
+X    case 27:           /* Esc will quit */
+X        exit(1);
+X        break;
+X    default:
+X      break;
+X    }
+X    glutPostRedisplay();
+}
+X
+/*
+X *  Handle Menus
+X */
+void
+Select(int value)
+{
+X    switch (value) {
+X    case -1:
+X        exit(0);
+X        break;
+X	case SPHERE:		/* Set ViewPort as the active thing to move */
+X		CurrentObject = SPHERE;
+X	  	strcpy(menu_item, curr_buff);
+X	  	strcat(menu_item, object_names[CurrentObject]);
+X      	glutChangeToMenuEntry(1, menu_item, 88);
+X		break;
+X	case CUBE:	
+X		CurrentObject = CUBE;
+X	  	strcpy(menu_item, curr_buff);
+X	  	strcat(menu_item, object_names[CurrentObject]);
+X      	glutChangeToMenuEntry(1, menu_item, 88);
+X		break;
+X	case TEAPOT:	
+X		CurrentObject = TEAPOT;
+X	  	strcpy(menu_item, curr_buff);
+X	  	strcat(menu_item, object_names[CurrentObject]);
+X      	glutChangeToMenuEntry(1, menu_item, 88);
+X		break;
+X	case CAMERA:		
+X		CurrentObject = CAMERA;
+X	  	strcpy(menu_item, curr_buff);
+X	  	strcat(menu_item, object_names[CurrentObject]);
+X      	glutChangeToMenuEntry(1, menu_item, 88);
+X		break;
+X	case TEAPOT_TRANSPARENT:
+X		TransparentTeapot = TransparentTeapot?0:1;
+X    	glutPostRedisplay();
+X		break;
+X	case DEBUG:
+X		Debug = Debug?0:1;
+X		break;
+X    }
+}
+X
+/*
+X *  Main Loop
+X *  Open window with initial window size, title bar, 
+X *  RGBA display mode, and handle input events.
+X */
+int main(int argc, char** argv) 
+{
+X int help_menu;
+X int mat_menu;
+X
+X	  printf("\n\nAdvanced Computer Graphics and Data Visualization\n");
+X	  printf("Laurie Conway\t\tHomework 1\n\n");
+X	  printf("Use the menu attached to the right mouse button to select\n");
+X	  printf("the active object. Then control the movement as shown below.\n"); 
+X	  printf("Note: xyz/XYZ keys are used for camera rotation about origin.\n\n");
+X	  printf("Key   Funct   Axis\n");
+X	  printf("------------------\n");
+X	  printf(" x    rotate+    x\n");
+X	  printf(" X    rotate-    x\n");
+X	  printf(" y    rotate+    y\n");
+X	  printf(" Y    rotate-    y\n");
+X	  printf(" z    rotate+    z\n");
+X	  printf(" Z    rotate-    z\n");
+X	  printf(" h   translate-  x\n");
+X	  printf(" l   translate+  x\n");
+X	  printf(" k   translate+  y\n");
+X	  printf(" j   translate-  y\n");
+X	  printf(" o   translate+  z\n");
+X	  printf(" i   translate-  z\n");
+X	  printf("+/- scale up/down\n\n");
+X	  glutInitWindowSize(W_WIDTH,W_HEIGHT);
+X      glutInit(&argc, argv);
+X      glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGBA);
+X      glutCreateWindow ("Laurie's Homework 1");
+X      myInit ();
+X      glutKeyboardFunc(Key);
+X      glutReshapeFunc (myReshape);
+X      glutDisplayFunc(display);
+X	  help_menu = glutCreateMenu(Select);
+X	  glutAddMenuEntry("Key  Funct   Axis", 88);
+X	  glutAddMenuEntry("---------------", 88);
+X	  glutAddMenuEntry(" x    rotate+   x", 88);
+X	  glutAddMenuEntry(" X    rotate-   x", 88);
+X	  glutAddMenuEntry(" y    rotate+   y", 88);
+X	  glutAddMenuEntry(" Y    rotate-   y", 88);
+X	  glutAddMenuEntry(" z    rotate+   z", 88);
+X	  glutAddMenuEntry(" Z    rotate-   z", 88);
+X	  glutAddMenuEntry(" h   translate-  x", 88);
+X	  glutAddMenuEntry(" l    translate+  x", 88);
+X	  glutAddMenuEntry(" k   translate+  y", 88);
+X	  glutAddMenuEntry(" j   translate-  y", 88);
+X	  glutAddMenuEntry(" o   translate+  z", 88);
+X	  glutAddMenuEntry(" i   translate-  z", 88);
+X	  glutAddMenuEntry("+/- scale up/down", 88);
+X      glutCreateMenu(Select);
+X	  strcpy(menu_item, curr_buff);
+X	  strcat(menu_item, object_names[CurrentObject]);
+X      glutAddMenuEntry(menu_item, 88);
+X      glutAddMenuEntry("-----------------------", 88);
+X      glutAddMenuEntry("Select Teapot", TEAPOT);
+X      glutAddMenuEntry("Select Cube", CUBE);
+X      glutAddMenuEntry("Select Sphere", SPHERE);
+X      glutAddMenuEntry("Rotate Camera", CAMERA);
+X      glutAddMenuEntry("Toggle Teapot Transparancy", TEAPOT_TRANSPARENT);
+X      glutAddMenuEntry("Toggle Debug Output", DEBUG);
+X	  glutAddSubMenu("Help Keys", help_menu);
+X      glutAddMenuEntry("Quit", -1);
+X      glutAttachMenu(GLUT_RIGHT_BUTTON);
+X      glutMainLoop();
+}
+X
+SHAR_EOF
+  $shar_touch -am 0206195497 'hw1.c' &&
+  chmod 0600 'hw1.c' ||
+  $echo 'restore of' 'hw1.c' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'hw1.c:' 'MD5 check failed'
+90d3dc2996e346959a9dd6e1fe0776fa  hw1.c
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'hw1.c'`"
+    test 11057 -eq "$shar_count" ||
+    $echo 'hw1.c:' 'original size' '11057,' 'current size' "$shar_count!"
+  fi
+fi
+rm -fr _sh26000
+exit 0
+# From: Laurie Conway <conway>

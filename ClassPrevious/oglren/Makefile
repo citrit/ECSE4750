@@ -1,0 +1,66 @@
+
+#
+#  Handle the cxx extension
+#
+.SUFFIXES: $(.SUFFIXES) .cxx
+.cxx.o:
+	$(CCC) $(CCFLAGS) -c $<
+
+# Obvious
+DEBUG = -g
+# -bnoquiet
+
+#
+# For IBM
+#
+# OPENGLINC = -I/campus/visualization/mesa-ogl/1.2.7/@sys/include
+# OPENGLLIB = -L/campus/visualization/mesa-ogl/1.2.7/@sys/lib -lMesaGL \
+# 	    -lMesaGLU
+# OPENGLLIB = -lGL -lGLU
+# CCC = xlC
+
+#
+# For SGIs
+#
+OPENGLINC = 
+OPENGLLIB = -lGL -lGLU -lgl -lm
+CCC = CC -woff 3262
+
+#
+# For Suns
+#
+# SUNINCS = -I/usr/include/X11 -I/campus/osf/motif/1.2/@sys/include
+# SUNLIBS = -L/campus/osf/motif/1.2/@sys/lib
+# OPENGLINC = -I/campus/visualization/mesa-ogl/1.2.7/@sys/include
+# OPENGLLIB = -L/campus/visualization/mesa-ogl/1.2.7/@sys/lib -lMesaGL \
+#	    -lMesaGLU -lMesaaux
+# CCC = g++
+
+#
+# Gather up the above
+#
+CCFLAGS = $(DEBUG) $(OPENGLINC) $(SUNINCS)
+LDFLAGS = $(OPENGLLIB) $(VTKLIB) $(SUNLIBS) -lX11
+
+
+#
+# Targets
+#
+TARGET = objtest
+OBJS = 	LineCell.o \
+	OGLXRen.o \
+	PlyGCell.o \
+	PtCell.o \
+	Matrix.o
+
+$(TARGET): $(TARGET).o $(OBJS)
+	$(CCC) -o $@ $(DEBUG) $(TARGET).o $(OBJS) $(LDFLAGS)
+
+#
+# Clean up
+#
+clean:
+	rm -f *.o core *~ $(TARGET)
+
+tidy:
+	rm -f *.o core *~

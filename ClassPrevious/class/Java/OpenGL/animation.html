@@ -1,0 +1,95 @@
+<HTML>
+<HEAD>
+<META NAME="GENERATOR" Content="Microsoft Visual Studio 6.0">
+<TITLE>DataVis - Animation</TITLE>
+</HEAD>
+<BODY><STRONG><FONT size=4>
+<HR style="WIDTH: 457px; HEIGHT: 2px">  
+   </FONT></STRONG>
+<P align=center><STRONG><FONT size=4>Advanced Computer Graphics and Data 
+Visualization</FONT></STRONG></P>
+<HR id=HR1 style="WIDTH: 464px; HEIGHT: 2px">
+
+<P><STRONG><FONT size=4>Animation</FONT></STRONG></P>
+<UL>
+  <LI>
+  <DIV>One of the key features to any visualization system 
+  is the ability to have objects move about.</DIV>
+  <LI>
+  <DIV>In order to get our system to react we need to add some 
+  stuff:</DIV></LI>
+  <UL>
+    <LI>
+    <DIV>Our systems needs a "clock" or a timer to tell the 
+    system things are changing.</DIV>
+    <LI>
+    <DIV>We need an Action object to handle responses to animation events and 
+    manipulate an actor.</DIV></LI></UL>
+  <LI>
+  <DIV>A clock needs to signal events so that the system can animate 
+  smoothly</DIV>
+  <LI>
+  <DIV>Currently the GL4Java canvas has an animation version. We will use this 
+  although another option would be to use threads or a timer&nbsp;to signal a 
+  clock tick.</DIV></LI>
+  <UL>
+    <LI>
+    <DIV>We need to add these methods to the Renderer 
+interface:</DIV></LI></UL></UL>
+<BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px">
+  <BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px"><PRE>/** Start the scene clock, does nothing if no actions were added */ <BR>public abstract void startScene(); <BR>/** Stop the scene clock, does nothing if no actions were added */ <BR>public abstract void stopScene();</PRE></BLOCKQUOTE></BLOCKQUOTE>
+<UL>
+  <UL>
+    <LI>
+    <DIV>And the actual implementation in the 
+    GL4JRenderer&nbsp;becomes:</DIV></LI></UL></UL>
+<BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px">
+  <BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px"><PRE>/** Start the scene clock, does nothing if no actions were added */ <BR>public void startScene() { if (this.Actions.size() &gt; 0) this.start(); } <BR>/** Stop the scene clock, does nothing if no actions were added */ <BR>public void stopScene() { if (this.Actions.size() &gt; 0) this.stop(); }</PRE></BLOCKQUOTE></BLOCKQUOTE>
+<UL>
+  <LI>
+  <DIV>We also need an interface to handle the Action so the user can add their 
+  own behaviors. </DIV></LI>
+  <UL>
+    <LI>
+    <DIV>This is&nbsp; our Action class:</DIV></LI></UL></UL>
+<BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px">
+  <BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px"><PRE>public abstract class Action extends ParentObject { <BR>	Vector Actors; <BR>	public Action() { <BR>		Actors = new Vector(); <BR>	} <BR>	public void addActor(Actor act) { Actors.addElement(act); } <BR><BR><BR>	/** Method to handle whenever the SceneClock ticks. <BR>	* This will be over-ridden by the derived class for a specific <BR>	* action. */ <BR>	abstract public void tick(int tickTime); <BR>}</PRE></BLOCKQUOTE></BLOCKQUOTE>
+<UL>
+  <LI>
+  <DIV>Next we need to add support for this to the GL4JRenderer.</DIV>
+  <LI>
+  <DIV>In the display function we add:</DIV></LI></UL>
+<BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px">
+  <BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px"><PRE>/** Simple redirector to our display function */ <BR>public void display() { <BR>   //System.out.println("Call to display"); <BR>   if (this.isRunning) { <BR>	for (int i=0;i&lt;Actions.size();i++) { <BR>		((Action)Actions.elementAt(i)).tick(currTime++); <BR>	} <BR>   } <BR>   render(true); <BR>}<ACTIONS.SIZE();I++) }<!--EndFragment-- } ((Action)Actions.elementAt(i)).tick(currTime++); { render(true);>&nbsp;</PRE></BLOCKQUOTE></BLOCKQUOTE>
+<UL>
+  <LI>
+  <DIV>Now we need to create action objects that correspond to our scene 
+  actions.</DIV>
+  <LI>
+  <DIV>Here is a simple Rotate action:</DIV></LI></UL>
+<BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px">
+  <BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px"><PRE>class RotateAction extends Action { <BR>    /** Method to handle whenever the SceneClock ticks. <BR>    * This will be over-ridden by the derived class for a specific <BR>    * action. */ <BR>    public void tick(int tickTime) { <BR>	int ii; <BR>	for (ii=0;ii&lt;Actors.size();ii++) { <BR>		((Actor)Actors.elementAt(ii)).rotateX(5); <BR>		//System.out.print("Tick: " + tickTime + "\r"); <BR>	} <BR>    } <BR>}</PRE></BLOCKQUOTE></BLOCKQUOTE>
+<UL>
+  <LI>
+  <DIV>The actions responsibility is to make sure the actor is positioned 
+  correctly. The&nbsp; render will take palce after all the actions are 
+  called.</DIV>
+  <LI>
+  <DIV>The setup for this takes place in the main function:</DIV></LI></UL>
+<BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px">
+  <BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px"><PRE>public class AnimateScene extends Frame { <BR>    public static void main(String argv[]) { <BR>	Actor act; <BR>	if (argv.length &gt; 0) { <BR>		act = new STLReader(argv[0]); } <BR>	else { <BR>		CubeCell cube = new CubeCell(); <BR>		MaterialSet mats = new MaterialSet(); <BR>		mats.addMaterial(new Material(1.0F,1.0F,0.0F,1.0F)); <BR>		cube.setMaterials(mats); <BR>		act = new Actor(); <BR>		act.addCell(cube); <BR>	} <BR>	GL4JRenderer aren = new GL4JRenderer(); <BR>	aren.addActor(act); <BR>	aren.addCamera(new GL4JCamera()); <BR>	aren.addLight(new GL4JLight(0)); <BR>	aren.addKeyCallback(new myKey(aren)); <BR>	RotateAction ja = new RotateAction(); <BR>	ja.addActor(act); aren.addAction(ja); <BR>	AnimateScene scene = new AnimateScene(); <BR>	// Make it visible and set size <BR>	aren.setVisible(true); <BR>	aren.setSize(300, 300); <BR>	aren.getCamera().setFrom(0.0F, 0.0F, 5.0F); <BR>	System.out.println("Here we go"); <BR>	// Add the canvas to the frame and make it show <BR>	scene.add("Center", aren); <BR>	scene.pack(); <BR>	scene.show(); <BR>   } <BR>}&nbsp;</PRE></BLOCKQUOTE></BLOCKQUOTE>
+<UL>
+  <LI>
+  <DIV>&nbsp; And a KeyCallback allows us to control turning the animation on 
+  and off:</DIV></LI></UL>
+<BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px">
+  <BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px"><PRE>class myKey implements KeyCallback { <BR>   Renderer aRen; <BR>   public myKey(Renderer aren) { aRen = aren; } <BR>   /** Callback so client can handle keystrokes. */ <BR>   public void keyCallback(KeyEvent e) { <BR>	switch(e.getKeyChar()) { <BR>		case '1': aRen.startScene(); <BR>			  break; <BR>		case '2': aRen.stopScene(); <BR>			  break; <BR>	} <BR>    } <BR>}</PRE></BLOCKQUOTE></BLOCKQUOTE>
+<UL>
+  <LI>
+  <DIV>The changes above are available <A 
+  href="download/Anim.zip">here</A>.</DIV></LI></UL>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+
+</BODY>
+</HTML>

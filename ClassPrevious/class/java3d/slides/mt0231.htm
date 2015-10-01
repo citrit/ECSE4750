@@ -1,0 +1,89 @@
+
+<HTML>
+<HEAD>
+<!-- Created by mktalk.pl on 7/16/98 at 3:58:23 PM -->
+<TITLE>Raster Example Code</TITLE>
+</HEAD>
+
+<BODY
+	
+	BGCOLOR=#000000
+	TEXT=#FFFFFF
+	LINK=#FFFFFF
+	ALINK=#00FF00
+	VLINK=#888888
+>
+<TABLE WIDTH=100%
+	BORDER=0
+	CELLSPACING=0
+	CELLPADDING=0
+>
+<TR >
+<TD ALIGN=CENTER WIDTH=24%>
+	<FONT
+		COLOR=#FFFFFF
+		SIZE=-1
+	>
+	<A HREF=mt0000.htm><B><IMG SRC="../images/arwtoc2.gif" BORDER=0 WIDTH=24 HEIGHT=24></B></A>
+</TD>
+<TD ALIGN=CENTER WIDTH=24%>
+	<FONT
+		COLOR=#FFFFFF
+		SIZE=-1
+	>
+	<A HREF=mt0224.htm><B><IMG SRC="../images/arwndx2.gif" BORDER=0 WIDTH=24 HEIGHT=24></B></A>
+</TD>
+<TD ALIGN=CENTER WIDTH=24%>
+	<FONT
+		COLOR=#FFFFFF
+		SIZE=-1
+	>
+	<A HREF=mt0230.htm><B><IMG SRC="../images/arwprev2.gif" BORDER=0 WIDTH=24 HEIGHT=24></B></A>
+</TD>
+<TD ALIGN=CENTER WIDTH=24%>
+	<FONT
+		COLOR=#FFFFFF
+		SIZE=-1
+	>
+	<A HREF=mt0232.htm><B><IMG SRC="../images/arwnext2.gif" BORDER=0 WIDTH=24 HEIGHT=24></B></A>
+</TD>
+<TD ALIGN=CENTER WIDTH=4%>
+	<FONT
+		COLOR=#FFFFFF
+		SIZE=-1
+	>
+	231
+</TD>
+</TR>
+</TABLE>
+<P>
+
+<FONT COLOR=#FFFF00 SIZE=+0>
+<CENTER>Using Raster Geometry</CENTER>
+<FONT COLOR=#FFFF00 SIZE=+3>
+<CENTER><B><I>Raster Example Code</I></B></CENTER>
+<CENTER><IMG SRC="../images/red.jpg" HEIGHT=2 WIDTH=70% BORDER=0></CENTER>
+<P>
+<FONT COLOR=#FFFFFF SIZE=+2>
+
+<PRE><B><TT><FONT COLOR=#006600 SIZE=+2>TransformGroup group = new TransformGroup( );
+. . .</FONT></TT></B><B><TT><FONT COLOR=#00FF00 SIZE=+2>
+Raster raster = new Raster( );
+raster.setPosition( new Point3f( 1.0f, 0.0f, 0.0f ) );
+raster.setType( Raster.RASTER_COLOR );
+raster.setOffset( 0, 0 );
+raster.setSize( 256, 256 );
+raster.setImage( image );
+</FONT></TT></B><B><TT><FONT COLOR=#006600 SIZE=+2>. . .
+Shape3D shape = new Shape3D( );
+shape.setGeometry( raster );
+shape.setAppearance( app );
+group.addChild( shape );
+</FONT></TT></B></PRE>
+
+
+
+<!------------------------------------------------------------------------>
+
+</BODY>
+</HTML>

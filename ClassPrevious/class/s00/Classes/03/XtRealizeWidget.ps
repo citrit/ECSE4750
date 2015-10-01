@@ -1,0 +1,684 @@
+%!PS-Adobe-1.0
+%%Creator: speed.ecse.rpi.edu:wrf (Wm Randolph Franklin)
+%%Title: stdin
+%%CreationDate: Sun Jan 26 15:58:59 1997
+%%DocumentFonts: Times-Roman Times-Italic Times-Bold Symbol Times-Roman DIThacks
+%%Pages: (atend)
+%%EndComments
+% Start of pscat.pro -- prolog for troff translator
+% Copyright (c) 1985,1987 Adobe Systems Incorporated. All Rights Reserved. 
+% GOVERNMENT END USERS: See Notice file in TranScript library directory
+% -- probably /usr/lib/ps/Notice
+% RCS: $Header: pscat.pro,v 2.2 87/11/17 16:40:32 byron Rel $
+save /pscatsave exch def
+/$pscat 50 dict def
+$pscat begin
+/fm [1 0 0 1 0 0] def
+/xo 0 def /yo 0 def
+/M /moveto load def
+/R /show load def
+/S {exch currentpoint exch pop moveto show}def
+/T {exch currentpoint pop exch moveto show}def
+/U {3 1 roll moveto show}def
+/siz 0 def
+/font 0 def
+/Z {/siz exch def SF}def
+/F {/font exch def SF}def
+/SF{font 0 ne
+    {catfonts font 1 sub get fm 0 siz put fm 3 siz neg put 
+     fm makefont setfont}if}def
+/BP{save/catsv exch def 0 792 translate 72 432 div dup neg scale 
+  xo yo translate 0 0 moveto}def
+/EP{catsv restore showpage}def
+
+% definitions for PPROC callback functions
+% each PPROC is called with the following number on the stack:
+% pointsize charcode railmag pswidth pschar x y wid
+/$pprocs 50 dict def
+/fractm [.65 0 0 .6 0 0] def
+% fractions
+/PS1{gsave $pprocs begin
+    /wid exch def pop pop pop pop pop /ch exch def /size exch def
+    /pair $pprocs ch get def /cf currentfont def
+    cf fractm makefont setfont
+    0 .3 size mul 6 mul 2 copy neg rmoveto pair 0 get show rmoveto
+    currentfont cf setfont (\244) show setfont
+    pair 1 get show grestore wid .06 div 0 rmoveto end}def
+$pprocs begin
+8#34 [(1)(4)] def
+8#36 [(1)(2)] def
+8#46 [(3)(4)] def
+end
+% DIThacks fonts for some special chars
+50 dict dup begin
+/FontType 3 def
+/FontName /DIThacks def
+/FontMatrix [.001 0.0 0.0 .001 0.0 0.0] def
+/FontBBox [-220 -280 900 900] def% a lie but ...
+/Encoding 256 array def
+0 1 255{Encoding exch /.notdef put}for
+Encoding
+ dup 8#040/space put %space
+ dup 8#110/rc put %right ceil
+ dup 8#111/lt put %left  top curl
+ dup 8#112/bv put %bold vert
+ dup 8#113/lk put %left  mid curl
+ dup 8#114/lb put %left  bot curl
+ dup 8#115/rt put %right top curl
+ dup 8#116/rk put %right mid curl
+ dup 8#117/rb put %right bot curl
+ dup 8#120/rf put %right floor
+ dup 8#121/lf put %left  floor
+ dup 8#122/lc put %left  ceil
+ dup 8#140/sq put %square
+ dup 8#141/bx put %box
+ dup 8#142/ci put %circle
+ dup 8#143/br put %box rule
+ dup 8#144/rn put %root extender
+ dup 8#145/vr put %vertical rule
+ dup 8#146/ob put %outline bullet
+ dup 8#147/bu put %bullet
+ dup 8#150/ru put %rule
+ dup 8#151/ul put %underline
+ pop
+/DITfd 100 dict def
+/BuildChar{0 begin
+ /cc exch def /fd exch def
+ /charname fd /Encoding get cc get def
+ /charwid fd /Metrics get charname get def
+ /charproc fd /CharProcs get charname get def
+ charwid 0 fd /FontBBox get aload pop setcachedevice
+ 40 setlinewidth
+ newpath 0 0 moveto gsave charproc grestore
+ end}def
+/BuildChar load 0 DITfd put
+%/UniqueID 5 def
+/CharProcs 50 dict def
+CharProcs begin
+/space{}def
+/.notdef{}def
+/ru{500 0 rls}def
+/rn{0 750 moveto 500 0 rls}def
+/vr{20 800 moveto 0 -770 rls}def
+/bv{20 800 moveto 0 -1000 rls}def
+/br{20 770 moveto 0 -1040 rls}def
+/ul{0 -250 moveto 500 0 rls}def
+/ob{200 250 rmoveto currentpoint newpath 200 0 360 arc closepath stroke}def
+/bu{200 250 rmoveto currentpoint newpath 200 0 360 arc closepath fill}def
+/sq{80 0 rmoveto currentpoint dround newpath moveto
+    640 0 rlineto 0 640 rlineto -640 0 rlineto closepath stroke}def
+/bx{80 0 rmoveto currentpoint dround newpath moveto
+    640 0 rlineto 0 640 rlineto -640 0 rlineto closepath fill}def
+/ci{355 333 rmoveto currentpoint newpath 333 0 360 arc
+    50 setlinewidth stroke}def
+
+/lt{20 -200 moveto 0 550 rlineto currx 800 2cx s4 add exch s4 a4p stroke}def
+/lb{20 800 moveto 0 -550 rlineto currx -200 2cx s4 add exch s4 a4p stroke}def
+/rt{20 -200 moveto 0 550 rlineto currx 800 2cx s4 sub exch s4 a4p stroke}def
+/rb{20 800 moveto 0 -500 rlineto currx -200 2cx s4 sub exch s4 a4p stroke}def
+/lk{20 800 moveto 20 300 -280 300 s4 arcto pop pop 1000 sub
+    currentpoint stroke moveto
+    20 300 4 2 roll s4 a4p 20 -200 lineto stroke}def
+/rk{20 800 moveto 20 300 320 300 s4 arcto pop pop 1000 sub
+    currentpoint stroke moveto
+    20 300 4 2 roll s4 a4p 20 -200 lineto stroke}def
+/lf{20 800 moveto 0 -1000 rlineto s4 0 rls}def
+/rf{20 800 moveto 0 -1000 rlineto s4 neg 0 rls}def
+/lc{20 -200 moveto 0 1000 rlineto s4 0 rls}def
+/rc{20 -200 moveto 0 1000 rlineto s4 neg 0 rls}def
+end
+
+/Metrics 50 dict def Metrics begin
+/.notdef 0 def
+/space 500 def
+/ru 500 def
+/br 0 def
+/lt 250 def
+/lb 250 def
+/rt 250 def
+/rb 250 def
+/lk 250 def
+/rk 250 def
+/rc 250 def
+/lc 250 def
+/rf 250 def
+/lf 250 def
+/bv 250 def
+/ob 350 def
+/bu 350 def
+/ci 750 def
+/bx 750 def
+/sq 750 def
+/rn 500 def
+/ul 500 def
+/vr 0 def
+end
+
+DITfd begin
+/s2 500 def /s4 250 def /s3 333 def
+/a4p{arcto pop pop pop pop}def
+/2cx{2 copy exch}def
+/rls{rlineto stroke}def
+/currx{currentpoint pop}def
+/dround{transform round exch round exch itransform} def
+end
+end
+/DIThacks exch definefont pop
+/catfonts [
+	/Times-Roman findfont
+	/Times-Italic findfont
+	/Times-Bold findfont
+	/Symbol findfont
+	/Times-Roman findfont
+	/DIThacks findfont
+	] def
+%%EndProlog
+%%Page: ? 1
+BP
+1 F
+60 Z
+432 222(XtRealize)U
+674(Widget)S
+862(\()S
+892(3Xt)S
+992(\))S
+1618(XT)S
+1718(FUNCTIONS)S
+2660(XtRealize)S
+2902(Widget)S
+3090(\()S
+3120(3Xt)S
+3220(\))S
+3 F
+54 Z
+432 510(NAME)U
+1 F
+60 Z
+648 582(XtRealize)U
+890(Widget,)S
+1103(XtIsRealize)S
+1388(d,)S
+1453(XtUnrealize)S
+1748(Widget)S
+1946(\261)S
+1996(realize)S
+2178(and)S
+2285(unrealize)S
+2527(widgets)S
+3 F
+54 Z
+432 681(SYNTAX)U
+1 F
+60 Z
+648 753(void)U
+775(XtRealize)S
+1017(Widget\()S
+2 F
+(w)R
+1 F
+(\))R
+648 924(B)U
+768 825(Widget)U
+2 F
+966(w)S
+1 F
+(;)R
+688 924(oolean)U
+869(XtIsRealize)S
+1154(d\()S
+2 F
+(w)R
+1 F
+(\))R
+648 1095(v)U
+768 996(Widget)U
+2 F
+966(w)S
+1 F
+(;)R
+678 1095(oid)U
+775(XtUnrealize)S
+1070(Widget\()S
+2 F
+(w)R
+1 F
+(\))R
+3 F
+54 Z
+432 1266(ARGUMENTS)U
+1 F
+60 Z
+768 1167(Widget)U
+2 F
+966(w)S
+1 F
+(;)R
+2 F
+648 1338(w)U
+1 F
+1080(Speci\256es)S
+1317(the)S
+1411(widget.)S
+3 F
+54 Z
+432 1437(DESCRIPTION)U
+1 F
+60 Z
+648 1509(If)U
+708(the)S
+802(widget)S
+986(is)S
+1046(already)S
+1244(realize)S
+1406(d,)S
+3 F
+1476(XtRealizeWidget)S
+1 F
+1939(simply)S
+2123(returns.)S
+2325(Otherwise,)S
+2607(it)S
+2661(performs)S
+2898(the)S
+2992(follow-)S
+6 F
+648 1680(g)U
+1 F
+648 1581(ing:)U
+798 1680(Binds)U
+958(all)S
+1039(action)S
+1207(names)S
+1381(in)S
+1448(the)S
+1542(widget's)S
+1769(translation)S
+2044(table)S
+2182(to)S
+2249(procedures)S
+2533(\(see)S
+2650(Section)S
+2851(10.1.2\).)S
+6 F
+648 1779(g)U
+1 F
+798(Makes)S
+978(a)S
+1025(post-order)S
+1292(traversal)S
+1520(of)S
+1590(the)S
+1684(widget)S
+1868(tree)S
+1979(rooted)S
+2153(at)S
+2217(the)S
+2311(speci\256ed)S
+2545(widget)S
+2729(and)S
+2836(calls)S
+2967(the)S
+798 1851(change)U
+6 F
+(i)R
+1 F
+(ma)R
+1073(naged)S
+1237(procedure)S
+1498(of)S
+1568(each)S
+1699(composite)S
+1967(widget)S
+2151(that)S
+2262(has)S
+2362(one)S
+2469(or)S
+2539(more)S
+2683(managed)S
+2921(children.)S
+3 F
+3195 1950(e)U
+6 F
+648(g)S
+1 F
+798(Constructs)S
+1075(an)S
+3 F
+1157(XSetWindowAttributes)S
+1 F
+1784(structure)S
+2015(\256lled)S
+2159(in)S
+2226(with)S
+2353(information)S
+2658(derived)S
+2859(from)S
+2996(the)S
+3 F
+3095(Cor)S
+1 F
+798 2022(widget)U
+982(\256elds)S
+1132(and)S
+1239(calls)S
+1370(the)S
+1464(realize)S
+1646(procedure)S
+1907(for)S
+1997(the)S
+2091(widget,)S
+2290(which)S
+2457(adds)S
+2587(any)S
+2694(widget-speci\256c)S
+3082(attri-)S
+6 F
+648 2193(g)U
+1 F
+798 2094(butes)U
+945(and)S
+1052(create)S
+1197(s)S
+1240(the)S
+1334(X)S
+1397(window.)S
+798 2193(If)U
+858(the)S
+952(widget)S
+1136(is)S
+1196(not)S
+1293(a)S
+1340(subclass)S
+1560(of)S
+3 F
+1635(compositeWidgetClass)S
+1 F
+2220(,)S
+3 F
+2260(XtRealizeWidget)S
+1 F
+2723(returns;)S
+2927(otherwise,)S
+3196(it)S
+798 2364(\261)U
+798 2265(continues)U
+1049(and)S
+1156(performs)S
+1393(the)S
+1487(following:)S
+948 2364(Descends)U
+1198(recursively)S
+1486(to)S
+1553(each)S
+1684(of)S
+1754(the)S
+1848(widget's)S
+2075(managed)S
+2313(children)S
+2531(and)S
+2638(calls)S
+2769(the)S
+2863(realize)S
+3045(pro-)S
+3185 2436(-)U
+948 2508(d)U
+948 2436(cedures.)U
+1187(Primitive)S
+1432(widgets)S
+1639(that)S
+1750(instantiat)S
+1972(e)S
+2019(children)S
+2237(are)S
+2331(responsible)S
+2625(for)S
+2715(realizi)S
+2867(ng)S
+2947(those)S
+3094(chil)S
+978 2508(ren)U
+1075(themselves.)S
+798 2607(\261)U
+948(Maps)S
+1101(all)S
+1182(of)S
+1252(the)S
+1346(managed)S
+1584(children)S
+1802(windows)S
+2038(that)S
+2149(have)S
+2283(mapped)S
+6 F
+(i)R
+1 F
+(when)R
+6 F
+(i)R
+1 F
+(ma)R
+2738(naged)S
+3 F
+2907(True)S
+1 F
+3039(.)S
+3094(\(If)S
+3174(a)S
+948 2751(s)U
+948 2679(widget)U
+1132(is)S
+1192(managed)S
+1430(but)S
+1527(mapped)S
+6 F
+(i)R
+1 F
+(when)R
+6 F
+(i)R
+1 F
+(ma)R
+1982(naged)S
+2146(is)S
+3 F
+2211(False)S
+1 F
+2350(,)S
+2385(the)S
+2479(widget)S
+2663(is)S
+2723(allocat)S
+2885(ed)S
+2962(visual)S
+971 2751(pace)U
+1102(but)S
+1199(is)S
+1259(not)S
+1356(displayed.)S
+1642(Some)S
+1799(people)S
+1980(seem)S
+2124(to)S
+2191(like)S
+2302(this)S
+2409(to)S
+2476(indicate)S
+2688(certain)S
+2873(states.\))S
+3215 2850(,)U
+648(If)S
+708(the)S
+802(widget)S
+986(is)S
+1046(a)S
+1093(top-level)S
+1328(shell)S
+1462(widget)S
+1646(\(that)S
+1777(is,)S
+1852(it)S
+1906(has)S
+2006(no)S
+2086(parent\),)S
+2292(and)S
+2399(mapped)S
+6 F
+(i)R
+1 F
+(when)R
+6 F
+(i)R
+1 F
+(ma)R
+2854(naged)S
+3018(is)S
+3 F
+3083(True)S
+653 2922(XtRealizeWidget)U
+1 F
+1116(maps)S
+1263(the)S
+1357(widget)S
+1541(window.)S
+648 3021(T)U
+(he)R
+3 F
+767(XtIsRealized)S
+1 F
+1122(function)S
+1343(returns)S
+3 F
+1535(True)S
+1 F
+1687(if)S
+1744(the)S
+1838(widget)S
+2022(has)S
+2122(been)S
+2256(realize)S
+2418(d,)S
+2483(that)S
+2594(is,)S
+2669(if)S
+2726(the)S
+2820(widget)S
+3004(has)S
+3104(a)S
+648 3192(S)U
+648 3093(nonzero)U
+862(X)S
+925(window)S
+1138(ID.)S
+681 3192(ome)U
+805(widget)S
+989(procedures)S
+1273(\(for)S
+1383(example,)S
+1623(set)S
+6 F
+(i)R
+1 F
+(values\))R
+1914(might)S
+2075(wish)S
+2208(to)S
+2275(operate)S
+2473(differently)S
+2748(after)S
+2879(the)S
+2973(widget)S
+3157(has)S
+648 3363(T)U
+648 3264(been)U
+782(realize)S
+944(d.)S
+685 3363(he)U
+3 F
+767(XtUnrealizeWidget)S
+1 F
+1290(function)S
+1511(destroys)S
+1731(the)S
+1825(windows)S
+2061(of)S
+2131(an)S
+2208(existing)S
+2419(widget)S
+2603(and)S
+2710(all)S
+2791(of)S
+2861(its)S
+2938(children)S
+648 3507(a)U
+648 3435(\(recursively)U
+956(down)S
+1109(the)S
+1203(widget)S
+1387(tree\).)S
+1553(To)S
+1640(recreat)S
+1805(e)S
+1852(the)S
+1946(windows)S
+2182(at)S
+2246(a)S
+2293(later)S
+2421(time,)S
+2564(call)S
+3 F
+2677(XtRealizeWidget)S
+1 F
+675 3507(gain.)U
+834(If)S
+894(the)S
+988(widget)S
+1172(was)S
+1285(managed,)S
+1538(it)S
+1592(will)S
+1706(be)S
+1783(unmanaged)S
+2081(automati)S
+2293(cally)S
+2431(before)S
+2605(its)S
+2682(window)S
+2895(is)S
+2955(freed.)S
+3 F
+54 Z
+432 3606(SEE)U
+552(ALSO)S
+1 F
+60 Z
+648 3678(XtManageChildre)U
+1083(n\(3Xt\))S
+2 F
+1704 3750(e)U
+648 3822(X)U
+648 3750(X)U
+705(Toolkit)S
+896(Intrinsics)S
+1143(\261)S
+1193(C)S
+1253(Language)S
+1513(Interfac)S
+685 3822(lib)U
+769(\261)S
+819(C)S
+879(Language)S
+1139(X)S
+1196(Interface)S
+1 F
+432 4542(X)U
+495(Version)S
+705(11)S
+1551(Last)S
+1675(change:)S
+1883(Release)S
+2091(6)S
+3210(1)S
+EP
+%%Trailer
+pscatsave end restore
+%%Pages: 1

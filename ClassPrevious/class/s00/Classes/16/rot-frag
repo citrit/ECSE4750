@@ -1,0 +1,15 @@
+from  http://www.3dgamedev.com/resources/openglfaq.txt
+
+Subject 5.04: After calling glRotate() a few times I end up rotating
+     around the wrong axis. Why?
+
+     This problem is commonly referred to as Gimble Lock. It is a
+     problem inherent in using 3 angles to describe an orientation
+     and is mentioned in just about every 3D graphics book in
+     existence. Typical solutions are to use a different representation
+     for orientation. The common ones are; Matrix, Axis/Angle, and
+     Quaternions.
+
+     http://www.3dgamedev.com/articles/eulers_are_evil.htm
+     ftp://ftp.netcom.com/pub/he/hexapod/matrixfaq.html
+

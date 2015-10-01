@@ -1,0 +1,49 @@
+1997-09-15  Thomas Patrick Reilly  <tom@copa.pajato.com>
+
+	* Moved test classes to test/ and changed names.
+
+	* Added JoglRenderer to clean up tests, and give a glutish
+	feel to our stuff. 
+
+	* Overhauled native code to get rid of stuff we don't
+	need anymore.
+
+	* Added NEED_OWN_WINDOW to config.h stuff so that we
+	can tell when we're on SGI's and create our own window
+	that's a subwindow of the canvas.
+
+	* Added sun/awt/motif/X11pDataAccess to get canvas window id.
+	Added jogl/JoglpDataAccess interface that the above implements
+	to get the code in JoglCanvas platform independent.
+
+	* Added a test target to compile the test classes.
+
+	* Added directories doc and demo soon to be full of relevant
+	material. 
+
+Sun Aug 31 14:49:06 1997  Tommy Reilly  <tpreilly@valinor.ncsa.uiuc.edu>
+
+	* Added GL and GLU classes to hold constants.  Bare Texture
+	functionality added.  Improvements on autoconf macros.
+
+Sat Aug  2 18:43:53 1997  Tommy Reilly  <tpreilly@valinor.ncsa.uiuc.edu>
+
+	* Made JoglWidget implement ComponentListener so it can keep
+	up with the JoglFrame's geometry changes.  Some bug fixes in 
+	OpenGL_open.c.
+
+Wed Jul 30 06:12:39 1997  Tommy Reilly  <tpreilly@valinor.ncsa.uiuc.edu>
+
+	* Incorporated Adam's implementation of the list stuff.
+
+	* Rewrote openJoglWidget so that it worked with SGI's.
+
+	* Overhauled lib code to use JNI.  Found a bunch of bugs
+	in OpenGL_funcs.c.  Optimized many functions.  Regular
+	usage (with parameter checking) can be had by defining DEBUG.
+
+Tue Jul 22 15:50:53 1997  Tommy Reilly  <tpreilly@valinor.ncsa.uiuc.edu>
+
+	* Added autoconf/automake/libtool stuff.  Added copyright stuff.
+	Changed names to be based on jogl.  
+

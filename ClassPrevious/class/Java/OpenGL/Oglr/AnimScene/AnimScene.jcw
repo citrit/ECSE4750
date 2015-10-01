@@ -1,0 +1,22 @@
+! ** JCreator Workspace File (C)2000
+! ********** DO NOT EDIT *********
+
+VERSION := "1.00"
+LABEL := "AnimScene"
+
+! Start Project Structure
+#[BeginProject]SOURCE := "AnimScene.jcp" #[EndProject]
+
+! Start Last Document Structure
+#[BeginFile]SOURCE := "AnimateScene.java" #[EndFile]
+#[BeginFile]SOURCE := "C:\\Class\\OpenGL\\Oglr\\Action.java" #[EndFile]
+#[BeginFile]SOURCE := "C:\\Class\\OpenGL\\Oglr\\Hw2.java" #[EndFile]
+#[BeginFile]SOURCE := "C:\\Class\\OpenGL\\Oglr\\STLReader.java" #[EndFile]
+#[BeginFile]SOURCE := "C:\\Class\\OpenGL\\Oglr\\OGLRenderer.java" #[EndFile]
+#[BeginFile]SOURCE := "C:\\Class\\OpenGL\\Oglr\\SceneClock.java" #[EndFile]
+#[BeginFile]SOURCE := "C:\\Class\\OpenGL\\Oglr\\Actor.java" #[EndFile]
+#[BeginFile]SOURCE := "C:\\Class\\OpenGL\\Oglr\\CubeCell.java" #[EndFile]
+#[BeginFile]SOURCE := "C:\\Class\\OpenGL\\Oglr\\Cell.java" #[EndFile]
+#[BeginFile]SOURCE := "C:\\Class\\OpenGL\\Oglr\\Material.java" #[EndFile]
+#[BeginFile]SOURCE := "C:\\Class\\OpenGL\\Oglr\\KeyCallback.java" #[EndFile]
+

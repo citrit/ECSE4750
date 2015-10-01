@@ -1,0 +1,712 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.0//EN">
+<!-- Time-stamp: </home/wrf/cg-f99/Classes/22/index.html, Thu, 21 Oct 1999, 14:57:38 EDT, wrf@benvolio.ecse.rpi.edu> -->
+
+<HTML>
+<HEAD>
+
+<TITLE>ECSE-4750, RPI, Class 22</TITLE>
+
+   <STYLE TYPE="text/css">
+   <!--
+H1 { color: red; }
+
+H2 { color: blue; }
+
+   OL.outline {list-style-type: upper-roman;
+    font: bold italic 18pt sans-serif;}
+
+   OL.outline OL {list-style-type: upper-alpha;
+       font: bold 14pt sans-serif;}
+
+   OL.outline OL OL {list-style-type: decimal;
+	  font: 12pt serif;}
+
+   OL.outline OL OL OL {list-style-type: lower-alpha;
+	     font: 10pt serif;}
+
+   OL.outline OL OL OL OL {list-style-type: lower-roman;
+		font: 10pt sans-serif;}
+   -->
+   </STYLE>
+
+
+</head>
+
+<body bgcolor=white>
+
+<H1 ALIGN="CENTER">
+Rensselaer Polytechnic Institute
+<BR>
+ECSE-4750 Computer Graphics, Fall 1999<br>
+Class 22, Thurs Oct 21 </H1>
+
+<h1>Possible Term Projects</h1>
+
+<ol>
+
+<li> Do a useful project for someone at RPI.
+<!--
+  I posted a notice
+around RPI asking for suggested projects, and received many
+suggestions, which are attached.
+-->
+<li>Write something interactive to help my COCO students.
+<li>Install a new OS, such as Plan 9, and do something interesting.
+<li> Look at MacDraw, or xfig, and implement something better.
+<li> Extend Imagemagick.
+<li> Browse the contributed X software on the system, find something
+else interesting, and modify it.
+<li> Look in the Usenet newsgroup comp.sources.x, find something you
+like, and modify it.
+<li> Implement a music scoring system
+<li> Simulate a racketball game including 3-D bounces, spins, etc.
+<li> Simulate a yacht race such as the America Cup.  Include wind, currents,
+etc.
+<li> Simulate an auto race including cars bouncing off each other.
+<li> Simulate travel to an L-5 colony, including transfer orbits, raw
+materials coming from the moon, and rockets from the earth.
+<li> Read ahead in the text and implement something with 3-D and a really
+nice user interface.
+<li> Read some of the journals on graphics. such as the SIGGRAPH
+proceedings, which are issues of the journal <em> Computer Graphics</em>, or
+the SIGGRAPH course notes, which are catalogued under SIGGRAPH, find an
+interesting idea, and implement it.
+<li> Animate some data structure or algorithm.  Show how a sort routine
+works, or how you rotate a tree to balance it.
+<li> A recent CACM had a paper on verifying a user's identity by measuring
+the time between keystrokes as he types his name. Test this. The
+graphical input might be assorted options that you would set with
+sliders etc.
+<li> Do a psychological experiment on users --- how well they can match
+colors in different color spaces, how easily they can use different
+types of physical devices for the same logical device, etc.
+<li> Experiment with different dithering methods. Extend this to a tutorial.
+Compare the times to implement and times to execute of several different
+circle algorithms.
+<li> Make stereo pictures, photo them on slide film, and put them in a
+ViewMaster.
+</ol>
+
+There will be several examples of term projects on reserve in the
+library.
+
+
+<h1>Available Programs and Data</h1>
+
+This is enrichment material, which will not be examined.   
+It is included to  give you some more ideas about a project.  I'll have
+more later. 
+
+<h2>ETOPO5 World Elevation and Bathymetric Data</h2>
+
+<p>This is two arrays of data for the world giving elevations above or
+below sea level on a 5 arc-minute grid.  There is some info 
+<a href="etopo5/">here</a>.  
+</p>
+
+<p>The northern hemisphere file is currently on RCS.  I'll put the
+southern hemisphere up if there's interest.  Eventually, I may take
+the northern offline to save space.  </p>
+
+<p>Here's a sample of the ETOPO5 data.  The intensity is dependent only
+on elevation.  I.e., that is not a satellite photo, and those are not
+clouds.
+</p>
+
+<p><center>
+<img src="etopo-na.gif">
+</center>
+</p>
+
+
+
+
+<h2>Digital Elevation Models of the US</h2>
+
+<p>A DEM is a grid of 1201x1201 elevations on a 3-arc-second spacing
+(about 90m) for a 1 degree by 1 degree cell of the coterminous US.
+See <a href="dem/">here</a> for more info.  There is a sample file, of
+the Lake Champlain West topo quad, online.  </p>
+
+<p>I can put another two dozen files online.  You can also FTP all the
+US DEMs from the United States Geological Survey, altho then you have
+to decode their format.  There are Windows programs that do that.
+</p>
+
+
+<h2>CIA World Databank of Coastlines and Borders</h2>
+
+<p>See <a
+href="cia/">here</a>.
+You're on your own; I haven't played with this one.  </p>
+
+
+
+
+<h2>Voronoi Diagrams</h2>
+
+<p>Consider a set of points representing firehouses.  Divide the city
+into a region around each firehouse, representing that part of the
+city closer to that firehouse than to any other.  That is called
+the Voronoi diagram of the points.
+<a href="xvor/">Xvor</a>
+is a program to
+interactively place points, give the velocities, and watch the
+changing Voronoi diagram.   The Sun executable is n dir sun.
+</p>
+
+<p>Here is a sample output.  The point are where the solid lines meet.
+(The solid lines triangulate the points' convex hull.)  The Voronoi
+diagram on the points is the dotted lines.  
+</p>
+
+<center>
+<img src="xvoronoi.gif">
+</center>
+
+
+<h2>POV Ray</h2>
+
+<p>POV-Ray is a neat ray-tracing program.  You define objects in
+terms of cylinders, cubes, etc, with their colors and surface
+properties, such as shininess, and the light sources.  POVray
+calculates the image.   POVray's home site is
+<a href="http://www.povray.org/">http://www.povray.org/</a>.
+</p>
+
+<p>POVray is in 
+<a href="/dept/acm/packages/povray/2.2"><tt>/dept/acm/packages/povray/2.2</tt></a>.  There is a doc file,
+which is 52 pages if printed 2-up with enscript thus:
+</p>
+
+<pre>
+Docs/povray.doc | enscript -2r -Pvclw
+</pre>
+
+<p>First, you create a file defining the scene, such as
+<a href="pov/a.pov"><tt>pov/a.pov</tt></a>, which I got from
+<a href="/dept/acm/packages/povray/2.2/Docs/demo/arealit1.pov.gz"><tt>/dept/acm/packages/povray/2.2/Docs/demo/arealit1.pov.gz</tt></a>.
+
+</p>
+
+<pre>
+// Persistence Of Vision raytracer version 2.0 sample file.
+// Illustrates how area light grid size affects soft shadows
+
+// Left   shadow - area_light &lt;8,0,0&gt;, &lt;0,0,8&gt;,  3,  3 (renders fastest)
+// Middle shadow - area_light &lt;8,0,0&gt;, &lt;0,0,8&gt;,  5,  5
+// Right  shadow - area_light &lt;8,0,0&gt;, &lt;0,0,8&gt;, 17, 17 (renders slowest)
+
+#include "colors.inc"
+#include "textures.inc"
+
+// A back wall to cast shadows onto
+plane { -z, -20
+    pigment { Gray70 }
+    finish { Dull }
+}
+
+#declare SpacingX = 20
+#declare Radius = 5
+#declare LightX = 15
+#declare LightY = 40
+#declare LightZ = -40
+#declare SRadius = 0
+#declare SFalloff = 11
+
+#declare SphereTexture = texture {
+    pigment { Red }
+    finish { Shiny }
+}
+
+sphere { &lt;-SpacingX, 0, 0&gt;, Radius
+    texture { SphereTexture }
+}
+
+light_source {
+    &lt;0, LightY, LightZ&gt; color White
+    area_light &lt;8, 0, 0&gt;, &lt;0, 8, 0&gt;, 3, 3
+    adaptive 0
+    jitter
+
+    spotlight
+    point_at &lt;-SpacingX, 0, 0&gt;
+    tightness 0
+    radius SRadius
+    falloff SFalloff
+}
+
+sphere { &lt;0, 0, 0&gt;, Radius
+    texture { SphereTexture }
+}
+
+light_source {
+    &lt;0, LightY, LightZ&gt; color White
+    area_light &lt;8, 0, 0&gt;, &lt;0, 8, 0&gt;, 5, 5
+    adaptive 0
+    jitter
+
+    spotlight
+    point_at &lt;0, 0, 0&gt;
+    tightness 0
+    radius SRadius
+    falloff SFalloff
+}
+
+sphere { &lt;+SpacingX, 0, 0&gt;, Radius
+    texture { SphereTexture }
+}
+
+light_source {
+    &lt;0, LightY, LightZ&gt; color White
+    area_light &lt;8, 0, 0&gt;, &lt;0, 8, 0&gt;, 17, 17
+    adaptive 0
+    jitter
+
+    spotlight
+    point_at &lt;+SpacingX, 0, 0&gt;
+    tightness 0
+    radius SRadius
+    falloff SFalloff
+}
+
+light_source { &lt;0, -15, -120&gt; color Gray10 }
+
+camera {
+    location &lt;0, -15, -120&gt;
+    direction 2*z
+    look_at &lt;0, -15, 0&gt;
+}
+</pre>
+
+<p>Then you run POVray thus:
+</p>
+
+<pre>
+cp /dept/ecse/graphics/h10/pov/a.pov .
+povray +Ia.pov +Oa.qrt +V +W400 +H400 +FD +L/dept/acm/packages/povray/2.2/common/include
+</pre>
+
+<p>to get this image showing 3 balls casting  shadows from 3 lights.
+</p>
+
+<center>
+<img src="povexample.gif">
+</center>
+
+<p>For previewing, I recommend doing a 60x60 image; I did
+400x400 just to make the printed image look better, but it
+took 11 1/2 minutes on my Sun IPC, or 2 CPI minutes on a Sun 10/30.
+</p>
+
+<p>The output file, <tt>a.qrt</tt>, has to be converted so that
+<tt>xv</tt> can read it, thus:
+</p>
+
+<pre>
+qrttoppm a.qrt &gt;a.ppm 
+xv a.ppm
+</pre>
+
+<p><tt>qrttoppm</tt> is in
+<tt>/campus/other/netpbm/1mar94/\@sys/bin/qrttoppm</tt>.  There were a
+number of sample command files and resulting scenes, in
+<a href="/dept/acm/packages/povray/2.2/distrib/scenes/"><tt>/dept/acm/packages/povray/2.2/distrib/scenes/</tt></a>, but they took
+too much space and are gone now.  
+</p>
+
+<center>
+<img src="povindex.gif">
+</center>
+
+
+<h2>Holograms</h2>
+
+<p>I found an interesting blurb on hand-drawn holograms in
+<a href="http://www.eskimo.com/~billb/amateur/holo1.html">http://www.eskimo.com/~billb/amateur/holo1.html</a>.
+</p>
+
+<p>I haven't tried it, but  if it works, you could also
+make crude computer-generated holograms as a project.
+</p>
+
+<BLOCKQUOTE>
+<center>
+HAND-DRAWN HOLOGRAMS!<br>
+(c)1995 William J. Beaty<br>
+</center>
+
+<p>I've stumbled across a technique for drawing holograms directly upon a 
+plastic plate by hand.  It sounds crazy, but I've been sitting on the 
+livingroom sofa making holographic images of floating polyhedra, words, 
+3D starfields, etc.  No laser, no isolation table, no darkroom, no 
+expensive film plates.  This takes nothing more than a compass and some 
+scraps of black plexiglas.  Too cool, if I say so myself!.....
+</p>
+
+</BLOCKQUOTE>
+
+
+
+<h2>Stereograms</h2>
+
+<p>There is a lot of info on the net.  See <a
+href="stereogram/">here</a> for one program.  </p>
+
+
+
+
+<h1><a href="http://www.ioccc.org/">IOCCC</a> Winners, Ctd</h1>
+
+<h2>Dodsond1 </h2>
+
+<p><a href="dodsond1.c">dodsond1.c</a> plays a game like Go.
+See these
+<a href="dodsond1.hint">hints</a>.
+</p>
+
+<p>Sample game:
+</p>
+<small>
+<pre>
+A : : : : : : : :
+B : : : : : : : :
+C : : : : : : : :
+D : : :O:X: : : :
+E : : :X:O: : : :
+F : : : : : : : :
+G : : : : : : : :
+H : : : : : : : :
+ 1 2 3 4 5 6 7 8 
+
+?D6
+
+A : : : : : : : :
+B : : : : : : : :
+C : : : : : : : :
+D : : :O:O:O: : :
+E : : :X:O: : : :
+F : : : : : : : :
+G : : : : : : : :
+H : : : : : : : :
+ 1 2 3 4 5 6 7 8 
+
+A : : : : : : : :
+B : : : : : : : :
+C : : : : : : : :
+D : : :O:O:O: : :
+E : : :X:X:X: : :
+F : : : : : : : :
+G : : : : : : : :
+H : : : : : : : :
+ 1 2 3 4 5 6 7 8 
+
+?F5
+
+A : : : : : : : :
+B : : : : : : : :
+C : : : : : : : :
+D : : :O:O:O: : :
+E : : :X:O:X: : :
+F : : : :O: : : :
+G : : : : : : : :
+H : : : : : : : :
+ 1 2 3 4 5 6 7 8 
+
+A : : : : : : : :
+B : : : : : : : :
+C : : :X: : : : :
+D : : :X:X:O: : :
+E : : :X:O:X: : :
+F : : : :O: : : :
+G : : : : : : : :
+H : : : : : : : :
+ 1 2 3 4 5 6 7 8 
+
+
+?D3 
+
+A : : : : : : : :
+B : : : : : : : :
+C : : :X: : : : :
+D : :O:O:O:O: : :
+E : : :O:O:X: : :
+F : : : :O: : : :
+G : : : : : : : :
+H : : : : : : : :
+ 1 2 3 4 5 6 7 8 
+
+A : : : : : : : :
+B : : : : : : : :
+C : : :X: : : : :
+D : :O:X:O:O: : :
+E : : :X:O:X: : :
+F : : :X:O: : : :
+G : : : : : : : :
+H : : : : : : : :
+ 1 2 3 4 5 6 7 8 
+
+?B5
+
+A : : : : : : : :
+B : : : :O: : : :
+C : : :O: : : : :
+D : :O:X:O:O: : :
+E : : :X:O:X: : :
+F : : :X:O: : : :
+G : : : : : : : :
+H : : : : : : : :
+ 1 2 3 4 5 6 7 8 
+
+
+A : : : : : : : :
+B : : : :O: : : :
+C : : :O: : : : :
+D : :O:X:X:X:X: :
+E : : :X:O:X: : :
+F : : :X:O: : : :
+G : : : : : : : :
+H : : : : : : : :
+ 1 2 3 4 5 6 7 8 
+
+ ...
+</pre>
+</small>
+
+
+<h2>Banks</h2>
+
+<p><a href="banks.c">banks</a>
+ is a flight simulator done in 1536 bytes of real code.  See the
+<a href="banks.hint">hints</a>.
+</p>
+
+
+
+<h1>Color summary</h1>
+
+<p>This logically follows on from hardware.</p>
+
+
+<ol>
+
+<li>
+<p>Refs:</p>
+
+<ol type=a>
+
+<li><p>Hearn &amp; Baker, chapter 15.</p></li>
+
+<li><p>
+
+efg's Computer Lab Reference Library: Color, at
+<a href="http://www.efg2.com/lab/library/Color.htm">http://www.efg2.com/lab/library/Color.htm</a>
+</p></li>
+
+</ol>
+
+
+
+<li><p>Visible light comes in wavelengths from 400 (violet) to 700nm (red).
+1nm=10<sup>-9</sup> meters.
+</p></li>
+
+<li><p>The 3 types of cone cells in your retina sense approximately red,
+green, or blue.
+</p></li>
+
+<li><p>Since we projecting down from an infinite-dimensional space
+(all the wavelengths from 400 to 700 nm) to a 3-D space (R,G,B), there
+is an enormous loss of info.  Two objects that look the same color
+might be emitting or reflecting quite different wavelengths.  This is
+why two objects can look the same color under an incandescent lamp,
+but look different in daylight.  </p></li>
+
+<li><p>The CIE chromaticity diagram, page 570, 
+http://www.nd.edu/~sboker/ColorVision2/CIEColorSpace2.gif
+<!--
+http://www.cybertheater.com/Tech_Reports/Envir_Light/avs_cie.jpg, and
+http://www.cybertheater.com/Tech_Reports/Envir_Light/CIE_BW3.gif
+-->
+</p>
+
+<center>
+<img src="http://www.nd.edu/~sboker/ColorVision2/CIEColorSpace2.gif">
+</center>
+
+<p>
+maps a wavelength to an (x,y) point.  It is designed so that when you
+combine two colors, you'll know what the result looks like.  (x1,y1)
+mixed with (x2,y2) looks like ((x1+y1)/2,(y1+y2)/2).  </p>
+
+<p> Designing this curve was not as easy as it sounds: what does a mix
+of violet and green light look like?  It was based on actual human
+tests.  </p></li>
+
+<li><p>The CIE coordinates are really 3D: (x,y,z).  The diagram just
+normalized the brightness.
+</p></li>
+
+<li><p>You can easily convert back and forth:
+</p>
+<center>
+<img src="http://www.ph.tn.tudelft.nl/Courses/FIP/images/fip98.gif"> 
+</center>
+<p>and</p>
+<center>
+<img src="http://www.ph.tn.tudelft.nl/Courses/FIP/images/fip99.gif">
+</center>
+</p></li>
+
+
+<li><p>For things that emit light, like CRTs, we talk about <em>additive</em> 
+colors.  The primaries are red, green, and blue  (RGB space).
+We can display only colors inside the triangle formed by the 3
+phosphors we're using (page 573).
+</p></li>
+
+<li><p>For things that reflect light, like paper, we talk about
+<em>subtractive</em> colors.  The primaries are cyan, magenta, and
+yellow (CMY space).  We can display only unsaturated colors; the more
+saturated an ink is, the darker it is.  </p></li>
+
+<li><p>There are other color models, like HSV (hue, saturation, value), and
+HLS (hue, lightness, saturation); see the text.   They try to be more
+intuitive.
+</p></li>
+
+</ol>
+
+<h1>Color Temperature</h1>
+
+<ol>
+<li><p>An object of no particular color, called black, appears different
+colors depending on its color.   E.g., as you heat iron, it goes from
+red hot, to orange and yellow.
+</p></li>
+
+<li><p>This is the equation for the amount of energy at frequency f that an
+object at temperature T emits (I'm omitting details):
+</p>
+
+<center>
+<img
+  src="http://www.phys.ualberta.ca/~rodning/courses/Phys271/lectures/L4/E1.GIF">
+</center>
+
+<p>The curve of energy vs frequency looks thus:</p>
+
+<center>
+<img
+  src="http://www.phys.ualberta.ca/~rodning/courses/Phys271/lectures/L4/F1.GIF">
+</center>
+
+<li><p>These are from
+<a
+  href="http://www.phys.ualberta.ca/~rodning/courses/Phys271/lectures/L4/">http://www.phys.ualberta.ca/~rodning/courses/Phys271/lectures/L4/</a>
+By the way, the shape of this curve is a proof that light is
+quantized.
+</p></li>
+
+<li><p>Now, white-ish light often matches this Planck black-body radiation
+curve at some temperature.  This is called the light's <em>color
+temperature</em>.  It may be, but is not always, related to the temperature
+of the object (light bulb filament, sun's surface, etc).   
+</p></li>
+
+<li><p>A good ref is here:
+<a
+  href="http://energyoutlet.com/res/lighting/KandB/color.html">http://energyoutlet.com/res/lighting/KandB/color.html</a>
+Here's a picture from it:
+</p>
+
+<center>
+<img src="http://energyoutlet.com/res/lighting/KandB/colortemp.gif">
+</center>
+
+</ol>
+
+
+
+<h1>Hardware, Ctd</h1>
+
+<p>We've done CRTs and LCDs.  Let's now do </a>
+<ol>
+<li><a href="http://www.dungeon.com/~poota/lpbook/02-chp2.html">laser printers</a>, 
+<li>data
+gloves, 
+<li>touch panels, 
+<li><a href="http://www.polhemus.com/ftrakds.htm">Polhemus locators</a>, and raster-scan systems, and
+<li>video systems
+</ol>
+
+
+
+<h1>Homework - Due Thurs Oct 28</h1>
+
+<ol>
+
+<li><p> Do <em>Hearn &amp; Baker</em>, page 81, exercise 2-10.  That
+means chapter two, exercise ten.  It does not mean exercises two thru
+ten.  </p></li>
+
+<li><p>There are many graphics input and output devices that I haven't
+described.  Choose one input and one output device.  Find a web page
+describing each device.  Give us the URL and attach a printout.
+</p></li>
+
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<hr>
+<a href="../21/">Previous Class</a>,
+<a href="../23/">Next Class</a>,
+<a href="http://www.rpi.edu/dept/ecse/graphics/index.html"
+>ECSE-4750 Fall 1999 Home Page</a>
+
+<hr>
+
+<p>Copyright &#169; 1998-9, Wm. Randolph Franklin.  You may use my
+material for non-profit education and research, provided that you
+acknowledge me and preserve this notice. </p>
+
+
+<p>
+<ADDRESS> 
+ <CENTER>
+   Wm. Randolph Franklin,
+   Associate Professor<br>
+   For email address, replace NOSPAM by RPI in the following:
+   wrf@ecse.NOSPAM.edu<br>
+   <A HREF="http://www.ecse.rpi.edu/Homepages/wrf/">
+     http://www.ecse.rpi.edu/Homepages/wrf/</a><br>
+   +1 (518) 276-6077;  Fax: -6261<br>
+   ECSE Dept., 6026 JEC, Rensselaer Polytechnic Inst, Troy NY, 12180 USA<br>
+   (PGP key available)<br>
+ </CENTER>
+</ADDRESS>
+</p>
+
+</font>
+
+<script>
+document.write("<i>Updated:</i> " + document.lastModified + "<br>")
+document.write("<i>URL:</i> " + document.URL + "<br>")
+</script>
+<font size="+1">
+</p>
+
+
+</BODY>
+</HTML>

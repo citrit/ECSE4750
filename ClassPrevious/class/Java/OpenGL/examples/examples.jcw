@@ -1,0 +1,17 @@
+! ** JCreator Workspace File (C)2000
+! ********** DO NOT EDIT *********
+
+VERSION := "1.00"
+LABEL := "examples"
+
+! Start Project Structure
+#[BeginProject]SOURCE := "examples.jcp" #[EndProject]
+
+! Start Last Document Structure
+#[BeginFile]SOURCE := "Animate.java" #[EndFile]
+#[BeginFile]SOURCE := "Primitives.java" #[EndFile]
+#[BeginFile]SOURCE := "TextureTest.java" #[EndFile]
+#[BeginFile]SOURCE := "Simple1.java" #[EndFile]
+#[BeginFile]SOURCE := "Simple2.java" #[EndFile]
+#[BeginFile]SOURCE := "Simple3.java" #[EndFile]
+

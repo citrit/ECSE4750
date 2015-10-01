@@ -1,0 +1,202 @@
+%!PS-Adobe-3.0
+%%Creator: enscript
+%%For: winston.its.rpi.edu:citrit (Thomas D Citriniti)
+%%Title: hw2.C
+%%CreationDate: Tue Oct 24 12:05:43 1995
+%%DocumentNeededResources: font Courier-Bold Courier-Bold
+%+ Times-Roman Times-Bold Helvetica-Bold
+%%Pages: (atend)
+%%BeginProlog
+% Start of enscript.pro -- prolog for text file translator
+% Copyright (c) 1984,1985,1987 Adobe Systems Incorporated. All Rights Reserved. 
+% GOVERNMENT END USERS: See Notice file in TranScript library directory
+% -- probably /usr/lib/ps/Notice
+% RCSID: $Header: /disks/hobo/vp6/snichols/rel3.0/transcript/lib/RCS/enscript.pro,v 3.0 1991/06/17 17:08:31 snichols Exp $
+/$enscript 50 dict def $enscript begin
+/S/show load def
+/bd { bind def } bind def
+/X{exch 0 rmoveto S} bd
+/Y{exch 0 exch rmoveto S} bd
+/B{3 1 roll moveto S} bd
+/F{$fd exch get setfont} def
+/U{1440 mul}def
+/UP{U 72 div}def
+/StartPage{/svpg save def .05 dup scale} bd
+/EndPage{svpg restore showpage} bd
+/DoPreFeed{/statusdict where{pop
+ statusdict/prefeed known{statusdict exch/prefeed exch put 0}if}if pop} bd
+/SetUpFonts
+ {dup/$fd exch array def{findfont exch scalefont $fd 3 1 roll put}repeat}def
+/InitGaudy{/Columns exch def
+ /ftD /Times-Bold findfont 12 UP scalefont def
+ /ftF /Times-Roman findfont 14 UP scalefont def
+ /ftP /Helvetica-Bold findfont 30 UP scalefont def} bd
+/LB{/pts exch UP def /charcolor exch def /boxcolor exch def /font exch def
+ /label exch def /dy exch def /dx exch def /lly exch def /llx exch def
+ gsave boxcolor setgray
+ llx lly moveto dx 0 rlineto 0 dy rlineto dx neg 0 rlineto closepath fill
+ /lines label length def
+ /yp lly dy add dy lines pts mul sub 2 div sub pts .85 mul sub def
+ font setfont charcolor setgray
+ label {dup stringwidth pop 2 div llx dx 2 div add exch sub yp moveto show
+   /yp yp pts sub def}forall grestore} bd
+/Gaudy{/plength exch def /BarLength exch def /hy exch def /hx exch def
+ /Page exch def /Date exch def  /File exch def /Comment exch def
+ hx hy  BarLength 144 sub .25 U [File] ftF .97 0 14 LB
+ hx hy 360 add BarLength 144 sub .25 U [Comment] ftF 1 0 14 LB
+ hx hy 1 U .5 U Date ftD .7 0 12 LB
+ BarLength 1080 sub hy 1 U .5 U [Page] ftP .7 1 30 LB
+ 2 1 Columns {1 sub plength Columns div mul 172.80 sub hy moveto 0 0 hy sub rlineto
+ stroke}for } bd
+/Landscape { 90 rotate 0 exch translate } bd
+%%EndProlog
+%%BeginSetup
+%%IncludeResource: font Courier-Bold
+1    200.000 /Courier-Bold
+%%IncludeResource: font Courier-Bold
+0    200.000 /Courier-Bold
+2 SetUpFonts
+1 InitGaudy
+%%EndSetup
+%%Page: ? 1
+StartPage
+()(hw2.C)[(95/10/19)(13:19:41)](1) 360 14760 11500 12240 Gaudy
+0 F
+900 14380(//////////////////////////////////////////////////////////////////////////)B
+900 14160(//)B
+900 13940(//  This code is for instructional purposes only. It was generated for)B
+900 13720(//  use in a graduate level course to show certain aspects of data)B
+900 13500(//  storage algorithms. It has problems and should not be used )B
+900 13280(//  outside the class environment.)B
+900 13060(//)B
+900 12840(//  Author:  Thomas D. Citriniti     citrit@rpi.edu)B
+900 12620(//  Class:   Advanced Computer Graphics and Data visualization)B
+900 12400(//           Rensselaer Polytechnic Institute)B
+900 12180(//  Date:    October 3, 1995)B
+900 11960(//)B
+900 11740(//////////////////////////////////////////////////////////////////////////)B
+900 11300(#include <iostream.h>)B
+900 10860(#include "PtCell.H")B
+900 10640(#include "LineCell.H")B
+900 10420(#include "PlyCell.H")B
+900 10200(#include "PlyLine.H")B
+900 9980(#include "Triangle.H")B
+900 9760(#include "DataSet.H")B
+900 9540(#include "OGLRen.H")B
+900 8880(main\(int argc, char *argv[]\))B
+900 8660({)B
+1140 8440(PointSet *myPts;)B
+1140 8220(PointCell *ptCell;)B
+1140 8000(LineCell *liCell;)B
+1140 7780(PolygonCell *pgCell;)B
+1140 7560(TriangleCell *trCell;)B
+1140 7340(PolylineCell *plCell;)B
+1140 7120(Material *mat;)B
+1140 6900(MaterialSet *matSet;)B
+1140 6680(DataSet *dSet = new DataSet;)B
+1140 6460(OGLRenderer *aren = new OGLRenderer;)B
+1140 6240(float x, y, z, rgba[4];)B
+1140 6020(int type = -1, index = 0, cnt  = 0, i;)B
+1140 5580(while \(! cin.eof\(\)\) {)B
+1380 5360(cin >> type >> cnt >> rgba[0] >> rgba[1] >> rgba[2];rgba[3] = 1.0;)B
+1380 5140(mat = new Material\(rgba\);)B
+1380 4920(matSet = new MaterialSet;)B
+1380 4700(*matSet += mat;)B
+1380 4480(switch \(type\) {)B
+1380 4260(case 0:)B
+1620 4040(myPts = new PointSet\(\);)B
+1620 3820(myPts->Reserve\(cnt\);)B
+1620 3600(for \(i = 0;i < cnt; i++\) {)B
+1860 3380(cin >> x >> y >> z;)B
+1860 3160(*myPts += new PointType\(x, y, z\);)B
+1620 2940(})B
+1620 2720(break;)B
+1380 2500(case 1:)B
+1620 2280(ptCell = new PointCell;)B
+1620 2060(ptCell->Reserve\(cnt\);)B
+1620 1840(for \(i = 0;i < cnt; i++\) {)B
+1860 1620(cin >> index;)B
+1860 1400(*ptCell += index;)B
+1620 1180(})B
+1620 960(ptCell->SetPoints\(myPts\);)B
+1620 740(ptCell->SetMaterials\(matSet\);)B
+EndPage
+%%Page: ? 2
+StartPage
+()(hw2.C)[(95/10/19)(13:19:41)](2) 360 14760 11500 12240 Gaudy
+0 F
+1620 14380(*dSet += ptCell;)B
+1620 14160(break;)B
+1380 13940(case 2:)B
+1620 13720(liCell = new LineCell;)B
+1620 13500(liCell->Reserve\(cnt\);)B
+1620 13280(for \(i = 0;i <\(2* cnt\); i++\) {)B
+1860 13060(cin >> index;)B
+1860 12840(*liCell += index;)B
+1620 12620(})B
+1620 12400(liCell->SetPoints\(myPts\);)B
+1620 12180(liCell->SetMaterials\(matSet\);)B
+1620 11960(*dSet += liCell;)B
+1620 11740(break;)B
+1380 11520(case 3:)B
+1620 11300(for \(i = 0;i <cnt; i++\) {)B
+1860 11080(pgCell = new PolygonCell;)B
+1860 10860(cin >> index;)B
+1860 10640(while \(index != -1\) {)B
+2100 10420(*pgCell += index;)B
+2100 10200(cin >> index;)B
+1860 9980(})B
+1860 9760(pgCell->SetPoints\(myPts\);)B
+1860 9540(pgCell->SetMaterials\(matSet\);)B
+1860 9320(*dSet += pgCell;)B
+1620 9100(})B
+1620 8880(break;)B
+1380 8660(case 4:)B
+1620 8440(trCell = new TriangleCell;)B
+1620 8220(trCell->Reserve\(cnt*3\);)B
+1620 8000(for \(i = 0;i < \(3 * cnt\); i++\) {)B
+1860 7780(cin >> index;)B
+1860 7560(*trCell += index;)B
+1620 7340(})B
+1620 7120(trCell->SetPoints\(myPts\);)B
+1620 6900(trCell->SetMaterials\(matSet\);)B
+1620 6680(*dSet += trCell;)B
+1620 6460(break;)B
+1380 6240(case 5:)B
+1620 6020(for \(i = 0;i <cnt; i++\) {)B
+1860 5800(plCell = new PolylineCell;)B
+1860 5580(cin >> index;)B
+1860 5360(while \(index != -1\) {)B
+2100 5140(*plCell += index;)B
+2100 4920(cin >> index;)B
+1860 4700(})B
+1860 4480(plCell->SetPoints\(myPts\);)B
+1860 4260(plCell->SetMaterials\(matSet\);)B
+1860 4040(*dSet += plCell;)B
+1620 3820(})B
+1620 3600(break;)B
+1380 3380(default:)B
+1620 3160(cerr << "Unknown cell type: " << type << endl;)B
+1620 2940(break;)B
+1380 2720(})B
+1140 2500(})B
+1140 2280(// Add this  DataSet to the Renderers collection.)B
+1140 2060(aren->AddDataSet\(dSet\);)B
+1140 1840(cout << "Dataset Count: " << dSet->Count\(\) <<endl;)B
+1140 1400(aren->AddCamera\(new OGLCamera\);)B
+1140 1180(aren->AddLight\(new OGLLight\(0\)\);)B
+1140 740(// Initialize the Renderer, creates window and attaches OpenGL Visual)B
+EndPage
+%%Page: ? 3
+StartPage
+()(hw2.C)[(95/10/19)(13:19:41)](3) 360 14760 11500 12240 Gaudy
+0 F
+1140 14380(aren->Initialize\(argc, argv\);)B
+1140 14160(// Starts the Event loop.)B
+1140 13940(aren->MainLoop\(\);)B
+1140 13500(return\(0\);)B
+900 13280(})B
+EndPage
+%%Trailer
+end
+%%Pages: 3

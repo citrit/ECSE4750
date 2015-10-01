@@ -1,0 +1,147 @@
+Manifest-Version: 1.0
+
+Name: jogl/GL.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: SmKL+Qu692Q71acJdTmwvlnra+E=
+MD5-Digest: ZK1YtfjRvqf/Vr3ofhFhPA==
+
+Name: jogl/GLU.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: TwcNCKY0Zt4ZVms0HyI8M41pZME=
+MD5-Digest: WDkwXS/3GxSrfGucDG7AWQ==
+
+Name: jogl/JoglCanvas.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: teDPAGzXchRbPaGGAS0+J9S7HmY=
+MD5-Digest: qZfVKpykDQNGMntlzyu3GA==
+
+Name: jogl/JoglNativeException.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: 9hoGbNKAClTrbFj/4LNjPVTTkVg=
+MD5-Digest: lf6zX7XOjAt3L3qtOECqtg==
+
+Name: jogl/JoglRenderer.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: xWihA4+8JqTNhXPoQHoupCZYfxg=
+MD5-Digest: 1nT1qCFLeo8K8uWWahkOxQ==
+
+Name: jogl/JoglpDataAccess.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: 1gU2SqVancNPJnF+GgPrUjfdK4k=
+MD5-Digest: ubW9Mb5bXpBjBcgTAr+EmA==
+
+Name: jogl/glu/Nurbs.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: hKuHUjPvKHUt2/AjYvsOZh74/bA=
+MD5-Digest: nUnONsrQ9+dhxFkyDKlHPA==
+
+Name: jogl/glu/Quadric.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: QdaWEZ9gNzEuPrRbHBOLYtZLC7c=
+MD5-Digest: y/56/2ymbTvre5zN40QbBA==
+
+Name: jogl/glu/Tesselator.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: cszTB5vjALp8mcGaKMJTe9+EhF8=
+MD5-Digest: D4qj625985jiT4UA86IFqQ==
+
+Name: test/Checker.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: 8IhV8+gjcatw171YB/eZPE9Ug3M=
+MD5-Digest: DUe1VpUuvGSe4GxPiCRYIA==
+
+Name: test/Cylinder.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: OorGDGOIfzAVFe6iVx/KnLyvA6A=
+MD5-Digest: h8x4jxYlQUKHmf606GsgRw==
+
+Name: test/Jogl$1.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: TqADwbIFISCXox12OoG9uuk4sds=
+MD5-Digest: tQwMdPy47zo+KOdh4xtvzw==
+
+Name: test/Jogl$MyRenderer.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: o/s+i1Z/nzvzhU/NGt8aQFWeoOE=
+MD5-Digest: g+sKeg8wEXbv0iv2H+1PZg==
+
+Name: test/Jogl.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: Nfk9CNUjLTIQdJPJF/d7covGCZw=
+MD5-Digest: c94z5QoBImzgnxgXSzs4mw==
+
+Name: test/Texture$1.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: 2NLHXDzCoGJ4a/Wyfw4iWtzFHT0=
+MD5-Digest: ldiFQk65OUzMlq0hDJ9KIQ==
+
+Name: test/Texture$MyRenderer.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: zoyxeiEOk+SKQ/JfEpWqOuJZOFI=
+MD5-Digest: OpIJGH+henpmvzHVKFv48Q==
+
+Name: test/Texture.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: CvkZW5H3c8Yud3oZ4Vw/azrAkuM=
+MD5-Digest: SLvqEp2ZUcGvRyPrqiITxQ==
+
+Name: test/jogltest$1.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: GjFQu/I7T93nrZy0iNaWRSTXU2w=
+MD5-Digest: +ukgLGBwr6SCpj23BKCtwA==
+
+Name: test/jogltest.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: lSKM4zXIQu5NVIbl59alOBdCxHM=
+MD5-Digest: VUB+2WwYTDUlZedz3Z+4+g==
+
+Name: sun/awt/windows/WindowspDataAccess.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: KQuKSeum08nswV6RdFK5y7NmjUA=
+MD5-Digest: pJJvg8cqWKbVV8X6Px9LRw==
+
+Name: demos/Light.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: IvlryNqesYc1aB8h1avj+H8lyQ0=
+MD5-Digest: js+L3+jYgL0c4DqFoo3dAg==
+
+Name: demos/Trackball.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: rQ1EPizDXH/Z6q8dtS3M/o8rd6E=
+MD5-Digest: XZ+BtobUYpTJ6iXA1wEOXQ==
+
+Name: demos/bounce.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: Sxie6tm1qsI3/cfP8Tjxl9XJ7AE=
+MD5-Digest: uEccF8/FeFm03akuPOTC/Q==
+
+Name: demos/dino.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: p6lWkcV9AEP4+tJUJzvL3FYPf5w=
+MD5-Digest: xks7ZDxxBEgoNUMxCxFLHw==
+
+Name: demos/mech$1.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: ii/6DCzK/8knYDOITB14einpo2k=
+MD5-Digest: dsddv4Y5CaGLxyu0IQ07rg==
+
+Name: demos/mech.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: xtIH68C4cfiUov045SrtZiDN4Oo=
+MD5-Digest: DM4SC2w4yROTxmoV+K4msA==
+
+Name: demos/plane.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: wenlwD9KguEOtQ23Om/URn/ZHsE=
+MD5-Digest: RXOCUgLDMtrh4/FlXl+ycQ==
+
+Name: demos/planes.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: w4hBvQcy/7ZHBY+GYUR5eXp2EYM=
+MD5-Digest: 7LbUdiiwkR6MhgwtVZ4HxQ==
+
+Name: demos/spots.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: WmPkpXaRip3QxYps5KLKgGv0NaU=
+MD5-Digest: F0bJEYZNNhjVT9A7booJWw==
+

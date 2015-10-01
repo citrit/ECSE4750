@@ -1,0 +1,18 @@
+/* config.hin.  Generated automatically from configure.in by autoheader.  */
+
+/* Define if the X Window System is missing or not being used.  */
+#undef X_DISPLAY_MISSING
+
+#undef NEED_OWN_WINDOW
+#undef HAVE_SGI_EXTENSIONS
+#undef VERSION
+#undef JNI_CFLAGS
+#undef OGL_CFLAGS
+#undef OGL_LIBS
+#undef PACKAGE
+
+/* Define if you have the <GL/gl.h> header file.  */
+#undef HAVE_GL_GL_H
+
+/* Define if you have the <GL/glu.h> header file.  */
+#undef HAVE_GL_GLU_H

@@ -1,0 +1,29 @@
+#
+# Sample Makefile for compilling the sample code for the
+# Advanced Computer Graphics and Data Visualization 35.6961 (Fall 1995)
+#
+# Copy this to the directory where the program resides and use
+#  
+#       make progname
+#
+# The progname would be the prefix of the source file you generated.
+# Like if your source file was hw1.c, the above line would read:
+#
+#       make hw1
+#
+# The make utility would automatically look for something with a suffix
+# it understood and would find hw1.c. There are built in rules which
+# tell it how to compile c source.
+#
+
+CC=acc
+LDFLAGS= -L/locker/44/000644/Mesa/@sys/lib -lglut -lMesaGLU -lMesaGL -L/usr/local/X11/lib -lXmu -lXt -lX11 -lm
+CFLAGS= -g -I/locker/44/000644/Mesa/@sys/include
+
+
+$(TARGET): $(TARGET).o
+	$(CC) -o $@ $? $(LIBS) $(LDFLAGS)
+
+clean:
+	/bin/rm -f *.o
+

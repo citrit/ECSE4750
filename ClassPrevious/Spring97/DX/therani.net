@@ -1,0 +1,455 @@
+//
+// time: Mon Apr 28 14:57:48 1997
+//
+// version: 2.0.3 (format), 2.1.5 (DX)
+//
+// MODULE main
+// CATEGORY Macros
+// workspace: width = 1000, height = 1000
+// layout: snap = 0, width = 50, height = 50, align = CC
+//
+macro main(
+) -> (
+) {
+    // 
+    // node Import[1]: x = 71, y = 46, inputs = 6, label = Import
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "MRIdata.general"
+    // input[3]: defaulting = 0, visible = 1, type = 32, value = "general"
+    //
+main_Import_1_out_1 = 
+    Import(
+        main_Import_1_in_1,
+        main_Import_1_in_2,
+        main_Import_1_in_3,
+        main_Import_1_in_4,
+        main_Import_1_in_5,
+        main_Import_1_in_6
+    ) [instance: 1, cache: 1];
+    // 
+    // node Scalar[1]: x = 224, y = 131, inputs = 11, label = Scalar
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "Scalar_1"
+    // input[3]: defaulting = 0, visible = 0, type = 5, value = 225.000 
+    // input[4]: defaulting = 0, visible = 0, type = 3, value = 0
+    // input[5]: defaulting = 1, visible = 0, type = 5, value = 100.0
+    // input[6]: defaulting = 1, visible = 0, type = 5, value = 5000.0
+    // input[7]: defaulting = 1, visible = 0, type = 5, value = 1.0
+    // input[9]: defaulting = 1, visible = 0, type = 1, value = 5
+    // output[1]: visible = 1, type = 5, value = 225.000 
+    //
+    // 
+    // node Sequencer[1]: x = 369, y = 77, inputs = 7, label = Sequencer
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "Sequencer_1"
+    // input[4]: defaulting = 1, visible = 1, type = 1, value = 1
+    // input[5]: defaulting = 1, visible = 1, type = 1, value = 100
+    // input[6]: defaulting = 1, visible = 0, type = 1, value = 1
+    // input[7]: defaulting = 0, visible = 0, type = 16777217, value = { 1 100 1 1 64 0 }
+    //
+    main_Sequencer_1_out_1 = @frame;
+    // 
+    // node Compute[2]: x = 110, y = 140, inputs = 5, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "float($0)"
+    //
+    // expression: value = float(a)
+    // name[2]: value = a
+    // name[3]: value = b
+    // name[4]: value = c
+    // name[5]: value = d
+main_Compute_2_out_1 = 
+    Compute(
+        main_Compute_2_in_1,
+        main_Import_1_out_1,
+        main_Compute_2_in_3,
+        main_Compute_2_in_4,
+        main_Compute_2_in_5
+    ) [instance: 2, cache: 1];
+    // 
+    // node Compute[3]: x = 322, y = 167, inputs = 3, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "[0, $0, 0]"
+    //
+    // expression: value = [0, a, 0]
+    // name[2]: value = a
+    // name[3]: value = b
+main_Compute_3_out_1 = 
+    Compute(
+        main_Compute_3_in_1,
+        main_Sequencer_1_out_1,
+        main_Compute_3_in_3
+    ) [instance: 3, cache: 1];
+    // 
+    // node ShowBox[2]: x = 25, y = 313, inputs = 1, label = ShowBox
+    //
+main_ShowBox_2_out_1,
+main_ShowBox_2_out_2 = 
+    ShowBox(
+        main_Compute_2_out_1
+    ) [instance: 2, cache: 1];
+    // 
+    // node Isosurface[3]: x = 220, y = 238, inputs = 6, label = Isosurface
+    //
+main_Isosurface_3_out_1 = 
+    Isosurface(
+        main_Compute_2_out_1,
+        main_Scalar_1_out_1,
+        main_Isosurface_3_in_3,
+        main_Isosurface_3_in_4,
+        main_Isosurface_3_in_5,
+        main_Isosurface_3_in_6
+    ) [instance: 3, cache: 1];
+    // 
+    // node AutoColor[4]: x = 241, y = 410, inputs = 10, label = AutoColor
+    //
+main_AutoColor_4_out_1,
+main_AutoColor_4_out_2 = 
+    AutoColor(
+        main_Isosurface_3_out_1,
+        main_AutoColor_4_in_2,
+        main_AutoColor_4_in_3,
+        main_AutoColor_4_in_4,
+        main_AutoColor_4_in_5,
+        main_AutoColor_4_in_6,
+        main_AutoColor_4_in_7,
+        main_AutoColor_4_in_8,
+        main_AutoColor_4_in_9,
+        main_AutoColor_4_in_10
+    ) [instance: 4, cache: 1];
+    // 
+    // node MapToPlane[1]: x = 116, y = 232, inputs = 3, label = MapToPlane
+    // input[3]: defaulting = 0, visible = 1, type = 8, value = [0 1 0]
+    //
+main_MapToPlane_1_out_1 = 
+    MapToPlane(
+        main_Compute_2_out_1,
+        main_Compute_3_out_1,
+        main_MapToPlane_1_in_3
+    ) [instance: 1, cache: 1];
+    // 
+    // node AutoGrayScale[2]: x = 134, y = 338, inputs = 10, label = AutoGrayScale
+    //
+main_AutoGrayScale_2_out_1,
+main_AutoGrayScale_2_out_2 = 
+    AutoGrayScale(
+        main_MapToPlane_1_out_1,
+        main_AutoGrayScale_2_in_2,
+        main_AutoGrayScale_2_in_3,
+        main_AutoGrayScale_2_in_4,
+        main_AutoGrayScale_2_in_5,
+        main_AutoGrayScale_2_in_6,
+        main_AutoGrayScale_2_in_7,
+        main_AutoGrayScale_2_in_8,
+        main_AutoGrayScale_2_in_9,
+        main_AutoGrayScale_2_in_10
+    ) [instance: 2, cache: 1];
+    // 
+    // node Collect[3]: x = 182, y = 494, inputs = 4, label = Collect
+    //
+main_Collect_3_out_1 = 
+    Collect(
+        main_ShowBox_2_out_1,
+        main_AutoGrayScale_2_out_1,
+        main_Collect_3_in_3,
+        main_Collect_3_in_4
+    ) [instance: 3, cache: 1];
+    // 
+    // node Image[1]: x = 158, y = 569, inputs = 35, label = Image
+    // input[1]: defaulting = 0, visible = 0, type = 1, value = 2
+    // input[4]: defaulting = 0, visible = 0, type = 8, value = [31.5 31.5 13.0197]
+    // input[5]: defaulting = 0, visible = 0, type = 8, value = [-57.8544 239.043 -44.6319]
+    // input[6]: defaulting = 0, visible = 0, type = 5, value = 124.971
+    // input[7]: defaulting = 0, visible = 0, type = 1, value = 542
+    // input[8]: defaulting = 0, visible = 0, type = 5, value = 0.678
+    // input[9]: defaulting = 0, visible = 0, type = 8, value = [-0.923659 -0.37095 0.0961795]
+    // input[19]: defaulting = 0, visible = 0, type = 32, value = "/tmp/head"
+    // input[21]: defaulting = 0, visible = 0, type = 32, value = "tiff orient=portrait page=8.5x11.0 dpi=300"
+    // input[22]: defaulting = 0, visible = 0, type = 1, value = 0
+    // input[23]: defaulting = 1, visible = 0, type = 5, value = 29.9999
+    // input[24]: defaulting = 0, visible = 0, type = 1, value = 1
+    // input[25]: defaulting = 0, visible = 0, type = 32, value = "none"
+    // input[26]: defaulting = 0, visible = 0, type = 32, value = "none"
+    // input[27]: defaulting = 0, visible = 0, type = 1, value = 1
+    // input[28]: defaulting = 0, visible = 0, type = 1, value = 1
+    // input[29]: defaulting = 0, visible = 0, type = 3, value = 2
+    //
+    // depth: value = 8
+main_Image_1_out_1,
+main_Image_1_out_2 = 
+    Image(
+        main_Image_1_in_1,
+        main_Collect_3_out_1,
+        main_Image_1_in_3,
+        main_Image_1_in_4,
+        main_Image_1_in_5,
+        main_Image_1_in_6,
+        main_Image_1_in_7,
+        main_Image_1_in_8,
+        main_Image_1_in_9,
+        main_Image_1_in_10,
+        main_Image_1_in_11,
+        main_Image_1_in_12,
+        main_Image_1_in_13,
+        main_Image_1_in_14,
+        main_Image_1_in_15,
+        main_Image_1_in_16,
+        main_Image_1_in_17,
+        main_Image_1_in_18,
+        main_Image_1_in_19,
+        main_Image_1_in_20,
+        main_Image_1_in_21,
+        main_Image_1_in_22,
+        main_Image_1_in_23,
+        main_Image_1_in_24,
+        main_Image_1_in_25,
+        main_Image_1_in_26,
+        main_Image_1_in_27,
+        main_Image_1_in_28,
+        main_Image_1_in_29,
+        main_Image_1_in_30,
+        main_Image_1_in_31,
+        main_Image_1_in_32,
+        main_Image_1_in_33,
+        main_Image_1_in_34,
+        main_Image_1_in_35
+    ) [instance: 1, cache: 1];
+// network: end of macro body
+}
+main_Import_1_in_1 = "MRIdata.general";
+main_Import_1_in_2 = NULL;
+main_Import_1_in_3 = "general";
+main_Import_1_in_4 = NULL;
+main_Import_1_in_5 = NULL;
+main_Import_1_in_6 = NULL;
+main_Import_1_out_1 = NULL;
+main_Scalar_1_in_1 = "Scalar_1";
+main_Scalar_1_in_2 = NULL;
+main_Scalar_1_in_3 = 225.000 ;
+main_Scalar_1_in_4 = 0;
+main_Scalar_1_in_5 = NULL;
+main_Scalar_1_in_6 = NULL;
+main_Scalar_1_in_7 = NULL;
+main_Scalar_1_in_8 = NULL;
+main_Scalar_1_in_9 = NULL;
+main_Scalar_1_in_10 = NULL;
+main_Scalar_1_in_11 = NULL;
+main_Scalar_1_out_1 = 225.000 ;
+main_Sequencer_1_in_1 = "Sequencer_1";
+main_Sequencer_1_in_2 = NULL;
+main_Sequencer_1_in_3 = NULL;
+main_Sequencer_1_in_4 = NULL;
+main_Sequencer_1_in_5 = NULL;
+main_Sequencer_1_in_6 = NULL;
+main_Sequencer_1_in_7 = { 1 100 1 1 64 0 };
+main_Sequencer_1_out_1 = NULL;
+
+@startframe = 1;
+@nextframe  = @startframe;
+@endframe   = 64;
+@deltaframe = 1;
+main_Compute_2_in_1 = "float($0)";
+main_Compute_2_in_3 = NULL;
+main_Compute_2_in_4 = NULL;
+main_Compute_2_in_5 = NULL;
+main_Compute_2_out_1 = NULL;
+main_Compute_3_in_1 = "[0, $0, 0]";
+main_Compute_3_in_3 = NULL;
+main_Compute_3_out_1 = NULL;
+main_ShowBox_2_out_1 = NULL;
+main_Isosurface_3_in_3 = NULL;
+main_Isosurface_3_in_4 = NULL;
+main_Isosurface_3_in_5 = NULL;
+main_Isosurface_3_in_6 = NULL;
+main_Isosurface_3_out_1 = NULL;
+main_AutoColor_4_in_2 = NULL;
+main_AutoColor_4_in_3 = NULL;
+main_AutoColor_4_in_4 = NULL;
+main_AutoColor_4_in_5 = NULL;
+main_AutoColor_4_in_6 = NULL;
+main_AutoColor_4_in_7 = NULL;
+main_AutoColor_4_in_8 = NULL;
+main_AutoColor_4_in_9 = NULL;
+main_AutoColor_4_in_10 = NULL;
+main_MapToPlane_1_in_3 = [0 1 0];
+main_MapToPlane_1_out_1 = NULL;
+main_AutoGrayScale_2_in_2 = NULL;
+main_AutoGrayScale_2_in_3 = NULL;
+main_AutoGrayScale_2_in_4 = NULL;
+main_AutoGrayScale_2_in_5 = NULL;
+main_AutoGrayScale_2_in_6 = NULL;
+main_AutoGrayScale_2_in_7 = NULL;
+main_AutoGrayScale_2_in_8 = NULL;
+main_AutoGrayScale_2_in_9 = NULL;
+main_AutoGrayScale_2_in_10 = NULL;
+main_AutoGrayScale_2_out_1 = NULL;
+main_Collect_3_in_3 = NULL;
+main_Collect_3_in_4 = NULL;
+main_Collect_3_out_1 = NULL;
+macro Image(
+        useVector,
+        object,
+        where,
+        to,
+        from,
+        width,
+        resolution,
+        aspect,
+        up,
+        options,
+        AAenable = 1,
+        AAlabels,
+        AAticks,
+        AAcorners,
+        AAframe,
+        AAadjust,
+        AAcursor,
+        RECenable = 1,
+        RECfile,
+        throttle,
+        RECformat,
+        perspective,
+        viewAngle,
+        buttonState = 1,
+        buttonUpApprox = "none",
+        buttonDownApprox = "none",
+        buttonUpDensity = 1,
+        buttonDownDensity = 1,
+        renderMode = 1,
+        backgroundColor,
+        AAgrid,
+        AAcolors,
+        AAannotation,
+        AAlabelscale,
+        AAfont) -> (
+        object,
+        camera)
+{
+    autoCamera =
+        AutoCamera(
+            object,
+            "front",
+            object,
+            resolution,
+            aspect,
+            [0,1,0],
+            perspective,
+            viewAngle,
+            backgroundColor) [instance: 1];
+    realCamera =
+        Camera(
+            to,
+            from,
+            width,
+            resolution,
+            aspect,
+            up,
+            perspective,
+            viewAngle,
+            backgroundColor) [instance: 1];
+    camera = Switch(useVector, autoCamera, realCamera)[instance:1];
+    AAobject =
+        AutoAxes(
+            object,
+            camera,
+            AAlabels,
+            AAticks,
+            AAcorners,
+            AAframe,
+            AAadjust,
+            AAcursor,
+            AAgrid,
+            AAcolors,
+            AAannotation,
+            AAlabelscale,
+            AAfont) [instance: 1];
+    object = Switch(AAenable, object, AAobject)[instance:2];
+    SWapproximation_options =
+        Switch(
+            buttonState,
+            buttonUpApprox,
+            buttonDownApprox) [instance: 3];
+    SWdensity_options =
+        Switch(
+            buttonState,
+            buttonUpDensity,
+            buttonDownDensity) [instance: 4];
+    HWapproximation_options =
+        Format(
+            "%s,%s",
+            buttonDownApprox,
+            buttonUpApprox) [instance: 1];
+    HWdensity_options =
+        Format(
+            "%d,%d",
+            buttonDownDensity,
+            buttonUpDensity) [instance: 1];
+    approximation_options = Switch(renderMode,
+        SWapproximation_options, HWapproximation_options)[instance: 5];
+    density_options = Switch(renderMode,
+        SWdensity_options, HWdensity_options)[instance: 6];
+    renderModeString = Switch(renderMode,
+        "software", "hardware")[instance: 7];
+    annoted_object =
+        Options(
+            object,
+            "send boxes",
+            0,
+            "rendering approximation",
+            approximation_options,
+            "render every",
+            density_options,
+            "rendering mode",
+            renderModeString) [instance: 1];
+    NoRECobject, RECobject = Route(RECenable, annoted_object);
+    Display(
+        NoRECobject,
+        camera,
+        where,
+        throttle) [instance: 1];
+    image =
+        Render(
+            RECobject,
+            camera) [instance: 1];
+    Display(
+        image,
+        NULL,
+        where,
+        throttle) [instance: 2];
+    WriteImage(
+        image,
+        RECfile,
+        RECformat) [instance: 1];
+}
+main_Image_1_in_1 = 2;
+main_Image_1_in_4 = [31.5 31.5 13.0197];
+main_Image_1_in_5 = [-57.8544 239.043 -44.6319];
+main_Image_1_in_6 = 124.971;
+main_Image_1_in_7 = 542;
+main_Image_1_in_8 = 0.678;
+main_Image_1_in_9 = [-0.923659 -0.37095 0.0961795];
+main_Image_1_in_10 = NULL;
+main_Image_1_in_11 = NULL;
+main_Image_1_in_12 = NULL;
+main_Image_1_in_13 = NULL;
+main_Image_1_in_14 = NULL;
+main_Image_1_in_15 = NULL;
+main_Image_1_in_16 = NULL;
+main_Image_1_in_17 = NULL;
+main_Image_1_in_19 = "/tmp/head";
+main_Image_1_in_20 = NULL;
+main_Image_1_in_21 = "tiff orient=portrait page=8.5x11.0 dpi=300";
+main_Image_1_in_22 = 0;
+main_Image_1_in_23 = NULL;
+main_Image_1_in_24 = 1;
+main_Image_1_in_25 = "none";
+main_Image_1_in_26 = "none";
+main_Image_1_in_27 = 1;
+main_Image_1_in_28 = 1;
+main_Image_1_in_29 = 2;
+main_Image_1_in_30 = NULL;
+main_Image_1_in_31 = NULL;
+main_Image_1_in_32 = NULL;
+main_Image_1_in_33 = NULL;
+main_Image_1_in_34 = NULL;
+main_Image_1_in_35 = NULL;
+Executive("product version 2 1 5");
+$sync;
+
+sequence main();
+play;

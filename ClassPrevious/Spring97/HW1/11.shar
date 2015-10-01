@@ -1,0 +1,565 @@
+#!/bin/sh
+# This is a shell archive (produced by GNU sharutils 4.2).
+# To extract the files from this archive, save it to some FILE, remove
+# everything before the `!/bin/sh' line above, then type `sh FILE'.
+#
+# Made on 1997-02-05 18:25 EST by <wilmesj@cortez>.
+# Source directory was `/afs/rpi.edu/home/80/wilmesj/Classes/Visualization/HW1'.
+#
+# Existing files will *not* be overwritten unless `-c' is specified.
+#
+# This shar contains:
+# length mode       name
+# ------ ---------- ------------------------------------------
+#    814 -rw------- Makefile
+#    814 -rw------- Makefile.Mesa.aix
+#    779 -rw------- Makefile.Mesa.linux
+#    810 -rw------- Makefile.Mesa.sun
+#    898 -rw------- Makefile.sgi
+#   9299 -rw------- hw1.c
+#
+save_IFS="${IFS}"
+IFS="${IFS}:"
+gettext_dir=FAILED
+locale_dir=FAILED
+first_param="$1"
+for dir in $PATH
+do
+  if test "$gettext_dir" = FAILED && test -f $dir/gettext \
+     && ($dir/gettext --version >/dev/null 2>&1)
+  then
+    set `$dir/gettext --version 2>&1`
+    if test "$3" = GNU
+    then
+      gettext_dir=$dir
+    fi
+  fi
+  if test "$locale_dir" = FAILED && test -f $dir/shar \
+     && ($dir/shar --print-text-domain-dir >/dev/null 2>&1)
+  then
+    locale_dir=`$dir/shar --print-text-domain-dir`
+  fi
+done
+IFS="$save_IFS"
+if test "$locale_dir" = FAILED || test "$gettext_dir" = FAILED
+then
+  echo=echo
+else
+  TEXTDOMAINDIR=$locale_dir
+  export TEXTDOMAINDIR
+  TEXTDOMAIN=sharutils
+  export TEXTDOMAIN
+  echo="$gettext_dir/gettext -s"
+fi
+touch -am 1231235999 $$.touch >/dev/null 2>&1
+if test ! -f 1231235999 && test -f $$.touch; then
+  shar_touch=touch
+else
+  shar_touch=:
+  echo
+  $echo 'WARNING: not restoring timestamps.  Consider getting and'
+  $echo "installing GNU \`touch', distributed in GNU File Utilities..."
+  echo
+fi
+rm -f 1231235999 $$.touch
+#
+if mkdir _sh116498; then
+  $echo 'x -' 'creating lock directory'
+else
+  $echo 'failed to create lock directory'
+  exit 1
+fi
+# ============= Makefile ==============
+if test -f 'Makefile' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'Makefile' '(file already exists)'
+else
+  $echo 'x -' extracting 'Makefile' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'Makefile' &&
+#
+# Sample Makefile for compilling the sample code for the
+# Advanced Computer Graphics and Data Visualization 35.6961 (Fall 1995)
+#
+# Copy this to the directory where the program resides and use
+#  
+#       make progname
+#
+# The progname would be the prefix of the source file you generated.
+# Like if your source file was hw1.c, the above line would read:
+#
+#       make hw1
+#
+# The make utility would automatically look for something with a suffix
+# it understood and would find hw1.c. There are built in rules which
+# tell it how to compile c source.
+#
+X
+LDFLAGS= -L/campus/visualization/mesa-ogl/1.2.7/@sys/lib \
+X	 -lglut -lMesaGLU -lMesaGL -lXmu -lXt -lX11 -lm
+CFLAGS= -g -I/campus/visualization/mesa-ogl/1.2.7/@sys/include
+X
+X
+$(TARGET): $(TARGET).o
+X	$(CC) -o $@ $? $(LIBS) $(LDFLAGS)
+X
+clean:
+X	/bin/rm -f *.o
+X
+SHAR_EOF
+  $shar_touch -am 0203130497 'Makefile' &&
+  chmod 0600 'Makefile' ||
+  $echo 'restore of' 'Makefile' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'Makefile:' 'MD5 check failed'
+b372b7437d5b7c8f07484606a593666a  Makefile
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'Makefile'`"
+    test 814 -eq "$shar_count" ||
+    $echo 'Makefile:' 'original size' '814,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= Makefile.Mesa.aix ==============
+if test -f 'Makefile.Mesa.aix' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'Makefile.Mesa.aix' '(file already exists)'
+else
+  $echo 'x -' extracting 'Makefile.Mesa.aix' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'Makefile.Mesa.aix' &&
+#
+# Sample Makefile for compilling the sample code for the
+# Advanced Computer Graphics and Data Visualization 35.6961 (Fall 1995)
+#
+# Copy this to the directory where the program resides and use
+#  
+#       make progname
+#
+# The progname would be the prefix of the source file you generated.
+# Like if your source file was hw1.c, the above line would read:
+#
+#       make hw1
+#
+# The make utility would automatically look for something with a suffix
+# it understood and would find hw1.c. There are built in rules which
+# tell it how to compile c source.
+#
+X
+LDFLAGS= -L/campus/visualization/mesa-ogl/1.2.7/@sys/lib \
+X	 -lglut -lMesaGLU -lMesaGL -lXmu -lXt -lX11 -lm
+CFLAGS= -g -I/campus/visualization/mesa-ogl/1.2.7/@sys/include
+X
+X
+$(TARGET): $(TARGET).o
+X	$(CC) -o $@ $? $(LIBS) $(LDFLAGS)
+X
+clean:
+X	/bin/rm -f *.o
+X
+SHAR_EOF
+  $shar_touch -am 0203130497 'Makefile.Mesa.aix' &&
+  chmod 0600 'Makefile.Mesa.aix' ||
+  $echo 'restore of' 'Makefile.Mesa.aix' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'Makefile.Mesa.aix:' 'MD5 check failed'
+b372b7437d5b7c8f07484606a593666a  Makefile.Mesa.aix
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'Makefile.Mesa.aix'`"
+    test 814 -eq "$shar_count" ||
+    $echo 'Makefile.Mesa.aix:' 'original size' '814,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= Makefile.Mesa.linux ==============
+if test -f 'Makefile.Mesa.linux' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'Makefile.Mesa.linux' '(file already exists)'
+else
+  $echo 'x -' extracting 'Makefile.Mesa.linux' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'Makefile.Mesa.linux' &&
+#
+# Sample Makefile for compilling the sample code for the
+# Advanced Computer Graphics and Data Visualization 35.6961 (Fall 1995)
+#
+# Copy this to the directory where the program resides and use
+#  
+#       make progname
+#
+# The progname would be the prefix of the source file you generated.
+# Like if your source file was hw1.c, the above line would read:
+#
+#       make hw1
+#
+# The make utility would automatically look for something with a suffix
+# it understood and would find hw1.c. There are built in rules which
+# tell it how to compile c source.
+#
+X
+CC=gcc
+LDFLAGS= -lglut -lMesaGLU -lMesaGL -L/usr/X11R6/lib -lXmu -lXt -lX11 -lXi -lm
+CFLAGS= -g -I/usr/include/mesa -I/usr/include/glut
+X
+X
+$(TARGET): $(TARGET).o
+X	$(CC) -o $@ $? $(LIBS) $(LDFLAGS)
+X
+clean:
+X	/bin/rm -f *.o
+X
+SHAR_EOF
+  $shar_touch -am 0203130297 'Makefile.Mesa.linux' &&
+  chmod 0600 'Makefile.Mesa.linux' ||
+  $echo 'restore of' 'Makefile.Mesa.linux' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'Makefile.Mesa.linux:' 'MD5 check failed'
+bd4d471a3461bdfe433485cdba10c077  Makefile.Mesa.linux
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'Makefile.Mesa.linux'`"
+    test 779 -eq "$shar_count" ||
+    $echo 'Makefile.Mesa.linux:' 'original size' '779,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= Makefile.Mesa.sun ==============
+if test -f 'Makefile.Mesa.sun' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'Makefile.Mesa.sun' '(file already exists)'
+else
+  $echo 'x -' extracting 'Makefile.Mesa.sun' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'Makefile.Mesa.sun' &&
+#
+# Sample Makefile for compilling the sample code for the
+# Advanced Computer Graphics and Data Visualization 35.6961 (Fall 1995)
+#
+# Copy this to the directory where the program resides and use
+#  
+#       make progname
+#
+# The progname would be the prefix of the source file you generated.
+# Like if your source file was hw1.c, the above line would read:
+#
+#       make hw1
+#
+# The make utility would automatically look for something with a suffix
+# it understood and would find hw1.c. There are built in rules which
+# tell it how to compile c source.
+#
+X
+CC=acc
+LDFLAGS= -L/locker/44/000644/Mesa/@sys/lib -lglut -lMesaGLU -lMesaGL -L/usr/local/X11/lib -lXmu -lXt -lX11 -lm
+CFLAGS= -g -I/locker/44/000644/Mesa/@sys/include
+X
+X
+$(TARGET): $(TARGET).o
+X	$(CC) -o $@ $? $(LIBS) $(LDFLAGS)
+X
+clean:
+X	/bin/rm -f *.o
+X
+SHAR_EOF
+  $shar_touch -am 0203130497 'Makefile.Mesa.sun' &&
+  chmod 0600 'Makefile.Mesa.sun' ||
+  $echo 'restore of' 'Makefile.Mesa.sun' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'Makefile.Mesa.sun:' 'MD5 check failed'
+0496885efb572c4a172e2560c65ee8e6  Makefile.Mesa.sun
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'Makefile.Mesa.sun'`"
+    test 810 -eq "$shar_count" ||
+    $echo 'Makefile.Mesa.sun:' 'original size' '810,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= Makefile.sgi ==============
+if test -f 'Makefile.sgi' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'Makefile.sgi' '(file already exists)'
+else
+  $echo 'x -' extracting 'Makefile.sgi' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'Makefile.sgi' &&
+#
+# Sample Makefile for compilling the sample code for the
+# Advanced Computer Graphics and Data Visualization 35.6961 (Fall 1995)
+#
+# Copy this to the directory where the program resides and use
+#  
+#       make progname
+#
+# The progname would be the prefix of the source file you generated.
+# Like if your source file was hw1.c, the above line would read:
+#
+#       make hw1
+#
+# The make utility would automatically look for something with a suffix
+# it understood and would find hw1.c. There are built in rules which
+# tell it how to compile c source.
+#
+X
+LDFLAGS= -L/campus/visualization/mesa-ogl/1.2.7/@sys/lib \
+X	 -lGL -lGLU -lMesaaux -lMesatk -lglut -lXmu -lXt -lX11 -lm
+CFLAGS= -g -I/campus/visualization/mesa-ogl/1.2.7/@sys/include/glut
+CC=cc
+X
+TARGET = simple
+X
+$(TARGET): $(TARGET).o
+X	$(CC) -o $@ $? $(LDFLAGS)
+X
+lorenz:    lorenz.o
+X	$(CC) $(CFLAGS) -o $@ $? $(LIBS)
+X
+clean:
+X	/bin/rm -f *.o
+SHAR_EOF
+  $shar_touch -am 0203130497 'Makefile.sgi' &&
+  chmod 0600 'Makefile.sgi' ||
+  $echo 'restore of' 'Makefile.sgi' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'Makefile.sgi:' 'MD5 check failed'
+a911ac703d77657be3fecce582d7478a  Makefile.sgi
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'Makefile.sgi'`"
+    test 898 -eq "$shar_count" ||
+    $echo 'Makefile.sgi:' 'original size' '898,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= hw1.c ==============
+if test -f 'hw1.c' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'hw1.c' '(file already exists)'
+else
+  $echo 'x -' extracting 'hw1.c' '(binary)'
+  sed 's/^X//' << 'SHAR_EOF' | uudecode &&
+begin 600 hw1.c
+M+RH*("H@2&]M97=O<FL@,2P@061V86YC960@0V]M<'5T97(@1W)A<&AI8W,@
+M86YD($1A=&$@5FES=6%L:7IA=&EO;@H@*B!*;W-H(%=I;&UE<R`H=VEL;65S
+M:D!R<&DN961U*0H@*B`R+S$O.3<*("HO"@HO*B!);F-L=61E<R!R97%U:7)E
+M9"`J+PHC:6YC;'5D92`\1TPO9VPN:#X*(VEN8VQU9&4@/$=,+V=L=70N:#X*
+M"B\J('-T<G5C='5R97,@*B\*<W1R=6-T(&]B:F5C="!["B`@8VAA<BH@;F%M
+M93L*("`O*B!P;W-I=&EO;B`J+PH@(&9L;V%T('AP;W,["B`@9FQO870@>7!O
+M<SL*("!F;&]A="!Z<&]S.PH@("\J(&]R:65N=&%T:6]N("HO"B`@:6YT('AR
+M;W0["B`@:6YT('ER;W0["B`@+RH@<V-A;&EN9R`J+PH@(&9L;V%T('-I>F4[
+M"B`@9FQO870@9&5F7W-I>F4["B`@+RH@;6%T97)I86P@<')O<&5R=&EE<R`J
+M+PH@(&9L;V%T(&%M8FEE;G1;-%T["B`@9FQO870@9&EF9G5S95LT73L*("!F
+M;&]A="!S<&5C=6QA<ELT73L*("!F;&]A="!S:&EN:6YE<W-;,5T["GT["@HO
+M*B!G;'5T+6-A;&QE9"!F=6YC=&EO;G,@*B\*<W1A=&EC('9O:60@9V-?:61L
+M92AV;VED*3L*<W1A=&EC('9O:60@9V-?9&ES<&QA>2AV;VED*3L*<W1A=&EC
+M('9O:60@9V-?<F5S:&%P92AI;G0L(&EN="D["G-T871I8R!V;VED(&=C7VME
+M>2AU;G-I9VYE9"!C:&%R+"!I;G0L(&EN="D["G-T871I8R!V;VED(&=C7W-P
+M96-I86QK97DH:6YT+"!I;G0L(&EN="D["G-T871I8R!V;VED(&=C7VUE;G4H
+M:6YT*3L*"B\J(&UA;G5A;&QY+6-A;&QE9"!F=6YC=&EO;G,@*B\*<W1A=&EC
+M('9O:60@;&EG:'1?:6YI="AV;VED*3L*=F]I9"!O8FI?<')E<"`H<W1R=6-T
+M(&]B:F5C="HI.PH*+RH@8V]N<W1A;G1S("HO"B-D969I;F4@455)5"`@(#$*
+M(V1E9FEN92!414%03U0@,@HC9&5F:6YE($-50D4@("`S"B-D969I;F4@4U!(
+M15)%(#0*(V1E9FEN92!62457("`@-0H*+RH@;V)J96-T(&EN:71I86QI>F%T
+M:6]N("HO"G-T<G5C="!O8FIE8W0@=&5A<&]T(#T@>R`B=&5A<&]T(BP*"0D)
+M("`@+3(N,"P@("\J('AP;W,@*B\*"0D)("`@,"XP+"`O*B!Y<&]S("HO"@D)
+M"2`@(#`N,"P@+RH@>G!O<R`J+PH)"0D@("`P+"`O*B!X<F]T("HO"@D)"2`@
+M(#`L("\J('ER;W0@*B\*"0D)("`@,"XX+"`O*B!S:7IE("HO"@D)"2`@(#`N
+M."P@+RH@9&5F875L="!S:7IE("HO"@D)"2`@('L@,"XP+"`P+C`L(#`N,"P@
+M,2XP('TL("\J(&%M8FEE;G0@*B\*"0D)("`@>R`Q+C`L(#$N,"P@,"XP+"`Q
+M+C`@?2P@+RH@9&EF9G5S92`J+PH)"0D@("![(#$N,"P@,2XP+"`Q+C`L(#$N
+M,"!]+"`O*B!S<&5C=6QA<B`J+PH)"0D@("![(#4P+C`@?2`@("`@("`@("`@
+M("`@("`O*B!S:&EN:6YE<W,@*B\*"0D@("`@("`@?3L@"@IS=')U8W0@;V)J
+M96-T(&-U8F4@/2![(")C=6)E(BP*"0D)(#`N,"P@("\J('AP;W,@*B\*"0D)
+M(#`N,"P@+RH@>7!O<R`J+PH)"0D@,"XP+"`O*B!Z<&]S("HO"@D)"2`P+"`O
+M*B!X<F]T("HO"@D)"2`P+"`O*B!Y<F]T("HO"@D)"2`Q+C`L("\J('-I>F4@
+M*B\*"0D)(#$N,"P@+RH@9&5F875L="!S:7IE("HO"@D)"2![(#`N,"P@,"XP
+M+"`P+C`L(#$N,"!]+"`O*B!A;6)I96YT("HO"@D)"2![(#$N,"P@,"XP+"`P
+M+C`L(#$N,"!]+"`O*B!D:69F=7-E("HO"@D)"2![(#$N,"P@,2XP+"`Q+C`L
+M(#$N,"!]+"`O*B!S<&5C=6QA<B`J+PH)"0D@>R`Q,#`N,"!]("`@("`@("`@
+M("`@("`@("\J('-H:6YI;F5S<R`J+PH)"2`@("`@?3L@"@H*<W1R=6-T(&]B
+M:F5C="!S<&AE<F4@/2![(")S<&AE<F4B+`H)"0D@("`R+C`L("`O*B!X<&]S
+M("HO"@D)"2`@(#`N,"P@+RH@>7!O<R`J+PH)"0D@("`P+C`L("\J('IP;W,@
+M*B\*"0D)("`@,"P@+RH@>')O="`J+PH)"0D@("`P+"`O*B!Y<F]T("HO"@D)
+M"2`@(#`N-BP@+RH@<VEZ92`J+PH)"0D@("`P+C8L("\J(&1E9F%U;'0@<VEZ
+M92`J+PH)"0D@("![(#`N,"P@,"XP+"`P+C`L(#$N,"!]+"`O*B!A;6)I96YT
+M("HO"@D)"2`@('L@,"XP+"`P+C`L(#$N,"P@,2XP('TL("\J(&1I9F9U<V4@
+M*B\*"0D)("`@>R`Q+C`L(#$N,"P@,2XP+"`Q+C`@?2P@+RH@<W!E8W5L87(@
+M*B\*"0D)("`@>R`P+C`@?2`@("`@("`@("`@("`@("`O*B!S:&EN:6YE<W,@
+M*B\*"0D@("`@("`@?3L@"@IS=')U8W0@;V)J96-T('9I97<@/2![(")V:65W
+M(BP*"0D)(#`N,"P@+RH@>'!O<R`M:6=N;W)E9"`J+PH)"0D@,"XP+"`O*B!Y
+M<&]S("UI9VYO<F5D("HO"@D)"2`P+C`L("\J('IP;W,@+6EG;F]R960@*B\*
+M"0D)(#`L("\J('AR;W0@*B\*"0D)(#`L("\J('ER;W0@*B\*"0D)(#`L("\J
+M('-I>F4M(&EG;F]R960@*B\*"0D)(#`L("\J(&1E9F%U;'0@<VEZ92T@:6=N
+M;W)E9"`J+PH)"0D@>R`P+C`L(#`N,"P@,"XP+"`Q+C`@?2P@+RH@86UB:65N
+M="`M:6=N;W)E9"`J+PH)"0D@>R`P+C`L(#`N,"P@,"XP+"`Q+C`@?2P@+RH@
+M9&EF9G5S92`M:6=N;W)E9"`J+PH)"0D@>R`P+C`L(#`N,"P@,"XP+"`Q+C`@
+M?2P@+RH@<W!E8W5L87(@+6EG;F]R960@*B\*"0D)('L@,"XP('T@("`@("`@
+M("`@("`@("`@+RH@<VAI;FEN97-S("UI9VYO<F5D("HO"@D)("`@("!].R`*
+M"G-T<G5C="!O8FIE8W0J('-E;&5C=&5D7V]B:F5C=#TF=FEE=SL*"B\J*BHJ
+M*BHJ*BHJ*BHJ*BHJ*BHJ*BHJ*BHJ*BHJ*BHJ($=,550@0V%L;&)A8VMS("HJ
+M*BHJ*BHJ*BHJ*BHJ*BHJ*BHJ*BHJ*BHJ*BHO"@HO*CHZ.CHZ.CHZ.CHZ.CHZ
+M.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ(&=C7VED;&4@.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ
+M.CHZ.CHZ.CHZ.CHZ.CHJ+PHO*B!#86QL960@87,@82!G;'5T(&-A;&QB86-K
+M(&1U<FEN9R!I9&QE(&QO;W`@*B\*=F]I9"!G8U]I9&QE*'9O:60I"GL*"GT*
+M"B\J.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ.B!G8U]D:7-P;&%Y
+M(#HZ.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ.BHO"B\J(&=L=70@1&ES
+M<&QA>2!F=6YC=&EO;B`J+PIV;VED(&=C7V1I<W!L87DH=F]I9"D*>PH@(&=L
+M0VQE87(H1TQ?0T],3U)?0E5&1D527T))5"!\($=,7T1%4%1(7T)51D9%4E]"
+M250I.PH@(&=L0VQE87)#;VQO<B`H,"XP+"`P+C`L(#`N,"P@,"XP*3L*("`*
+M("!G;$UA=')I>$UO9&4@*$=,7TU/1$5,5DE%5RD[("`@("`@("`O*B!M86YI
+M<'5L871E(&UO9&5L=FEE=R!M871R:7@@("HO"@H@("\J(&1O('9I97<@=')A
+M;G-F;W)M871I;VYS("HO"B`@9VQ,;V%D261E;G1I='DH*3L*("!G;%1R86YS
+M;&%T968H=FEE=RYX<&]S+"!V:65W+GEP;W,L('9I97<N>G!O<RD["B`@9VQ2
+M;W1A=&5F*"UV:65W+GAR;W0L(#$N,"P@,"XP+"`P+C`I.R`O*B`H;6]V92!I
+M;B!O<'!O<VET92!D:7)E8W1I;VX@9F]R("HO"B`@9VQ2;W1A=&5F*"UV:65W
+M+GER;W0L(#`N,"P@,2XP+"`P+C`I.R`O*B`@=&AE('9I97<I("HO"@H@(&=L
+M4'5S:$UA=')I>"@I.PH@("`@(&]B:E]P<F5P*"9C=6)E*3L*("`@("!G;'5T
+M4V]L:61#=6)E*&-U8F4N<VEZ92D[("`@+RH@(&1R87<@=&AE(&-U8F4@*B\*
+M("!G;%!O<$UA=')I>"@I.PH@(`H@(&=L4'5S:$UA=')I>"@I.PH@("`@(&]B
+M:E]P<F5P*"9S<&AE<F4I.PH@("`@(&=L=713;VQI9%-P:&5R92AS<&AE<F4N
+M<VEZ92PR,"PR,"D["B`@9VQ0;W!-871R:7@H*3L*("`*("!G;%!U<VA-871R
+M:7@H*3L*("`@("!O8FI?<')E<"@F=&5A<&]T*3L*("`@("!G;'5T4V]L:614
+M96%P;W0H=&5A<&]T+G-I>F4I.PH@(&=L4&]P36%T<FEX*"D["B`@"B`@9VQU
+M=%-W87!"=69F97)S*"D[(`I]"@HO*CHZ.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ
+M.CHZ.CHZ.CH@9V-?<F5S:&%P92`Z.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ
+M.CHZ.CHJ+PHO*B`@0V%L;&5D('=H96X@=&AE('=I;F1O=R!I<R!F:7)S="!O
+M<&5N960@86YD('=H96YE=F5R(`H@*B`@=&AE('=I;F1O=R!I<R!R96-O;F9I
+M9W5R960@*&UO=F5D(&]R(')E<VEZ960I+@H@*B\*=F]I9"!G8U]R97-H87!E
+M*&EN="!W+"!I;G0@:"D*>PH@("`@("!G;%9I97=P;W)T("@P+"`P+"!W+"!H
+M*3L@("`@("`@("`@("`O*B`@9&5F:6YE('1H92!V:65W<&]R="`J+PH@("`@
+M("!G;$UA=')I>$UO9&4H1TQ?4%)/2D5#5$E/3BD["B`@("`@(&=L3&]A9$ED
+M96YT:71Y*"D["B`@("`@(&=L=5!E<G-P96-T:79E*#0U+C`L(#$N,"HH1TQF
+M;&]A="EW+RA'3&9L;V%T*6@L(#$N,"P@,3`N,"D["B`@("`@(&=L5')A;G-L
+M871E9B`H,"XP+"`P+C`L("TT+C`I.R`@("`@+RH@('9I97=I;F<@=')A;G-F
+M;W)M871I;VX@("`@("`J+PH@("`@("!G;$UA=')I>$UO9&4@*$=,7TU/1$5,
+M5DE%5RD[("`@("`@("`O*B!B86-K('1O(&UO9&5L=FEE=R!M871R:7@@("HO
+M"GT*"B\J.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ.B!G8U]K
+M97D@.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ.BHO"B\J($ME>6)O
+M87)D(&AA;F1L97(@*B\*=F]I9"!G8U]K97DH=6YS:6=N960@8VAA<B!K97DL
+M(&EN="!X+"!I;G0@>2D*>PH@("`@<W=I=&-H("AK97DI('L*("`@(&-A<V4@
+M,C<Z("`@("`@("`@("`O*B!%<V,@=VEL;"!Q=6ET("HO"B`@("`@(&5X:70H
+M,2D["B`@("`@(&)R96%K.PH@("`@8V%S92`G<2<Z"B`@("`@('-E;&5C=&5D
+M7V]B:F5C="T^>'!O<R`K/2`P+C(@.PH@("`@("!B<F5A:SL*("`@(&-A<V4@
+M)V$G.@H@("`@("!S96QE8W1E9%]O8FIE8W0M/GAP;W,@+3T@,"XR(#L*("`@
+M("`@8G)E86L["B`@("!C87-E("=W)SH*("`@("`@<V5L96-T961?;V)J96-T
+M+3YY<&]S("L](#`N,B`["B`@("`@(&)R96%K.PH@("`@8V%S92`G<R<Z"B`@
+M("`@('-E;&5C=&5D7V]B:F5C="T^>7!O<R`M/2`P+C(@.PH@("`@("!B<F5A
+M:SL*("`@(&-A<V4@)V4G.@H@("`@("!S96QE8W1E9%]O8FIE8W0M/GIP;W,@
+M*ST@,"XR(#L*("`@("`@8G)E86L["B`@("!C87-E("=D)SH*("`@("`@<V5L
+M96-T961?;V)J96-T+3YZ<&]S("T](#`N,B`["B`@("`@(&)R96%K.PH@("`@
+M9&5F875L=#H*("`@("`@8G)E86L["B`@("!]"B`@("!G;'5T4&]S=%)E9&ES
+M<&QA>2@I.PI]"@HO*CHZ.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ.B!G
+M8U]S<&5C:6%L:V5Y(#HZ.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ.CHJ+PHO
+M*B!3<&5C:6%L($ME>2!H86YD;&5R("HO"G-T871I8R!V;VED(&=C7W-P96-I
+M86QK97DH(&EN="!K97DL(&EN="!X+"!I;G0@>2`I"GL*("!S=VET8V@@*&ME
+M>2D@>PH@(&-A<V4@1TQ55%]+15E?4$%'15]54#H*("`@('!R:6YT9B`H(E-C
+M86QE("5S('5P7&XB+'-E;&5C=&5D7V]B:F5C="T^;F%M92D["B`@("!S96QE
+M8W1E9%]O8FIE8W0M/G-I>F4@*ST@+C(["B`@("!B<F5A:SL*"B`@8V%S92!'
+M3%547TM%65]004=%7T1/5TXZ"B`@("!P<FEN=&8@*")38V%L92`E<R!D;W=N
+M7&XB+'-E;&5C=&5D7V]B:F5C="T^;F%M92D["B`@("!S96QE8W1E9%]O8FIE
+M8W0M/G-I>F4@+3T@+C(["B`@("!B<F5A:SL*"B`@8V%S92!'3%547TM%65],
+M1494.@H@("`@<')I;G1F("@B4F]T871E("5S(&QE9G1<;B(L<V5L96-T961?
+M;V)J96-T+3YN86UE*3L*("`@('-E;&5C=&5D7V]B:F5C="T^>7)O="`M/2`Q
+M-3L*("`@(&)R96%K.PH*("!C87-E($=,551?2T597T1/5TXZ"B`@("!P<FEN
+M=&8@*")2;W1A=&4@)7,@9&]W;EQN(BQS96QE8W1E9%]O8FIE8W0M/FYA;64I
+M.PH@("`@<V5L96-T961?;V)J96-T+3YX<F]T("L](#$U.PH@("`@8G)E86L[
+M"@H@(&-A<V4@1TQ55%]+15E?55`Z"B`@("!P<FEN=&8@*")2;W1A=&4@)7,@
+M=7!<;B(L<V5L96-T961?;V)J96-T+3YN86UE*3L*("`@('-E;&5C=&5D7V]B
+M:F5C="T^>')O="`M/2`Q-3L*("`@(&)R96%K.PH*("!C87-E($=,551?2T59
+M7U))1TA4.@H@("`@<')I;G1F("@B4F]T871E("5S(')I9VAT7&XB+'-E;&5C
+M=&5D7V]B:F5C="T^;F%M92D["B`@("!S96QE8W1E9%]O8FIE8W0M/GER;W0@
+M*ST@,34["B`@("!B<F5A:SL*"B`@8V%S92!'3%547TM%65](3TU%.@H@("`@
+M<')I;G1F("@B4F5S=&]R92`E<R!T;R!H;VUE('!O<UQN(BQS96QE8W1E9%]O
+M8FIE8W0M/FYA;64I.PH@("`@<V5L96-T961?;V)J96-T+3YY<F]T/3`["B`@
+M("!S96QE8W1E9%]O8FIE8W0M/GAR;W0],#L*("`@('-E;&5C=&5D7V]B:F5C
+M="T^<VEZ93US96QE8W1E9%]O8FIE8W0M/F1E9E]S:7IE.PH@("`@8G)E86L[
+M"B`@?0H@(&EF("AS96QE8W1E9%]O8FIE8W0M/GER;W0@/"`P*2`@('-E;&5C
+M=&5D7V]B:F5C="T^>7)O="`K/2`S-C`["B`@:68@*'-E;&5C=&5D7V]B:F5C
+M="T^>7)O="`^(#,V,"D@<V5L96-T961?;V)J96-T+3YY<F]T("T](#,V,#L*
+M("!I9B`H<V5L96-T961?;V)J96-T+3YX<F]T(#P@,"D@("!S96QE8W1E9%]O
+M8FIE8W0M/GAR;W0@*ST@,S8P.PH@(&EF("AS96QE8W1E9%]O8FIE8W0M/GAR
+M;W0@/B`S-C`I('-E;&5C=&5D7V]B:F5C="T^>')O="`M/2`S-C`["B`@9VQU
+M=%!O<W12961I<W!L87DH*3L*?0H*+RHZ.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ
+M.CHZ.CHZ.CHZ.B!G8U]M96YU(#HZ.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ
+M.CHZ.CHZ*B\*<W1A=&EC('9O:60@9V-?;65N=2`H:6YT(&-H;VEC92D@"GL*
+M("!S=VET8V@H8VAO:6-E*2!["B`@8V%S92!154E4.B`@("!E>&ET*#`I.PH@
+M(&-A<V4@5$5!4$]4.B`@<V5L96-T961?;V)J96-T/29T96%P;W0[(&)R96%K
+M.PH@(&-A<V4@0U5"13H@("`@<V5L96-T961?;V)J96-T/29C=6)E.R`@(&)R
+M96%K.PH@(&-A<V4@4U!(15)%.B`@<V5L96-T961?;V)J96-T/29S<&AE<F4[
+M(&)R96%K.PH@(&-A<V4@5DE%5SH@("`@<V5L96-T961?;V)J96-T/29V:65W
+M.R`@(&)R96%K.PH@('T*("!P<FEN=&8H(DUE;G4@<V5L96-T.B`E<UQN(BQS
+M96QE8W1E9%]O8FIE8W0M/FYA;64I.PH@(&=L=710;W-T4F5D:7-P;&%Y*"D[
+M"GT*"@HO*BHJ*BHJ*BHJ*BHJ*BHJ*BHJ*BHJ*BHJ*BHJ*BHJ*BHJ*BHJ*BHJ
+M*BHJ*BHJ*BHJ*BHJ*BHJ*BHJ*BHJ*BHJ*BHJ*BHJ*BHJ*BHO"@HO*CHZ.CHZ
+M.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ.CH@;&EG:'1?:6YI="`Z.CHZ.CHZ
+M.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ.CHJ+PHO*B!);FET:6%L:7IE('-H861I
+M;F<@;6]D96P@*B\*=F]I9"!L:6=H=%]I;FET*'9O:60I"GL*("`@("`@<W1A
+M=&EC(&9L;V%T(&QI9VAT4&]S6S1=(#T@>S`N,"P@,"XP+"`T+C`L(#$N,'T[
+M"B`@("`@('-T871I8R!F;&]A="!L:6=H=$%M8ELT72`]('LP+C<L(#`N-RP@
+M,"XW+"`Q+C!].PH@("`@("!S=&%T:6,@9FQO870@;&EG:'1$:69F6S1=(#T@
+M>S`N."P@,"XX+"`P+C@L(#$N,'T["B`@("`@('-T871I8R!F;&]A="!L:6=H
+M=%-P96-;-%T@/2![,"XT+"`P+C0L(#`N-"P@,2XP?3L*"B`@("`@(&=L16YA
+M8FQE*$=,7TQ)1TA424Y'*3L*("`@("`@9VQ%;F%B;&4H1TQ?3$E'2%0P*3L*
+M("`@("`@9VQ,:6=H=&9V*$=,7TQ)1TA4,"P@1TQ?4$]3251)3TXL(&QI9VAT
+M4&]S*3L*("`@("`@9VQ,:6=H=&9V*$=,7TQ)1TA4,"P@1TQ?04U"245.5"P@
+M;&EG:'1!;6(I.PH@("`@("!G;$QI9VAT9G8H1TQ?3$E'2%0P+"!'3%]$249&
+M55-%+"!L:6=H=$1I9F8I.PH@("`@("!G;$QI9VAT9G8H1TQ?3$E'2%0P+"!'
+M3%]34$5#54Q!4BP@;&EG:'13<&5C*3L*("`@("`@9VQ%;F%B;&4H1TQ?1$50
+M5$A?5$535"D["B`@("`@("\J("`@9VQ3:&%D94UO9&5L("A'3%]&3$%4*3L@
+M("HO"GT*"B\J.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ.CH@;V)J
+M7W!R97`@.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ.CHZ.BHO"B\J('!R
+M97!A<F4@=&AE(&UO9&5L=FEE=R!T<F%N<V9O<FUA=&EO;B!M871R:7@@=7-I
+M;F<@=F%L=65S(&EN("IO8FIE8W0Z("HO"B\J(&%L<V\@<V5T<R!U<"!M871E
+M<FEA;',@*B\*=F]I9"!O8FI?<')E<"`H<W1R=6-T(&]B:F5C="H@;V)J96-T
+M*0I["B`@9VQ4<F%N<VQA=&5F*&]B:F5C="T^>'!O<RP@;V)J96-T+3YY<&]S
+M+"!O8FIE8W0M/GIP;W,I.PH@(&=L4F]T871E9BAO8FIE8W0M/GAR;W0L(#$N
+M,"P@,"XP+"`P+C`I.PH@(&=L4F]T871E9BAO8FIE8W0M/GER;W0L(#`N,"P@
+M,2XP+"`P+C`I.PH@(&=L36%T97)I86QF=BA'3%]&4D].5"P@1TQ?04U"245.
+M5"P@("!O8FIE8W0M/F%M8FEE;G0I.PH@(&=L36%T97)I86QF=BA'3%]&4D].
+M5"P@1TQ?1$E&1E5312P@("!O8FIE8W0M/F1I9F9U<V4I.PH@(&=L36%T97)I
+M86QF=BA'3%]&4D].5"P@1TQ?4U!%0U5,05(L("!O8FIE8W0M/G-P96-U;&%R
+M*3L*("!G;$UA=&5R:6%L9G8H1TQ?1E)/3E0L($=,7U-(24Y)3D534RP@;V)J
+M96-T+3YS:&EN:6YE<W,I.PI]"@HO*BHJ*BHJ*BHJ*BHJ*BHJ*BHJ*BHJ*BHJ
+M*BHJ*BHJ*BHJ*BHJ($U!24X@*BHJ*BHJ*BHJ*BHJ*BHJ*BHJ*BHJ*BHJ*BHJ
+M*BHJ*BHJ*BHO"FEN="!M86EN*&EN="!A<F=C+"!C:&%R*BH@87)G=BD@"GL*
+M("!P<FEN=&8@*")+97ES.EQN(%5P7'12;W1A=&4@=7!<;B!$;W=N.EQT4F]T
+M871E(&1O=VY<;B!,969T.EQT4F]T871E(&QE9G1<;B!2:6=H=#I<=%)O=&%T
+M92!2:6=H=%QN(%!A9V55<#I38V%L92!U<%QN(%!A9V5$;CI38V%L92!D;W=N
+M7&X@82]S.EQT;6]V92`K+RT@>%QN('<O<SI<=&UO=F4@*R\M('E<;B!E+V0Z
+M7'1M;W9E("LO+2!Z7&Y(;VUE.EQT36]V92!T;R!H;VUE('!O<VET:6]N7&Y-
+M;W5S93H@7&X@4FEG:'0@8G5T=&]N.B!S96QE8W0@;V)J96-T(&UE;G5<;EQN
+M(BD["@H@(&=L=71);FET*"9A<F=C+"!A<F=V*3L*("!G;'5T26YI=$1I<W!L
+M87E-;V1E("A'3%547T1/54),12!\($=,551?4D="02D["B`@9VQU=$EN:717
+M:6YD;W=3:7IE("@T,#`L(#(P,"D["B`@9VQU=$-R96%T95=I;F1O=R`H87)G
+M=ELP72D["B`@"B`@;&EG:'1?:6YI="`H*3L@"B`@"B`@+RH@<F5G:7-T97(@
+M;W5R(&-A;&QB86-K<R`J+PH@(&=L=71+97EB;V%R9$9U;F,H9V-?:V5Y*3L*
+M("!G;'5T4W!E8VEA;$9U;F,@*&=C7W-P96-I86QK97DI.PH@(&=L=71297-H
+M87!E1G5N8R`H9V-?<F5S:&%P92D["B`@9VQU=$1I<W!L87E&=6YC("AG8U]D
+M:7-P;&%Y*3L*("`O*F=L=71)9&QE1G5N8R`@("AG8U]I9&QE*3LJ+PH@(`H@
+M("\J(%-E="!U<"!A(&UE;G4@;VX@=&AE(')I9VAT(&)U='1O;B`J+PH@(&=L
+M=71#<F5A=&5-96YU("`H9V-?;65N=2D["B`@9VQU=$%D9$UE;G5%;G1R>2@B
+M475I="(L(%%5250I.PH@(&=L=71!9&1-96YU16YT<GDH(BTM+2TM+2TM+2TM
+M+2TB+"`P*3L*("!G;'5T061D365N=45N=')Y*")396QE8W0@=&5A<&]T(BP@
+M5$5!4$]4*3L*("!G;'5T061D365N=45N=')Y*")396QE8W0@8W5B92(L($-5
+M0D4I.PH@(&=L=71!9&1-96YU16YT<GDH(E-E;&5C="!S<&AE<F4B+"!34$A%
+M4D4I.PH@(&=L=71!9&1-96YU16YT<GDH(E-E;&5C="!V:65W<&]I;G0B+"!6
+M2457*3L*("`*("!G;'5T071T86-H365N=2A'3%547U))1TA47T)55%1/3BD[
+M"B`@"B`@+RH@5'5R;B!C;VYT<F]L(&]V97(@=&\@=&AE(&=L=70@979E;G0@
+=;&]O<"`J+PH@(&=L=71-86EN3&]O<"@I.PI]"@H@
+`
+end
+SHAR_EOF
+  $shar_touch -am 0203160597 'hw1.c' &&
+  chmod 0600 'hw1.c' ||
+  $echo 'restore of' 'hw1.c' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'hw1.c:' 'MD5 check failed'
+221d05895e6fe68d725037b5061f7194  hw1.c
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'hw1.c'`"
+    test 9299 -eq "$shar_count" ||
+    $echo 'hw1.c:' 'original size' '9299,' 'current size' "$shar_count!"
+  fi
+fi
+rm -fr _sh116498
+exit 0
+# From: Josh Wilmes <wilmesj>

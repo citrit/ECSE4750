@@ -1,0 +1,57 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: OGLRen - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "c:\windows\TEMP\RSP121.TMP" with contents
+[
+/nologo /MLd /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FR"Debug/" /Fp"Debug/OGLRen.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /c 
+"D:\WRK\oglren\LineCell.cxx"
+"D:\WRK\oglren\OGLWin32Ren.cxx"
+"D:\WRK\oglren\PlyGCell.cxx"
+"D:\WRK\oglren\PlyLCell.cxx"
+"D:\WRK\oglren\PtCell.cxx"
+"D:\WRK\oglren\StructG.cxx"
+"D:\WRK\oglren\TriCell.cxx"
+"D:\Wrk\oglren\objtest.cxx"
+]
+Creating command line "cl.exe @c:\windows\TEMP\RSP121.TMP" 
+<h3>Output Window</h3>
+Compiling...
+LineCell.cxx
+OGLWin32Ren.cxx
+PlyGCell.cxx
+PlyLCell.cxx
+PtCell.cxx
+StructG.cxx
+TriCell.cxx
+objtest.cxx
+Creating temporary file "c:\windows\TEMP\RSP231.TMP" with contents
+[
+opengl32.lib glu32.lib glaux.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:yes /pdb:"Debug/OGLRen.pdb" /debug /machine:I386 /nodefaultlib:"libcmt.lib" /out:"Debug/OGLRen.exe" /pdbtype:sept 
+.\Debug\LineCell.obj
+.\Debug\OGLWin32Ren.obj
+.\Debug\PlyGCell.obj
+.\Debug\PlyLCell.obj
+.\Debug\PtCell.obj
+.\Debug\StructG.obj
+.\Debug\TriCell.obj
+.\Debug\objtest.obj
+]
+Creating command line "link.exe @c:\windows\TEMP\RSP231.TMP"
+<h3>Output Window</h3>
+Linking...
+Creating command line "bscmake.exe /nologo /o"Debug/OGLRen.bsc"  .\Debug\LineCell.sbr .\Debug\OGLWin32Ren.sbr .\Debug\PlyGCell.sbr .\Debug\PlyLCell.sbr .\Debug\PtCell.sbr .\Debug\StructG.sbr .\Debug\TriCell.sbr .\Debug\objtest.sbr"
+Creating browse info file...
+<h3>Output Window</h3>
+
+
+
+<h3>Results</h3>
+OGLRen.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

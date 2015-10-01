@@ -1,0 +1,11 @@
+Example 6.3:
+	6.3main.tcl : shared code between parts a and b
+	Ex6.3a.tcl  : part a
+	Ex6.3b.tcl  : part b
+
+Example 9.4:
+	Ex9.4a.tcl : vtkHedgeHog
+	Ex9.4c.tcl : vtkWarpVector
+	Ex9.4d.tcl : vtkVectorNorm
+	Ex9.4e.tcl : vtkVectorDot
+

@@ -1,0 +1,235 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage Express 2.0">
+<title>DataVis - VTK</title>
+</head>
+
+<body bgcolor="#FFFFFF">
+
+<h3><img src="Speckled_GradientA042.gif" width="500" height="4"></h3>
+
+<h3><img src="images/head.gif" align="absmiddle" width="73"
+height="90">Advanced Computer Graphics and Data Visualization</h3>
+
+<p><img src="Speckled_GradientA042.gif" width="500" height="4"></p>
+
+<h2>VTK: An Intro</h2>
+
+<p>&nbsp;</p>
+
+<h3>Introduction:</h3>
+
+<ul>
+    <li><font size="4">The Visualization ToolKit (vtk) is a
+        software system for 3D Computer Graphics and
+        Visualization</font></li>
+    <li><font size="4">Vtk includes a textbook , a C++ class
+        library, and a Tcl implementation based on the class
+        library</font></li>
+    <li><font size="4">The design and implementation of the
+        library has been strongly influenced by object-oriented
+        principles</font></li>
+    <li><font size="4">The graphics model in vtk is at a higher
+        level of abstraction than rendering libraries like openGL
+        or PEX</font></li>
+    <li><font size="4">In vtk applications can be written
+        directly in C++ or in Tcl, a interpretive language
+        developed by John Ousterhout</font></li>
+    <li><font size="4">using Tcl and Tk, a graphical user
+        interface toolkit based on Tcl, it is possible to build
+        useful applications quickly</font></li>
+    <li><font size="4">The software is a true visualization
+        system, it doesn't just let you visualize geometry</font></li>
+    <li><font size="4">Vtk supports a wide variety of
+        visualization algorithms including scalar, vector, and
+        tensor visualization, and advanced modelling techniques
+        like implicit modelling, polygon reduction, and Delaunay
+        triangulation</font></li>
+    <li><font size="4">Over 300 C++ classes</font></li>
+    <li><font size="4">Computer Graphics:</font><ul>
+            <li><font size="4">Surface Rendering (supported
+                rendering libraries):<br>
+                openGL (various implementations), Silicon
+                Graphics (tm) gl, Hewlett-Packard (tm) starbase,
+                Sun Microsystems (tm) xgl</font></li>
+            <li><font size="4">Rendering Primitives: <br>
+                points, lines, polygons, triangle strips, volumes
+                </font></li>
+            <li><font size="4">Interactive Viewer/Renderer: A
+                &quot;3D Widget&quot; for interacting with data </font></li>
+            <li><font size="4">Properties:<br>
+                ambient, diffuse, specular, lights, transparency,
+                texture mapping, shading (flat/Gouraud)
+                backlighting on/off </font></li>
+            <li><font size="4">Lights: infinite, spot </font></li>
+            <li><font size="4">Cameras:<br>
+                parallel and perspective projection, nice methods
+                like elevation, azimuth, zoom, reset, automatic
+                camera/light creation </font></li>
+            <li><font size="4">Graphics Model:<br>
+                Lights illuminate the scene &#149; Cameras define
+                viewpoint &#149; Actors specify
+                geometry/properties &#149; Assemblies group
+                actors into arbitrary hierarchies &#149; Mappers
+                define geometry/link into visualization pipeline
+                &#149; Renderers coordinate lights, cameras,
+                actors to create image </font></li>
+            <li><font size="4">Special Features <br>
+                Multiple windows/viewports &#149; Red/blue stereo
+                &#149; Crystal eyes stereo &#149; Motion and
+                focal blur Backface/frontface culling of polygons
+                &#149; Save image to ppm file </font></li>
+        </ul>
+    </li>
+    <li><font size="4">Technical Overview: Visualization:</font><ul>
+            <li><font size="4">Data Types: <br>
+                polygonal data (points, lines, polygons, triangle
+                strips) &#149; images and volumes (i.e.,
+                structured point datasets) &#149; structured
+                grids (e.g., finite difference grids) &#149;
+                unstructured grids (e.g, finite element meshes)
+                &#149; unstructured points </font></li>
+            <li><font size="4">Attribute Types: <br>
+                scalars (single valued plus grayscale,
+                grayscale-alpha, rgb, and rgb-alpha). &#149;
+                vectors &#149; 3x3 tensors &#149; normals &#149;
+                texture coordinates (1-3D) &#149; user defined </font></li>
+            <li><font size="4">Scalar algorithms:<br>
+                color mapping &#149; carpet plots &#149;
+                iso-contouring: marching cubes &#149;
+                iso-contouring: dividing cubes &#149;
+                thresholding &#149; scalar generation from other
+                data (elevation, velocity, etc.)</font></li>
+            <li><font size="4">Modelling algorithms:<br>
+                spheres, cones, cylinders, cubes, lines, planes,
+                etc. &#149; axes, cursors, text, outlines &#149;
+                implicit modelling &#149; decimation &#149;
+                texture thresholding etc...</font></li>
+            <li><font size="4">Visualization Pipeline:<br>
+                Demand-driven data-flow with automatic network
+                updates &#149; Reference counting to reduce
+                memory requirements &#149; Uses sources, filters,
+                mappers to start, process, and terminate network
+                Network looping and feedback supported &#149;
+                Strongly type-checked to enforce filter
+                connectivity Supports multiple input / multiple
+                output filters </font></li>
+        </ul>
+    </li>
+    <li><font size="4">VTK objects are organized into a pipeline
+        consisting mainly of:</font><ul>
+            <li><font size="4">Sources - where the data comes
+                from</font></li>
+            <li><font size="4">Filters - process objects that
+                generate geometry</font></li>
+            <li><font size="4">Mappers - take raw geometry and
+                &quot;map&quot; it to VTK primitives</font></li>
+            <li><font size="4">Actors - represent an entity in a
+                scene</font></li>
+            <li><font size="4">Renderers - collect up all the
+                Actors, Cameras, and Lights to organize the scene</font></li>
+        </ul>
+    </li>
+    <li><font size="4">Here is a simple example of a scene:</font></li>
+</ul>
+
+<p>&nbsp;</p>
+<div align="center"><center>
+
+<table border="0" width="95%">
+    <tr>
+        <td width="50%"><strong>Tcl Source</strong></td>
+        <td width="50%"><strong>C++ source</strong></td>
+    </tr>
+    <tr>
+        <td><pre><font size="2">catch {load vtktcl}
+# user interface command widget
+source vtkInt.tcl
+
+# create a rendering window and renderer
+vtkRenderer ren1
+vtkRenderWindow renWin
+    renWin AddRenderer ren1
+vtkRenderWindowInteractor iren
+    iren SetRenderWindow renWin
+
+# create an actor and give it cone geometry
+vtkConeSource cone
+  cone SetResolution 8
+vtkPolyDataMapper coneMapper
+  coneMapper SetInput [cone GetOutput]
+vtkActor coneActor
+  coneActor SetMapper coneMapper
+
+# assign our actor to the renderer
+ren1 AddActor coneActor
+
+# enable user interface interactor
+iren SetUserMethod {wm deiconify .vtkInteract}
+iren Initialize
+
+# prevent the tk window from showing up then start the event loop
+wm withdraw .</font></pre>
+        </td>
+        <td><pre><font size="2">#include &quot;vtk.h&quot;
+
+main ()
+{
+char a;
+
+// create a rendering window and renderer
+vtkRenderer *ren = vtkRenderer::New();
+vtkRenderWindow *renWindow = vtkRenderWindow::New();
+
+renWindow-&gt;AddRenderer(ren);
+
+// create an actor and give it cone geometry
+vtkConeSource *cone = vtkConeSource::New();
+cone-&gt;SetResolution(8);
+vtkPolyDataMapper *coneMapper = vtkPolyDataMapper::New();
+
+coneMapper-&gt;SetInput(cone-&gt;GetOutput());
+vtkActor *coneActor = vtkActor::New();
+coneActor-&gt;SetMapper(coneMapper);
+
+// assign our actor to the renderer
+ren-&gt;AddActor(coneActor);
+
+// draw the resulting scene
+renWindow-&gt;Render();
+
+// loop until key is pressed
+cout &lt;&lt; &quot;Press any key followed by &lt;Enter&gt; to exit&gt;&gt; &quot;;
+cin &gt;&gt; a;
+
+// Clean up
+ren-&gt;Delete();
+renWindow-&gt;Delete();
+cone-&gt;Delete();
+coneMapper-&gt;Delete();
+coneActor-&gt;Delete();
+}</font></pre>
+        </td>
+    </tr>
+</table>
+</center></div>
+
+<p align="center"><font size="4"><img src="images/cone.jpg"
+width="308" height="326"></font></p>
+
+<ul>
+    <li><p align="left"><font size="4">This is a simple example
+        of how to get VTK up and running.</font> </p>
+    </li>
+    <li><p align="left"><font size="4">Next we will look at the
+        individual objects and pick apart the base source
+        objects.</font> </p>
+    </li>
+</ul>
+
+<p>&nbsp;</p>
+</body>
+</html>

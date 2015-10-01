@@ -1,0 +1,20 @@
+--------------------Configuration: Univ - Java Virtual Machine Debug--------------------
+Begining build with project "D:\Class\Java\Univ\Univ.dsp", at root.
+Active configuration is Java Virtual Machine Java Project (based on Java Virtual Machine Java Project)
+
+Project's tools are:
+			"Java Compiler" with flags "/g "
+			"Custom Build" with flags ""
+			"<Component 0xa>" with flags ""
+
+Creating temp file "D:\TEMP\RSP3AD.tmp" with contents <D:\Class\Java\Univ\HelloUniverse.java>
+Compiling...
+Microsoft (R) Visual J++ Compiler Version 1.01.7022
+Copyright (C) Microsoft Corp 1996. All rights reserved.
+
+D:\Class\Java\Univ\HelloUniverse.java(52,8) : error J0136: Public class 'UniverseBuilder' should not be defined in 'D:\Class\Java\Univ\HelloUniverse.java'
+D:\Class\Java\Univ\HelloUniverse.java(107,8) : error J0136: Public class 'ColorCube' should not be defined in 'D:\Class\Java\Univ\HelloUniverse.java'
+
+
+
+Univ - 2 error(s), 0 warning(s)

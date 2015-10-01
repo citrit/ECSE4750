@@ -1,0 +1,9 @@
+Authors of GNU Jogl
+
+Leo Chan - first version
+
+Adam King - lots of additions and fixes.  Also did the port to Win32.
+
+Tommy Reilly - turned into a typical GNU package, bug fixes, 
+	SGI support, optimizations, 
+

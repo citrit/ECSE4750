@@ -1,0 +1,16 @@
+Microsoft Visual Studio Solution File, Format Version 1.00
+Project("{66355F20-A65B-11D0-BFB5-00A0C91EBFA0}") = "AnimScene", "AnimScene.vjp", "{E79AE93E-EEA7-4DCB-B9F3-647D24820930}"
+EndProject
+Project("{66355F20-A65B-11D0-BFB5-00A0C91EBFA0}") = "OGLR", "..\OGLR.vjp", "{B0A000F8-BF9C-4441-980E-945AC3F8FEDB}"
+EndProject
+Global
+	GlobalSection(LocalDeployment) = postSolution
+		StartupProject = {E79AE93E-EEA7-4DCB-B9F3-647D24820930}
+	EndGlobalSection
+	GlobalSection(BuildOrder) = postSolution
+		0 = {E79AE93E-EEA7-4DCB-B9F3-647D24820930}
+		1 = {B0A000F8-BF9C-4441-980E-945AC3F8FEDB}
+	EndGlobalSection
+	GlobalSection(DeploymentRoot) = postSolution
+	EndGlobalSection
+EndGlobal

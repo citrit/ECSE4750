@@ -1,0 +1,20 @@
+Version 2
+Delimiter ","
+CoordSys Earth Projection 1, 0
+Columns 1
+  Field1 Char(10)
+Data
+
+Text "Rotation example"
+    -0.237549 0.025854 0.00445 0.055648
+    Font ("MS Sans Serif",0,0,8388608)
+    Angle 45.0
+
+Point -0.23785 0.055205
+    Symbol (32,0,9)
+Point -0.238183 0.028177
+    Symbol (32,0,9)
+Point -0.062665 0.054871
+    Symbol (32,0,9)
+Point -0.062331 0.028177
+    Symbol (32,0,9)

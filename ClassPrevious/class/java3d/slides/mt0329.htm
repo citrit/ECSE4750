@@ -1,0 +1,87 @@
+
+<HTML>
+<HEAD>
+<!-- Created by mktalk.pl on 7/16/98 at 3:58:23 PM -->
+<TITLE>Getting Pick Results</TITLE>
+</HEAD>
+
+<BODY
+	
+	BGCOLOR=#000000
+	TEXT=#FFFFFF
+	LINK=#FFFFFF
+	ALINK=#00FF00
+	VLINK=#888888
+>
+<TABLE WIDTH=100%
+	BORDER=0
+	CELLSPACING=0
+	CELLPADDING=0
+>
+<TR >
+<TD ALIGN=CENTER WIDTH=24%>
+	<FONT
+		COLOR=#FFFFFF
+		SIZE=-1
+	>
+	<A HREF=mt0000.htm><B><IMG SRC="../images/arwtoc2.gif" BORDER=0 WIDTH=24 HEIGHT=24></B></A>
+</TD>
+<TD ALIGN=CENTER WIDTH=24%>
+	<FONT
+		COLOR=#FFFFFF
+		SIZE=-1
+	>
+	<A HREF=mt0317.htm><B><IMG SRC="../images/arwndx2.gif" BORDER=0 WIDTH=24 HEIGHT=24></B></A>
+</TD>
+<TD ALIGN=CENTER WIDTH=24%>
+	<FONT
+		COLOR=#FFFFFF
+		SIZE=-1
+	>
+	<A HREF=mt0328.htm><B><IMG SRC="../images/arwprev2.gif" BORDER=0 WIDTH=24 HEIGHT=24></B></A>
+</TD>
+<TD ALIGN=CENTER WIDTH=24%>
+	<FONT
+		COLOR=#FFFFFF
+		SIZE=-1
+	>
+	<A HREF=mt0330.htm><B><IMG SRC="../images/arwnext2.gif" BORDER=0 WIDTH=24 HEIGHT=24></B></A>
+</TD>
+<TD ALIGN=CENTER WIDTH=4%>
+	<FONT
+		COLOR=#FFFFFF
+		SIZE=-1
+	>
+	329
+</TD>
+</TR>
+</TABLE>
+<P>
+
+<FONT COLOR=#FFFF00 SIZE=+0>
+<CENTER>Picking Shapes</CENTER>
+<FONT COLOR=#FFFF00 SIZE=+3>
+<CENTER><B><I>Getting Pick Results</I></B></CENTER>
+<CENTER><IMG SRC="../images/red.jpg" HEIGHT=2 WIDTH=70% BORDER=0></CENTER>
+<P>
+<FONT COLOR=#FFFFFF SIZE=+2>
+
+<DL>
+<DD><LI>The pick methods on <B><TT><FONT COLOR=#00FF00 SIZE=+2>Locale</FONT></TT></B> or <B><TT><FONT COLOR=#00FF00 SIZE=+2>BranchGroup</FONT></TT></B>
+return one or more <B><TT><FONT COLOR=#00FF00 SIZE=+2>SceneGraphPath</FONT></TT></B>s
+<P>
+<DD><LI>Each <B><TT><FONT COLOR=#00FF00 SIZE=+2>SceneGraphPath</FONT></TT></B> contains:
+<DL>
+	<DD><LI>A <B><TT><FONT COLOR=#00FF00 SIZE=+2>Node</FONT></TT></B> for the object that was picked
+	<DD><LI>The <B><TT><FONT COLOR=#00FF00 SIZE=+2>Locale</FONT></TT></B> above it in the scene graph
+	<DD><LI>A list of the <B><TT><FONT COLOR=#00FF00 SIZE=+2>Node</FONT></TT></B>s from the picked object
+		up to the <B><TT><FONT COLOR=#00FF00 SIZE=+2>Locale</FONT></TT></B>
+	<DD><LI>The world-to-object transform
+</DL>
+</DL>
+
+
+<!------------------------------------------------------------------------>
+
+</BODY>
+</HTML>

@@ -1,0 +1,145 @@
+<html>
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 2.0">
+<title>Data Vis - Visualization Pipeline</title>
+</head>
+<body bgcolor="#FFFFFF">
+<h3><img src="Speckled_GradientA042.gif" width="500" height="4"></h3>
+<h3><img src="images/head.gif" alt="*" align="absmiddle"
+width="73" height="90">Advanced Computer Graphics and Data
+Visualization</h3>
+<h2><img src="Speckled_GradientA042.gif" width="500" height="4"></h2>
+<h2>Section 4: Visualization Pipeline</h2>
+<hr align="left">
+<ul>
+    <li>Visualization deals with the idea of trasforming data
+        into images that accurately represent the information
+        about the data. Therefore the two main goals of
+        Visualization are <i>Transformation</i> and <i>Representation</i>.
+        <ol>
+            <li>Transformation deals with converting the data
+                from its original form into graphics primitives.</li>
+            <li>Representation deals with the internal
+                representation of the data and the graphics
+                primitives generated to depict the data.</li>
+        </ol>
+    </li>
+    <li>We next need to define things in terms of a functional
+        model and an object model.
+        <ul>
+            <li>The functional model defines how data flows
+                through the system.</li>
+            <li>The object model describes which modules operate
+                on the data.</li>
+        </ul>
+    </li>
+    <li>There are two choices for combinining the functional
+        model into an object model
+        <ul>
+            <li>The first choice is to combine process and data
+                objects. This binds the data and methods into one
+                object. This is good in that the processes, which
+                are data manipulation algorithms, have direct
+                access to the data which makes for fast code. The
+                drawbacks are:
+                <ol>
+                    <li>Users generally think of data algorithms
+                        as separate objects, for instance a user
+                        may want to generate contours of a data
+                        set. If the process is separate from the
+                        data we can use on gerenal contour
+                        process object to operate on many
+                        different types of data objects. </li>
+                    <li>If we bind processes to data objects,
+                        algorithms must be implemented in all
+                        objects of any data type we may create.
+                        Also if we change our contouring
+                        algorithm this must be changed in each
+                        data object the implements thsi process.</li>
+                    <li>Binding the data and processes also make
+                        for complex data dependant code and
+                        simple objects now become large and
+                        complex.</li>
+                </ol>
+            </li>
+        </ul>
+    </li>
+    <li>The Visualization pipeline consists of objects to
+        represent data (data objects), objects to operate on data
+        (process objects), and an indicated direction of data
+        flow.</li>
+    <li>The elements of the pipeline can obviously be linked in a
+        variety of ways to create visualization networks. In this
+        model the two issues to be aware of are <i>type</i> and <i>multiplicity</i>.
+        <ul>
+            <li>Type refers to the form the data process objects
+                either accept or supply. A contour object may
+                want a data set of connected points and then
+                output a container object that holds graphics
+                primitives.</li>
+            <li>Multiplicity deals with the number of input and
+                output objects allowed for any one process
+                object.</li>
+        </ul>
+    </li>
+    <li>To be useful a visualization network needs to process
+        data to generate a desired result. The complete process
+        of making each process object to operate is called the <i>execution</i>
+        of the network. We must ensure that all process objects
+        execute in the defined order and only if they need to.
+        This is important because we only want those objects to
+        execute that have had their input modified. We need to
+        define a method by which we can oversee the execution of
+        the network.</li>
+    <li>There are two methods for this: <i>Explicit</i> and <i>Implicit</i>
+        control.
+        <ul>
+            <li>Explicit control directly tracks the execution of
+                the network and records changes and then directly
+                controls the the execution of the process
+                objects. This method must track all objects and
+                changes to any one object in order to renotify
+                any dependant objects that a change has occured.
+                The nice aspect of this is that there is a single
+                process which tracks the network, this allows us
+                to gather execution information for data flow
+                graphs. The drawbacks are each process is
+                dependant on the executive object and must notify
+                it of any internal changes. Also the executive
+                cannot easily control execution if the network
+                execution is conditional since to execute or not
+                is dependant on one or more other objects.</li>
+            <li>Implicit control means a process object executes
+                only if the local data or input changes. Implicit
+                control is implemented using a two pass method. 
+                <ul>
+                    <li>The first pass deals with a recursive
+                        traversal of objects until the source
+                        object is found, this is the <i>update</i>
+                        pass. The source object then executes if
+                        necessary and the path is reversed until
+                        the requesting object is encountered and
+                        the sequence terminates. This is refered
+                        to as the <i>execution</i> pass. </li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+    <li>Another aspect of visualization networks is <i>conditional
+        execution</i>, we may want data to map through different
+        lookup tables based on some criterion.</li>
+    <li>A sound memory model is very important, we want to
+        minimize the amount of new data generated and maximize
+        the availabilty of data throughout the network.</li>
+    <li>A method of minimizing the memory requirements is to
+        implement reference counting, this allows more than one
+        object to share data stores.</li>
+    <li>Visualization systems must be easy to use and designed
+        for human interaction.</li>
+</ul>
+<p>Read chapter 4 in The Visualization Toolkit. </p>
+<p><img src="Speckled_GradientA042.gif" width="500" height="4"></p>
+</body>
+</html>

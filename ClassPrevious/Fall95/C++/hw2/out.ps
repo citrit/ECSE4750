@@ -1,0 +1,311 @@
+%!PS-Adobe-3.0
+%%Creator: enscript
+%%For: winston.its.rpi.edu:citrit (Thomas D Citriniti)
+%%Title: Cell.H
+%%CreationDate: Thu Sep 28 12:38:45 1995
+%%DocumentNeededResources: font Courier-Bold Courier
+%+ Times-Roman Times-Bold Helvetica-Bold
+%%Pages: (atend)
+%%BeginProlog
+% Start of enscript.pro -- prolog for text file translator
+% Copyright (c) 1984,1985,1987 Adobe Systems Incorporated. All Rights Reserved. 
+% GOVERNMENT END USERS: See Notice file in TranScript library directory
+% -- probably /usr/lib/ps/Notice
+% RCSID: $Header: /disks/hobo/vp6/snichols/rel3.0/transcript/lib/RCS/enscript.pro,v 3.0 1991/06/17 17:08:31 snichols Exp $
+/$enscript 50 dict def $enscript begin
+/S/show load def
+/bd { bind def } bind def
+/X{exch 0 rmoveto S} bd
+/Y{exch 0 exch rmoveto S} bd
+/B{3 1 roll moveto S} bd
+/F{$fd exch get setfont} def
+/U{1440 mul}def
+/UP{U 72 div}def
+/StartPage{/svpg save def .05 dup scale} bd
+/EndPage{svpg restore showpage} bd
+/DoPreFeed{/statusdict where{pop
+ statusdict/prefeed known{statusdict exch/prefeed exch put 0}if}if pop} bd
+/SetUpFonts
+ {dup/$fd exch array def{findfont exch scalefont $fd 3 1 roll put}repeat}def
+/InitGaudy{/Columns exch def
+ /ftD /Times-Bold findfont 12 UP scalefont def
+ /ftF /Times-Roman findfont 14 UP scalefont def
+ /ftP /Helvetica-Bold findfont 30 UP scalefont def} bd
+/LB{/pts exch UP def /charcolor exch def /boxcolor exch def /font exch def
+ /label exch def /dy exch def /dx exch def /lly exch def /llx exch def
+ gsave boxcolor setgray
+ llx lly moveto dx 0 rlineto 0 dy rlineto dx neg 0 rlineto closepath fill
+ /lines label length def
+ /yp lly dy add dy lines pts mul sub 2 div sub pts .85 mul sub def
+ font setfont charcolor setgray
+ label {dup stringwidth pop 2 div llx dx 2 div add exch sub yp moveto show
+   /yp yp pts sub def}forall grestore} bd
+/Gaudy{/plength exch def /BarLength exch def /hy exch def /hx exch def
+ /Page exch def /Date exch def  /File exch def /Comment exch def
+ hx hy  BarLength 144 sub .25 U [File] ftF .97 0 14 LB
+ hx hy 360 add BarLength 144 sub .25 U [Comment] ftF 1 0 14 LB
+ hx hy 1 U .5 U Date ftD .7 0 12 LB
+ BarLength 1080 sub hy 1 U .5 U [Page] ftP .7 1 30 LB
+ 2 1 Columns {1 sub plength Columns div mul 172.80 sub hy moveto 0 0 hy sub rlineto
+ stroke}for } bd
+/Landscape { 90 rotate 0 exch translate } bd
+%%EndProlog
+%%BeginSetup
+%%IncludeResource: font Courier-Bold
+1    200.000 /Courier-Bold
+%%IncludeResource: font Courier
+0    240.000 /Courier
+2 SetUpFonts
+1 InitGaudy
+%%EndSetup
+%%Page: ? 1
+StartPage
+()(Cell.H)[(95/09/28)(09:23:09)](1) 360 14760 11500 12240 Gaudy
+0 F
+900 13960(#ifndef _CELL_H_)B
+900 13700(#define _CELL_H_)B
+900 13180(#include "VectorT.H")B
+900 12920(#include "PointSet.H")B
+900 12400(class Cell : public VectorType<int> {)B
+1188 12140(protected:)B
+1476 11880(PointSet *PtSet;)B
+1188 11360(public:)B
+1476 11100(Cell\(\) {})B
+1476 10840(virtual ~Cell\(\) {})B
+1476 10580(virtual void  Render\(void *rnd\) = 0;)B
+1476 10320(virtual char *CellType\(\) { return "AbstractCell"; })B
+1476 10060(void SetPoints\(PointSet *pts\) { PtSet = pts; })B
+900 9800(};)B
+900 9280(#endif)B
+EndPage
+%%Page: ? 2
+StartPage
+()(DataSet.H)[(95/09/28)(09:22:04)](1) 360 14760 11500 12240 Gaudy
+0 F
+900 13960(#ifndef _DATA_SET_H_)B
+900 13700(#define _DATA_SET_H_)B
+900 13180(#include "VectorT.H")B
+900 12920(#include "Cell.H")B
+900 12400(typedef VectorType<Cell *> DataSet; )B
+900 11620(#endif)B
+EndPage
+%%Page: ? 3
+StartPage
+()(LineCell.H)[(95/09/25)(23:48:03)](1) 360 14760 11500 12240 Gaudy
+0 F
+900 13960(#ifndef _LINE_CELL_H_)B
+900 13700(#define _LINE_CELL_H_)B
+900 13180(#include "PointSet.H")B
+900 12920(#include "Cell.H")B
+900 12660(#include "Renderer.H")B
+900 12140(class LineCell : public Cell {)B
+1188 11880(private:)B
+1188 11360(public:)B
+1476 11100(LineCell\(\) {})B
+1476 10840(~LineCell\(\) {})B
+1476 10580(void Render\(void *aren\);)B
+1476 10320(char *CellType\(\) { return "LineCell"; })B
+900 9800(};)B
+900 9280(void)B
+900 9020(LineCell::Render\(void *aren\))B
+900 8760({)B
+1188 8500(Renderer *theren = \(Renderer *\)aren;)B
+1188 7980(theren->BeginDraw\(Renderer::LINE\);)B
+1188 7720(for \(int i=0;i<this->Count\(\);i++\) {)B
+1476 7460(theren->Vertex\(\(*PtSet\)[\(*this\)[i]]->x, )B
+3636 7200(\(*PtSet\)[\(*this\)[i]]->y, )B
+3636 6940(\(*PtSet\)[\(*this\)[i]]->z\);)B
+1188 6680(})B
+1188 6420(theren->EndDraw\(\);)B
+900 5900(})B
+900 5120(#endif)B
+EndPage
+%%Page: ? 4
+StartPage
+()(OGLRen.H)[(95/09/28)(12:05:45)](1) 360 14760 11500 12240 Gaudy
+0 F
+900 13960(#ifndef _OGLR_RENDERER_H_)B
+900 13700(#define _OGLR_RENDERER_H_)B
+900 13180(#include <stdlib.h>)B
+900 12920(#include <X11/Xlib.h>)B
+900 12660(#include <X11/Xutil.h>)B
+900 12400(#include <X11/Intrinsic.h>)B
+900 12140(#include <X11/Shell.h>)B
+900 11880(#include <X11/StringDefs.h>)B
+900 11620(#include "GL/gl.h")B
+900 11360(#include "GL/glu.h")B
+900 11100(#include "GL/glx.h")B
+900 10580(#include "Renderer.H")B
+900 10060(typedef void \(*OGLRkeyboardCB\) \(unsigned char, int, int\);)B
+900 9540(class OGLRenderer : public Renderer {)B
+1188 9280(protected:)B
+1476 9020(int x, y, width, height;)B
+1476 8760(Display *DisplayId;)B
+1476 8500(Window   WindowId;)B
+1476 8240(Widget   Top;)B
+1476 7980(XtAppContext App;)B
+1476 7720(Colormap ColorMap;)B
+1476 7460(OGLRkeyboardCB *KeyB;)B
+1476 7200(void Reshape\(int w, int h\);)B
+1476 6940(void Key\(unsigned char key, int x, int y\);)B
+1476 6680(friend void OGLRendererCB\(Widget w,XtPointer client_data, )B
+5220 6420(XEvent *event, Boolean *ctd\);)B
+1188 5900(public:)B
+1476 5640(OGLRenderer\(\) { x = 10; y = 10; width = 400; height = 300;)B
+3780 5380(Top = 0;App = 0;DisplayId = 0;})B
+1476 5120(~OGLRenderer\(\) { })B
+1476 4860(void BeginDraw\(RenderType mode\);)B
+1476 4600(void EndDraw\(\);)B
+1476 4340(void Vertex\(double x, double y, double z = 0\);)B
+900 4080(//    void AddKeyHandler\(OGLRkeyboardCB *keyb\);)B
+1476 3820(void Initialize\(int argc, char *argv[]\);)B
+1476 3560(void MainLoop\(\);)B
+1476 3300(void Render\(void\);)B
+900 2780(};)B
+900 2260(#endif)B
+EndPage
+%%Page: ? 5
+StartPage
+()(PlyCell.H)[(95/09/26)(08:46:38)](1) 360 14760 11500 12240 Gaudy
+0 F
+900 13960(#ifndef _POLY_CELL_H_)B
+900 13700(#define _POLY_CELL_H_)B
+900 13180(#include "PointSet.H")B
+900 12920(#include "Cell.H")B
+900 12660(#include "Renderer.H")B
+900 12140(class PolygonCell : public Cell {)B
+1188 11880(private:)B
+1188 11360(public:)B
+1476 11100(PolygonCell\(\) {})B
+1476 10840(~PolygonCell\(\) {})B
+1476 10580(void Render\(void *aren\);)B
+1476 10320(char *CellType\(\) { return "PolygonCell"; })B
+900 9800(};)B
+900 9280(void)B
+900 9020(PolygonCell::Render\(void *aren\))B
+900 8760({)B
+1188 8500(Renderer *theren = \(Renderer *\) aren;)B
+1188 7980(theren->BeginDraw\(Renderer::POLYGON\);)B
+1188 7720(for \(int i=0;i<this->Count\(\);i++\) {)B
+1476 7460(theren->Vertex\(\(*PtSet\)[\(*this\)[i]]->x, )B
+3636 7200(\(*PtSet\)[\(*this\)[i]]->y, )B
+3636 6940(\(*PtSet\)[\(*this\)[i]]->z\);)B
+1188 6680(})B
+1188 6420(theren->EndDraw\(\);)B
+900 5900(})B
+900 5120(#endif)B
+EndPage
+%%Page: ? 6
+StartPage
+()(PointSet.H)[(95/09/25)(22:58:11)](1) 360 14760 11500 12240 Gaudy
+0 F
+900 13960(#ifndef _POINT_SET_H_)B
+900 13700(#define _POINT_SET_H_)B
+900 13180(#include "VectorT.H")B
+900 12660(class PointType {)B
+1188 12400(public:)B
+1476 12140(double x, y, z;)B
+1476 11620(PointType\(\) { x = y = z = 0; })B
+1476 11360(PointType\(float pt[3]\) )B
+1764 11100({ x = pt[0]; y = pt[1]; z = pt[2]; })B
+1476 10840(PointType& operator=\(float pt[3]\))B
+1764 10580({ x = pt[0]; y = pt[1]; z = pt[2]; return *this; })B
+1476 10320(PointType& operator!\(void\) {return *this; })B
+900 10060(};)B
+900 9540(typedef VectorType<PointType *> PointSet;)B
+900 9020(#endif)B
+EndPage
+%%Page: ? 7
+StartPage
+()(PtCell.H)[(95/09/26)(22:44:57)](1) 360 14760 11500 12240 Gaudy
+0 F
+900 13960(#ifndef _POINT_CELL_H_)B
+900 13700(#define _POINT_CELL_H_)B
+900 13180(#include "PointSet.H")B
+900 12920(#include "Cell.H")B
+900 12660(#include "Renderer.H")B
+900 12140(class PointCell : public Cell {)B
+1188 11880(private:)B
+1188 11360(public:)B
+1476 11100(PointCell\(\) {})B
+1476 10840(~PointCell\(\) {})B
+1476 10580(void Render\(void *aren\);)B
+1476 10320(char *CellType\(\) { return "PointCell"; })B
+900 9800(};)B
+900 9280(void)B
+900 9020(PointCell::Render\(void *aren\))B
+900 8760({)B
+1188 8500(Renderer *theren = \(Renderer *\)aren;)B
+1188 7980(theren->BeginDraw\(Renderer::POINT\);)B
+1188 7720(theren->Vertex\(\(*PtSet\)[0]->x, \(*PtSet\)[0]->y, \(*PtSet\)[0]->z\);)B
+1188 7460(theren->EndDraw\(\);)B
+900 6940(})B
+900 6160(#endif)B
+EndPage
+%%Page: ? 8
+StartPage
+()(Renderer.H)[(95/09/26)(10:20:30)](1) 360 14760 11500 12240 Gaudy
+0 F
+900 13960(#ifndef _RENDERER_H_)B
+900 13700(#define _RENDERER_H_)B
+900 13180(#include "VectorT.H")B
+900 12920(#include "DataSet.H")B
+900 12400(class Renderer {)B
+1188 12140(protected:)B
+1476 11880(VectorType<DataSet *> DataSets;)B
+1188 11360(public:)B
+1476 11100(enum RenderType { POLYGON, LINE, POINT };)B
+1476 10580(Renderer\(\) { })B
+1476 10320(virtual ~Renderer\(\) { })B
+1476 10060(void AddDataSet\(DataSet *ds\) { DataSets += ds; })B
+1476 9540(virtual void BeginDraw\(RenderType mode\) = 0;)B
+1476 9280(virtual void EndDraw\(\) = 0;)B
+1476 9020(virtual void Vertex\(double x, double y, double z = 0\) = 0;)B
+1476 8500(virtual void Initialize\(int argc, char *argv[]\) = 0;)B
+1476 8240(virtual void MainLoop\(\) = 0;)B
+900 7980(};)B
+900 6940(#endif)B
+EndPage
+%%Page: ? 9
+StartPage
+()(objTest.C)[(95/09/26)(21:34:46)](1) 360 14760 11500 12240 Gaudy
+0 F
+900 14220(#include <iostream.h>)B
+900 13700(#include "PtCell.H")B
+900 13440(#include "LineCell.H")B
+900 13180(#include "PlyCell.H")B
+900 12920(#include "DataSet.H")B
+900 12660(#include "OGLRen.H")B
+900 11880(main\(int argc, char *argv[]\))B
+900 11620({)B
+1188 11100(PointSet *myPts = new PointSet;)B
+1188 10840(LineCell *lCell = new LineCell;)B
+1188 10580(PolygonCell *pCell = new PolygonCell;)B
+1188 10320(DataSet *dSet = new DataSet;)B
+1188 10060(OGLRenderer *aren = new OGLRenderer;)B
+1188 9800(float tmp[3];)B
+1188 9280(myPts->Reserve\(10\);)B
+1188 9020(tmp[0] = 0.0;tmp[1] = 0.0;tmp[2] = 0.0; *myPts += new PointType\(tmp\);)B
+1188 8760(tmp[0] = 1.0;tmp[1] = 0.0;tmp[2] = 0.0; *myPts += new PointType\(tmp\);)B
+1188 8500(tmp[0] = 1.0;tmp[1] = 1.0;tmp[2] = 0.0; *myPts += new PointType\(tmp\);)B
+1188 8240(tmp[0] = 0.0;tmp[1] = 1.0;tmp[2] = 0.0; *myPts += new PointType\(tmp\);)B
+1188 7980(tmp[0] = 0.0;tmp[1] = 0.0;tmp[2] = 1.0; *myPts += new PointType\(tmp\);)B
+1188 7720(tmp[0] = 1.0;tmp[1] = 0.0;tmp[2] = 1.0; *myPts += new PointType\(tmp\);)B
+1188 7460(tmp[0] = 1.0;tmp[1] = 1.0;tmp[2] = 1.0; *myPts += new PointType\(tmp\);)B
+1188 7200(tmp[0] = 0.0;tmp[1] = 1.0;tmp[2] = 1.0; *myPts += new PointType\(tmp\);)B
+1188 6940(tmp[0] = 0.5;tmp[1] = 0.5;tmp[2] = 0.5; *myPts += new PointType\(tmp\);)B
+1188 6420(*lCell += 0; *lCell += 1; *lCell+= 2; *lCell += 0;)B
+1188 6160(lCell->SetPoints\(myPts\);)B
+1188 5900(*pCell += 0; *pCell += 1; *pCell+= 8; *pCell += 0;)B
+1188 5640(pCell->SetPoints\(myPts\);)B
+1188 5380(*dSet += lCell;)B
+1188 5120(*dSet += pCell;)B
+1188 4600(aren->AddDataSet\(dSet\);)B
+1188 4080(aren->Initialize\(argc, argv\);)B
+1188 3820(aren->MainLoop\(\);)B
+1188 3300(return\(0\);)B
+900 3040(})B
+EndPage
+%%Trailer
+end
+%%Pages: 9

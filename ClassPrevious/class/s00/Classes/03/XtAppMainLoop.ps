@@ -1,0 +1,1219 @@
+%!PS-Adobe-1.0
+%%Creator: speed.ecse.rpi.edu:wrf (Wm Randolph Franklin)
+%%Title: stdin
+%%CreationDate: Sun Jan 26 15:58:10 1997
+%%DocumentFonts: Times-Roman Times-Italic Times-Bold Symbol Times-Roman DIThacks
+%%Pages: (atend)
+%%EndComments
+% Start of pscat.pro -- prolog for troff translator
+% Copyright (c) 1985,1987 Adobe Systems Incorporated. All Rights Reserved. 
+% GOVERNMENT END USERS: See Notice file in TranScript library directory
+% -- probably /usr/lib/ps/Notice
+% RCS: $Header: pscat.pro,v 2.2 87/11/17 16:40:32 byron Rel $
+save /pscatsave exch def
+/$pscat 50 dict def
+$pscat begin
+/fm [1 0 0 1 0 0] def
+/xo 0 def /yo 0 def
+/M /moveto load def
+/R /show load def
+/S {exch currentpoint exch pop moveto show}def
+/T {exch currentpoint pop exch moveto show}def
+/U {3 1 roll moveto show}def
+/siz 0 def
+/font 0 def
+/Z {/siz exch def SF}def
+/F {/font exch def SF}def
+/SF{font 0 ne
+    {catfonts font 1 sub get fm 0 siz put fm 3 siz neg put 
+     fm makefont setfont}if}def
+/BP{save/catsv exch def 0 792 translate 72 432 div dup neg scale 
+  xo yo translate 0 0 moveto}def
+/EP{catsv restore showpage}def
+
+% definitions for PPROC callback functions
+% each PPROC is called with the following number on the stack:
+% pointsize charcode railmag pswidth pschar x y wid
+/$pprocs 50 dict def
+/fractm [.65 0 0 .6 0 0] def
+% fractions
+/PS1{gsave $pprocs begin
+    /wid exch def pop pop pop pop pop /ch exch def /size exch def
+    /pair $pprocs ch get def /cf currentfont def
+    cf fractm makefont setfont
+    0 .3 size mul 6 mul 2 copy neg rmoveto pair 0 get show rmoveto
+    currentfont cf setfont (\244) show setfont
+    pair 1 get show grestore wid .06 div 0 rmoveto end}def
+$pprocs begin
+8#34 [(1)(4)] def
+8#36 [(1)(2)] def
+8#46 [(3)(4)] def
+end
+% DIThacks fonts for some special chars
+50 dict dup begin
+/FontType 3 def
+/FontName /DIThacks def
+/FontMatrix [.001 0.0 0.0 .001 0.0 0.0] def
+/FontBBox [-220 -280 900 900] def% a lie but ...
+/Encoding 256 array def
+0 1 255{Encoding exch /.notdef put}for
+Encoding
+ dup 8#040/space put %space
+ dup 8#110/rc put %right ceil
+ dup 8#111/lt put %left  top curl
+ dup 8#112/bv put %bold vert
+ dup 8#113/lk put %left  mid curl
+ dup 8#114/lb put %left  bot curl
+ dup 8#115/rt put %right top curl
+ dup 8#116/rk put %right mid curl
+ dup 8#117/rb put %right bot curl
+ dup 8#120/rf put %right floor
+ dup 8#121/lf put %left  floor
+ dup 8#122/lc put %left  ceil
+ dup 8#140/sq put %square
+ dup 8#141/bx put %box
+ dup 8#142/ci put %circle
+ dup 8#143/br put %box rule
+ dup 8#144/rn put %root extender
+ dup 8#145/vr put %vertical rule
+ dup 8#146/ob put %outline bullet
+ dup 8#147/bu put %bullet
+ dup 8#150/ru put %rule
+ dup 8#151/ul put %underline
+ pop
+/DITfd 100 dict def
+/BuildChar{0 begin
+ /cc exch def /fd exch def
+ /charname fd /Encoding get cc get def
+ /charwid fd /Metrics get charname get def
+ /charproc fd /CharProcs get charname get def
+ charwid 0 fd /FontBBox get aload pop setcachedevice
+ 40 setlinewidth
+ newpath 0 0 moveto gsave charproc grestore
+ end}def
+/BuildChar load 0 DITfd put
+%/UniqueID 5 def
+/CharProcs 50 dict def
+CharProcs begin
+/space{}def
+/.notdef{}def
+/ru{500 0 rls}def
+/rn{0 750 moveto 500 0 rls}def
+/vr{20 800 moveto 0 -770 rls}def
+/bv{20 800 moveto 0 -1000 rls}def
+/br{20 770 moveto 0 -1040 rls}def
+/ul{0 -250 moveto 500 0 rls}def
+/ob{200 250 rmoveto currentpoint newpath 200 0 360 arc closepath stroke}def
+/bu{200 250 rmoveto currentpoint newpath 200 0 360 arc closepath fill}def
+/sq{80 0 rmoveto currentpoint dround newpath moveto
+    640 0 rlineto 0 640 rlineto -640 0 rlineto closepath stroke}def
+/bx{80 0 rmoveto currentpoint dround newpath moveto
+    640 0 rlineto 0 640 rlineto -640 0 rlineto closepath fill}def
+/ci{355 333 rmoveto currentpoint newpath 333 0 360 arc
+    50 setlinewidth stroke}def
+
+/lt{20 -200 moveto 0 550 rlineto currx 800 2cx s4 add exch s4 a4p stroke}def
+/lb{20 800 moveto 0 -550 rlineto currx -200 2cx s4 add exch s4 a4p stroke}def
+/rt{20 -200 moveto 0 550 rlineto currx 800 2cx s4 sub exch s4 a4p stroke}def
+/rb{20 800 moveto 0 -500 rlineto currx -200 2cx s4 sub exch s4 a4p stroke}def
+/lk{20 800 moveto 20 300 -280 300 s4 arcto pop pop 1000 sub
+    currentpoint stroke moveto
+    20 300 4 2 roll s4 a4p 20 -200 lineto stroke}def
+/rk{20 800 moveto 20 300 320 300 s4 arcto pop pop 1000 sub
+    currentpoint stroke moveto
+    20 300 4 2 roll s4 a4p 20 -200 lineto stroke}def
+/lf{20 800 moveto 0 -1000 rlineto s4 0 rls}def
+/rf{20 800 moveto 0 -1000 rlineto s4 neg 0 rls}def
+/lc{20 -200 moveto 0 1000 rlineto s4 0 rls}def
+/rc{20 -200 moveto 0 1000 rlineto s4 neg 0 rls}def
+end
+
+/Metrics 50 dict def Metrics begin
+/.notdef 0 def
+/space 500 def
+/ru 500 def
+/br 0 def
+/lt 250 def
+/lb 250 def
+/rt 250 def
+/rb 250 def
+/lk 250 def
+/rk 250 def
+/rc 250 def
+/lc 250 def
+/rf 250 def
+/lf 250 def
+/bv 250 def
+/ob 350 def
+/bu 350 def
+/ci 750 def
+/bx 750 def
+/sq 750 def
+/rn 500 def
+/ul 500 def
+/vr 0 def
+end
+
+DITfd begin
+/s2 500 def /s4 250 def /s3 333 def
+/a4p{arcto pop pop pop pop}def
+/2cx{2 copy exch}def
+/rls{rlineto stroke}def
+/currx{currentpoint pop}def
+/dround{transform round exch round exch itransform} def
+end
+end
+/DIThacks exch definefont pop
+/catfonts [
+	/Times-Roman findfont
+	/Times-Italic findfont
+	/Times-Bold findfont
+	/Symbol findfont
+	/Times-Roman findfont
+	/DIThacks findfont
+	] def
+%%EndProlog
+%%Page: ? 1
+BP
+1 F
+60 Z
+432 222(XtAppNextEvent)U
+863(\()S
+893(3Xt)S
+993(\))S
+1618(XT)S
+1718(FUNCTIONS)S
+2659(XtAppNextEvent)S
+3090(\()S
+3120(3Xt)S
+3220(\))S
+3 F
+54 Z
+432 510(NAME)U
+1 F
+60 Z
+648 582(XtAppNextEvent,)U
+1104(XtAppPending,)S
+1499(XtAppPeekEvent,)S
+1955(XtAppProcessEvent,)S
+2477(XtDispatchEvent,)S
+2927(XtAppMain-)S
+3 F
+54 Z
+432 753(SYNTAX)U
+1 F
+60 Z
+648 654(Loop)U
+795(\261)S
+845(query)S
+1002(and)S
+1109(process)S
+1309(events)S
+1483(and)S
+1590(input)S
+648 825(void)U
+775(XtAppNextEvent\()S
+2 F
+(app)R
+6 F
+(i)R
+2 F
+(conte)R
+1467(xt)S
+1 F
+(,)R
+2 F
+1546(event)S
+6 F
+(i)R
+2 F
+(ret)R
+1771(urn)S
+1 F
+(\))R
+768 969(X)U
+768 897(XtAppContext)U
+2 F
+1142(app)S
+6 F
+(i)R
+2 F
+(context)R
+1 F
+(;)R
+811 969(Event)U
+4 F
+972(*)S
+2 F
+(event)R
+6 F
+(i)R
+2 F
+(ret)R
+1227(urn)S
+1 F
+(;)R
+1948 1068(\))U
+648(Boolean)S
+869(XtAppPeekEvent\()S
+2 F
+(app)R
+6 F
+(i)R
+2 F
+(conte)R
+1561(xt)S
+1 F
+(,)R
+2 F
+1640(event)S
+6 F
+(i)R
+2 F
+(ret)R
+1865(urn)S
+1 F
+768 1140(XtAppContext)U
+2 F
+1142(app)S
+6 F
+(i)R
+2 F
+(context)R
+1 F
+(;)R
+648 1311(X)U
+768 1212(XEvent)U
+4 F
+972(*)S
+2 F
+(event)R
+6 F
+(i)R
+2 F
+(ret)R
+1227(urn)S
+1 F
+(;)R
+691 1311(tInputMask)U
+988(XtAppPending\()S
+2 F
+(app)R
+6 F
+(i)R
+2 F
+(context)R
+1 F
+(\))R
+648 1482(v)U
+768 1383(XtAppContext)U
+2 F
+1142(app)S
+6 F
+(i)R
+2 F
+(context)R
+1 F
+(;)R
+678 1482(oid)U
+775(XtAppProcessEvent\()S
+2 F
+(app)R
+6 F
+(i)R
+2 F
+(contex)R
+1560(t)S
+1 F
+(,)R
+2 F
+1612(mask)S
+1 F
+(\))R
+768 1626(X)U
+768 1554(XtAppContext)U
+2 F
+1142(app)S
+6 F
+(i)R
+2 F
+(context)R
+1 F
+(;)R
+811 1626(tInputMask)U
+2 F
+1108(mask)S
+1 F
+(;)R
+1432 1725(\))U
+648(Boolean)S
+869(XtDispatchEvent\()S
+2 F
+(e)R
+1331(vent)S
+1 F
+768 1797(XEvent)U
+4 F
+972(*)S
+2 F
+(event)R
+1 F
+(;)R
+1507 1896(\))U
+648(void)S
+775(XtAppMainLoop\()S
+2 F
+(app)R
+6 F
+(i)R
+2 F
+(contex)R
+1490(t)S
+1 F
+768 1968(XtAppContext)U
+2 F
+1142(app)S
+6 F
+(i)R
+2 F
+(context)R
+1 F
+(;)R
+3 F
+54 Z
+432 2067(ARGUMENTS)U
+2 F
+60 Z
+648 2139(app)U
+6 F
+(i)R
+2 F
+(context)R
+1 F
+1080(Speci\256es)S
+1317(the)S
+1411(applicat)S
+1603(ion)S
+1700(context)S
+1898(that)S
+2009(identi\256es)S
+2250(the)S
+2344(applicat)S
+2536(ion)S
+2633(.)S
+3100 2238(e)U
+2 F
+648(event)S
+1 F
+1080(Speci\256es)S
+1317(a)S
+1364(pointer)S
+1555(to)S
+1622(the)S
+1716(event)S
+1867(structure)S
+2098(that)S
+2209(is)S
+2269(to)S
+2336(be)S
+2413(dispatched)S
+2691(to)S
+2758(the)S
+2852(appropriat)S
+1080 2310(event)U
+1231(handler.)S
+2 F
+648 2409(e)U
+(vent)R
+6 F
+(i)R
+2 F
+(ret)R
+873(urn)S
+1 F
+1080(Returns)S
+1287(the)S
+1381(event)S
+1532(information)S
+1837(to)S
+1904(the)S
+1998(speci\256ed)S
+2232(event)S
+2383(structure.)S
+3127 2508(f)U
+2 F
+648(mask)S
+1 F
+1080(Speci\256es)S
+1317(what)S
+1454(types)S
+1601(of)S
+1671(events)S
+1845(to)S
+1912(process.)S
+2147(The)S
+2261(mask)S
+2408(is)S
+2468(the)S
+2562(bitwise)S
+2756(inclusive)S
+2994(OR)S
+3097(o)S
+1080 2580(any)U
+1187(combinati)S
+1429(on)S
+1509(of)S
+3 F
+1584(XtIMXEvent)S
+1 F
+1925(,)S
+3 F
+1965(XtIMTimer)S
+1 F
+2274(,)S
+3 F
+2314(XtIMAlternateInput)S
+1 F
+2848(,)S
+2883(and)S
+3 F
+2995(XtIMSig-)S
+1 F
+1080 2724(b)U
+3 F
+1080 2652(nal)U
+1 F
+1165(.)S
+1220(As)S
+1306(a)S
+1353(convenienc)S
+1628(e,)S
+1690(the)S
+1784(X)S
+1847(Toolkit)S
+2045(de\256nes)S
+2235(the)S
+2329(symbolic)S
+2570(name)S
+3 F
+2726(XtIMAll)S
+1 F
+2971(to)S
+3038(be)S
+3115(the)S
+1110 2724(itwise)U
+1274(inclusive)S
+1512(OR)S
+1615(of)S
+1685(all)S
+1766(event)S
+1917(types.)S
+3 F
+54 Z
+432 2823(DESCRIPTION)U
+1 F
+60 Z
+648 2895(If)U
+708(the)S
+802(X)S
+865(event)S
+1016(queue)S
+1180(is)S
+1240(empty,)S
+3 F
+1431(XtAppNextEvent)S
+1 F
+1898(\257ushes)S
+2084(the)S
+2178(X)S
+2241(output)S
+2415(buffers)S
+2605(of)S
+2675(each)S
+2806(Display)S
+3013(in)S
+3080(the)S
+648 3039(v)U
+648 2967(applicat)U
+840(ion)S
+937(context)S
+1135(and)S
+1242(waits)S
+1389(for)S
+1479(an)S
+1556(event)S
+1707(while)S
+1861(looking)S
+2065(at)S
+2129(the)S
+2223(other)S
+2367(input)S
+2511(sources,)S
+2726(timeout)S
+2931(timeout)S
+678 3039(alues,)U
+837(and)S
+944(signal)S
+1108(handlers)S
+1332(and)S
+1439(calling)S
+1624(any)S
+1731(callbac)S
+1903(k)S
+1953(procedures)S
+2237(triggered)S
+2475(by)S
+2555(them.)S
+2731(This)S
+2858(wait)S
+2982(time)S
+3110(can)S
+648 3210(I)U
+648 3111(be)U
+725(used)S
+855(for)S
+945(background)S
+1249(processing)S
+1526(\(see)S
+1643(Section)S
+1844(7.8\).)S
+668 3210(f)U
+708(there)S
+849(is)S
+909(an)S
+986(event)S
+1137(in)S
+1204(the)S
+1298(queue,)S
+3 F
+1482(XtAppPeekEvent)S
+1 F
+1953(\256lls)S
+2063(in)S
+2130(the)S
+2224(event)S
+2375(and)S
+2482(returns)S
+2669(a)S
+2716(nonzero)S
+2930(value.)S
+3096(If)S
+3156(no)S
+648 3354(\()U
+648 3282(X)U
+711(input)S
+855(is)S
+915(on)S
+995(the)S
+1089(queue,)S
+3 F
+1273(XtAppPeekEvent)S
+1 F
+1744(\257ushes)S
+1930(the)S
+2024(output)S
+2198(buffer)S
+2365(and)S
+2472(blocks)S
+2649(until)S
+2780(input)S
+2924(is)S
+2984(availabl)S
+3176(e)S
+668 3354(possibly)U
+888(calling)S
+1073(some)S
+1220(timeout)S
+1425(callbac)S
+1597(ks)S
+1670(in)S
+1737(the)S
+1831(process\).)S
+2086(If)S
+2146(the)S
+2240(input)S
+2384(is)S
+2444(an)S
+2521(event,)S
+3 F
+2692(XtAppPeekEvent)S
+1 F
+3180 3426(d)U
+648(\256lls)S
+758(in)S
+825(the)S
+919(event)S
+1070(and)S
+1177(returns)S
+1364(a)S
+1411(nonzero)S
+1625(value.)S
+1811(Otherwise,)S
+2093(the)S
+2187(input)S
+2331(is)S
+2391(for)S
+2481(an)S
+2558(alternat)S
+2740(e)S
+2787(input)S
+2931(source,)S
+3123(an)S
+3 F
+653 3498(XtAppPeekEvent)U
+1 F
+1124(returns)S
+1311(zero.)S
+648 3597(T)U
+(he)R
+3 F
+767(XtAppPending)S
+1 F
+1174(function)S
+1395(returns)S
+1582(a)S
+1629(nonzero)S
+1843(value)S
+1994(if)S
+2051(there)S
+2192(are)S
+2286(events)S
+2460(pending)S
+2674(from)S
+2811(the)S
+2905(X)S
+2968(server,)S
+648 3669(timer)U
+796(pending,)S
+1025(or)S
+1095(other)S
+1239(input)S
+1383(sources)S
+1583(pending.)S
+1812(The)S
+1926(value)S
+2077(returned)S
+2298(is)S
+2358(a)S
+2405(bit)S
+2489(mask)S
+2636(that)S
+2747(is)S
+2807(the)S
+2901(OR)S
+3004(of)S
+3 F
+653 3741(XtIMXEvent)U
+1 F
+994(,)S
+3 F
+1034(XtIMTimer)S
+1 F
+1343(,)S
+3 F
+1383(XtIMAlternateInput)S
+1 F
+1917(,)S
+1952(and)S
+3 F
+2064(XtIMSignal)S
+1 F
+2392(\(see)S
+3 F
+2514(XtAppProcessEvent)S
+1 F
+3035(\).)S
+3110(If)S
+648 3912(T)U
+648 3813(there)U
+789(are)S
+883(no)S
+963(events)S
+1137(pending,)S
+3 F
+1371(XtAppPending)S
+1 F
+1778(\257ushes)S
+1964(the)S
+2058(output)S
+2232(buffer)S
+2399(and)S
+2506(returns)S
+2693(zero.)S
+685 3912(he)U
+3 F
+767(XtAppProcessEvent)S
+1 F
+1308(function)S
+1529(processes)S
+1779(one)S
+1886(timer,)S
+2049(alternat)S
+2231(e)S
+2278(input,)S
+2437(signal)S
+2601(source,)S
+2793(or)S
+2863(X)S
+2926(event.)S
+3112(If)S
+3162 3984(e)U
+648 4056(i)U
+648 3984(there)U
+789(is)S
+849(nothing)S
+1053(of)S
+1123(the)S
+1217(appropriate)S
+1512(type)S
+1636(to)S
+1703(process,)S
+3 F
+1923(XtAppProcessEvent)S
+1 F
+2464(blocks)S
+2641(until)S
+2772(there)S
+2913(is.)S
+3008(If)S
+3068(ther)S
+665 4056(s)U
+708(more)S
+852(than)S
+976(one)S
+1083(type)S
+1207(of)S
+1277(thing)S
+1421(availabl)S
+1613(e)S
+1660(to)S
+1727(process,)S
+1942(it)S
+1996(is)S
+2056(unde\256ned)S
+2313(which)S
+2480(will)S
+2594(get)S
+2688(processed.)S
+2980(Usually,)S
+648 4200(p)U
+648 4128(this)U
+755(procedure)S
+1016(is)S
+1076(not)S
+1173(called)S
+1338(by)S
+1418(client)S
+1573(applicat)S
+1765(ions)S
+1885(\(see)S
+3 F
+2007(XtAppMainLoop)S
+1 F
+2454(\).)S
+3 F
+2534(XtAppProcessEvent)S
+1 F
+678 4200(rocesses)U
+898(timer)S
+1046(events)S
+1220(by)S
+1300(calling)S
+1485(any)S
+1592(appropriate)S
+1887(timer)S
+2035(callbac)S
+2207(ks,)S
+2295(alternat)S
+2477(e)S
+2524(input)S
+2668(by)S
+2748(calling)S
+2933(any)S
+3115 4272(X)U
+432 4560(X)U
+648 4272(appropriate)U
+943(alternat)S
+1125(e)S
+1172(input)S
+1316(callbac)S
+1488(ks,)S
+1576(signal)S
+1740(source)S
+1917(by)S
+1997(calling)S
+2182(any)S
+2289(appropriate)S
+2584(signal)S
+2748(callbac)S
+2920(ks,)S
+3008(and)S
+495 4560(Version)U
+705(11)S
+1551(Last)S
+1675(change:)S
+1883(Release)S
+2091(6)S
+3210(1)S
+EP
+%%Page: ? 2
+BP
+1 F
+60 Z
+3220 222(\))U
+432(XtAppNextEvent)S
+863(\()S
+893(3Xt)S
+993(\))S
+1618(XT)S
+1718(FUNCTIONS)S
+2659(XtAppNextEvent)S
+3090(\()S
+3120(3Xt)S
+648 510(events)U
+822(by)S
+902(calling)S
+3 F
+1092(XtDispatchEvent)S
+1 F
+1536(.)S
+648 609(W)U
+(hen)R
+812(an)S
+889(X)S
+952(event)S
+1103(is)S
+1163(receive)S
+1338(d,)S
+1403(it)S
+1457(is)S
+1517(passed)S
+1697(to)S
+3 F
+1769(XtDispatchEvent)S
+1 F
+2213(,)S
+2248(which)S
+2415(calls)S
+2546(the)S
+2640(appropriate)S
+2935(event)S
+3190 681(.)U
+648 753(I)U
+648 681(handlers)U
+872(and)S
+979(passes)S
+1152(them)S
+1293(the)S
+1387(widget,)S
+1586(the)S
+1680(event,)S
+1846(and)S
+1953(client-spec)S
+2215(i\256c)S
+2312(data)S
+2433(registered)S
+2691(with)S
+2818(each)S
+2949(procedure)S
+668 753(f)U
+708(there)S
+849(are)S
+943(no)S
+1023(handlers)S
+1247(for)S
+1337(that)S
+1448(event)S
+1599(registered,)S
+1872(the)S
+1966(event)S
+2117(is)S
+2177(ignored)S
+2381(and)S
+2488(the)S
+2582(dispatcher)S
+2850(simply)S
+3034(returns.)S
+648 924(T)U
+648 825(The)U
+762(order)S
+909(in)S
+976(which)S
+1143(the)S
+1237(handlers)S
+1461(are)S
+1555(called)S
+1720(is)S
+1780(unde\256ned.)S
+685 924(he)U
+3 F
+767(XtDispatchEvent)S
+1 F
+1231(function)S
+1452(sends)S
+1605(those)S
+1752(events)S
+1926(to)S
+1993(the)S
+2087(event)S
+2238(handler)S
+2439(functions)S
+2683(that)S
+2794(have)S
+2928(been)S
+3062(previ-)S
+3188 996(o)U
+648 1068(s)U
+648 996(ously)U
+798(registered)S
+1056(with)S
+1183(the)S
+1277(dispatch)S
+1498(routine.)S
+3 F
+1729(XtDispatchEvent)S
+1 F
+2193(returns)S
+3 F
+2385(True)S
+1 F
+2537(if)S
+2594(it)S
+2648(dispatched)S
+2926(the)S
+3020(event)S
+3171(t)S
+671 1068(ome)U
+795(handler)S
+996(and)S
+3 F
+1108(False)S
+1 F
+1267(if)S
+1324(it)S
+1378(found)S
+1538(no)S
+1618(handler)S
+1819(to)S
+1886(dispatch)S
+2107(the)S
+2201(event)S
+2352(to.)S
+2454(The)S
+2568(most)S
+2705(common)S
+2936(use)S
+3036(of)S
+3128 1140(t)U
+648 1212(a)U
+3 F
+653 1140(XtDispatchEvent)U
+1 F
+1117(is)S
+1177(to)S
+1244(dispatch)S
+1465(events)S
+1639(acquired)S
+1867(with)S
+1994(the)S
+3 F
+2093(XtAppNextEvent)S
+1 F
+2560(procedure.)S
+2856(However,)S
+3111(i)S
+675 1212(lso)U
+765(can)S
+869(be)S
+946(used)S
+1076(to)S
+1143(dispatch)S
+1364(user-constructed)S
+1782(events.)S
+3 F
+1996(XtDispatchEvent)S
+1 F
+2460(also)S
+2577(is)S
+2637(responsible)S
+2931(for)S
+3021(imple-)S
+648 1383(T)U
+648 1284(menting)U
+866(the)S
+960(grab)S
+1087(semantics)S
+1345(for)S
+3 F
+1440(XtAddGrab)S
+1 F
+1754(.)S
+685 1383(he)U
+3 F
+767(XtAppMainLoop)S
+1 F
+1234(function)S
+1455(\256rst)S
+1568(reads)S
+1715(the)S
+1809(next)S
+1933(incoming)S
+2181(X)S
+2244(event)S
+2395(by)S
+2475(calling)S
+3 F
+2665(XtAppNextEvent)S
+1 F
+3132(and)S
+648 1527(c)U
+648 1455(then)U
+772(it)S
+826(dispatches)S
+1097(the)S
+1191(event)S
+1342(to)S
+1409(the)S
+1503(appropriate)S
+1798(registered)S
+2056(procedure)S
+2317(by)S
+2397(calling)S
+3 F
+2587(XtDispatchEvent)S
+1 F
+3031(.)S
+3086(This)S
+675 1527(onstitutes)U
+926(the)S
+1020(main)S
+1161(loop)S
+1288(of)S
+1358(X)S
+1421(Toolkit)S
+1619(applicat)S
+1811(ions,)S
+1946(and,)S
+2068(as)S
+2138(such,)S
+2283(it)S
+2337(does)S
+2467(not)S
+2564(return.)S
+2763(Applications)S
+3091(are)S
+3168 1599(t)U
+648 1671(i)U
+648 1599(expecte)U
+833(d)S
+883(to)S
+950(exit)S
+1061(in)S
+1128(response)S
+1358(to)S
+1425(some)S
+1572(user)S
+1692(action.)S
+1895(There)S
+2056(is)S
+2116(nothing)S
+2320(special)S
+2508(about)S
+3 F
+2667(XtAppMainLoop)S
+1 F
+3114(;)S
+3151(i)S
+665 1671(s)U
+708(simply)S
+892(an)S
+969(in\256nite)S
+1160(loop)S
+1287(that)S
+1398(calls)S
+3 F
+1534(XtAppNextEvent)S
+1 F
+2001(and)S
+2108(then)S
+3 F
+2237(XtDispatchEvent)S
+1 F
+2681(.)S
+3105 1770(r)U
+648 1842(t)U
+648 1770(Applications)U
+976(can)S
+1080(provide)S
+1284(their)S
+1415(own)S
+1538(version)S
+1735(of)S
+1805(this)S
+1912(loop,)S
+2054(which)S
+2221(tests)S
+2348(some)S
+2495(global)S
+2666(terminat)S
+2868(ion)S
+2965(\257ag)S
+3075(o)S
+665 1842(ests)U
+775(that)S
+886(the)S
+980(number)S
+1184(of)S
+1254(top-level)S
+1489(widgets)S
+1696(is)S
+1756(larger)S
+1917(than)S
+2041(zero)S
+2165(before)S
+2339(circling)S
+2544(back)S
+2678(to)S
+2745(the)S
+2839(call)S
+2947(to)S
+3 F
+3019(XtApp-)S
+648 1914(NextEvent)U
+1 F
+923(.)S
+3 F
+54 Z
+657 2013(O)U
+432(SEE)S
+552(ALS)S
+2 F
+60 Z
+648 2085(X)U
+705(Toolkit)S
+896(Intrinsics)S
+1143(\261)S
+1193(C)S
+1253(Language)S
+1513(Interface)S
+1 F
+432 4542(X)U
+2 F
+648 2157(Xlib)U
+769(\261)S
+819(C)S
+879(Language)S
+1139(X)S
+1196(Interface)S
+1 F
+495 4542(Version)U
+705(11)S
+1551(Last)S
+1675(change:)S
+1883(Release)S
+2091(6)S
+3210(2)S
+EP
+%%Trailer
+pscatsave end restore
+%%Pages: 2

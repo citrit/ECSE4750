@@ -1,0 +1,41 @@
+#//////////////////////////////////////////////////////////////////////////
+#//
+#//  This code is for instructional purposes only. It was generated for
+#//  use in a graduate level course to show certain aspects of data
+#//  storage algorithms. It has problems and should not be used 
+#//  outside the class environment.
+#//
+#//  Author:  Thomas D. Citriniti     citrit@rpi.edu
+#//  Class:   Advanced Computer Graphics and Data visualization
+#//           Rensselaer Polytechnic Institute
+#//  Date:    October 3, 1995
+#//
+#//////////////////////////////////////////////////////////////////////////
+
+.SUFFIXES: $(.SUFFIXES) .C .C~
+
+
+# CCC=xlC
+
+CCC=g++
+CCFLAGS= -I/locker/44/000644/Mesa/@sys/include \
+	-I/locker/44/000644/vtk1.0/@sys/include
+
+OBJS= 
+
+LDFLAGS=-L/locker/44/000644/vtk1.0/@sys/lib -L/locker/44/000644/Mesa/@sys/lib \
+	-lvtk -lMesaGLU -lMesaGL -lXmu -lXt -lX11 -lm
+
+hw4.$(USER): hw4.o $(OBJS)
+	$(CCC) -o /tmp/$@  hw4.o $(OBJS) $(LDFLAGS)
+
+
+clean:
+	rm -f *.o *~ core /tmp/hw4
+.C.o:
+	$(CCC) $(CCFLAGS) -c $<
+
+.C:
+	$(CCC) $(CCFLAGS) $< -o $@  $(LDFLAGS) 
+
+

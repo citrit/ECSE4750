@@ -1,0 +1,619 @@
+#!/bin/sh
+# This is a shell archive (produced by GNU sharutils 4.2).
+# To extract the files from this archive, save it to some FILE, remove
+# everything before the `!/bin/sh' line above, then type `sh FILE'.
+#
+# Made on 1997-02-06 19:04 EST by <andret@rebecca.its.rpi.edu>.
+# Source directory was `/afs/rpi.edu/home/70/andret/agfx'.
+#
+# Existing files will *not* be overwritten unless `-c' is specified.
+#
+# This shar contains:
+# length mode       name
+# ------ ---------- ------------------------------------------
+#  14578 -rw------- hw1.c
+#
+save_IFS="${IFS}"
+IFS="${IFS}:"
+gettext_dir=FAILED
+locale_dir=FAILED
+first_param="$1"
+for dir in $PATH
+do
+  if test "$gettext_dir" = FAILED && test -f $dir/gettext \
+     && ($dir/gettext --version >/dev/null 2>&1)
+  then
+    set `$dir/gettext --version 2>&1`
+    if test "$3" = GNU
+    then
+      gettext_dir=$dir
+    fi
+  fi
+  if test "$locale_dir" = FAILED && test -f $dir/shar \
+     && ($dir/shar --print-text-domain-dir >/dev/null 2>&1)
+  then
+    locale_dir=`$dir/shar --print-text-domain-dir`
+  fi
+done
+IFS="$save_IFS"
+if test "$locale_dir" = FAILED || test "$gettext_dir" = FAILED
+then
+  echo=echo
+else
+  TEXTDOMAINDIR=$locale_dir
+  export TEXTDOMAINDIR
+  TEXTDOMAIN=sharutils
+  export TEXTDOMAIN
+  echo="$gettext_dir/gettext -s"
+fi
+touch -am 1231235999 $$.touch >/dev/null 2>&1
+if test ! -f 1231235999 && test -f $$.touch; then
+  shar_touch=touch
+else
+  shar_touch=:
+  echo
+  $echo 'WARNING: not restoring timestamps.  Consider getting and'
+  $echo "installing GNU \`touch', distributed in GNU File Utilities..."
+  echo
+fi
+rm -f 1231235999 $$.touch
+#
+if mkdir _sh25285; then
+  $echo 'x -' 'creating lock directory'
+else
+  $echo 'failed to create lock directory'
+  exit 1
+fi
+# ============= hw1.c ==============
+if test -f 'hw1.c' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'hw1.c' '(file already exists)'
+else
+  $echo 'x -' extracting 'hw1.c' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'hw1.c' &&
+/*
+X *
+X * FILE: hw1.c
+X * AUTHOR: Thayer Andrews
+X * DATE: February 6, 1997
+X *
+X * Advanced Graphics homework 1
+X * 
+X */
+X
+#include <stdlib.h>
+X
+#ifdef _WIN32
+#include <windows.h>
+#endif
+X
+#include <GL/gl.h>
+#include <GL/glut.h>
+#include <math.h>
+X
+#define TRUE                1
+#define FALSE               0
+X
+/*transformation increments used by the mouseMove function
+X  to transform the currently selected object*/
+#define TRANSLATE_INCR      0.1
+#define ROTATE_INCR         5
+#define SCALE_INCR          0.95
+X
+/*possible menu selections*/
+#define ROTATE_SPHERE       1
+#define SCALE_SPHERE        2
+#define TRANSLATE_SPHERE    3
+#define ROTATE_CUBE         4 
+#define SCALE_CUBE          5
+#define TRANSLATE_CUBE      6
+#define ROTATE_TEAPOT       7
+#define SCALE_TEAPOT        8
+#define TRANSLATE_TEAPOT    9
+#define CAMERA	            10
+#define TRANSPARENT_TEAPOT  11
+#define TOGGLE_SPHERE       12
+#define TOGGLE_CUBE         13
+#define TOGGLE_TEAPOT       14
+#define QUIT                666
+X
+X
+/*
+X * object information structure containing all information
+X * about an object's position, size, orientation and material.
+X */
+typedef struct _objectInfo
+{
+X  /*specify object position*/
+X  GLfloat xPos;
+X  GLfloat yPos;
+X  GLfloat zPos;
+X  
+X  /*specify object orientation (in degrees)*/
+X  GLfloat xAngle;
+X  GLfloat yAngle;
+X  GLfloat zAngle;
+X  
+X  /*specify object scale factors*/
+X  GLfloat xScale;
+X  GLfloat yScale;
+X  GLfloat zScale;
+X
+X  /*float arrays to store material properties*/
+X  GLfloat diffuse[4];
+X  GLfloat ambient[4];
+X  GLfloat specular[4];
+X  GLfloat shininess[1];
+X
+} objectInfo;
+X
+X
+/*Create global state structs for the cube, sphere, teapot and camera*/
+objectInfo cubeInfo, sphereInfo, potInfo, cameraInfo;
+X
+/*more globals...*/
+int selected = CAMERA;
+int transparentTeapot = FALSE, sphereHidden = FALSE,
+X    cubeHidden = FALSE, teapotHidden = FALSE;
+GLsizei windowWidth, windowHeight;
+X
+X
+/*
+X * display function is responsible for translating geometry and drawing
+X * it to the screen.
+X */
+void display(void)
+{   
+X  /*enable face culling to speed performance*/
+X  glEnable(GL_CULL_FACE);
+X  glCullFace(GL_BACK);
+X  glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+X
+X
+X  /*Camera transformations*/
+X  glMatrixMode(GL_PROJECTION);
+X  glLoadIdentity();
+X  gluPerspective(45.0,1.0*(GLfloat)windowWidth/(GLfloat)windowHeight,1.0,10.0);
+X  glTranslatef(cameraInfo.xPos, cameraInfo.yPos, cameraInfo.zPos);
+X  glRotatef(cameraInfo.xAngle,1.0,0.0,0.0);
+X  glRotatef(cameraInfo.yAngle,0.0,1.0,0.0);
+X  
+X  /*From now on we play with the modelview matrix...*/
+X  glMatrixMode(GL_MODELVIEW);
+X  glLoadIdentity();
+X
+X  if(!cubeHidden)
+X  {
+X    glPushMatrix();
+X      /*position, scale and orient the cube*/
+X      glTranslatef(cubeInfo.xPos, cubeInfo.yPos, cubeInfo.zPos);
+X      glScalef(cubeInfo.xScale, cubeInfo.xScale, cubeInfo.xScale);
+X      glRotatef(cubeInfo.xAngle,1.0,0.0,0.0);
+X      glRotatef(cubeInfo.yAngle,0.0,1.0,0.0);
+X      glRotatef(cubeInfo.zAngle,0.0,0.0,1.0);
+X    
+X     /*set material properties for and draw the cube*/
+X      glMaterialfv(GL_FRONT, GL_AMBIENT, cubeInfo.ambient); 
+X      glMaterialfv(GL_FRONT, GL_DIFFUSE, cubeInfo.diffuse);
+X      glMaterialfv(GL_FRONT, GL_SPECULAR, cubeInfo.specular);
+X      glMaterialfv(GL_FRONT, GL_SHININESS, cubeInfo.shininess);
+X      glutSolidCube(1.0);
+X      glPopMatrix();
+X  }
+X
+X  if(!sphereHidden)
+X  {
+X    glPushMatrix();
+X      /*position, scale and orient the sphere*/ 
+X      glTranslatef(sphereInfo.xPos, sphereInfo.yPos, sphereInfo.zPos);
+X      glScalef(sphereInfo.xScale, sphereInfo.xScale, sphereInfo.xScale);
+X      glRotatef(sphereInfo.xAngle,1.0,0.0,0.0);
+X      glRotatef(sphereInfo.yAngle,0.0,1.0,0.0);
+X      glRotatef(sphereInfo.zAngle,0.0,0.0,1.0);
+X    
+X      /*set material properties for and draw the sphere*/
+X      glMaterialfv(GL_FRONT, GL_AMBIENT, sphereInfo.ambient); 
+X      glMaterialfv(GL_FRONT, GL_DIFFUSE, sphereInfo.diffuse);
+X      glMaterialfv(GL_FRONT, GL_SPECULAR, sphereInfo.specular);
+X      glMaterialfv(GL_FRONT, GL_SHININESS, sphereInfo.shininess);
+X      glutSolidSphere(0.5,10,10);
+X    glPopMatrix();
+X  }
+X
+X
+X  if(!teapotHidden)
+X  {
+X    /*If transparency is enabled, enable blending and switch the 
+X      z-buffer to read only mode to allow the teapot to be transparent.*/
+X    if(transparentTeapot)
+X    {
+X      glEnable(GL_BLEND);
+X      glDepthMask(GL_FALSE);
+X      glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+X    }
+X  
+X    /*Switch off face culling for the teapot since the faces seem to be defined
+X      backwards so front facing polygons are culled when glCullFace(GL_BACK) is
+X      called.  Weird...*/
+X    glDisable(GL_CULL_FACE);
+X    
+X    glPushMatrix();
+X      /*position, scale and orient the teapot*/ 
+X      glTranslatef(potInfo.xPos, potInfo.yPos, potInfo.zPos);
+X      glScalef(potInfo.xScale, potInfo.xScale, potInfo.xScale);
+X      glRotatef(potInfo.xAngle,1.0,0.0,0.0);
+X      glRotatef(potInfo.yAngle,0.0,1.0,0.0);
+X      glRotatef(potInfo.zAngle,0.0,0.0,1.0);
+X    
+X      /*set material properties for and draw the teapot*/
+X      glMaterialfv(GL_FRONT, GL_AMBIENT, potInfo.ambient); 
+X      glMaterialfv(GL_FRONT, GL_DIFFUSE, potInfo.diffuse);
+X      glMaterialfv(GL_FRONT, GL_SPECULAR, potInfo.specular);
+X      glMaterialfv(GL_FRONT, GL_SHININESS, potInfo.shininess);
+X      glutSolidTeapot(0.5);
+X    glPopMatrix();
+X
+X    /*now turn off blending and switch z-buffer back to 
+X      read/write mode and re-enable culling*/
+X    glDepthMask(GL_TRUE); 
+X    glDisable(GL_BLEND);
+X    glEnable(GL_CULL_FACE);
+X  }
+X
+X  /*force completion of drawing and swap front and back buffers*/
+X  glFlush();
+X  glutSwapBuffers ();
+}
+X
+X
+X
+/*
+X * initialize lights and object attributes
+X */
+void myinit (void)
+{  
+X  /*define light parameters*/
+X  float light0Pos[4] = {2.0, 4.0, 2.0, 1.0};
+X  float light0Dir[4] = {-2.0, -4.0, -2.0, 1.0};
+X  float light0Amb[4] = {0.7, 0.7, 0.7, 1.0};
+X  float light0Diff[4] = {0.8, 0.8, 0.8, 1.0};
+X  float light0Spec[4] = {0.8, 0.8, 0.8, 1.0};
+X
+X  /*clear to black when glClear() is called*/
+X  glClearColor (0.0, 0.0, 0.0, 1.0);
+X  
+X  /*enable lighting and set GL_LIGHT0 params to defined values*/
+X  glEnable(GL_LIGHTING);
+X  glEnable(GL_LIGHT0);
+X  glLightfv(GL_LIGHT0, GL_POSITION, light0Pos);
+X  glLightfv(GL_LIGHT0, GL_AMBIENT, light0Amb);
+X  glLightfv(GL_LIGHT0, GL_DIFFUSE, light0Diff);
+X  glLightfv(GL_LIGHT0, GL_SPECULAR, light0Spec);
+X
+X  glEnable(GL_DEPTH_TEST);
+X  glShadeModel(GL_SMOOTH);
+X
+X  /*set initial position and orientation for sphere*/
+X  sphereInfo.xPos = 2.0; sphereInfo.yPos = 0.0; sphereInfo.zPos = 0.0;
+X  sphereInfo.xAngle = 0.0; sphereInfo.yAngle = 0.0; sphereInfo.zAngle = 0.0;
+X  sphereInfo.xScale = 1.0; sphereInfo.yScale = 1.0; sphereInfo.zScale = 1.0;
+X
+X  /*set material properties for the sphere*/
+X  sphereInfo.diffuse[0] = 0.0; 
+X  sphereInfo.diffuse[1] = 0.0; 
+X  sphereInfo.diffuse[2] = 0.8; 
+X  sphereInfo.diffuse[3] = 1.0;
+X
+X  sphereInfo.ambient[0] = 0.0;
+X  sphereInfo.ambient[1] = 0.0;
+X  sphereInfo.ambient[2] = 0.4;
+X  sphereInfo.ambient[3] = 1.0;
+X
+X  sphereInfo.specular[0] = 0.0;
+X  sphereInfo.specular[1] = 0.0;
+X  sphereInfo.specular[2] = 0.3;
+X  sphereInfo.specular[3] = 1.0;
+X
+X  sphereInfo.shininess[0] = 0.0;
+X
+X
+X  /*set position and orientation of the cube*/
+X  cubeInfo.xPos = 0.0; cubeInfo.yPos = 0.0; cubeInfo.zPos = 0.0;
+X  cubeInfo.xAngle = 0.0; cubeInfo.yAngle = 0.0; cubeInfo.zAngle = 0.0;
+X  cubeInfo.xScale = 1.0; cubeInfo.yScale = 1.0; cubeInfo.zScale = 1.0;
+X
+X  /*set material properties for the cube*/
+X  cubeInfo.diffuse[0] = 0.8; 
+X  cubeInfo.diffuse[1] = 0.0; 
+X  cubeInfo.diffuse[2] = 0.0; 
+X  cubeInfo.diffuse[3] = 1.0;
+X
+X  cubeInfo.ambient[0] = 0.4;
+X  cubeInfo.ambient[1] = 0.0;
+X  cubeInfo.ambient[2] = 0.0;
+X  cubeInfo.ambient[3] = 1.0;
+X
+X  cubeInfo.specular[0] = 0.8;
+X  cubeInfo.specular[1] = 0.8;
+X  cubeInfo.specular[2] = 0.8;
+X  cubeInfo.specular[3] = 1.0;
+X
+X  cubeInfo.shininess[0] = 100.0;
+X
+X  /*set position and orienation of the tea pot*/
+X  potInfo.xPos = -2.0; potInfo.yPos = 0.0; potInfo.zPos = 0.0;
+X  potInfo.xAngle = 0.0; potInfo.yAngle = 0.0; potInfo.zAngle = 0.0;
+X  potInfo.xScale = 1.0; potInfo.yScale = 1.0; potInfo.zScale = 1.0;
+X
+X  /*set material properties for the cube*/
+X  potInfo.diffuse[0] = 0.8; 
+X  potInfo.diffuse[1] = 0.8; 
+X  potInfo.diffuse[2] = 0.0; 
+X  potInfo.diffuse[3] = 0.6;
+X
+X  potInfo.ambient[0] = 0.4;
+X  potInfo.ambient[1] = 0.4;
+X  potInfo.ambient[2] = 0.0;
+X  potInfo.ambient[3] = 0.6;
+X
+X  potInfo.specular[0] = 0.3;
+X  potInfo.specular[1] = 0.3;
+X  potInfo.specular[2] = 0.0;
+X  potInfo.specular[3] = 0.6;
+X
+X  potInfo.shininess[0] = 100.0;
+X
+X  /*set position and orientation of the camera*/
+X  cameraInfo.xPos = 0.0; cameraInfo.yPos = 0.0; cameraInfo.zPos = -8.0;
+X  cameraInfo.xAngle = 0.0; cameraInfo.yAngle = 0.0; cameraInfo.zAngle = 0.0;
+X  cameraInfo.xScale = 1.0; cameraInfo.yScale = 1.0; cameraInfo.zScale = 1.0;
+}
+X
+X
+/*
+X * handle window resize and expose events
+X */
+void myReshape(GLsizei w, GLsizei h)
+{
+X  /*save the window size in these globals for use
+X    in the display function*/
+X  windowWidth = w; 
+X  windowHeight = h;
+X  
+X  glViewport(0, 0, w, h);
+X  glMatrixMode(GL_PROJECTION);
+X  glLoadIdentity();
+X  gluPerspective(45.0, 1.0*(GLfloat)w/(GLfloat)h, 1.0, 10.0);
+X  glTranslatef(cameraInfo.xPos, cameraInfo.yPos, cameraInfo.zPos);
+X  glRotatef(cameraInfo.xAngle,1.0,0.0,0.0);
+X  glRotatef(cameraInfo.yAngle,0.0,1.0,0.0);
+X  glMatrixMode(GL_MODELVIEW);
+X  glLoadIdentity ();
+}
+X
+X
+/*
+X * Handle pop-up menu events.  Perform transparency and hidden object
+X * toggling directly otherwise just assign the input parameter to selected
+X * and let the mouse movement callback handle rotation, scaling and 
+X * translation.
+X */
+void
+Select(int value)
+{
+X
+X  /*exit when user selects quit*/
+X  if(value == QUIT)
+X    exit(0);
+X  /*if user toggles transparency, invert current transparency state
+X    and force redraw*/
+X  else if(value == TRANSPARENT_TEAPOT)
+X  {
+X    if(transparentTeapot)
+X      transparentTeapot = FALSE;
+X    else 
+X      transparentTeapot = TRUE;
+X    glutPostRedisplay();
+X  }
+X  else if(value == TOGGLE_SPHERE)
+X  {
+X    if(sphereHidden)
+X      sphereHidden = FALSE;
+X    else 
+X      sphereHidden = TRUE;
+X    glutPostRedisplay();
+X  }
+X  else if(value == TOGGLE_CUBE)
+X  {
+X    if(cubeHidden)
+X      cubeHidden= FALSE;
+X    else 
+X      cubeHidden = TRUE;
+X    glutPostRedisplay();
+X  }
+X  else if(value == TOGGLE_TEAPOT)
+X  {
+X    if(teapotHidden)
+X      teapotHidden = FALSE;
+X    else 
+X      teapotHidden = TRUE;
+X    glutPostRedisplay();
+X  }
+X  /*...otherwise, set selected global to menu option value*/
+X  else
+X    selected = value;
+}
+X
+X
+/*
+X * keys function scales, rotates and translates the
+X * currently selected object.
+X */ 
+void keys(unsigned char key, int x, int y)
+{
+X
+X  GLint deltaX = 0, deltaY = 0;
+X  
+X  
+X  switch(key)
+X  {
+X  case 'h':
+X    deltaX = -1;
+X    break;
+X  case 'j':
+X    deltaX = 1;
+X    break;
+X  case 'k':
+X    deltaY = -1;
+X    break;
+X  case 'l':
+X    deltaY = 1;
+X    break;
+X  }
+X
+X  /*as mouse movement callbacks are generated, switch based on the 
+X    selected action and execute it*/
+X  switch(selected) {
+X  case ROTATE_SPHERE:
+X    sphereInfo.yAngle += (deltaX*ROTATE_INCR);
+X    sphereInfo.xAngle += (deltaY*ROTATE_INCR);
+X    break;
+X  case SCALE_SPHERE:
+X    if(deltaX < 0)
+X      sphereInfo.xScale *= SCALE_INCR;
+X    else if(deltaX > 0)
+X      sphereInfo.xScale /= SCALE_INCR;
+X    break;
+X  case TRANSLATE_SPHERE:
+X    sphereInfo.xPos += (deltaX*TRANSLATE_INCR);
+X    sphereInfo.yPos -= (deltaY*TRANSLATE_INCR);
+X    break;
+X
+X  case ROTATE_CUBE:
+X    cubeInfo.yAngle += (deltaX*ROTATE_INCR);
+X    cubeInfo.xAngle += (deltaY*ROTATE_INCR);
+X    break;
+X  case SCALE_CUBE:
+X    if(deltaX < 0)
+X      cubeInfo.xScale *= SCALE_INCR;
+X    else if(deltaX > 0)
+X      cubeInfo.xScale /= SCALE_INCR;
+X    break;
+X  case TRANSLATE_CUBE:
+X    cubeInfo.xPos += (deltaX*TRANSLATE_INCR);
+X    cubeInfo.yPos -= (deltaY*TRANSLATE_INCR);
+X    break;
+X
+X  case ROTATE_TEAPOT:
+X    potInfo.yAngle += (deltaX*ROTATE_INCR);
+X    potInfo.xAngle += (deltaY*ROTATE_INCR);
+X    break;
+X  case SCALE_TEAPOT:
+X    if(deltaX < 0)
+X      potInfo.xScale *= SCALE_INCR;
+X    else if(deltaX > 0)
+X      potInfo.xScale /= SCALE_INCR;
+X    break;
+X  case TRANSLATE_TEAPOT:
+X    potInfo.xPos += (deltaX*TRANSLATE_INCR);
+X    potInfo.yPos -= (deltaY*TRANSLATE_INCR);
+X    break;
+X    
+X  case CAMERA:
+X    cameraInfo.yAngle += (deltaX*ROTATE_INCR);
+X    cameraInfo.xAngle += (deltaY*ROTATE_INCR);
+X    break;
+X  }
+X  
+X  /*force redraw of buffers*/
+X  glutPostRedisplay();
+}
+X
+/*
+X *  Main Loop
+X *  Open window with initial window size, title bar, 
+X *  RGBA display mode, and handle input events.
+X */
+int main(int argc, char** argv)
+{
+X  /*menu id's used below*/
+X  int sphereMenu, cubeMenu, potMenu; 
+X
+X  glutInit(&argc, argv);
+X  glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGBA);
+X  glutInitWindowSize (500, 500);
+X  glutCreateWindow (argv[0]);
+X    
+X
+X  /*print help messages*/
+X  printf("\n\nTo select an action use the right mouse button.\n");
+X  printf("Keys:\n");
+X  printf("h and j: Transform about/along x-axis\n");
+X  printf("k and l: Transform about/along y-axis\n");
+X
+X  /*initialize stuff*/
+X  myinit ();
+X    
+X  glutDisplayFunc(display);
+X  glutReshapeFunc (myReshape);
+X  glutIdleFunc (NULL);
+X
+X  /*
+X   * Setup a pop-up menu and bind it to the right
+X   * mouse button.  Start by defining the sphere 
+X   * submenu
+X   */
+X  sphereMenu = glutCreateMenu(Select);
+X  glutAddMenuEntry("Toggle Sphere", TOGGLE_SPHERE);
+X  glutAddMenuEntry("Rotate Sphere",ROTATE_SPHERE);
+X  glutAddMenuEntry("Scale Sphere", SCALE_SPHERE);
+X  glutAddMenuEntry("Translate Sphere", TRANSLATE_SPHERE);
+X  /*...now define the cube submenu...*/
+X  cubeMenu = glutCreateMenu(Select);
+X  glutAddMenuEntry("Toggle Cube", TOGGLE_CUBE);
+X  glutAddMenuEntry("Rotate Cube",ROTATE_CUBE);
+X  glutAddMenuEntry("Scale Cube", SCALE_CUBE);
+X  glutAddMenuEntry("Translate Cube", TRANSLATE_CUBE);
+X  /*...now define the teapot submenu...*/
+X  potMenu = glutCreateMenu(Select);
+X  glutAddMenuEntry("Toggle Teapot", TOGGLE_TEAPOT);
+X  glutAddMenuEntry("Rotate Teapot",ROTATE_TEAPOT);
+X  glutAddMenuEntry("Scale Teapot", SCALE_TEAPOT);
+X  glutAddMenuEntry("Translate Teapot", TRANSLATE_TEAPOT);
+X  /*...now create the main pop-up menu and add the three
+X    submenus to it*/
+X  glutCreateMenu(Select);
+X  glutAddSubMenu("Sphere",sphereMenu);
+X  glutAddSubMenu("Cube", cubeMenu);
+X  glutAddSubMenu("Teapot", potMenu);
+X  /*...finally add two more entries to the main menu
+X    and bind it to the right mouse button.*/
+X  glutAddMenuEntry("Move Camera", CAMERA);
+X  glutAddMenuEntry("Toggle Teapot Transparency", TRANSPARENT_TEAPOT);
+X  glutAddMenuEntry("Quit", QUIT);
+X  glutAttachMenu(GLUT_RIGHT_BUTTON);
+X
+X  /*bind keyboard events to the keys() function*/
+X  glutKeyboardFunc(keys);
+X  
+X  /*start the main loop*/
+X  glutMainLoop();
+}
+SHAR_EOF
+  $shar_touch -am 0206190397 'hw1.c' &&
+  chmod 0600 'hw1.c' ||
+  $echo 'restore of' 'hw1.c' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'hw1.c:' 'MD5 check failed'
+a3719fcf6744aef2acaa49124f27b2d8  hw1.c
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'hw1.c'`"
+    test 14578 -eq "$shar_count" ||
+    $echo 'hw1.c:' 'original size' '14578,' 'current size' "$shar_count!"
+  fi
+fi
+rm -fr _sh25285
+exit 0
+# From: lavalj@rpi.edu (Jean-Etienne LaVallee)

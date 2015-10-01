@@ -1,0 +1,13 @@
+Microsoft Visual Studio Solution File, Format Version 1.00
+Project("{66355F20-A65B-11D0-BFB5-00A0C91EBFA0}") = "Examples", "Examples.vjp", "{FADDAC21-9214-469B-93B0-A6563CA1BB12}"
+EndProject
+Global
+	GlobalSection(LocalDeployment) = postSolution
+		StartupProject = {FADDAC21-9214-469B-93B0-A6563CA1BB12}
+	EndGlobalSection
+	GlobalSection(BuildOrder) = postSolution
+		0 = {FADDAC21-9214-469B-93B0-A6563CA1BB12}
+	EndGlobalSection
+	GlobalSection(DeploymentRoot) = postSolution
+	EndGlobalSection
+EndGlobal

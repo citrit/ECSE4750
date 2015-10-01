@@ -1,0 +1,414 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage Express 2.0">
+<title>DataVis - Data Storage Algorithms</title>
+</head>
+
+<body bgcolor="#FFFFFF">
+
+<h3><img src="Speckled_Gradient1A5.gif" width="500" height="4"></h3>
+
+<h3><img src="images/head.gif" alt="*" align="absmiddle"
+width="73" height="90">Advanced Computer Graphics and Data
+Visualization</h3>
+
+<h1><img src="Speckled_Gradient1A5.gif" width="500" height="4"></h1>
+
+<h2>&nbsp;Section 2: Data Storage Algorithms</h2>
+
+<h3>&nbsp; Data Representation</h3>
+
+<ul>
+    <li>Now with our understanding of how to map geometric
+        primitives to the screen, we need methods by which we can
+        efficiently store the necessary information to recreate
+        large geometric representations of our visualizations.</li>
+    <li>Since our goal is data visualization, we first we need to
+        understand our data. This may sound easy, but in practice
+        this becomes the main issue in creating a visualization</li>
+    <li>The choice of data storage methods is important because
+        it affects our ability to interface to external data and
+        the overall performance of the entire visualization
+        system. We will want to keep a few guidelines for <b>design
+        criterion</b>:</li>
+</ul>
+
+<dl>
+    <dt><b><i>Compact</i></b></dt>
+    <dd>Since we know visualization data tends to be very large,
+        we need to design our structures to minimize computer
+        memory requirements.&nbsp;</dd>
+    <dt><b><i>Efficient</i></b></dt>
+    <dd>Visualization data needs to be accessed many times and we
+        would like to retrieve and store data in our structures
+        in constant time.&nbsp;</dd>
+    <dt><b><i>Mappable</i></b></dt>
+    <dd>Data representations need to efficiently map into
+        graphics primitives. We must be able to easily convert
+        external data into internal visualization data
+        structures.&nbsp;</dd>
+    <dt><b><i>Minimal Coverage</i></b></dt>
+    <dd>We must create a data representation that minimizes the
+        number of data types while covering a large portion of
+        external data types. We wish to balance efficiency with
+        the number of data types.&nbsp;</dd>
+    <dt><b><i>Simple</i></b></dt>
+    <dd>Simple algorithms and data sets are easier to implement
+        and also easier to extend.&nbsp;</dd>
+</dl>
+
+<h3>Data Set</h3>
+
+<ul>
+    <li>The Dataset is an abstract form which simply defines the
+        concept of the behavior of the concrete derived classes
+        to follow.</li>
+    <li>The data set consists of two sections: the <b><i>Structure</i></b>
+        and <b><i>Attributes</i></b>.</li>
+    <li><b><i>Structure</i></b> consist of two elements: <i>Topology</i>
+        and <i>Geometry</i></li>
+    <li><ol>
+            <li><i>Topology</i> is the information about the
+                structure of the dataset.</li>
+            <li><i>Geometry</i> is the instantiation of the
+                Topology</li>
+        </ol>
+    </li>
+    <li>The best way to think of it is if we say a polygon is a
+        triangle, we specified the topology. When we provide the
+        point coordinates we specify the geometry.</li>
+    <li><b><i>Attributes</i></b> are supplemental information
+        associated with the geometry such as temperature,
+        pressure, or density. They consist of scalars, vectors,
+        normals, texture coordinates, tensors, and user defined
+        data.</li>
+</ul>
+
+<h3>Cell Types</h3>
+
+<ul>
+    <li>Data sets consist of one or more cells which are the
+        fundamental building blocks of visualization systems.</li>
+    <li>Cells are defined by specifying a <i>type</i> in
+        combination with an ordered list of points (<i>connectivity
+        list</i>) which implicitly defines the topology of the
+        cell.</li>
+    <li>Examples of Cell types are:</li>
+</ul>
+
+<blockquote>
+    <p><tt>Vertex PolyVertex Line PolyLine<br>
+    Triangle TriangleStrip Quadrilateran<br>
+    Polygon Tetrahedron Hexahedron Voxel</tt></p>
+</blockquote>
+
+<h3>Attribute Data</h3>
+
+<ul>
+    <li>Attribute data is information associated with the
+        structure of the data set. It can be bound to the
+        topology, such as a face color, or assigned to the
+        underlying geometry, such as temperatures of points. This
+        data is an attribute to the structure of the dataset.</li>
+</ul>
+
+<p align="center"><img src="images/vector.gif" alt="Vector data"
+width="784" height="392"></p>
+
+<ul>
+    <li>We need a way to associate the attribute data with the
+        same overall constraints we defined for the container
+        objects.</li>
+</ul>
+
+<hr>
+
+<h3><font size="4">Example implementation: Open Inventor</font></h3>
+
+<ul>
+    <li>Open Inventor is an object-oriented toolkit for
+        developing interactive, 3D graphics applications. It also
+        defines a standard file format for exchanging 3D data
+        among applications. </li>
+    <li>Scene graphs describe geometry and attributes</li>
+    <li>They use a graph (usually a directed acyclic graph) to
+        relate/bind attributes and geometry.</li>
+    <li>Graphical objects (nodes) are organized into a
+        hierarchical graph</li>
+    <li>The path to any node on the graph defines the attributes
+        of that node</li>
+    <li>For example a Rotation or Material node will affect the
+        nodes after it in the scene</li>
+</ul>
+
+<p align="center"><img src="images/datast1.jpg" width="280"
+height="144"></p>
+
+<ul>
+    <li><p align="left">A VRML Scene graph is made up of several
+        different types of nodes </p>
+        <ul>
+            <li><p align="left"><strong>Shape nodes</strong><br>
+                AsciiText, Cone, Cube, Cylinder, IndexedFaceSet,
+                IndexedLineSet, PointSet, Sphere. </p>
+            </li>
+            <li><p align="left"><font size="3"><strong>Group
+                nodes</strong></font><br>
+                Group, Separator, Switch, TransformSeparator,
+                WWWAnchor </p>
+            </li>
+            <li><p align="left"><strong>Property nodes</strong><br>
+                <em>Geometry and Appearance</em>:<br>
+                Coordinate3, FontStyle, Info, LOD, Material,
+                MaterialBinding, Normal, NormalBinding, Texture2,
+                Texture2Transform, TextureCoordinate2, ShapeHints<br>
+                <br>
+                <em>Matrix or Transform Properties</em>:<br>
+                MatrixTransform, Rotation, Scale, Transform,
+                Translation<br>
+                <br>
+                <em>Cameras and Lights</em><br>
+                OrthographicCamera, PerspectiveCamera
+                DirectionalLight, PointLight, SpotLight </p>
+            </li>
+        </ul>
+    </li>
+    <li><p align="left">Each node has zero or more fields, which
+        stores the data for the node. </p>
+    </li>
+    <li><p align="left">Each node is identified by its path from
+        the root node </p>
+    </li>
+</ul>
+
+<p align="center">&nbsp;</p>
+
+<p align="center"><img src="images/datast2.jpg" width="746"
+height="329"></p>
+
+<ul>
+    <li><strong>Strengths</strong>: <ul>
+            <li>Reuse of properties and transformations reduce
+                storage and rendering times</li>
+            <li>State based drawing paradigm is very fast</li>
+            <li>Hierarchical model allows grouping of nodes</li>
+            <li>It can be part of a larger OO package</li>
+        </ul>
+    </li>
+    <li><strong>Weakness</strong>: <ul>
+            <li>It is a recursive traversal model, overhead
+                involved - pushing &amp; popping the execution
+                state</li>
+            <li>Geometry nodes are effected by
+                &#147;unknown&#148; nodes prior in the tree</li>
+            <li>Cannot render &quot;out of order&quot;, always a
+                left to right rendering order<ul>
+                    <li>Cannot perform parrallel rendering</li>
+                </ul>
+            </li>
+            <li>It is difficult to understand, great deal of
+                nuance</li>
+        </ul>
+    </li>
+    <li>Scene Graphs serve best as scene description formats</li>
+</ul>
+
+<p>&nbsp;</p>
+
+<hr>
+
+<h3>Example Implementation: Java3D</h3>
+
+<ul>
+    <li>We will look into Java3D which is a move away from the
+        traditional SG of Inventor towards a more object based
+        rendering system</li>
+    <li><a
+        href="http://java.sun.com/products/java-media/3D/forDevelopers/3Dguide/Intro.doc.html">Java3D</a>
+        is an extension to the Java language specification and is
+        found at:<ul>
+            <li><a
+                href="http://java.sun.com/products/java-media/3D/index.html">http://java.sun.com/products/java-media/3D/index.html</a></li>
+        </ul>
+    </li>
+    <li>First we will look at the <a
+        href="http://java.sun.com/products/java-media/3D/forDevelopers/3Dguide/SceneGraphOverview.doc.html"><font
+        size="3">Scene Graph Overview</font></a></li>
+    <li>Which is organized by the <a
+        href="http://java.sun.com/products/java-media/3D/forDevelopers/3Dguide/GroupNodes.doc.html"><font
+        size="3">Group Node Objects</font></a></li>
+    <li><font size="3">and things are drawn using </font><a
+        href="http://java.sun.com/products/java-media/3D/forDevelopers/3Dguide/LeafNodes.doc.html"><font
+        size="3">Leaf Node Objects</font></a></li>
+</ul>
+
+<h3>Recipe for Java 3D Program</h3>
+
+<ul>
+    <li>The following steps are taken by the example program to
+        create the scene graph elements and link them together.
+        Java 3D will then render the scene graph and display the
+        graphics in a window on the screen: </li>
+</ul>
+
+<blockquote>
+    <p>1. Create a Canvas3D object and add it to the Applet panel
+    or a frame. </p>
+    <p>2. Create a BranchGroup as the root of the scene branch
+    graph. </p>
+    <p>3. Construct a shape node with a transform above it. </p>
+    <p>4. Attach a RotationInterpolator behavior to the
+    transform. </p>
+    <p>5. Call the universe builder utility function to do the
+    following: </p>
+    <blockquote>
+        <p>a. Establish a virtual universe with a single
+        high-resolution Locale </p>
+        <p>b. Create the PhysicalBody, PhysicalEnvironment, View
+        and ViewPlatform objects. </p>
+        <p>c. Create a BranchGroup as the root of the view
+        platform branch graph. </p>
+        <p>d. Insert the view platform branch graph into the
+        Locale. </p>
+    </blockquote>
+    <p>6. Insert the scene branch graph into the universe
+    builder's Locale. </p>
+</blockquote>
+
+<ul>
+    <li>The Java 3D renderer then starts running in an infinite
+        loop. The renderer conceptually performs the following
+        operations: </li>
+</ul>
+
+<hr>
+
+<blockquote>
+    <pre>while(true) {</pre>
+</blockquote>
+
+<blockquote>
+    <pre>    Process input
+    If (request to exit) break
+    Perform Behaviors
+    Traverse the scene graph and render visible objects
+}</pre>
+</blockquote>
+
+<blockquote>
+    <pre>Cleanup and exit</pre>
+</blockquote>
+
+<hr>
+
+<ul>
+    <li><pre><font size="3">and of course when we apply all these principles we get HomeWork 1</font></pre>
+    </li>
+    <li>&nbsp;</li>
+</ul>
+
+<hr>
+
+<h3>Example Implementation: Our Rendering System</h3>
+
+<ul>
+    <li>We need to keep in mind our design criteria<ul>
+            <li><em><strong>Compact, Efficient, Mappable, Minimal
+                Coverage, and Simple</strong></em></li>
+        </ul>
+    </li>
+    <li>Some issues to keep in mind when creating a rendering
+        system:<ul>
+            <li>Create building block type objects that can be
+                organized and subclassed to create any shape we
+                need</li>
+            <li>Keep them extendable (topology and geometry)</li>
+            <li>We need to be able to position and move these
+                basic shapes</li>
+            <li>We need to assign colors (per vertex,
+                single/double sided, smooth coloring)</li>
+            <li>We need to keep track of lights and viewer
+                position</li>
+            <li>We may want to develop our code to work cross
+                platforms</li>
+        </ul>
+    </li>
+    <li>Based on these and other issues, the following class
+        hierarchy was devloped to illustrate the above points</li>
+</ul>
+
+<p>&nbsp;</p>
+
+<p><img src="images/oglrtopology.gif" width="640" height="512"></p>
+
+<p><img src="images/oglrrensys.gif" width="640" height="512"></p>
+
+<h3>The ParentObject Class</h3>
+
+<ul>
+    <li>The Parent Object defines some basic behavior of all
+        objects in our system</li>
+    <li>It also allows us to gather up any object for later
+        processing</li>
+    <li>It specifies some helpfull methods for later use</li>
+</ul>
+
+<h3>The Cell Class (Topology)</h3>
+
+<ul>
+    <li>This is the base class for all basic building blocks in
+        the system</li>
+    <li>It defines behaviors and implicit information for all
+        topology objects</li>
+    <li>The Render method is the way the Renderer signals the
+        objects to draw themselves</li>
+</ul>
+
+<h3>The Points Classes (Geometry)</h3>
+
+<ul>
+    <li>These define how geometry is stored in the system</li>
+    <li>Basically simple storage objects</li>
+</ul>
+
+<h3>The Material Classes</h3>
+
+<ul>
+    <li>Define how colors are stored in our system, allow the
+        user to define various variables associated with color
+        models</li>
+    <li>Allow for per-face or per-vertex coloring</li>
+</ul>
+
+<h3>Rendering System Abstraction Layer</h3>
+
+<ul>
+    <li>Defines how the rendering system organizes the scene</li>
+    <li>Includes actors, cameras and lights</li>
+    <li>Specifies a collection method for all instances of
+        objects to be referenced later</li>
+    <li>Defines the API for Cells to draw themselves</li>
+    <li>Basically a collection object with Graphics methods</li>
+</ul>
+
+<h3>Specific Rendering Implementation Layer</h3>
+
+<ul>
+    <li>Ties our abstraction layer to a real rendering API</li>
+    <li>We need to translate our API methods in the abstract
+        layer to actual functions within the graphics API</li>
+    <li>Also need to tie down any specific finctionality of
+        lights, cameras, and actors that may apply to the
+        specified rendering system</li>
+</ul>
+
+<p><img src="Speckled_Gradient1A5.gif" width="500" height="4"></p>
+
+<p><font size="1">Page last updated: <!--webbot bot="Timestamp"
+startspan s-type="EDITED" s-format="%B %d, %Y %I:%M %p" -->February 22, 1998 10:49 AM<!--webbot
+bot="Timestamp" i-checksum="54299" endspan --></font></p>
+</body>
+</html>

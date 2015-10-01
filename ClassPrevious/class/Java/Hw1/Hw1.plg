@@ -1,0 +1,18 @@
+--------------------Configuration: Hw1 - Java Virtual Machine Debug--------------------
+Begining build with project "D:\class\Java\Hw1\Hw1.dsp", at root.
+Active configuration is Java Virtual Machine Java Project (based on Java Virtual Machine Java Project)
+
+Project's tools are:
+			"Java Compiler" with flags "/g "
+			"Custom Build" with flags ""
+			"<Component 0xa>" with flags ""
+
+Creating temp file "c:\windows\TEMP\RSP6303.TMP" with contents <D:\class\Java\Hw1\Hw1.java>
+Compiling...
+Microsoft (R) Visual J++ Compiler Version 1.01.7022
+Copyright (C) Microsoft Corp 1996. All rights reserved.
+
+
+
+
+Hw1 - 0 error(s), 0 warning(s)

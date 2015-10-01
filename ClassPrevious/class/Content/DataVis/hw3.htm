@@ -1,0 +1,110 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage Express 2.0">
+<title>DataVis - Home Work 3</title>
+</head>
+
+<body bgcolor="#FFFFFF">
+
+<p align="center"><img src="Speckled_Gradient1A5.gif" width="500"
+height="4"></p>
+
+<h3 align="center">Advanced Computer Graphics and Data
+Visualization</h3>
+
+<p align="center"><img src="Speckled_Gradient1A5.gif" width="500"
+height="4"></p>
+
+<h2 align="center">&nbsp;Home Work 3</h2>
+
+<p align="center"><b>Due: Midnight on Tues Feb 28, 2001</b></p>
+
+<p>&nbsp;</p>
+
+<p>In this homework you have two tasks. One is to add display
+lists to the rendering system. The second is to add a structured
+grid object to our rendering system of homework 2. </p>
+
+<p>For the display list portion of the assignment you may want to
+review the display list section of the notes. Remember you need
+to generate a unique integer identifier for each display list you
+want to keep. So you can either have the cell hold the display
+list or the Actor. You then need to modify the renderer interface
+to include display list support. The functions required are:</p>
+
+<pre>	int generateDL();    	void beginDL(int dl);
+	void callDL(int dl);    void endDL(int dl);</pre>
+
+<p>You may want the beginDL to check if the passed in value is
+already a DL and delete it if it is. Then you will need to
+implement the logic to ensure if something changes in a dependant
+object, the display list is trashed and a new one is generated.</p>
+
+<p>The StructuredGrid object should be a derived class to the
+Actor object in that we can include it in the Actor collection of
+the Renderer. You will also need to add a ScalarData object to
+hold scalar values and map arbitrary scalars to colors based on
+the included range. This is the colormap object.</p>
+
+<p>The Structured Grid should contain these methods:</p>
+
+<pre>	SetSize(int w = 0, int h = 0);		DisplayWireframe();
+	SetStartPoint(PointType pt); 		DisplayPlane();
+	SetDeltas(float deltax, float deltay); 	DisplayContours();
+	SetPoints(PointSet pts); 		SetContours(Vector vec);
+	SetData(ScalarData data);		Contour();
+</pre>
+
+<p>The ScalarData object is a container holding scalars values
+for each of the points in a system. This object should do several
+things: </p>
+
+<ol>
+    <li>Collect up a number of scalars values, presumably one for
+        each point in the system.</li>
+    <li>Keep track of bounds, minimum and maximum values.</li>
+    <li>Return a material color based on a color scheme and a
+        value sent to the object (it already knows the scalar
+        range).</li>
+</ol>
+
+<p>The StructuredGrid object should behave according to its
+current state and should always draw something. The
+StructuredGrid should hold a bounding box for the data set so it
+can set the renderers viewpoint correctly. The output should
+toggle between displaying a wireframe grid, solid plane, or
+contours. These are the behaviors and expected results: </p>
+
+<ol>
+    <li>If there is no data defined, the StructuredGrid draws
+        itself as a grid of white lines using its internal size
+        variables and either the PointSet (if not NULL) or its
+        own internally generated coordinates.</li>
+    <li>If there is data, draw either the solid/wireframe grid or
+        the contours based on the current state and color
+        appropriately.</li>
+    <li>You will need to use the time variable of the network so
+        that the StructuredGrid object can tell weather to
+        regenerate its contours based on the time of the
+        DataObject and PointSet. </li>
+</ol>
+
+<p>There is an example.grid data file and its format will be:</p>
+
+<blockquote>
+    <p>dimx dimy val0 val1 val2 val3 ... val[dimx*dimy]</p>
+</blockquote>
+
+<p><strong>Extra Credit</strong>: Stretch the grid into the Z
+direction using the scalar value as the Z while still applying
+vertex coloring. Apply a Z value to the colored contours based on
+the current data value.</p>
+
+<p><img src="Speckled_Gradient1A5.gif" width="500" height="4"></p>
+
+<p>&nbsp;</p>
+</body>
+</html>

@@ -1,0 +1,50 @@
+winston.its.rpi.edu-citrit> cat ~/Class/VisClass/hw4/hw4.tcl
+# get the interactor ui
+source /locker/44/000644/vtk1.0/examples/tcl/vtkInt.tcl
+
+# First create the render master
+vtkRenderMaster rm;
+
+# Now create the RenderWindow, Renderer
+#
+set renWin [rm MakeRenderWindow];
+set ren1   [$renWin MakeRenderer];
+set iren   [$renWin MakeRenderWindowInteractor];
+
+if [catch {open example.grid r} inf] {
+    puts stderr "error: cannot open example.grid for read"
+    exit 1
+} 
+
+
+#
+# Load up the data
+#
+
+vtkStructuredPoints volume;
+   volume 
+
+
+
+
+
+
+
+
+# Add the actors to the renderer, set the background and size
+#
+$ren1 AddActors outActor;
+$ren1 AddActors volActor;
+$ren1 SetBackground 0 0 0;
+$renWin SetSize 500 400;
+$iren Initialize;
+
+# render the image
+#
+$iren SetUserMethod {wm deiconify .vtkInteract};
+
+$renWin Render;
+
+# prevent the tk window from showing up then start the event loop
+wm withdraw .
+

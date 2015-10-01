@@ -1,0 +1,763 @@
+#!/bin/sh
+# This is a shell archive (produced by GNU sharutils 4.2).
+# To extract the files from this archive, save it to some FILE, remove
+# everything before the `!/bin/sh' line above, then type `sh FILE'.
+#
+# Made on 1997-04-30 15:31 EDT by <kozurj@magritte>.
+# Source directory was `/afs/rpi.edu/home/96/kozurj/private/visual/proj3'.
+#
+# Existing files will *not* be overwritten unless `-c' is specified.
+#
+# This shar contains:
+# length mode       name
+# ------ ---------- ------------------------------------------
+#    361 -rw------- README
+#   2760 -rw------- p1a.tcl
+#   2789 -rw------- p1b.tcl
+#   3376 -rw------- p2a.tcl
+#   2868 -rw------- p2b.tcl
+#   3482 -rw------- p2c.tcl
+#
+save_IFS="${IFS}"
+IFS="${IFS}:"
+gettext_dir=FAILED
+locale_dir=FAILED
+first_param="$1"
+for dir in $PATH
+do
+  if test "$gettext_dir" = FAILED && test -f $dir/gettext \
+     && ($dir/gettext --version >/dev/null 2>&1)
+  then
+    set `$dir/gettext --version 2>&1`
+    if test "$3" = GNU
+    then
+      gettext_dir=$dir
+    fi
+  fi
+  if test "$locale_dir" = FAILED && test -f $dir/shar \
+     && ($dir/shar --print-text-domain-dir >/dev/null 2>&1)
+  then
+    locale_dir=`$dir/shar --print-text-domain-dir`
+  fi
+done
+IFS="$save_IFS"
+if test "$locale_dir" = FAILED || test "$gettext_dir" = FAILED
+then
+  echo=echo
+else
+  TEXTDOMAINDIR=$locale_dir
+  export TEXTDOMAINDIR
+  TEXTDOMAIN=sharutils
+  export TEXTDOMAIN
+  echo="$gettext_dir/gettext -s"
+fi
+touch -am 1231235999 $$.touch >/dev/null 2>&1
+if test ! -f 1231235999 && test -f $$.touch; then
+  shar_touch=touch
+else
+  shar_touch=:
+  echo
+  $echo 'WARNING: not restoring timestamps.  Consider getting and'
+  $echo "installing GNU \`touch', distributed in GNU File Utilities..."
+  echo
+fi
+rm -f 1231235999 $$.touch
+#
+if mkdir _sh121044; then
+  $echo 'x -' 'creating lock directory'
+else
+  $echo 'failed to create lock directory'
+  exit 1
+fi
+# ============= README ==============
+if test -f 'README' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'README' '(file already exists)'
+else
+  $echo 'x -' extracting 'README' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'README' &&
+Here is project 3, these were all done on an IBM AIX workstation.  There aren't
+any probles as far as I can tell, although the animation is pretty slow so I
+only have 5 shots for each sequence.  I don't have the time or patience to
+figure out the requirements of the last 2 filters, so theres no bonus stuff.
+p2a = hedgehog
+p2b = stream
+p2c = warp
+X
+John Kozura
+SHAR_EOF
+  $shar_touch -am 0415233197 'README' &&
+  chmod 0600 'README' ||
+  $echo 'restore of' 'README' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'README:' 'MD5 check failed'
+f450e95aef0eeed681801a7d1864cc67  README
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'README'`"
+    test 361 -eq "$shar_count" ||
+    $echo 'README:' 'original size' '361,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= p1a.tcl ==============
+if test -f 'p1a.tcl' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'p1a.tcl' '(file already exists)'
+else
+  $echo 'x -' extracting 'p1a.tcl' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'p1a.tcl' &&
+# tcl file for Graphics Project 3, problem 6.3a
+# John P Kozura
+X
+# user interface command widget
+source vtkInt.tcl
+X
+# create a rendering window and renderer
+vtkRenderMaster rm;
+set renWin [rm MakeRenderWindow];
+set ren1 [$renWin MakeRenderer];
+set iren [$renWin MakeRenderWindowInteractor];
+X
+vtkQuadric quad;
+X  quad SetCoefficients 0.5 1 .2 0 .1 0 0 .2 0 0;
+vtkSampleFunction sample;
+X  sample SetSampleDimensions 50 50 50;
+X  sample SetImplicitFunction quad;
+X
+X
+# here is my code, eventually generates 5 actors
+# I think this would be better done in a loop
+X
+vtkContourFilter cont1;
+X  cont1 SetInput [sample GetOutput];
+X  cont1 GenerateValues 1 0.0 0.2;
+vtkPolyMapper contMapper1;
+X  contMapper1 SetInput [cont1 GetOutput];
+X  contMapper1 SetScalarRange 0.0 2.0;
+vtkActor contActor1;
+X  contActor1 SetMapper contMapper1;
+$ren1 AddActors contActor1;
+X  contActor1 VisibilityOn;
+X
+vtkContourFilter cont2;
+X  cont2 SetInput [sample GetOutput];
+X  cont2 GenerateValues 1 0.0 0.4;
+vtkPolyMapper contMapper2;
+X  contMapper2 SetInput [cont2 GetOutput];
+X  contMapper2 SetScalarRange 0.0 2.0;
+vtkActor contActor2;
+X  contActor2 SetMapper contMapper2;
+$ren1 AddActors contActor2;
+X  contActor2 VisibilityOff;
+X
+vtkContourFilter cont3;
+X  cont3 SetInput [sample GetOutput];
+X  cont3 GenerateValues 1 0.0 0.6;
+vtkPolyMapper contMapper3;
+X  contMapper3 SetInput [cont3 GetOutput];
+X  contMapper3 SetScalarRange 0.0 2.0;
+vtkActor contActor3;
+X  contActor3 SetMapper contMapper3;
+$ren1 AddActors contActor3;
+X  contActor3 VisibilityOff;
+X
+vtkContourFilter cont4;
+X  cont4 SetInput [sample GetOutput];
+X  cont4 GenerateValues 1 0.0 0.8;
+vtkPolyMapper contMapper4;
+X  contMapper4 SetInput [cont4 GetOutput];
+X  contMapper4 SetScalarRange 0.0 2.0;
+vtkActor contActor4;
+X  contActor4 SetMapper contMapper4;
+$ren1 AddActors contActor4;
+X  contActor4 VisibilityOff;
+X
+vtkContourFilter cont5;
+X  cont5 SetInput [sample GetOutput];
+X  cont5 GenerateValues 1 0.0 1.0;
+vtkPolyMapper contMapper5;
+X  contMapper5 SetInput [cont5 GetOutput];
+X  contMapper5 SetScalarRange 0.0 2.0;
+vtkActor contActor5;
+X  contActor5 SetMapper contMapper5;
+$ren1 AddActors contActor5;
+X  contActor5 VisibilityOff;
+X
+X
+# now for some more code pirated shamelessly from sample
+$ren1 SetBackground 1 1 1;
+X
+# enable user interface interactor
+$iren SetUserMethod {wm deiconify .vtkInteract};
+$iren Initialize;
+X
+# prevent the tk window from showing up then start the event loop
+wm withdraw .
+X
+# initial render to turn everything off
+$renWin Render;
+X
+# now cycle through all 5
+X
+contActor1 VisibilityOff;
+contActor2 VisibilityOn;
+$renWin Render;
+X
+contActor2 VisibilityOff;
+contActor3 VisibilityOn;
+$renWin Render;
+X
+contActor3 VisibilityOff;
+contActor4 VisibilityOn;
+$renWin Render;
+X
+contActor4 VisibilityOff;
+contActor5 VisibilityOn;
+$renWin Render;
+SHAR_EOF
+  $shar_touch -am 0415211397 'p1a.tcl' &&
+  chmod 0600 'p1a.tcl' ||
+  $echo 'restore of' 'p1a.tcl' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'p1a.tcl:' 'MD5 check failed'
+add026087e48fc4928821d2ab747ba53  p1a.tcl
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'p1a.tcl'`"
+    test 2760 -eq "$shar_count" ||
+    $echo 'p1a.tcl:' 'original size' '2760,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= p1b.tcl ==============
+if test -f 'p1b.tcl' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'p1b.tcl' '(file already exists)'
+else
+  $echo 'x -' extracting 'p1b.tcl' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'p1b.tcl' &&
+# tcl file for Graphics Project 3, problem 6.3b
+# John P Kozura
+X
+# get the interactor ui
+source vtkInt.tcl
+X
+# First create the render master
+vtkRenderMaster rm;
+X
+# Now create the RenderWindow, Renderer
+#
+set renWin [rm MakeRenderWindow];
+set ren1   [$renWin MakeRenderer];
+set iren   [$renWin MakeRenderWindowInteractor];
+X
+#
+# Load up the data
+vtkStructuredPointsReader vol;
+X    vol SetFilename "MRIdata.vtk"
+#    vol DebugOn;
+X
+# here is my code, same as the first one, eventually generates 5 actors
+# I'd use a loop, but cut and paste is just so much fun
+X
+X
+vtkMarchingCubes cont1;
+X  cont1 SetInput [vol GetOutput];
+X  cont1 SetValue 0 25.0;
+vtkPolyMapper volMapper1;
+X  volMapper1 SetInput [cont1 GetOutput];
+X  volMapper1 ScalarsVisibleOff;
+vtkActor volActor1;
+X  volActor1 SetMapper volMapper1;
+X  volActor1 VisibilityOn;
+$ren1 AddActors volActor1;
+X
+X
+vtkMarchingCubes cont2;
+X  cont2 SetInput [vol GetOutput];
+X  cont2 SetValue 0 50.0;
+vtkPolyMapper volMapper2;
+X  volMapper2 SetInput [cont2 GetOutput];
+X  volMapper2 ScalarsVisibleOff;
+vtkActor volActor2;
+X  volActor2 SetMapper volMapper2;
+X  volActor2 VisibilityOff;
+$ren1 AddActors volActor2;
+X
+vtkMarchingCubes cont3;
+X  cont3 SetInput [vol GetOutput];
+X  cont3 SetValue 0 75.0;
+vtkPolyMapper volMapper3;
+X  volMapper3 SetInput [cont3 GetOutput];
+X  volMapper3 ScalarsVisibleOff;
+vtkActor volActor3;
+X  volActor3 SetMapper volMapper3;
+X  volActor3 VisibilityOff;
+$ren1 AddActors volActor3;
+X
+X
+vtkMarchingCubes cont4;
+X  cont4 SetInput [vol GetOutput];
+X  cont4 SetValue 0 100.0;
+vtkPolyMapper volMapper4;
+X  volMapper4 SetInput [cont4 GetOutput];
+X  volMapper4 ScalarsVisibleOff;
+vtkActor volActor4;
+X  volActor4 SetMapper volMapper4;
+X  volActor4 VisibilityOff;
+$ren1 AddActors volActor4;
+X
+X
+vtkMarchingCubes cont5;
+X  cont5 SetInput [vol GetOutput];
+X  cont5 SetValue 0 125.0;
+vtkPolyMapper volMapper5;
+X  volMapper5 SetInput [cont5 GetOutput];
+X  volMapper5 ScalarsVisibleOff;
+vtkActor volActor5;
+X  volActor5 SetMapper volMapper5;
+X  volActor5 VisibilityOff;
+$ren1 AddActors volActor5;
+X
+X
+# heres some of your code to generate a gridline
+vtkOutlineFilter outLine;
+X  outLine SetInput [vol GetOutput];
+vtkPolyMapper outMapper;
+X  outMapper SetInput [outLine GetOutput];
+vtkActor outActor;
+X  outActor SetMapper outMapper;
+$ren1 AddActors outActor;
+X
+$ren1 SetBackground 0 0 0;
+$renWin SetSize 500 400;
+$iren Initialize;
+X
+# render the image
+#
+$iren SetUserMethod {wm deiconify .vtkInteract};
+$renWin Render;
+X
+# prevent the tk window from showing up then start the event loop
+wm withdraw .
+X
+# now cycle through all 5
+X
+volActor1 VisibilityOff;
+volActor2 VisibilityOn;
+$renWin Render;
+X
+volActor2 VisibilityOff;
+volActor3 VisibilityOn;
+$renWin Render;
+X
+volActor3 VisibilityOff;
+volActor4 VisibilityOn;
+$renWin Render;
+X
+volActor4 VisibilityOff;
+volActor5 VisibilityOn;
+X
+X
+SHAR_EOF
+  $shar_touch -am 0415212397 'p1b.tcl' &&
+  chmod 0600 'p1b.tcl' ||
+  $echo 'restore of' 'p1b.tcl' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'p1b.tcl:' 'MD5 check failed'
+f453336a8c9ee8d8f6f61c050f6acd8f  p1b.tcl
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'p1b.tcl'`"
+    test 2789 -eq "$shar_count" ||
+    $echo 'p1b.tcl:' 'original size' '2789,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= p2a.tcl ==============
+if test -f 'p2a.tcl' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'p2a.tcl' '(file already exists)'
+else
+  $echo 'x -' extracting 'p2a.tcl' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'p2a.tcl' &&
+# tcl file for Graphics Project 3, problem 9.4a
+# John P Kozura
+X
+# get the interactor ui
+source vtkInt.tcl
+X
+# create planes
+# First create the render master
+vtkRenderMaster rm;
+X
+# Now create the RenderWindow, Renderer and both Actors
+#
+set renWin [rm MakeRenderWindow];
+set ren1   [$renWin MakeRenderer];
+set iren [$renWin MakeRenderWindowInteractor];
+X
+# create pipeline
+#
+vtkPLOT3DReader pl3d;
+X    pl3d SetXYZFilename "combxyz.bin"
+X    pl3d SetQFilename "combq.bin"
+X    pl3d SetScalarFunctionNumber 100;
+X    pl3d SetVectorFunctionNumber 202;
+X    pl3d Update;
+X
+vtkPlaneSource plane;
+X    plane SetResolution 50 50;
+vtkTransform transP1;
+X    transP1 Translate 3.7 0.0 28.37;
+X    transP1 Scale 5 5 5;
+X    transP1 RotateY 90;
+vtkTransformPolyFilter tpd1
+X    tpd1 SetInput [plane GetOutput];
+X    tpd1 SetTransform transP1;
+vtkOutlineFilter outTpd1;
+X    outTpd1 SetInput [tpd1 GetOutput];
+vtkPolyMapper mapTpd1;
+X    mapTpd1 SetInput [outTpd1 GetOutput];
+vtkActor tpd1Actor;
+X    tpd1Actor SetMapper mapTpd1;
+X    [tpd1Actor GetProperty] SetColor 0 0 0;
+X
+vtkTransform transP2;
+X    transP2 Translate 9.2 0.0 31.20;
+X    transP2 Scale 5 5 5;
+X    transP2 RotateY 90;
+vtkTransformPolyFilter tpd2
+X    tpd2 SetInput [plane GetOutput];
+X    tpd2 SetTransform transP2;
+vtkOutlineFilter outTpd2;
+X    outTpd2 SetInput [tpd2 GetOutput];
+vtkPolyMapper mapTpd2;
+X    mapTpd2 SetInput [outTpd2 GetOutput];
+vtkActor tpd2Actor;
+X    tpd2Actor SetMapper mapTpd2;
+X    [tpd2Actor GetProperty] SetColor 0 0 0;
+X
+vtkTransform transP3;
+X    transP3 Translate 13.27 0.0 33.30;
+X    transP3 Scale 5 5 5;
+X    transP3 RotateY 90;
+vtkTransformPolyFilter tpd3
+X    tpd3 SetInput [plane GetOutput];
+X    tpd3 SetTransform transP3;
+vtkOutlineFilter outTpd3;
+X    outTpd3 SetInput [tpd3 GetOutput];
+vtkPolyMapper mapTpd3;
+X    mapTpd3 SetInput [outTpd3 GetOutput];
+vtkActor tpd3Actor;
+X    tpd3Actor SetMapper mapTpd3;
+X    [tpd3Actor GetProperty] SetColor 0 0 0;
+X
+vtkAppendPolyData appendF;
+X    appendF AddInput [tpd1 GetOutput];
+X    appendF AddInput [tpd2 GetOutput];
+X    appendF AddInput [tpd3 GetOutput];
+X
+vtkProbeFilter probe;
+X    probe SetInput [appendF GetOutput];
+X    probe SetSource [pl3d GetOutput];
+X
+# My huge contribution to this problem!
+vtkHedgeHog hedger;
+X	hedger SetInput [probe GetOutput];
+X	hedger SetScaleFactor 0.01;
+X
+vtkPolyMapper contourMapper;
+X    contourMapper SetInput [hedger GetOutput];
+X    eval contourMapper SetScalarRange [[pl3d GetOutput] GetScalarRange];
+vtkActor planeActor;
+X    planeActor SetMapper contourMapper;
+X
+vtkStructuredGridOutlineFilter outline;
+X    outline SetInput [pl3d GetOutput];
+vtkPolyMapper outlineMapper;
+X    outlineMapper SetInput [outline GetOutput];
+vtkActor outlineActor;
+X    outlineActor SetMapper outlineMapper;
+X    [outlineActor GetProperty] SetColor 0 0 0;
+X
+$ren1 AddActors outlineActor;
+$ren1 AddActors planeActor;
+$ren1 AddActors tpd1Actor;
+$ren1 AddActors tpd2Actor;
+$ren1 AddActors tpd3Actor;
+$ren1 SetBackground 1 1 1;
+$renWin SetSize 500 500;
+$iren Initialize;
+X
+set cam1 [$ren1 GetActiveCamera];
+$cam1 SetClippingRange 3.95297 50;
+$cam1 SetFocalPoint 8.88908 0.595038 29.3342;
+$cam1 SetPosition -12.3332 31.7479 41.2387;
+$cam1 CalcViewPlaneNormal;
+$cam1 SetViewUp 0.060772 -0.319905 0.945498;
+X
+# render the image
+#
+$iren SetUserMethod {wm deiconify .vtkInteract};
+$renWin Render;
+X
+# prevent the tk window from showing up then start the event loop
+wm withdraw .
+X
+X
+X
+SHAR_EOF
+  $shar_touch -am 0415220597 'p2a.tcl' &&
+  chmod 0600 'p2a.tcl' ||
+  $echo 'restore of' 'p2a.tcl' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'p2a.tcl:' 'MD5 check failed'
+e05df75962a54a54cb0e33426a8a4049  p2a.tcl
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'p2a.tcl'`"
+    test 3376 -eq "$shar_count" ||
+    $echo 'p2a.tcl:' 'original size' '3376,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= p2b.tcl ==============
+if test -f 'p2b.tcl' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'p2b.tcl' '(file already exists)'
+else
+  $echo 'x -' extracting 'p2b.tcl' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'p2b.tcl' &&
+# tcl file for Graphics Project 3, problem 9.4b
+# John P Kozura
+X
+# get the interactor ui
+source vtkInt.tcl
+X
+# create planes
+# First create the render master
+vtkRenderMaster rm;
+X
+# Now create the RenderWindow, Renderer and both Actors
+#
+set renWin [rm MakeRenderWindow];
+set ren1   [$renWin MakeRenderer];
+set iren [$renWin MakeRenderWindowInteractor];
+X
+# create pipeline
+#
+vtkPLOT3DReader pl3d;
+X    pl3d SetXYZFilename "combxyz.bin"
+X    pl3d SetQFilename "combq.bin"
+X    pl3d SetScalarFunctionNumber 100;
+X    pl3d SetVectorFunctionNumber 202;
+X    pl3d Update;
+X
+#vtkPlaneSource plane;
+#    plane SetResolution 50 50;
+# Here we generate the point source representation
+X
+vtkPointSource ps1;
+X	ps1 SetNumberOfPoints 50;
+X	ps1 SetRadius 0.5;
+X	eval ps1 SetCenter 3.7 0.0 28.37;
+vtkStreamLine sline1; 
+X	sline1 SetInput [pl3d GetOutput];
+X	sline1 SetSource [ps1 GetOutput];
+X	sline1 SetStepLength 0.1;
+X	sline1 Update;
+vtkPolyMapper pmapper1;
+X    pmapper1 SetInput [sline1 GetOutput];
+X    eval pmapper1 SetScalarRange [[pl3d GetOutput] GetScalarRange];    
+vtkActor stream1;
+X    stream1 SetMapper pmapper1;
+$ren1 AddActors stream1;
+X
+X
+vtkPointSource ps2;
+X	ps2 SetNumberOfPoints 50;
+X	ps2 SetRadius 0.5;
+X	eval ps2 SetCenter 9.2 0.0 31.20;
+vtkStreamLine sline2; # DataSetToPoly
+X	sline2 SetInput [pl3d GetOutput];
+X	sline2 SetSource [ps2 GetOutput];
+X	sline2 SetStepLength 0.1;
+X	sline2 Update;
+vtkPolyMapper pmapper2;
+X    pmapper2 SetInput [sline2 GetOutput];
+X    eval pmapper2 SetScalarRange [[pl3d GetOutput] GetScalarRange];    
+vtkActor stream2;
+X    stream2 SetMapper pmapper2;
+$ren1 AddActors stream2;
+X
+vtkPointSource ps3;
+X	ps3 SetNumberOfPoints 50;
+X	ps3 SetRadius 0.5;
+X	eval ps3 SetCenter 13.27 0.0 33.30;
+vtkStreamLine sline3;
+X	sline3 SetInput [pl3d GetOutput];
+X	sline3 SetSource [ps3 GetOutput];
+X	sline3 SetStepLength 0.1;
+X	sline3 Update;
+vtkPolyMapper pmapper3;
+X    pmapper3 SetInput [sline3 GetOutput];
+X    eval pmapper3 SetScalarRange [[pl3d GetOutput] GetScalarRange];    
+vtkActor stream3;
+X    stream3 SetMapper pmapper3;
+$ren1 AddActors stream3;
+X
+# no more of this plane old contour filter garbage :)
+X
+vtkStructuredGridOutlineFilter outline;
+X    outline SetInput [pl3d GetOutput];
+vtkPolyMapper outlineMapper;
+X    outlineMapper SetInput [outline GetOutput];
+vtkActor outlineActor;
+X    outlineActor SetMapper outlineMapper;
+X    [outlineActor GetProperty] SetColor 0 0 0;
+X
+$ren1 AddActors outlineActor;
+$ren1 SetBackground 1 1 1;
+$renWin SetSize 500 500;
+$iren Initialize;
+X
+set cam1 [$ren1 GetActiveCamera];
+$cam1 SetClippingRange 3.95297 50;
+$cam1 SetFocalPoint 8.88908 0.595038 29.3342;
+$cam1 SetPosition -12.3332 31.7479 41.2387;
+$cam1 CalcViewPlaneNormal;
+$cam1 SetViewUp 0.060772 -0.319905 0.945498;
+X
+# render the image
+#
+$iren SetUserMethod {wm deiconify .vtkInteract};
+$renWin Render;
+X
+# prevent the tk window from showing up then start the event loop
+wm withdraw .
+X
+X
+X
+SHAR_EOF
+  $shar_touch -am 0415225097 'p2b.tcl' &&
+  chmod 0600 'p2b.tcl' ||
+  $echo 'restore of' 'p2b.tcl' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'p2b.tcl:' 'MD5 check failed'
+25b5d028170866473feccc0905d5072e  p2b.tcl
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'p2b.tcl'`"
+    test 2868 -eq "$shar_count" ||
+    $echo 'p2b.tcl:' 'original size' '2868,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= p2c.tcl ==============
+if test -f 'p2c.tcl' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'p2c.tcl' '(file already exists)'
+else
+  $echo 'x -' extracting 'p2c.tcl' '(binary)'
+  sed 's/^X//' << 'SHAR_EOF' | uudecode &&
+begin 600 p2c.tcl
+M(R!T8VP@9FEL92!F;W(@1W)A<&AI8W,@4')O:F5C="`S+"!P<F]B;&5M(#DN
+M-&,*(R!*;VAN(%`@2V]Z=7)A"@HC(&=E="!T:&4@:6YT97)A8W1O<B!U:0IS
+M;W5R8V4@=G1K26YT+G1C;`H*(R!C<F5A=&4@<&QA;F5S"B,@1FER<W0@8W)E
+M871E('1H92!R96YD97(@;6%S=&5R"G9T:U)E;F1E<DUA<W1E<B!R;3L*"B,@
+M3F]W(&-R96%T92!T:&4@4F5N9&5R5VEN9&]W+"!296YD97)E<B!A;F0@8F]T
+M:"!!8W1O<G,*(PIS970@<F5N5VEN(%MR;2!-86ME4F5N9&5R5VEN9&]W73L*
+M<V5T(')E;C$@("!;)')E;E=I;B!-86ME4F5N9&5R97)=.PIS970@:7)E;B!;
+M)')E;E=I;B!-86ME4F5N9&5R5VEN9&]W26YT97)A8W1O<ET["@HC(&-R96%T
+M92!P:7!E;&EN90HC"G9T:U!,3U0S1%)E861E<B!P;#-D.PH@("`@<&PS9"!3
+M971865I&:6QE;F%M92`B8V]M8GAY>BYB:6XB"B`@("!P;#-D(%-E=%%&:6QE
+M;F%M92`B8V]M8G$N8FEN(@H@("`@<&PS9"!397138V%L87)&=6YC=&DN("`@
+M("`@("`@(!``-O)UGB*>(@``\G6>(@(``````"XN("`@("`@("`@$``V\G6>
+M(IXB``#R=9XB````````4D5!1$U%("`@("`@``G]=9XBGB(``."[CR(D`'(!
+M``!0,4$@("`@(%1#3"``L?IUGB*>(@``H*F/(@,`-`L``%`Q0B`@("`@5$-,
+M(`!C^W6>(IXB``#@JH\B"0!@"P``4#)!("`@("!40TP@`+C[=9XBGB(``*"P
+MCR(/`*X*``!0,D(@("`@(%1#3"``2/QUGB*>(@``0+:/(A8`H@L``%`R0R`@
+M("`@5$-,(`"Y_'6>(IXB````NX\B'``+#@``````````````````````````
+M````````````````````````````````````````````````````````````
+M````````````````````````````````````````````````````````````
+M````````````````````````````````````````````````````````````
+M````````````````````````````````````````````````````````````
+M````````````````````````````````````````````````````````````
+M`````````````````$UA<'!E<B!M87!4<&0Q.PH@("`@6W1P9#%!8W1O<B!'
+M9710<F]P97)T>5T@4V5T0V]L;W(@,"`P(#`["@IV=&M4<F%N<V9O<FT@=')A
+M;G-0,CL*("`@('1R86YS4#(@5')A;G-L871E(#DN,B`P+C`@,S$N,C`["B`@
+M("!T<F%N<U`R(%-C86QE(#4@-2`U.PH@("`@=')A;G-0,B!2;W1A=&59(#DP
+M.PIV=&M4<F%N<V9O<FU0;VQY1FEL=&5R('1P9#(*("`@('1P9#(@4V5T26YP
+M=70@6W!L86YE($=E=$]U='!U=%T["B`@("!T<&0R(%-E=%1R86YS9F]R;2!T
+M<F%N<U`R.PIV=&M/=71L:6YE1FEL=&5R(&]U=%1P9#(["B`@("!O=714<&0R
+M(%-E=$EN<'5T(%MT<&0R($=E=$]U='!U=%T["G9T:U!O;'E-87!P97(@;6%P
+M5'!D,CL*("`@(&UA<%1P9#(@4V5T26YP=70@6V]U=%1P9#(@1V5T3W5T<'5T
+M73L*=G1K06-T;W(@='!D,D%C=&]R.PH@("`@='!D,D%C=&]R(%-E=$UA<'!E
+M<B!M87!4<&0R.PH@("`@6W1P9#)!8W1O<B!'9710<F]P97)T>5T@4V5T0V]L
+M;W(@,"`P(#`["@IV=&M4<F%N<V9O<FT@=')A;G-0,SL*("`@('1R86YS4#,@
+M5')A;G-L871E(#$S+C(W(#`N,"`S,RXS,#L*("`@('1R86YS4#,@4V-A;&4@
+M-2`U(#4["B`@("!T<F%N<U`S(%)O=&%T95D@.3`["G9T:U1R86YS9F]R;5!O
+M;'E&:6QT97(@='!D,PH@("`@='!D,R!3971);G!U="!;<&QA;F4@1V5T3W5T
+M<'5T73L*("`@('1P9#,@4V5T5')A;G-F;W)M('1R86YS4#,["G9T:T]U=&QI
+M;F5&:6QT97(@;W5T5'!D,SL*("`@(&]U=%1P9#,@4V5T26YP=70@6W1P9#,@
+M1V5T3W5T<'5T73L*=G1K4&]L>4UA<'!E<B!M87!4<&0S.PH@("`@;6%P5'!D
+M,R!3971);G!U="!;;W5T5'!D,R!'971/=71P=71=.PIV=&M!8W1O<B!T<&0S
+M06-T;W(["B`@("!T<&0S06-T;W(@4V5T36%P<&5R(&UA<%1P9#,["B`@("!;
+M='!D,T%C=&]R($=E=%!R;W!E<G1Y72!3971#;VQO<B`P(#`@,#L*"G9T:T%P
+M<&5N9%!O;'E$871A(&%P<&5N9$8["B`@("!A<'!E;F1&($%D9$EN<'5T(%MT
+M<&0Q($=E=$]U='!U=%T["B`@("!A<'!E;F1&($%D9$EN<'5T(%MT<&0R($=E
+M=$]U='!U=%T["B`@("!A<'!E;F1&($%D9$EN<'5T(%MT<&0S($=E=$]U='!U
+M=%T["@IV=&M0<F]B949I;'1E<B!P<F]B93L*("`@('!R;V)E(%-E=$EN<'5T
+M(%MA<'!E;F1&($=E=$]U='!U=%T["B`@("!P<F]B92!39713;W5R8V4@6W!L
+M,V0@1V5T3W5T<'5T73L*"B,@:&5R92!W92!W86YT('1O(&%F9F5C="!T:&4@
+M9V5O;65T<GD@=VET:"!W87)P"@IV=&M'96]M971R>49I;'1E<B!G96]M971R
+M>3L*("`@(&=E;VUE=')Y(%-E=$EN<'5T(%MP<F]B92!'971/=71P=71=.PIV
+M=&M787)P5F5C=&]R('=A<G`["B`@("!W87)P(%-E=$EN<'5T(%MG96]M971R
+M>2!'971/=71P=71=.PH@("`@=V%R<"!397138V%L949A8W1O<B`P+C`P-3L*
+M"G9T:T1A=&%3971-87!P97(@=VUA<'!E<CL*("`@('=M87!P97(@4V5T26YP
+M=70@6W=A<G`@1V5T3W5T<'5T73L*("`@(&5V86P@=VUA<'!E<B!397138V%L
+M87)286YG92!;6W!L,V0@1V5T3W5T<'5T72!'97138V%L87)286YG95T["G9T
+M:T%C=&]R('=A<G!!8W1O<CL*("`@('=A<G!!8W1O<B!3971-87!P97(@=VUA
+M<'!E<CL*)')E;C$@061D06-T;W)S('=A<G!!8W1O<CL*"B,@86YD(&YO=R!B
+M86-K('1O('EO=7(@<W1U9F8*"G9T:U-T<G5C='5R961'<FED3W5T;&EN949I
+M;'1E<B!O=71L:6YE.PH@("`@;W5T;&EN92!3971);G!U="!;<&PS9"!'971/
+M=71P=71=.PIV=&M0;VQY36%P<&5R(&]U=&QI;F5-87!P97(["B`@("!O=71L
+M:6YE36%P<&5R(%-E=$EN<'5T(%MO=71L:6YE($=E=$]U='!U=%T["G9T:T%C
+M=&]R(&]U=&QI;F5!8W1O<CL*("`@(&]U=&QI;F5!8W1O<B!3971-87!P97(@
+M;W5T;&EN94UA<'!E<CL*("`@(%MO=71L:6YE06-T;W(@1V5T4')O<&5R='E=
+M(%-E=$-O;&]R(#`@,"`P.PH*)')E;C$@061D06-T;W)S(&]U=&QI;F5!8W1O
+M<CL*)')E;C$@061D06-T;W)S('1P9#%!8W1O<CL*)')E;C$@061D06-T;W)S
+M('1P9#)!8W1O<CL*)')E;C$@061D06-T;W)S('1P9#-!8W1O<CL*)')E;C$@
+M4V5T0F%C:V=R;W5N9"`Q(#$@,3L*)')E;E=I;B!39713:7IE(#4P,"`U,#`[
+M"B1I<F5N($EN:71I86QI>F4["@IS970@8V%M,2!;)')E;C$@1V5T06-T:79E
+M0V%M97)A73L*)&-A;3$@4V5T0VQI<'!I;F=286YG92`S+CDU,CDW(#4P.PHD
+M8V%M,2!3971&;V-A;%!O:6YT(#@N.#@Y,#@@,"XU.34P,S@@,CDN,S,T,CL*
+M)&-A;3$@4V5T4&]S:71I;VX@+3$R+C,S,S(@,S$N-S0W.2`T,2XR,S@W.PHD
+M8V%M,2!#86QC5FEE=U!L86YE3F]R;6%L.PHD8V%M,2!39716:65W57`@,"XP
+M-C`W-S(@+3`N,S$Y.3`U(#`N.30U-#DX.PH*(R!R96YD97(@=&AE(&EM86=E
+M"B,*)&ER96X@4V5T57-E<DUE=&AO9"![=VT@9&5I8V]N:69Y("YV=&M);G1E
+M<F%C='T["B1R96Y7:6X@4F5N9&5R.PH*(R!P<F5V96YT('1H92!T:R!W:6YD
+M;W<@9G)O;2!S:&]W:6YG('5P('1H96X@<W1A<G0@=&AE(&5V96YT(&QO;W`*
+1=VT@=VET:&1R87<@+@H*"@IP
+`
+end
+SHAR_EOF
+  $shar_touch -am 0415232497 'p2c.tcl' &&
+  chmod 0600 'p2c.tcl' ||
+  $echo 'restore of' 'p2c.tcl' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'p2c.tcl:' 'MD5 check failed'
+50a33276dc49e47a9a5298efaf63cd18  p2c.tcl
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'p2c.tcl'`"
+    test 3482 -eq "$shar_count" ||
+    $echo 'p2c.tcl:' 'original size' '3482,' 'current size' "$shar_count!"
+  fi
+fi
+rm -fr _sh121044
+exit 0
+# From: "Thomas D. Citriniti" <citrit@rpi.edu>

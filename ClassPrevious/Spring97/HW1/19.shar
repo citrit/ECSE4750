@@ -1,0 +1,557 @@
+#!/bin/sh
+# This is a shell archive (produced by GNU sharut 4.2.1).
+# To extract the files from this archive, save it to some FILE, remove
+# everything before the `!/bin/sh' line above, then type `sh FILE'.
+#
+# Made on 1997-02-06 23:59 EST by <mjr@vir>.
+# Source directory was `/home/mjr/class/gv/proj1'.
+#
+# Existing files will *not* be overwritten unless `-c' is specified.
+#
+# This shar contains:
+# length mode       name
+# ------ ---------- ------------------------------------------
+#    800 -rw-r--r-- Makefile
+#   9819 -rw-r--r-- proj1.c
+#    296 -rw-rw-r-- proj1.h
+#
+save_IFS="${IFS}"
+IFS="${IFS}:"
+gettext_dir=FAILED
+locale_dir=FAILED
+first_param="$1"
+for dir in $PATH
+do
+  if test "$gettext_dir" = FAILED && test -f $dir/gettext \
+     && ($dir/gettext --version >/dev/null 2>&1)
+  then
+    set `$dir/gettext --version 2>&1`
+    if test "$3" = GNU
+    then
+      gettext_dir=$dir
+    fi
+  fi
+  if test "$locale_dir" = FAILED && test -f $dir/shar \
+     && ($dir/shar --print-text-domain-dir >/dev/null 2>&1)
+  then
+    locale_dir=`$dir/shar --print-text-domain-dir`
+  fi
+done
+IFS="$save_IFS"
+if test "$locale_dir" = FAILED || test "$gettext_dir" = FAILED
+then
+  echo=echo
+else
+  TEXTDOMAINDIR=$locale_dir
+  export TEXTDOMAINDIR
+  TEXTDOMAIN=sharutils
+  export TEXTDOMAIN
+  echo="$gettext_dir/gettext -s"
+fi
+if (echo "testing\c"; echo 1,2,3) | grep c >/dev/null; then
+  if (echo -n testing; echo 1,2,3) | sed s/-n/xn/ | grep xn >/dev/null; then
+    shar_n= shar_c='
+'
+  else
+    shar_n=-n shar_c=
+  fi
+else
+  shar_n= shar_c='\c'
+fi
+touch -am 1231235999 $$.touch >/dev/null 2>&1
+if test ! -f 1231235999 && test -f $$.touch; then
+  shar_touch=touch
+else
+  shar_touch=:
+  echo
+  $echo 'WARNING: not restoring timestamps.  Consider getting and'
+  $echo "installing GNU \`touch', distributed in GNU File Utilities..."
+  echo
+fi
+rm -f 1231235999 $$.touch
+#
+$echo $shar_n 'x -' 'lock directory' "\`_sh00902': "$shar_c
+if mkdir _sh00902; then
+  $echo 'created'
+else
+  $echo 'failed to create'
+  exit 1
+fi
+# ============= Makefile ==============
+if test -f 'Makefile' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'Makefile' '(file already exists)'
+else
+  $echo 'x -' extracting 'Makefile' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'Makefile' &&
+#
+# Sample Makefile for compilling the sample code for the
+# Advanced Computer Graphics and Data Visualization 35.6961 (Fall 1995)
+#
+# Copy this to the directory where the program resides and use
+#  
+#       make progname
+#
+# The progname would be the prefix of the source file you generated.
+# Like if your source file was hw1.c, the above line would read:
+#
+#       make hw1
+#
+# The make utility would automatically look for something with a suffix
+# it understood and would find hw1.c. There are built in rules which
+# tell it how to compile c source.
+#
+X
+CC=gcc
+LDFLAGS= -L/usr/X11R6/lib -lglut -lMesaGLU -lMesaGL -lXmu -lXi -lXext -lXt -lX11 -lm
+CFLAGS= -g -I/usr/include/mesa -I/usr/include/glut
+X
+X
+$(TARGET): $(TARGET).o
+X	$(CC) -o $@ $? $(LIBS) $(LDFLAGS)
+X
+clean:
+X	/bin/rm -f *.o
+X
+proj1.o: p1.h
+SHAR_EOF
+  $shar_touch -am 0206123797 'Makefile' &&
+  chmod 0644 'Makefile' ||
+  $echo 'restore of' 'Makefile' 'failed'
+  if ( md5sum --help </dev/null 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version </dev/null 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'Makefile:' 'MD5 check failed'
+1eccc571bdf0ddb3e6dc7ddd22300dd4  Makefile
+SHAR_EOF
+  else
+    shar_count="`LC_ALL=C wc -c < 'Makefile'`"
+    test 800 -eq "$shar_count" ||
+    $echo 'Makefile:' 'original size' '800,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= proj1.c ==============
+if test -f 'proj1.c' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'proj1.c' '(file already exists)'
+else
+  $echo 'x -' extracting 'proj1.c' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'proj1.c' &&
+/*
+X *
+X *  Simple2.c 
+X *
+X *  Simple example of programming using the OpenGL graphics library
+X *  Taken from the "OpenGL Programming Guide"
+X *
+X *
+X */
+X
+/* Includes required */
+#include <GL/gl.h>
+#include <GL/glut.h>
+#include <stdio.h>
+#include "proj1.h"
+X
+/* Global State Variables */
+static objState worldInitial = {0.0, 0.0, -5.0, 0.0, 0.0, 0.0, 1.0,
+X	{{0.0, 0.0, 0.0, 0.0},
+X	 {0.0},
+X	 {0.0, 0.0, 0.0, 0.0},
+X	 {0.0, 0.0, 0.0, 0.0}}};
+static objState world;
+static objState cubeInitial = {0,0,0,0,0,0,1,
+X	{{0.7, 0.2, 0.2, 1.0},
+X	 {120.0},
+X	 {0.9, 0.0, 0.0, 1.0},
+X	 {1.0, 1.0, 1.0, 1.0}}};
+static objState cube;
+static objState sphereInitial = {2,0,0,0,0,0,1,
+X	{{0.1, 0.1, 1.1, 1.0},
+X	 {0.0},
+X	 {1.0, 1.0, 1.0, 1.0},
+X	 {0.0, 0.0, 1.0, 1.0}}};
+static objState sphere;
+static objState teapotInitial = {-2,0,0,0,0,0,1,
+X	{{0.7, 0.7, 0.0, 1.0},
+X	 {100.0},
+X	 {0.6, 0.6, 0.1, 1.0},
+X	 {1.0, 1.0, 0.5, 1.0}}};
+static objState teapot;
+X
+static int sBufWin;
+static int dBufWin;
+X
+void copyState(objState *src, objState *dest) {
+X  bcopy(src, dest, sizeof(GLfloat)*7);
+X  bcopy(src->mat.amb, dest->mat.amb, sizeof(float)*4);
+X  bcopy(src->mat.shiny, dest->mat.shiny, sizeof(float)*1);
+X  bcopy(src->mat.diff, dest->mat.diff, sizeof(float)*4);
+X  bcopy(src->mat.spec, dest->mat.spec, sizeof(float)*4);
+}
+/*
+X * Reset the program to it's initial state. 
+X */
+void resetWorld(void){
+X  copyState(&worldInitial, &world);
+X  copyState(&cubeInitial, &cube);
+X  copyState(&sphereInitial, &sphere);
+X  copyState(&teapotInitial, &teapot);
+X  glutHideWindow();
+X  glutSetWindow(dBufWin);
+X  glutShowWindow();
+}
+X
+/*
+X *  Clear the screen.  Set the current color to white.
+X *  Draw the cube.
+X */
+void display(void)
+{
+X  static float lightPos[4] = {2.0, 4.0, 2.0, 1.0};
+X  static float lightDir[4] = {-2.0, -4.0, -2.0, 1.0};
+X  static float lightAmb[4] = {0.7, 0.7, 0.7, 1.0};
+X  static float lightDiff[4] = {0.8, 0.8, 0.8, 1.0};
+X  static float lightSpec[4] = {0.4, 0.4, 0.4, 1.0};
+X
+X  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+X
+X  glPushMatrix();
+X    /* Do world transformations */
+X    glScalef(world.size, world.size, world.size);
+X    glTranslatef(world.x, world.y, world.z);
+X    glRotatef(world.rotX, 1.0, 0.0, 0.0);
+X    glRotatef(world.rotY, 0.0, 1.0, 0.0);
+X    glRotatef(world.rotZ, 0.0, 0.0, 1.0);
+X
+X    /* Set up lighting */
+X    glEnable(GL_LIGHTING);
+X    glEnable(GL_LIGHT0);
+X    glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
+X    glLightfv(GL_LIGHT0, GL_AMBIENT, lightAmb);
+X    glLightfv(GL_LIGHT0, GL_DIFFUSE, lightDiff);
+X    glLightfv(GL_LIGHT0, GL_SPECULAR, lightSpec);
+X    glEnable(GL_DEPTH_TEST);
+X
+X    glPushMatrix();
+X      glScalef(cube.size, cube.size, cube.size);
+X      glTranslatef(cube.x/cube.size, cube.y/cube.size, cube.z/cube.size);
+X      glRotatef(cube.rotX, 1.0, 0.0, 0.0);
+X      glRotatef(cube.rotY, 0.0, 1.0, 0.0);
+X      glRotatef(cube.rotZ, 0.0, 0.0, 1.0);
+X
+X      /* set the material properties for the cube */
+X      glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, cube.mat.amb);
+X      glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, cube.mat.diff);
+X      glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, cube.mat.spec);
+X      glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, cube.mat.shiny);
+X        
+X      glutSolidCube(1.0);   /*  draw the cube       */
+X    glPopMatrix();
+X
+X    glPushMatrix();
+X      glShadeModel(GL_FLAT);
+X      glScalef(sphere.size, sphere.size, sphere.size);
+X      glTranslatef(sphere.x/sphere.size, sphere.y/sphere.size, sphere.z/sphere.size);
+X      glRotatef(sphere.rotX, 1.0, 0.0, 0.0);
+X      glRotatef(sphere.rotY, 0.0, 1.0, 0.0);
+X      glRotatef(sphere.rotZ, 0.0, 0.0, 1.0);
+X
+X      /* set the material properties for the sphere */
+X      glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, sphere.mat.amb);
+X      glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, sphere.mat.diff);
+X      glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, sphere.mat.spec);
+X      glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, sphere.mat.shiny);
+X        
+X      glutSolidSphere(0.5, 20, 20);   /*  draw the sphere       */
+X      glShadeModel(GL_SMOOTH);
+X    glPopMatrix();
+X
+X    glPushMatrix();
+X      glScalef(teapot.size, teapot.size, teapot.size);
+X      glTranslatef(teapot.x, teapot.y, teapot.z);
+X      glRotatef(teapot.rotX, 1.0, 0.0, 0.0);
+X      glRotatef(teapot.rotY, 0.0, 1.0, 0.0);
+X      glRotatef(teapot.rotZ, 0.0, 0.0, 1.0);
+X
+X      /* set the material properties for the teapot */
+X      glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, teapot.mat.amb);
+X      glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, teapot.mat.diff);
+X      glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, teapot.mat.spec);
+X      glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, teapot.mat.shiny);
+X        
+X      glutSolidCube(1.0);   /*  draw the teapot       */
+X    glPopMatrix();
+X
+X 
+X  glPopMatrix();
+X  glutSwapBuffers(); 
+}
+X
+/*
+X *  Called when the window is first opened and whenever 
+X *  the window is reconfigured (moved or resized).
+X */
+void myReshape(int w, int h)
+{
+X      glViewport (0, 0, w, h);            /*  define the viewport */
+X      glMatrixMode(GL_PROJECTION);
+X      glLoadIdentity();
+X      gluPerspective(45.0, 1.0*(GLfloat)w/(GLfloat)h, 1.0, 20.0);
+X      glTranslatef (0.0, 0.0, -5.0);     /*  viewing transformation      */
+X      glMatrixMode (GL_MODELVIEW);        /* back to modelview matrix  */
+}
+X
+/*
+X * Keyboard handler
+X */
+void
+Key(unsigned char key, int x, int y)
+{
+X  static objState *currObj = &world;
+X
+X  switch (key) {
+X  case '0':
+X    currObj = &world;
+X    break;
+X  case '1':
+X    currObj = &sphere;
+X    break;
+X  case '2':
+X    currObj = &cube;
+X    break;
+X  case '3':
+X    currObj = &teapot;
+X    break;
+X  case 'h':
+X    currObj->x -= DEF_TRANSLATE_INC;
+X    break;
+X  case 'l':
+X    currObj->x += DEF_TRANSLATE_INC;
+X    break;
+X  case 'j':
+X    currObj->y -= DEF_TRANSLATE_INC;
+X    break;
+X  case 'k':
+X    currObj->y += DEF_TRANSLATE_INC;
+X    break;
+X  case 'i':  
+X    currObj->z -= DEF_TRANSLATE_INC;
+X    break;
+X  case 'm':
+X    currObj->z += DEF_TRANSLATE_INC;
+X    break;
+X  case 'x':
+X    currObj->rotX -= DEF_ROTATE_INC;
+X    break;
+X  case 'X':
+X    currObj->rotX += DEF_ROTATE_INC;
+X    break;
+X  case 'y':
+X    currObj->rotY -= DEF_ROTATE_INC;
+X    break;
+X  case 'Y':
+X    currObj->rotY += DEF_ROTATE_INC;
+X    break;
+X  case 'z':
+X    currObj->rotZ -= DEF_ROTATE_INC;
+X    break;
+X  case 'Z':
+X    currObj->rotZ += DEF_ROTATE_INC;
+X    break;
+X  case '+':
+X    currObj->size += DEF_SCALE_INC;
+X    break;
+X  case '-':
+X    currObj->size -= DEF_SCALE_INC;
+X    break;
+#ifdef DEBUG
+X  case 'd':
+X    fprintf(stderr, "World: %f %f %f %f %f %f\n", world.x, world.y, world.z,
+X		world.rotX, world.rotY, world.rotZ);
+X    fprintf(stderr, "Cube: %f %f %f %f %f %f\n", cube.x, cube.y, cube.z,
+X		cube.rotX, cube.rotY, cube.rotZ);
+X    fprintf(stderr, "Sphere: %f %f %f %f %f %f\n", sphere.x, sphere.y, sphere.z,
+X		sphere.rotX, sphere.rotY, sphere.rotZ);
+X    fprintf(stderr, "Teapot: %f %f %f %f %f %f\n", teapot.x, teapot.y, teapot.z,
+X		teapot.rotX, teapot.rotY, teapot.rotZ);
+X    break;
+#endif
+X  case 'q':	/* 'q' will exit */
+X  case 27:	/* Esc will exit */
+X    exit(1);
+X    break;
+X  default:
+X    break;
+X  }
+X  glutPostRedisplay();
+}
+X
+/* Callback for the main menu */
+void
+menuMain(int value)
+{
+X  switch (value) {
+X  case 1: /* Change to single buffered mode. */
+X    glutChangeToMenuEntry(1, "Set doublebuffer", 2);
+X    glutHideWindow();
+X    glutSetWindow(sBufWin);
+X    glutShowWindow();
+X    break;
+X  case 2: /* Change to double buffered mode. */
+X    glutChangeToMenuEntry(1, "Set singlebuffer", 1);
+X    glutHideWindow();
+X    glutSetWindow(dBufWin);
+X    glutShowWindow();
+X    break;
+X  case 3:
+X    resetWorld();
+X    glutPostRedisplay;
+X    break;
+X  case 4:
+X    exit(0);
+X    break;
+X  }
+}
+X
+/* Callback for the Selection submenu. */
+void menuSelection(int value)
+{
+X  switch(value) {
+X  case 0:
+X    Key('0', 0, 0);
+X    break;
+X  case 1:
+X    Key('1', 0, 0);
+X    break;
+X  case 2:
+X    Key('2', 0, 0);
+X    break;
+X  case 3:
+X    Key('3', 0, 0);
+X    break;
+X  }
+}
+X
+void printDoc(void) {
+X  printf("The Selection submenu let's you choose which (or all) objects to move.\n");
+X  printf("Use the set {single|double}buffer menu item to switch between single\nand double buffering.\n");
+X  printf("Keys:\n");
+X  printf("x = Pos. X axis rotation        X = Neg. X axis rotation\n");
+X  printf("y = Pos. Y axis rotation        Y = Neg. Y axis rotation\n");
+X  printf("z = Pos. Z axis rotation        Z = Neg. Z axis rotation\n");
+X  printf("h = Neg. X axis translation     l = Pos. X axis translation\n");
+X  printf("j = Neg. Y axis translation     k = Pos. Y axis translation\n");
+X  printf("i = Neg. Z axis translation     m = Pos. Z axis translation\n");
+X  printf("+ = Increase object(s) size     - = Decrease object(s) size\n");
+}
+/*
+X *  Main Loop
+X *  Open window with initial window size, title bar, 
+X *  RGBA display mode, and handle input events.
+X */
+int main(int argc, char** argv) 
+{
+X  int menuSelectionId;
+X
+X  printDoc();
+X  glutInit(&argc, argv);
+X
+X  /* Set up menu structure */
+X  menuSelectionId = glutCreateMenu(menuSelection);
+X  glutAddMenuEntry("All", 0);
+X  glutAddMenuEntry("Sphere", 1);
+X  glutAddMenuEntry("Cube", 2);
+X  glutAddMenuEntry("Teapot", 3);
+X  glutCreateMenu(menuMain);
+X  glutAddSubMenu("Selection", menuSelectionId);
+X  glutAddMenuEntry("Framebuffer: single", 1);
+X  glutAddMenuEntry("Reset", 3);
+X  glutAddMenuEntry("Quit", 4);
+X
+X  /* Set up single buffered window. */
+X  glutInitDisplayMode (GLUT_SINGLE | GLUT_RGBA);
+X  sBufWin = glutCreateWindow(argv[0]);
+X  glutKeyboardFunc(Key);
+X  glutReshapeFunc(myReshape);
+X  glutDisplayFunc(display);
+X  glutAttachMenu(GLUT_RIGHT_BUTTON);
+X  glutHideWindow();
+X
+X  /* Set up double buffered window */
+X  glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGBA);
+X  dBufWin = glutCreateWindow(argv[0]);
+X  glutKeyboardFunc(Key);
+X  glutReshapeFunc(myReshape);
+X  glutDisplayFunc(display);
+X  glutAttachMenu(GLUT_RIGHT_BUTTON);
+X
+X  /* Reset the world */
+X  resetWorld();
+X
+X  /* We're off! */
+X  glutMainLoop();
+}
+SHAR_EOF
+  $shar_touch -am 0206235897 'proj1.c' &&
+  chmod 0644 'proj1.c' ||
+  $echo 'restore of' 'proj1.c' 'failed'
+  if ( md5sum --help </dev/null 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version </dev/null 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'proj1.c:' 'MD5 check failed'
+eff707f9081dda03850a86c0d036d00b  proj1.c
+SHAR_EOF
+  else
+    shar_count="`LC_ALL=C wc -c < 'proj1.c'`"
+    test 9819 -eq "$shar_count" ||
+    $echo 'proj1.c:' 'original size' '9819,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= proj1.h ==============
+if test -f 'proj1.h' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'proj1.h' '(file already exists)'
+else
+  $echo 'x -' extracting 'proj1.h' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'proj1.h' &&
+#define DEF_ROTATE_INC 15.0
+#define DEF_TRANSLATE_INC 0.1
+#define DEF_SCALE_INC 0.1
+X
+typedef struct {
+X	GLfloat x;
+X	GLfloat y;
+X	GLfloat z;
+X	GLfloat rotX;
+X	GLfloat rotY;
+X	GLfloat rotZ;
+X	GLfloat size;
+X	struct {
+X		float amb[4];
+X		float shiny[1];
+X		float diff[4];
+X		float spec[4];
+X	} mat;
+} objState;
+SHAR_EOF
+  $shar_touch -am 0206191197 'proj1.h' &&
+  chmod 0664 'proj1.h' ||
+  $echo 'restore of' 'proj1.h' 'failed'
+  if ( md5sum --help </dev/null 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version </dev/null 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'proj1.h:' 'MD5 check failed'
+59ec2c9b6a988542e005111e9e19980e  proj1.h
+SHAR_EOF
+  else
+    shar_count="`LC_ALL=C wc -c < 'proj1.h'`"
+    test 296 -eq "$shar_count" ||
+    $echo 'proj1.h:' 'original size' '296,' 'current size' "$shar_count!"
+  fi
+fi
+$echo $shar_n 'x -' 'lock directory' '_sh00902:' $shar_c
+if rm -fr _sh00902; then
+  $echo 'removed'
+else
+  $echo 'failed to remove'
+fi
+exit 0
+# From: "Matthew J. Ryan" <mjr@linux1.acm.rpi.edu>

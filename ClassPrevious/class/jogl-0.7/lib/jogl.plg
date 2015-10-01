@@ -1,0 +1,69 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: jogl - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\WINDOWS\TEMP\RSPF390.TMP" with contents
+[
+/nologo /MT /W3 /GX /O2 /I "c:\jdk1.3\include" /I "c:\jdk1.3\include\win32" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /FR"Release/" /Fp"Release/jogl.pch" /YX /Fo"Release/" /Fd"Release/" /FD /c 
+"D:\class\jogl-0.7\lib\array_ptr.c"
+"D:\class\jogl-0.7\lib\gl.c"
+"D:\class\jogl-0.7\lib\glu.c"
+"D:\class\jogl-0.7\lib\glu_nurbs.c"
+"D:\class\jogl-0.7\lib\glu_quadric.c"
+"D:\class\jogl-0.7\lib\glu_tesselator.c"
+"D:\class\jogl-0.7\lib\joglWin32.c"
+"D:\class\jogl-0.7\lib\methodinfo.c"
+]
+Creating command line "cl.exe @C:\WINDOWS\TEMP\RSPF390.TMP" 
+Creating temporary file "C:\WINDOWS\TEMP\RSPF391.TMP" with contents
+[
+opengl32.lib glu32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /incremental:no /pdb:"Release/jogl.pdb" /machine:I386 /out:"Release/jogl.dll" /implib:"Release/jogl.lib" 
+".\Release\array_ptr.obj"
+".\Release\gl.obj"
+".\Release\glu.obj"
+".\Release\glu_nurbs.obj"
+".\Release\glu_quadric.obj"
+".\Release\glu_tesselator.obj"
+".\Release\joglWin32.obj"
+".\Release\methodinfo.obj"
+]
+Creating command line "link.exe @C:\WINDOWS\TEMP\RSPF391.TMP"
+<h3>Output Window</h3>
+Compiling...
+array_ptr.c
+gl.c
+D:\class\jogl-0.7\lib\gl.c(3875) : warning C4244: 'function' : conversion from 'int ' to 'float ', possible loss of data
+D:\class\jogl-0.7\lib\gl.c(4181) : warning C4244: 'function' : conversion from 'int ' to 'float ', possible loss of data
+D:\class\jogl-0.7\lib\gl.c(4187) : warning C4244: 'function' : conversion from 'int ' to 'float ', possible loss of data
+D:\class\jogl-0.7\lib\gl.c(6875) : warning C4133: 'initializing' : incompatible types - from 'long *' to 'char *'
+glu.c
+glu_nurbs.c
+glu_quadric.c
+glu_tesselator.c
+joglWin32.c
+methodinfo.c
+Linking...
+   Creating library Release/jogl.lib and object Release/jogl.exp
+Creating command line "bscmake.exe /nologo /o"Release/jogl.bsc"  ".\Release\array_ptr.sbr" ".\Release\gl.sbr" ".\Release\glu.sbr" ".\Release\glu_nurbs.sbr" ".\Release\glu_quadric.sbr" ".\Release\glu_tesselator.sbr" ".\Release\joglWin32.sbr" ".\Release\methodinfo.sbr""
+Creating browse info file...
+<h3>Output Window</h3>
+Creating temporary file "C:\WINDOWS\TEMP\RSP231.BAT" with contents
+[
+@echo off
+copy release\jogl.dll c:\windows\system
+]
+Creating command line "C:\WINDOWS\TEMP\RSP231.BAT"
+
+        1 file(s) copied
+
+
+
+<h3>Results</h3>
+jogl.dll - 0 error(s), 4 warning(s)
+</pre>
+</body>
+</html>

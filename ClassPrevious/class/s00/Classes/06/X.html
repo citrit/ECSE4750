@@ -1,0 +1,1104 @@
+<HTML>
+<BODY>
+<PRE>
+<!-- Manpage converted by man2html 3.0.1 -->
+NAME
+     <A HREF="X.html">X</A> - a portable, network-transparent window system
+
+SYNOPSIS
+     The <A HREF="X.html">X</A> Window System is a network transparent  window  system
+     which  runs  on  a  wide  range  of  computing  and graphics
+     machines.  It should be relatively straightforward to  build
+     the <A HREF="X.html">X</A> Window System software distribution on most ANSI C and
+     POSIX compliant  systems.   Commercial  implementations  are
+     also available for a wide range of platforms.
+
+     The Open Group requests that the  following  names  be  used
+     when referring to this software:
+
+                                  <A HREF="X.html">X</A>
+                           <A HREF="X.html">X</A> Window System
+                             <A HREF="X.html">X</A> Version 11
+                     <A HREF="X.html">X</A> Window System, Version 11
+                                 X11
+
+     <I><A HREF="X.html">X</A></I> <I>Window</I> <I>System</I> is a trademark of The Open Group.
+
+DESCRIPTION
+     <A HREF="X.html">X</A>  Window  System  servers  run  on  computers  with  <A HREF="bitmap.html">bitmap</A>
+     displays.   The server distributes user input to and accepts
+     output requests  from  various  client  programs  through  a
+     variety  of  different  interprocess communication channels.
+     Although the most common case is for the client programs  to
+     be running on the same machine as the server, clients can be
+     run transparently from other  machines  (including  machines
+     with different architectures and operating systems) as well.
+
+     <A HREF="X.html">X</A> supports overlapping hierarchical subwindows and text  and
+     graphics  operations, on both monochrome and color displays.
+     For a full explanation of the functions that are  available,
+     see  the  <I>Xlib</I> - <I>C</I> <I>Language</I> <I><A HREF="X.html">X</A></I> <I>Interface</I> manual, the <I><A HREF="X.html">X</A></I> <I>Window</I>
+     <I>System</I> <I>Protocol</I> specification, the <I><A HREF="X.html">X</A></I> <I>Toolkit</I> <I>Intrinsics</I> -  <I>C</I>
+     <I>Language</I> <I>Interface</I> manual, and various toolkit documents.
+
+     The number of programs that use <I><A HREF="X.html">X</A></I> is quite large.   Programs
+     provided in the core <A HREF="X.html">X</A> Window System distribution include: a
+     terminal emulator, <I><A HREF="xterm.html">xterm</A></I>; a window manager, <I><A HREF="twm.html">twm</A></I>;  a  display
+     manager,  <I><A HREF="xdm.html">xdm</A></I>;  a console redirect program, <I><A HREF="xconsole.html">xconsole</A></I>; a mail
+     interface,  <I>xmh</I>;   a   <A HREF="bitmap.html">bitmap</A>   editor,   <I><A HREF="bitmap.html">bitmap</A></I>;   resource
+     listing/manipulation  tools, <I><A HREF="appres.html">appres</A></I>, <I><A HREF="editres.html">editres</A></I>; access control
+     programs, <I><A HREF="xauth.html">xauth</A></I>, <I><A HREF="xhost.html">xhost</A></I>, and <I><A HREF="iceauth.html">iceauth</A></I>; user preference setting
+     programs,  <I><A HREF="xrdb.html">xrdb</A></I>, <I><A HREF="xcmsdb.html">xcmsdb</A></I>, <I><A HREF="xset.html">xset</A></I>, <I><A HREF="xsetroot.html">xsetroot</A></I>, <I><A HREF="xstdcmap.html">xstdcmap</A></I>, and <I>xmod-</I>
+     <I>map</I>; clocks, <I><A HREF="xclock.html">xclock</A></I> and  <I><A HREF="oclock.html">oclock</A></I>;  a  font  displayer,  (<I><A HREF="xfd.html">xfd</A></I>;
+     utilities  for listing information about fonts, windows, and
+     displays, <I><A HREF="xlsfonts.html">xlsfonts</A></I>, <I><A HREF="xwininfo.html">xwininfo</A></I>,  <I>xlsclients</I>,  <I><A HREF="xdpyinfo.html">xdpyinfo</A></I>,  <I>xlsa-</I>
+     <I>toms</I>,  and  <I><A HREF="xprop.html">xprop</A></I>; screen image manipulation utilities, <I><A HREF="xwd.html">xwd</A></I>,
+     <I><A HREF="xwud.html">xwud</A></I>, and <I><A HREF="xmag.html">xmag</A></I>; a performance measurement utility,  <I><A HREF="x11perf.html">x11perf</A></I>;
+     a  font compiler, <I><A HREF="bdftopcf.html">bdftopcf</A></I>; a font server and related utili-
+     ties, <I><A HREF="xfs.html">xfs</A></I>, <I><A HREF="fsinfo.html">fsinfo</A></I>, <I><A HREF="fslsfonts.html">fslsfonts</A></I>, <I><A HREF="fstobdf.html">fstobdf</A></I>; an <A HREF="X.html">X</A> Image  Extension
+     exerciser,  <I><A HREF="xieperf.html">xieperf</A></I>; a display server and related utilities,
+     <I><A HREF="Xserver.html">Xserver</A></I>, <I>rgb</I>, <I><A HREF="mkfontdir.html">mkfontdir</A></I>; remote execution utilities,  <I><A HREF="rstart.html">rstart</A></I>
+     and  <I><A HREF="xon.html">xon</A></I>; a clipboard manager, <I><A HREF="xclipboard.html">xclipboard</A></I>; keyboard descrip-
+     tion compiler  and  related  utilities,  <I><A HREF="xkbcomp.html">xkbcomp</A></I>,  <I><A HREF="xkbprint.html">xkbprint</A></I>,
+     <I>xkbbell</I>,  <I><A HREF="xkbevd.html">xkbevd</A></I>,  <I>xkbvleds</I>, and <I>xkbwatch</I>; a utility to ter-
+     minate  clients,  <I><A HREF="xkill.html">xkill</A></I>;  an  optimized  <A HREF="X.html">X</A>  protocol  proxy,
+     <I><A HREF="lbxproxy.html">lbxproxy</A></I>;  a  firewall <A HREF="security.html">security</A> proxy, <I><A HREF="xfwp.html">xfwp</A></I>; a proxy manager
+     to control them,  <I><A HREF="proxymngr.html">proxymngr</A></I>;  a  utility  to  find  proxies,
+     <I><A HREF="xfindproxy.html">xfindproxy</A></I>;   Netscape  Navigator  Plug-ins,  <I><A HREF="libxrx.html">libxrx</A></I>.<I>so</I>  and
+     <I>libxrxnest</I>.<I>so</I>; an RX MIME-type helper program,  <I><A HREF="xrx.html">xrx</A></I>;  and  a
+     utility  to  cause  part or all of the screen to be redrawn,
+     <I><A HREF="xrefresh.html">xrefresh</A></I>.
+
+     Many other utilities, window managers, games, toolkits, etc.
+     are  included  as  user-contributed software in the <A HREF="X.html">X</A> Window
+     System distribution, or are available using anonymous ftp on
+     the Internet.  See your site administrator for details.
+
+STARTING UP
+     There are two main ways of getting the <A HREF="X.html">X</A> server and an  ini-
+     tial  set  of  client  applications started.  The particular
+     method used depends on what operating system you are running
+     and  whether or not you use other window systems in addition
+     to <A HREF="X.html">X</A>.
+
+     <I><A HREF="xdm.html">xdm</A></I> (the <A HREF="X.html">X</A> Display Manager)
+             If you  want  to  always  have  <A HREF="X.html">X</A>  running  on  your
+             display,   your  site  administrator  can  set  your
+             machine up to use the <A HREF="X.html">X</A> Display Manager  <I><A HREF="xdm.html">xdm</A></I>.   This
+             program  is  typically started by the system at boot
+             time and takes care of keeping  the  server  running
+             and  getting  users  logged  in.  If you are running
+             <I><A HREF="xdm.html">xdm</A></I>, you will see a window on the  screen  welcoming
+             you  to  the system and asking for your username and
+             password.  Simply type them in as  you  would  at  a
+             normal terminal, pressing the Return key after each.
+             If you make a mistake, <I><A HREF="xdm.html">xdm</A></I>  will  display  an  error
+             message  and  ask  you to try again.  After you have
+             successfully logged in, <I><A HREF="xdm.html">xdm</A></I> will  start  up  your  <A HREF="X.html">X</A>
+             environment.   By default, if you have an executable
+             file named .<I>xsession</I> in  your  home  directory,  <I><A HREF="xdm.html">xdm</A></I>
+             will  treat it as a program (or shell script) to run
+             to start up your initial clients (such  as  terminal
+             emulators,  clocks,  a window manager, user settings
+             for things like the background,  the  speed  of  the
+             pointer, etc.).  Your site administrator can provide
+             details.
+
+     <I><A HREF="xinit.html">xinit</A></I> (run manually from the shell)
+             Sites that support more than one window system might
+             choose to use the <I><A HREF="xinit.html">xinit</A></I> program for starting <A HREF="X.html">X</A> manu-
+             ally.  If this is true for your machine,  your  site
+             administrator  will probably have provided a program
+             named "x11", "<A HREF="startx.html">startx</A>",  or  "xstart"  that  will  do
+             site-specific  initialization  (such as loading con-
+             venient default resources, running a window manager,
+             displaying  a  clock,  and starting several terminal
+             emulators) in a nice way.  If  not,  you  can  build
+             such a script using the <I><A HREF="xinit.html">xinit</A></I> program.  This utility
+             simply runs one user-specified program to start  the
+             server,   runs  another  to  start  up  any  desired
+             clients, and then waits for either to finish.  Since
+             either or both of the user-specified programs may be
+             a shell script, this gives  substantial  flexibility
+             at  the  expense of a nice interface.  For this rea-
+             son, <I><A HREF="xinit.html">xinit</A></I> is not intended for end users.
+
+DISPLAY NAMES
+     From the user's perspective, every <A HREF="X.html">X</A> server  has  a  <I>display</I>
+     <I>name</I> of the form:
+
+                 <I>hostname</I>:<I>displaynumber</I>.<I>screennumber</I>
+
+     This information is used by the application to determine how
+     it  should  connect to the server and which screen it should
+     use by default (on displays with multiple monitors):
+
+     <I>hostname</I>
+             The <I>hostname</I> specifies the name of  the  machine  to
+             which  the  display is physically connected.  If the
+             hostname is not given, the  most  efficient  way  of
+             communicating  to  a server on the same machine will
+             be used.
+
+     <I>displaynumber</I>
+             The phrase "display" is usually  used  to  refer  to
+             collection  of monitors that share a common keyboard
+             and pointer (mouse, tablet,  etc.).   Most  worksta-
+             tions tend to only have one keyboard, and therefore,
+             only one display.  Larger, multi-user systems,  how-
+             ever,  frequently have several displays so that more
+             than one person can be doing graphics work at  once.
+             To  avoid  confusion,  each  display on a machine is
+             assigned a <I>display</I> <I>number</I> (beginning at 0) when  the
+             <A HREF="X.html">X</A>  server  for that display is started.  The display
+             number must always be given in a display name.
+
+     <I>screennumber</I>
+             Some displays share a single  keyboard  and  pointer
+             among  two or more monitors.  Since each monitor has
+             its own set of windows, each screen  is  assigned  a
+             <I>screen</I> <I>number</I> (beginning at 0) when the <A HREF="X.html">X</A> server for
+             that display is started.  If the  screen  number  is
+             not given, screen 0 will be used.
+
+     On POSIX systems, the default display name is stored in your
+     DISPLAY environment variable.  This variable is set automat-
+     ically by the <I><A HREF="xterm.html">xterm</A></I> terminal emulator.   However,  when  you
+     log  into another machine on a network, you will need to set
+     DISPLAY by hand to point to your display.  For example,
+
+         % setenv DISPLAY myws:0
+         $ DISPLAY=myws:0; export DISPLAY
+     The <I><A HREF="xon.html">xon</A></I> script can be used to start an <A HREF="X.html">X</A> program on a remote
+     machine;   it   automatically   sets  the  DISPLAY  variable
+     correctly.
+
+     Finally, most <A HREF="X.html">X</A> programs accept a  command  line  option  of
+     -display <I>displayname</I> to temporarily override the contents of
+     DISPLAY.  This is most  commonly  used  to  pop  windows  on
+     another  person's screen or as part of a "remote shell" com-
+     mand to start an <A HREF="xterm.html">xterm</A> pointing back to your  display.   For
+     example,
+
+         % xeyes -display joesws:0 -geometry 1000x1000+0+0
+         % rsh big <A HREF="xterm.html">xterm</A> -display myws:0 -ls &lt;/dev/null &amp;
+
+     <A HREF="X.html">X</A> servers listen for connections on a variety  of  different
+     communications   channels   (network  byte  streams,  shared
+     memory, etc.).  Since there can be more than one way of con-
+     tacting  a  given  server,  The <I>hostname</I> part of the display
+     name is used to determine the type of channel (also called a
+     transport  layer)  to  be used.  <A HREF="X.html">X</A> servers generally support
+     the following types of connections:
+
+     <I>local</I>
+             The hostname part of the display name should be  the
+             empty  string.  For example:  :<I>0</I>, :<I>1</I>, and :<I>0</I>.<I>1</I>.  The
+             most efficient local transport will be chosen.
+
+     <I>TCP</I>/<I>IP</I>
+             The hostname part of the display name should be  the
+             server  machine's  IP  address  name.  Full Internet
+             names, abbreviated names, and IP addresses  are  all
+             allowed.     For    example:     <I>x</I>.<I>org</I>:<I>0</I>,    <I>expo</I>:<I>0</I>,
+             <I>198</I>.<I>112</I>.<I>45</I>.<I>11</I>:<I>0</I>, <I>bigmachine</I>:<I>1</I>, and <I>hydra</I>:<I>0</I>.<I>1</I>.
+
+     <I>DECnet</I>
+             The hostname part of the display name should be  the
+             server  machine's  nodename,  followed by two colons
+             instead of one.  For example:  <I>myws</I>::<I>0</I>, <I>big</I>::<I>1</I>,  and
+             <I>hydra</I>::<I>0</I>.<I>1</I>.
+
+
+ACCESS CONTROL
+     An <A HREF="X.html">X</A>  server  can  use  several  types  of  access  control.
+     Mechanisms provided in Release 6 are:
+         Host Access                   Simple host-based access control.
+         MIT-MAGIC-COOKIE-1            Shared plain-text "cookies".
+         XDM-AUTHORIZATION-1           Secure DES based private-keys.
+         SUN-DES-1                     Based on Sun's secure rpc system.
+         MIT-KERBEROS-5                Kerberos Version 5 user-to-user.
+
+     <I>Xdm</I> initializes access  control  for  the  server  and  also
+     places authorization information in a file accessible to the
+     user.  Normally, the list of hosts  from  which  connections
+     are  always  accepted  should be empty, so that only clients
+     with are explicitly authorized can connect to  the  display.
+     When  you  add  entries  to  the host list (with <I><A HREF="xhost.html">xhost</A></I>), the
+     server no longer performs any authorization  on  connections
+     from those machines.  Be careful with this.
+
+     The file from which <I>Xlib</I> extracts authorization data can  be
+     specified  with  the  environment  variable  XAUTHORITY, and
+     defaults to the file .Xauthority in the home directory.  <I>Xdm</I>
+     uses  $HOME/.Xauthority  and  will  create  it  or  merge in
+     authorization records if it already exists when a user  logs
+     in.
+
+     If you use several machines and share a common  home  direc-
+     tory  across  all of the machines by means of a network file
+     system, you never really have to worry  about  authorization
+     files,  the system should work correctly by default.  Other-
+     wise, as the authorization  files  are  machine-independent,
+     you  can  simply  copy  the  files to share them.  To manage
+     authorization files, use <I><A HREF="xauth.html">xauth</A></I>.  This program allows you  to
+     extract  records  and  insert  them into other files.  Using
+     this, you can send authorization to remote machines when you
+     login,  if  the  remote machine does not share a common home
+     directory with your local machine.  Note that  authorization
+     information  transmitted  ``in the clear'' through a network
+     file system or using <I>ftp</I> or <I>rcp</I> can be ``stolen'' by a  net-
+     work  eavesdropper,  and  as  such  may  enable unauthorized
+     access.  In many environments, this level of <A HREF="security.html">security</A> is not
+     a  concern,  but if it is, you need to know the exact seman-
+     tics of the particular authorization data to know if this is
+     actually a problem.
+
+     For more information on access control,  see  the  <I>Xsecurity</I>
+     manual page.
+
+GEOMETRY SPECIFICATIONS
+     One of the advantages of using  window  systems  instead  of
+     hardwired  terminals  is  that applications don't have to be
+     restricted to a particular size or location on  the  screen.
+     Although the layout of windows on a display is controlled by
+     the window manager  that  the  user  is  running  (described
+     below),  most  <A HREF="X.html">X</A>  programs accept a command line argument of
+     the  form  -geometry  <I>WIDTHxHEIGHT</I>+<I>XOFF</I>+<I>YOFF</I>  (where  <I>WIDTH</I>,
+     <I>HEIGHT</I>,  <I>XOFF</I>,  and  <I>YOFF</I> are numbers) for specifying a pre-
+     ferred size and location for this application's main window.
+
+     The <I>WIDTH</I> and <I>HEIGHT</I> parts of the geometry specification are
+     usually  measured  in either pixels or characters, depending
+     on the application.  The <I>XOFF</I> and <I>YOFF</I> parts are measured in
+     pixels  and  are  used to specify the distance of the window
+     from the left or right and  top  and  bottom  edges  of  the
+     screen,  respectively.   Both  types of offsets are measured
+     from the indicated edge of the screen to  the  corresponding
+     edge  of  the  window.  The <A HREF="X.html">X</A> offset may be specified in the
+     following ways:
+
+     +<I>XOFF</I>   The left edge of the window is  to  be  placed  <I>XOFF</I>
+             pixels  in  from  the left edge of the screen (i.e.,
+             the <A HREF="X.html">X</A> coordinate of  the  window's  origin  will  be
+             <I>XOFF</I>).   <I>XOFF</I>  may  be  negative,  in which case the
+             window's left edge will be off the screen.
+
+     -<I>XOFF</I>   The right edge of the window is to  be  placed  <I>XOFF</I>
+             pixels  in  from the right edge of the screen.  <I>XOFF</I>
+             may be negative, in which case  the  window's  right
+             edge will be off the screen.
+
+     The Y offset has similar meanings:
+
+     +<I>YOFF</I>   The top edge of the window  is  to  be  <I>YOFF</I>  pixels
+             below  the top edge of the screen (i.e., the Y coor-
+             dinate of the window's origin will be  <I>YOFF</I>).   <I>YOFF</I>
+             may be negative, in which case the window's top edge
+             will be off the screen.
+
+     -<I>YOFF</I>   The bottom edge of the window is to be  <I>YOFF</I>  pixels
+             above  the  bottom  edge of the screen.  <I>YOFF</I> may be
+             negative, in which case  the  window's  bottom  edge
+             will be off the screen.
+
+     Offsets must be given as pairs; in other words, in order  to
+     specify  either  <I>XOFF</I> or <I>YOFF</I> both must be present.  Windows
+     can be placed in the four corners of the  screen  using  the
+     following specifications:
+
+     +<I>0</I>+<I>0</I>    upper left hand corner.
+
+     -<I>0</I>+<I>0</I>    upper right hand corner.
+
+     -<I>0</I>-<I>0</I>    lower right hand corner.
+
+     +<I>0</I>-<I>0</I>    lower left hand corner.
+     In the following examples, a terminal emulator is placed  in
+     roughly the center of the screen and a load average monitor,
+     mailbox, and clock  are  placed  in  the  upper  right  hand
+     corner:
+
+         <A HREF="xterm.html">xterm</A> -fn 6x10 -geometry 80x24+30+200 &amp;
+         <A HREF="xclock.html">xclock</A> -geometry 48x48-0+0 &amp;
+         xload -geometry 48x48-96+0 &amp;
+         xbiff -geometry 48x48-48+0 &amp;
+
+WINDOW MANAGERS
+     The layout of windows on the screen is controlled by special
+     programs  called  <I>window</I>  <I>managers</I>.   Although  many  window
+     managers will honor geometry specifications as given, others
+     may  choose to ignore them (requiring the user to explicitly
+     draw the window's region on the screen with the pointer, for
+     example).
+
+     Since window managers are regular  (albeit  complex)  client
+     programs,  a  variety  of  different  user interfaces can be
+     built.  The <A HREF="X.html">X</A> Window System distribution comes with a window
+     manager  named <I><A HREF="twm.html">twm</A></I> which supports overlapping windows, popup
+     menus, point-and-click or click-to-type input models,  title
+     bars,  nice  icons  (and an icon manager for those who don't
+     like separate icon windows).
+
+     See the user-contributed software in  the  <A HREF="X.html">X</A>  Window  System
+     distribution for other popular window managers.
+
+FONT NAMES
+     Collections of characters for displaying text and symbols in
+     <A HREF="X.html">X</A> are known as <I>fonts</I>.  A font typically contains images that
+     share a common appearance and look nice together (for  exam-
+     ple,  a  single  size,  boldness, slant, and character set).
+     Similarly, collections of fonts that are based on  a  common
+     type  face  (the  variations are usually called roman, bold,
+     italic, bold italic, oblique, and bold oblique)  are  called
+     <I>families</I>.
+
+     Fonts come in various sizes.  The <A HREF="X.html">X</A> server supports <I>scalable</I>
+     fonts,  meaning it is possible to create a font of arbitrary
+     size from a single source for the font.  The server supports
+     scaling  from  <I>outline</I> fonts and <I><A HREF="bitmap.html">bitmap</A></I> fonts.  Scaling from
+     outline fonts usually produces significantly better  results
+     than scaling from <A HREF="bitmap.html">bitmap</A> fonts.
+
+     An <A HREF="X.html">X</A> server can obtain fonts from individual files stored in
+     directories  in  the  file  system, or from one or more font
+     servers, or from a mixtures of directories and font servers.
+     The  list  of  places the server looks when trying to find a
+     font is controlled by its <I>font</I> <I>path</I>.  Although most  instal-
+     lations  will choose to have the server start up with all of
+     the commonly used font directories in  the  font  path,  the
+     font  path can be changed at any time with the <I><A HREF="xset.html">xset</A></I> program.
+     However, it is important  to  remember  that  the  directory
+     names are on the server's machine, not on the application's.
+
+     Bitmap font files are usually created by compiling a textual
+     font  description  into  binary  form, using <I><A HREF="bdftopcf.html">bdftopcf</A></I>.  Font
+     databases are created by running the  <I><A HREF="mkfontdir.html">mkfontdir</A></I>  program  in
+     the  directory containing the source or compiled versions of
+     the  fonts.   Whenever  fonts  are  added  to  a  directory,
+     <I><A HREF="mkfontdir.html">mkfontdir</A></I>  should  be  rerun so that the server can find the
+     new fonts.  To make the server  reread  the  font  database,
+     reset  the font path with the <I><A HREF="xset.html">xset</A></I> program.  For example, to
+     add a font to a private directory,  the  following  commands
+     could be used:
+
+         % cp newfont.pcf ~/myfonts
+         % <A HREF="mkfontdir.html">mkfontdir</A> ~/myfonts
+         % <A HREF="xset.html">xset</A> fp rehash
+
+     The <I>xfontsel</I> and <I><A HREF="xlsfonts.html">xlsfonts</A></I> programs can  be  used  to  browse
+     through the fonts available on a server.  Font names tend to
+     be fairly long as they contain all of the information needed
+     to  uniquely  identify  individual  fonts.   However,  the <A HREF="X.html">X</A>
+     server supports wildcarding  of  font  names,  so  the  full
+     specification
+
+         -<I>adobe</I>-<I>courier</I>-<I>medium</I>-<I>r</I>-<I>normal</I>--<I>10</I>-<I>100</I>-<I>75</I>-<I>75</I>-<I>m</I>-<I>60</I>-<I>iso8859</I>-<I>1</I>
+
+     might be abbreviated as:
+
+         -*-<I>courier</I>-<I>medium</I>-<I>r</I>-<I>normal</I>--*-<I>100</I>-*-*-*-*-<I>iso8859</I>-<I>1</I>
+
+     Because the shell also has special meanings  for  *  and  ?,
+     wildcarded font names should be quoted:
+
+         % <A HREF="xlsfonts.html">xlsfonts</A> -fn '-*-courier-medium-r-normal--*-100-*-*-*-*-*-*'
+
+     The <I><A HREF="xlsfonts.html">xlsfonts</A></I> program can be used to list all  of  the  fonts
+     that match a given pattern.  With no arguments, it lists all
+     available fonts.  This will usually list the  same  font  at
+     many  different  sizes.   To see just the base scalable font
+     names, try using one of the following patterns:
+
+         -*-*-*-*-*-*-<I>0</I>-<I>0</I>-<I>0</I>-<I>0</I>-*-<I>0</I>-*-*
+         -*-*-*-*-*-*-<I>0</I>-<I>0</I>-<I>75</I>-<I>75</I>-*-<I>0</I>-*-*
+         -*-*-*-*-*-*-<I>0</I>-<I>0</I>-<I>100</I>-<I>100</I>-*-<I>0</I>-*-*
+
+     To convert one of the resulting  names  into  a  font  at  a
+     specific  size,  replace  one  of the first two zeros with a
+     nonzero value.  The field containing the first zero  is  for
+     the  pixel size; replace it with a specific height in pixels
+     to name a font at that size.  Alternatively, the field  con-
+     taining  the  second  zero is for the point size; replace it
+     with a specific size in decipoints (there  are  722.7  deci-
+     points  to  the inch) to name a font at that size.  The last
+     zero is an average width field, measured in tenths  of  pix-
+     els; some servers will anamorphically scale if this value is
+     specified.
+
+FONT SERVER NAMES
+     One of the following forms can be used to name a font server
+     that accepts TCP connections:
+
+         tcp/<I>hostname</I>:<I>port</I>
+         tcp/<I>hostname</I>:<I>port</I>/<I>cataloguelist</I>
+
+     The <I>hostname</I> specifies the name (or decimal numeric address)
+     of  the  machine  on  which the font server is running.  The
+     <I>port</I> is the decimal TCP port on which  the  font  server  is
+     listening  for  connections.   The <I>cataloguelist</I> specifies a
+     list of catalogue names, with '+' as a separator.
+
+     Examples: <I>tcp</I>/<I>x</I>.<I>org</I>:<I>7100</I>, <I>tcp</I>/<I>198</I>.<I>112</I>.<I>45</I>.<I>11</I>:<I>7100</I>/<I>all</I>.
+
+     One of the following forms can be used to name a font server
+     that accepts DECnet connections:
+
+         decnet/<I>nodename</I>::font$<I>objname</I>
+         decnet/<I>nodename</I>::font$<I>objname</I>/<I>cataloguelist</I>
+
+     The <I>nodename</I> specifies the name (or decimal numeric address)
+     of  the  machine  on  which the font server is running.  The
+     <I>objname</I> is a normal, case-insensitive  DECnet  object  name.
+     The  <I>cataloguelist</I> specifies a list of catalogue names, with
+     '+' as a separator.
+
+     Examples:                       <I>DECnet</I>/<I>SRVNOD</I>::<I>FONT</I>$<I>DEFAULT</I>,
+     <I>decnet</I>/<I>44</I>.<I>70</I>::<I>font</I>$<I>special</I>/<I>symbols</I>.
+
+COLOR NAMES
+     Most applications provide ways of tailoring (usually through
+     resources  or  command line arguments) the colors of various
+     elements in the text and graphics they display.  A color can
+     be  specified  either  by  an  abstract  color name, or by a
+     numerical color specification.  The numerical  specification
+     can  identify  a  color  in either device-dependent (RGB) or
+     device-independent   terms.    Color   strings   are   case-
+     insensitive.
+
+     <A HREF="X.html">X</A> supports the use of abstract  color  names,  for  example,
+     "red",  "blue".   A value for this abstract name is obtained
+     by searching one or more color name databases.   <I>Xlib</I>  first
+     searches  zero  or  more  client-side databases; the number,
+     location, and content of these databases  is  implementation
+     dependent.  If the name is not found, the color is looked up
+     in the <A HREF="X.html">X</A> server's database.  The text form of this  database
+     is  commonly  stored  in  the  file &lt;<I>XRoot</I>&gt;/<I>lib</I>/<I>X11</I>/<I>rgb</I>.<I>txt</I>,
+     where &lt;XRoot&gt; is replaced by the root  of  the  X11  install
+     tree.
+
+     A numerical color specification consists of  a  color  space
+     name and a set of values in the following syntax:
+
+         &lt;<I>color</I>_<I>space</I>_<I>name</I>&gt;:&lt;<I>value</I>&gt;/.../&lt;<I>value</I>&gt;
+
+     An RGB Device specification  is  identified  by  the  prefix
+     "rgb:" and has the following syntax:
+
+         rgb:&lt;<I>red</I>&gt;/&lt;<I>green</I>&gt;/&lt;<I>blue</I>&gt;
+
+             &lt;<I>red</I>&gt;, &lt;<I>green</I>&gt;, &lt;<I>blue</I>&gt; := <I>h</I> | <I>hh</I> | <I>hhh</I> | <I>hhhh</I>
+             <I>h</I> := single hexadecimal digits
+     Note that <I>h</I> indicates the value scaled in  4  bits,  <I>hh</I>  the
+     value scaled in 8 bits, <I>hhh</I> the value scaled in 12 bits, and
+     <I>hhhh</I> the value  scaled  in  16  bits,  respectively.   These
+     values  are passed directly to the <A HREF="X.html">X</A> server, and are assumed
+     to be gamma corrected.
+
+     The eight primary colors can be represented as:
+
+         black                rgb:0/0/0
+         red                  rgb:ffff/0/0
+         green                rgb:0/ffff/0
+         blue                 rgb:0/0/ffff
+         yellow               rgb:ffff/ffff/0
+         magenta              rgb:ffff/0/ffff
+         cyan                 rgb:0/ffff/ffff
+         white                rgb:ffff/ffff/ffff
+
+     For backward compatibility, an older syntax for  RGB  Device
+     is  supported, but its continued use is not encouraged.  The
+     syntax is an initial sharp  sign  character  followed  by  a
+     numeric specification, in one of the following formats:
+
+         #RGB                      (4 bits each)
+         #RRGGBB                   (8 bits each)
+         #RRRGGGBBB                (12 bits each)
+         #RRRRGGGGBBBB             (16 bits each)
+
+     The R, G, and B represent single hexadecimal  digits.   When
+     fewer  than  16  bits each are specified, they represent the
+     most-significant bits of the value (unlike the  "rgb:"  syn-
+     tax,  in which values are scaled).  For example, #3a7 is the
+     same as #3000a0007000.
+
+     An RGB intensity specification is identified by  the  prefix
+     "rgbi:" and has the following syntax:
+
+         rgbi:&lt;<I>red</I>&gt;/&lt;<I>green</I>&gt;/&lt;<I>blue</I>&gt;
+
+     The red, green, and blue are floating point  values  between
+     0.0  and  1.0,  inclusive.   They represent linear intensity
+     values, with 1.0 indicating full intensity, 0.5 half  inten-
+     sity,  and  so  on.  These values will be gamma corrected by
+     <I>Xlib</I> before being sent to the <A HREF="X.html">X</A> server.   The  input  format
+     for  these  values  is an optional sign, a string of numbers
+     possibly  containing  a  decimal  point,  and  an   optional
+     exponent  field  containing an E or e followed by a possibly
+     signed integer string.
+
+     The standard device-independent string  specifications  have
+     the following syntax:
+
+         CIEXYZ:&lt;<I><A HREF="X.html">X</A></I>&gt;/&lt;<I>Y</I>&gt;/&lt;<I>Z</I>&gt;             (<I>none</I>, 1, <I>none</I>)
+         CIEuvY:&lt;<I>u</I>&gt;/&lt;<I>v</I>&gt;/&lt;<I>Y</I>&gt;             (~.6, ~.6, 1)
+         CIExyY:&lt;<I>x</I>&gt;/&lt;<I>y</I>&gt;/&lt;<I>Y</I>&gt;             (~.75, ~.85, 1)
+         CIELab:&lt;<I>L</I>&gt;/&lt;<I>a</I>&gt;/&lt;<I>b</I>&gt;             (100, <I>none</I>, <I>none</I>)
+         CIELuv:&lt;<I>L</I>&gt;/&lt;<I>u</I>&gt;/&lt;<I>v</I>&gt;             (100, <I>none</I>, <I>none</I>)
+         TekHVC:&lt;<I>H</I>&gt;/&lt;<I>V</I>&gt;/&lt;<I>C</I>&gt;             (360, 100, 100)
+
+     All of the values (C, H, V, <A HREF="X.html">X</A>, Y, Z, a, b, u, v, y,  x)  are
+     floating  point  values.  Some of the values are constrained
+     to be between zero and some upper bound;  the  upper  bounds
+     are given in parentheses above.  The syntax for these values
+     is an optional '+' or '-' sign, a string of digits  possibly
+     containing  a  decimal point, and an optional exponent field
+     consisting of an 'E' or 'e' followed by an optional  '+'  or
+     '-' followed by a string of digits.
+
+     For more information on device independent  color,  see  the
+     <I>Xlib</I> reference manual.
+
+KEYBOARDS
+     The <A HREF="X.html">X</A> keyboard model is broken  into  two  layers:   server-
+     specific  codes (called <I>keycodes</I>) which represent the physi-
+     cal keys, and server-independent  symbols  (called  <I>keysyms</I>)
+     which  represent  the  letters  or  words that appear on the
+     keys.  Two tables are kept in the server for converting key-
+     codes to keysyms:
+
+     <I>modifier</I> <I>list</I>
+             Some keys (such as Shift, Control,  and  Caps  Lock)
+             are  known  as  <I>modifier</I> and are used to select dif-
+             ferent symbols that are attached  to  a  single  key
+             (such   as   Shift-a  generates  a  capital  A,  and
+             Control-l generates a control  character  ^L).   The
+             server keeps a list of keycodes corresponding to the
+             various modifier keys.  Whenever a key is pressed or
+             released,  the  server  generates an <I>event</I> that con-
+             tains the keycode of the indicated key as well as  a
+             mask  that  specifies which of the modifier keys are
+             currently pressed.  Most servers set up this list to
+             initially  contain  the  various shift, control, and
+             shift lock keys on the keyboard.
+
+     <I>keymap</I> <I>table</I>
+             Applications translate event keycodes  and  modifier
+             masks  into  keysyms using a <I>keysym</I> <I>table</I> which con-
+             tains one row for each keycode and  one  column  for
+             various  modifier states.  This table is initialized
+             by the server to  correspond  to  normal  typewriter
+             conventions.   The  exact semantics of how the table
+             is interpreted to produce  keysyms  depends  on  the
+             particular  program,  libraries,  and language input
+             method used, but the following conventions  for  the
+             first four keysyms in each row are generally adhered
+             to:
+
+     The first four elements of  the  list  are  split  into  two
+     groups  of  keysyms.   Group 1 contains the first and second
+     keysyms; Group 2 contains  the  third  and  fourth  keysyms.
+     Within  each  group,  if the first element is alphabetic and
+     the the second element is the special keysym <I>NoSymbol</I>,  then
+     the  group  is treated as equivalent to a group in which the
+     first element is the lowercase letter and the second element
+     is the uppercase letter.
+
+     Switching between groups is controlled by the  keysym  named
+     MODE  SWITCH,  by  attaching  that  keysym  to  some key and
+     attaching that key to any one of the modifiers Mod1  through
+     Mod5.  This modifier is called the ``group modifier.'' Group
+     1 is used when the group modifier is off,  and  Group  2  is
+     used when the group modifier is on.
+
+     Within a group, the modifier state determines  which  keysym
+     to  use.   The  first keysym is used when the Shift and Lock
+     modifiers are off.  The second keysym is used when the Shift
+     modifier  is on, when the Lock modifier is on and the second
+     keysym is uppercase alphabetic, or when the Lock modifier is
+     on  and  is  interpreted  as ShiftLock.  Otherwise, when the
+     Lock modifier is on and  is  interpreted  as  CapsLock,  the
+     state  of  the  Shift  modifier is applied first to select a
+     keysym; but if that keysym is lowercase alphabetic, then the
+     corresponding uppercase keysym is used instead.
+
+OPTIONS
+     Most <A HREF="X.html">X</A> programs attempt to use the same  names  for  command
+     line  options  and arguments.  All applications written with
+     the <A HREF="X.html">X</A> Toolkit Intrinsics automatically accept the  following
+     options:
+
+     -display <I>display</I>
+             This option specifies the name of the  <A HREF="X.html">X</A>  server  to
+             use.
+
+     -geometry <I>geometry</I>
+             This option specifies the initial size and  location
+             of the window.
+
+     -bg <I>color</I>, -background <I>color</I>
+             Either option specifies the color  to  use  for  the
+             window background.
+
+     -bd <I>color</I>, -bordercolor <I>color</I>
+             Either option specifies the color  to  use  for  the
+             window border.
+
+     -bw <I>number</I>, -borderwidth <I>number</I>
+             Either option specifies the width in pixels  of  the
+             window border.
+
+     -fg <I>color</I>, -foreground <I>color</I>
+             Either option specifies the color to use for text or
+             graphics.
+
+     -fn <I>font</I>, -font <I>font</I>
+             Either option specifies the font to use for display-
+             ing text.
+
+     -iconic
+             This option indicates that  the  user  would  prefer
+             that  the  application's  windows  initially  not be
+             visible as if the windows had be immediately  iconi-
+             fied by the user.  Window managers may choose not to
+             honor the application's request.
+
+     -name
+             This option specifies the name under which resources
+             for the application should be found.  This option is
+             useful in shell aliases to distinguish between invo-
+             cations  of  an  application,  without  resorting to
+             creating links to alter the executable file name.
+
+     -rv, -reverse
+             Either option  indicates  that  the  program  should
+             simulate  reverse  video if possible, often by swap-
+             ping the foreground and background colors.  Not  all
+             programs  honor  this or implement it correctly.  It
+             is usually only used on monochrome displays.
+
+     +rv
+             This option indicates that the  program  should  not
+             simulate  reverse  video.   This is used to override
+             any defaults since reverse video doesn't always work
+             properly.
+
+     -selectionTimeout
+             This option specifies the  timeout  in  milliseconds
+             within  which  two  communicating  applications must
+             respond to one another for a selection request.
+
+     -synchronous
+             This option indicates that requests to the <A HREF="X.html">X</A>  server
+             should  be  sent synchronously, instead of asynchro-
+             nously.  Since <I>Xlib</I> normally buffers requests to the
+             server,  errors  do  not  necessarily  get  reported
+             immediately after they occur.  This option turns off
+             the   buffering  so  that  the  application  can  be
+             debugged.  It should never be used  with  a  working
+             program.
+
+     -title <I>string</I>
+             This option specifies the title to be used for  this
+             window.   This  information  is  sometimes used by a
+             window manager to provide some sort of header  iden-
+             tifying the window.
+
+     -xnllanguage <I>language</I>[_<I>territory</I>][.<I>codeset</I>]
+             This option specifies the language,  territory,  and
+             codeset  for  use  in  resolving  resource and other
+             filenames.
+
+     -xrm <I>resourcestring</I>
+             This option specifies a resource name and  value  to
+             override  any  defaults.  It is also very useful for
+             setting resources that don't have  explicit  command
+             line arguments.
+
+RESOURCES
+     To make the tailoring of applications  to  personal  prefer-
+     ences  easier,  <A HREF="X.html">X</A>  provides  a mechanism for storing default
+     values for program resources (e.g. background color,  window
+     title,  etc.)  Resources  are  specified as strings that are
+     read in from various places  when  an  application  is  run.
+     Program components are named in a hierarchical fashion, with
+     each node in the hierarchy identified  by  a  class  and  an
+     instance  name.   At the top level is the class and instance
+     name of the application itself.  By  convention,  the  class
+     name of the application is the same as the program name, but
+     with  the first letter capitalized (e.g.  <I>Bitmap</I>  or  <I>Emacs</I>)
+     although some programs that begin with the letter ``x'' also
+     capitalize the second letter for historical reasons.
+
+     The precise syntax for resources is:
+
+     ResourceLine      = Comment | IncludeFile | ResourceSpec | &lt;empty line&gt;
+     Comment           = "!" {&lt;any character except null or newline&gt;}
+     IncludeFile       = "#" WhiteSpace "include" WhiteSpace FileName WhiteSpace
+     FileName          = &lt;valid filename for operating system&gt;
+     ResourceSpec      = WhiteSpace ResourceName WhiteSpace ":" WhiteSpace Value
+     ResourceName      = [Binding] {Component Binding} ComponentName
+     Binding           = "." | "*"
+     WhiteSpace        = {&lt;space&gt; | &lt;horizontal tab&gt;}
+     Component         = "?" | ComponentName
+     ComponentName     = NameChar {NameChar}
+     NameChar          = "a"-"z" | "A"-"Z" | "0"-"9" | "_" | "-"
+     Value             = {&lt;any character except null or unescaped newline&gt;}
+
+     Elements separated by vertical  bar  (|)  are  alternatives.
+     Curly  braces  ({...})  indicate zero or more repetitions of
+     the enclosed elements.   Square  brackets  ([...])  indicate
+     that  the  enclosed element is optional.  Quotes ("...") are
+     used around literal characters.
+
+     IncludeFile lines are interpreted by replacing the line with
+     the contents of the specified file.  The word "include" must
+     be in lowercase.  The filename is  interpreted  relative  to
+     the  directory  of  the  file  in which the line occurs (for
+     example, if the filename contains no directory or contains a
+     relative directory specification).
+
+     If a ResourceName contains a contiguous sequence of  two  or
+     more  Binding characters, the sequence will be replaced with
+     single "." character if the sequence contains only "." char-
+     acters,  otherwise the sequence will be replaced with a sin-
+     gle "*" character.
+
+     A resource database never contains more than one entry for a
+     given  ResourceName.   If  a resource file contains multiple
+     lines with the same ResourceName, the last line in the  file
+     is used.
+
+     Any whitespace character before or after the name  or  colon
+     in  a  ResourceSpec  are ignored.  To allow a Value to begin
+     with  whitespace,  the  two-character  sequence   ``\<I>space</I>''
+     (backslash  followed by space) is recognized and replaced by
+     a space character, and the two-character  sequence  ``\<I>tab</I>''
+     (backslash  followed  by  horizontal  tab) is recognized and
+     replaced by a horizontal tab character.  To allow a Value to
+     contain   embedded  newline  characters,  the  two-character
+     sequence ``\n'' is recognized  and  replaced  by  a  newline
+     character.   To  allow  a Value to be broken across multiple
+     lines in a text file,  the  two-character  sequence  ``\<I>new-</I>
+     <I>line</I>''  (backslash  followed  by  newline) is recognized and
+     removed from  the  value.   To  allow  a  Value  to  contain
+     arbitrary   character  codes,  the  four-character  sequence
+     ``\<I>nnn</I>'', where each <I>n</I> is a digit character in the range  of
+     ``0''-``7'',  is  recognized and replaced with a single byte
+     that contains the octal value  specified  by  the  sequence.
+     Finally, the two-character sequence ``\\'' is recognized and
+     replaced with a single backslash.
+
+     When an application looks for the value of  a  resource,  it
+     specifies  a complete path in the hierarchy, with both class
+     and instance names.  However, resource  values  are  usually
+     given with only partially specified names and classes, using
+     pattern matching constructs.  An asterisk  (*)  is  a  loose
+     binding  and  is used to represent any number of intervening
+     components, including none.  A period (.) is a tight binding
+     and  is used to separate immediately adjacent components.  A
+     question mark (?) is used to match any single component name
+     or  class.   A database entry cannot end in a loose binding;
+     the final component (which cannot be "?") must be specified.
+     The  lookup algorithm searches the resource database for the
+     entry that most closely matches (is most specific  for)  the
+     full name and class being queried.  When more than one data-
+     base entry matches the full name and class, precedence rules
+     are used to select just one.
+
+     The full name and class are scanned from left to right (from
+     highest  level in the hierarchy to lowest), one component at
+     a time.  At each level, the corresponding  component  and/or
+     binding  of  each  matching  entry  is determined, and these
+     matching components and bindings are compared  according  to
+     precedence  rules.   Each  of  the  rules is applied at each
+     level, before moving to the next level, until a rule selects
+     a single entry over all others.  The rules (in order of pre-
+     cedence) are:
+
+     1.   An entry that contains a  matching  component  (whether
+          name, class, or "?") takes precedence over entries that
+          elide the level (that is, entries that match the  level
+          in a loose binding).
+
+     2.   An entry with a matching  name  takes  precedence  over
+          both  entries  with  a  matching class and entries that
+          match using "?".  An entry with a matching class  takes
+          precedence over entries that match using "?".
+
+     3.   An entry preceded by a tight binding  takes  precedence
+          over entries preceded by a loose binding.
+
+     Programs based on the <A HREF="X.html">X</A> Tookit Intrinsics  obtain  resources
+     from  the  following sources (other programs usually support
+     some subset of these sources):
+
+     RESOURCE_MANAGER root window property
+             Any global resources that  should  be  available  to
+             clients  on  all  machines  should  be stored in the
+             RESOURCE_MANAGER property on the root window of  the
+             first  screen  using the <I><A HREF="xrdb.html">xrdb</A></I> program.  This is fre-
+             quently taken care of when  the  user  starts  up  <A HREF="X.html">X</A>
+             through the display manager or <I><A HREF="xinit.html">xinit</A></I>.
+
+     SCREEN_RESOURCES root window property
+             Any resources  specific  to  a  given  screen  (e.g.
+             colors)  that  should be available to clients on all
+             machines should be stored  in  the  SCREEN_RESOURCES
+             property  on  the  root  window of that screen.  The
+             <I><A HREF="xrdb.html">xrdb</A></I> program will sort resources  automatically  and
+             place  them in RESOURCE_MANAGER or SCREEN_RESOURCES,
+             as appropriate.
+
+     application-specific files
+             Directories named by the environment variable XUSER-
+             FILESEARCHPATH or the environment variable XAPPLRES-
+             DIR (which names a single directory and  should  end
+             with  a '/' on POSIX systems), plus directories in a
+             standard place (usually under &lt;XRoot&gt;/lib/X11/,  but
+             this  can  be  overridden  with  the XFILESEARCHPATH
+             environment   variable)   are   searched   for   for
+             application-specific resources.  For example, appli-
+             cation  default  resources  are  usually   kept   in
+             &lt;XRoot&gt;/lib/X11/app-defaults/.   See  the  <I><A HREF="X.html">X</A></I> <I>Toolkit</I>
+             <I>Intrinsics</I>  -  <I>C</I>  <I>Language</I>  <I>Interface</I>   manual   for
+             details.
+
+     XENVIRONMENT
+             Any user-  and  machine-specific  resources  may  be
+             specified  by  setting  the XENVIRONMENT environment
+             variable to the name of a resource file to be loaded
+             by  all  applications.   If  this  variable  is  not
+             defined, a file named  $<I>HOME</I>/.Xdefaults-<I>hostname</I>  is
+             looked  for  instead,  where <I>hostname</I> is the name of
+             the host where the application is executing.
+
+     -xrm <I>resourcestring</I>
+             Resources can also be  specified  from  the  command
+             line.   The <I>resourcestring</I> is a single resource name
+             and value as shown above.  Note that if  the  string
+             contains  characters interpreted by the shell (e.g.,
+             asterisk), they must be quoted.  Any number of  -xrm
+             arguments may be given on the command line.
+
+     Program resources are organized into groups called  <I>classes</I>,
+     so  that  collections of individual resources (each of which
+     are called <I>instances</I>) can be set all at  once.   By  conven-
+     tion,  the  instance name of a resource begins with a lower-
+     case letter and  class  name  with  an  upper  case  letter.
+     Multiple  word  resources  are  concatenated  with the first
+     letter of the succeeding  words  capitalized.   Applications
+     written with the <A HREF="X.html">X</A> Toolkit Intrinsics will have at least the
+     following resources:
+
+     background (class Background)
+             This resource specifies the color  to  use  for  the
+             window background.
+
+     borderWidth (class BorderWidth)
+             This resource specifies the width in pixels  of  the
+             window border.
+
+     borderColor (class BorderColor)
+             This resource specifies the color  to  use  for  the
+             window border.
+
+     Most applications using the <A HREF="X.html">X</A> Toolkit Intrinsics  also  have
+     the  resource  foreground (class Foreground), specifying the
+     color to use for text and graphics within the window.
+
+     By combining class and instance specifications,  application
+     preferences  can  be set quickly and easily.  Users of color
+     displays will frequently want to set  Background  and  Fore-
+     ground  classes  to  particular  defaults.   Specific  color
+     instances such  as  text  cursors  can  then  be  overridden
+     without  having to define all of the related resources.  For
+     example,
+
+         <A HREF="bitmap.html">bitmap</A>*Dashed:  off
+         XTerm*cursorColor:  gold
+         XTerm*multiScroll:  on
+         XTerm*jumpScroll:  on
+         XTerm*reverseWrap:  on
+         XTerm*curses:  on
+         XTerm*Font:  6x10
+         XTerm*scrollBar: on
+         XTerm*scrollbar*thickness: 5
+         XTerm*multiClickTime: 500
+         XTerm*charClass:  33:48,37:48,45-47:48,64:48
+         XTerm*cutNewline: off
+         XTerm*cutToBeginningOfLine: off
+         XTerm*titeInhibit:  on
+         XTerm*ttyModes:  intr ^c erase ^? kill ^u
+         XLoad*Background: gold
+         XLoad*Foreground: red
+         XLoad*highlight: black
+         XLoad*borderWidth: 0
+         emacs*Geometry:  80x65-0-0
+         emacs*Background:  rgb:5b/76/86
+         emacs*Foreground:  white
+         emacs*Cursor:  white
+         emacs*BorderColor:  white
+         emacs*Font:  6x10
+         <A HREF="xmag.html">xmag</A>*geometry: -0-0
+         <A HREF="xmag.html">xmag</A>*borderColor:  white
+
+     If these resources were stored in a file called  .<I>Xresources</I>
+     in  your home directory, they could be added to any existing
+     resources in the server with the following command:
+
+         % <A HREF="xrdb.html">xrdb</A> -merge $HOME/.Xresources
+
+     This is frequently how user-friendly startup  scripts  merge
+     user-specific  defaults  into  any  site-wide defaults.  All
+     sites are encouraged to set up convenient ways of  automati-
+     cally   loading  resources.  See  the  <I>Xlib</I>  manual  section
+     <I>Resource</I> <I>Manager</I> <I>Functions</I> for more information.
+
+EXAMPLES
+     The following is a collection of sample  command  lines  for
+     some  of the more frequently used commands.  For more infor-
+     mation  on  a  particular  command,  please  refer  to  that
+     command's manual page.
+
+         %  <A HREF="xrdb.html">xrdb</A> $HOME/.Xresources
+         %  <A HREF="xmodmap.html">xmodmap</A> -e "keysym BackSpace = Delete"
+         %  <A HREF="mkfontdir.html">mkfontdir</A> /usr/local/lib/X11/otherfonts
+         %  <A HREF="xset.html">xset</A> fp+ /usr/local/lib/X11/otherfonts
+         %  <A HREF="xmodmap.html">xmodmap</A> $HOME/.keymap.km
+         %  <A HREF="xsetroot.html">xsetroot</A> -solid 'rgbi:.8/.8/.8'
+         %  <A HREF="xset.html">xset</A> b 100 400 c 50 s 1800 r on
+         %  <A HREF="xset.html">xset</A> q
+         %  <A HREF="twm.html">twm</A>
+         %  <A HREF="xmag.html">xmag</A>
+         %  <A HREF="xclock.html">xclock</A> -geometry 48x48-0+0 -bg blue -fg white
+         %  xeyes -geometry 48x48-48+0
+         %  xbiff -update 20
+         %  <A HREF="xlsfonts.html">xlsfonts</A> '*helvetica*'
+         %  <A HREF="xwininfo.html">xwininfo</A> -root
+         %  <A HREF="xdpyinfo.html">xdpyinfo</A> -display joesworkstation:0
+         %  <A HREF="xhost.html">xhost</A> -joesworkstation
+         %  <A HREF="xrefresh.html">xrefresh</A>
+         %  <A HREF="xwd.html">xwd</A> | <A HREF="xwud.html">xwud</A>
+         %  <A HREF="bitmap.html">bitmap</A> companylogo.bm 32x32
+         %  xcalc -bg blue -fg magenta
+         %  <A HREF="xterm.html">xterm</A> -geometry 80x66-0-0 -name myxterm $*
+         %  <A HREF="xon.html">xon</A> filesysmachine xload
+
+DIAGNOSTICS
+     A wide variety of error messages are generated from  various
+     programs.   The  default error handler in <I>Xlib</I> (also used by
+     many toolkits) uses standard resources to construct diagnos-
+     tic  messages  when  errors  occur.   The defaults for these
+     messages are usually stored in &lt;<I>XRoot</I>&gt;/<I>lib</I>/<I>X11</I>/<I>XErrorDB</I>.  If
+     this  file  is  not  present,  error messages will be rather
+     terse and cryptic.
+
+     When the <A HREF="X.html">X</A> Toolkit Intrinsics  encounter  errors  converting
+     resource  strings  to  the  appropriate  internal format, no
+     error messages are usually printed.  This is convenient when
+     it  is  desirable  to  have  one  set  of resources across a
+     variety of displays (e.g.  color  vs.  monochrome,  lots  of
+     fonts vs. very few, etc.), although it can pose problems for
+     trying to determine why an  application  might  be  failing.
+     This   behavior   can  be  overridden  by  the  setting  the
+     <I>StringConversionsWarning</I> resource.
+
+     To force the <A HREF="X.html">X</A> Toolkit Intrinsics  to  always  print  string
+     conversion  error messages, the following resource should be
+     placed   in   the   file   that   gets   loaded   onto   the
+     RESOURCE_MANAGER property using the <I><A HREF="xrdb.html">xrdb</A></I> program (frequently
+     called .<I>Xresources</I> or .<I>Xres</I> in the user's home directory):
+
+         *StringConversionWarnings: on
+
+     To have conversion messages printed for  just  a  particular
+     application,  the  appropriate  instance  name can be placed
+     before the asterisk:
+
+         <A HREF="xterm.html">xterm</A>*StringConversionWarnings: on
+
+SEE ALSO
+     <B><A HREF="XProjectTeam.html">XProjectTeam</A>(1)</B>, <B>XStandards(1)</B>, <B>Xsecurity(1)</B>,
+
+     <B><A HREF="appres.html">appres</A>(1)</B>, <B><A HREF="bdftopcf.html">bdftopcf</A>(1)</B>,  <B><A HREF="bitmap.html">bitmap</A>(1)</B>,  <B><A HREF="editres.html">editres</A>(1)</B>,  <B><A HREF="fsinfo.html">fsinfo</A>(1)</B>,
+     <B><A HREF="fslsfonts.html">fslsfonts</A>(1)</B>, <B><A HREF="fstobdf.html">fstobdf</A>(1)</B>, <B><A HREF="iceauth.html">iceauth</A>(1)</B>, <B><A HREF="imake.html">imake</A>(1)</B>, <B><A HREF="lbxproxy.html">lbxproxy</A>(1)</B>,
+     <B>makedepend(1)</B>,   <B><A HREF="mkfontdir.html">mkfontdir</A>(1)</B>,   <B><A HREF="oclock.html">oclock</A>(1)</B>,    <B><A HREF="proxymngr.html">proxymngr</A>(1)</B>,
+     <B>rgb(1)</B>,    <B><A HREF="resize.html">resize</A>(1)</B>,    <B><A HREF="rstart.html">rstart</A>(1)</B>,    <B><A HREF="smproxy.html">smproxy</A>(1)</B>,   <B><A HREF="twm.html">twm</A>(1)</B>,
+     <B><A HREF="x11perf.html">x11perf</A>(1)</B>,   <B>x11perfcomp(1)</B>,    <B><A HREF="xauth.html">xauth</A>(1)</B>,    <B><A HREF="xclipboard.html">xclipboard</A>(1)</B>,
+     <B><A HREF="xclock.html">xclock</A>(1)</B>,   <B><A HREF="xcmsdb.html">xcmsdb</A>(1)</B>,  <B><A HREF="xconsole.html">xconsole</A>(1)</B>,  <B><A HREF="xdm.html">xdm</A>(1)</B>,  <B><A HREF="xdpyinfo.html">xdpyinfo</A>(1)</B>,
+     <B><A HREF="xfd.html">xfd</A>(1)</B>,   <B><A HREF="xfindproxy.html">xfindproxy</A>(1)</B>,    <B><A HREF="xfs.html">xfs</A>(1)</B>,    <B><A HREF="xfwp.html">xfwp</A>(1)</B>,    <B><A HREF="xhost.html">xhost</A>(1)</B>,
+     <B><A HREF="xieperf.html">xieperf</A>(1)</B>,  <B><A HREF="xinit.html">xinit</A>(1)</B>,  <B>xkbbell(1)</B>,  <B><A HREF="xkbcomp.html">xkbcomp</A>(1)</B>,  <B>xbkevd(1)</B>,
+     <B><A HREF="xkbprint.html">xkbprint</A>(1)</B>, <B>xkbvleds(1)</B>, <B>xkbwatch(1)</B>,  <B><A HREF="xkill.html">xkill</A>(1)</B>,  <B><A HREF="xlogo.html">xlogo</A>(1)</B>,
+     <B><A HREF="xlsatoms.html">xlsatoms</A>(1)</B>,  <B>xlsclients(1)</B>,  <B><A HREF="xlsfonts.html">xlsfonts</A>(1)</B>,  <B><A HREF="xmag.html">xmag</A>(1)</B>, <B>xmh(1)</B>,
+     <B><A HREF="xmodmap.html">xmodmap</A>(1)</B>, <B><A HREF="xon.html">xon</A>(1)</B>, <B><A HREF="xprop.html">xprop</A>(1)</B>, <B><A HREF="xrdb.html">xrdb</A>(1)</B>, <B><A HREF="xrefresh.html">xrefresh</A>(1)</B>,  <B><A HREF="xrx.html">xrx</A>(1)</B>,
+     <B><A HREF="xset.html">xset</A>(1)</B>, <B><A HREF="xsetroot.html">xsetroot</A>(1)</B>, <B><A HREF="xsm.html">xsm</A>(1)</B>, <B><A HREF="xstdcmap.html">xstdcmap</A>(1)</B>, <B><A HREF="xterm.html">xterm</A>(1)</B>, <B><A HREF="xwd.html">xwd</A>(1)</B>,
+     <B><A HREF="xwininfo.html">xwininfo</A>(1)</B>,  <B><A HREF="xwud.html">xwud</A>(1)</B>.   <B><A HREF="Xserver.html">Xserver</A>(1)</B>,   <B><A HREF="Xdec.html">Xdec</A>(1)</B>,   <B>XmacII(1)</B>,
+     <B><A HREF="Xsun.html">Xsun</A>(1)</B>,   <B><A HREF="Xnest.html">Xnest</A>(1)</B>,   <B><A HREF="Xvfb.html">Xvfb</A>(1)</B>,  <B><A HREF="XF86_Acc.html">XF86_Acc</A>(1)</B>,  <B><A HREF="XF86_Mono.html">XF86_Mono</A>(1)</B>,
+     <B><A HREF="XF86_SVGA.html">XF86_SVGA</A>(1)</B>, <B><A HREF="XF86_VGA16.html">XF86_VGA16</A>(1)</B>, <B><A HREF="XFree86.html">XFree86</A>(1)</B>, <B><A HREF="kbd_mode.html">kbd_mode</A>(1)</B>, <I>Xlib</I> -
+     <I>C</I>  <I>Language</I>  <I><A HREF="X.html">X</A></I>  <I>Interface</I>,  and  <I><A HREF="X.html">X</A></I>  <I>Toolkit</I>  <I>Intrinsics</I>  - <I>C</I>
+     <I>Language</I> <I>Interface</I>
+
+TRADEMARKS
+     <A HREF="X.html">X</A> Window System is a trademark of The Open Group.
+
+AUTHORS
+     A cast of thousands, literally.  The Release  6.4  distribu-
+     tion  is  brought  to  you by The Open Group <A HREF="X.html">X</A> Project Team.
+     The names of all people who made it a reality will be  found
+     in  the  individual  documents  and source files.  The The <A HREF="X.html">X</A>
+     Project Team staff members responsible for this release are:
+     Arthur  Barstow,  Kaleb  Keithley,  Sekhar  Makkapati, M. S.
+     Ramesh, Jingping Ge, Ken Flowers, and Dave Knorr.
+
+     The <A HREF="X.html">X</A> Window System standard was originally developed at the
+     Laboratory  for Computer Science at the Massachusetts Insti-
+     tute of Technology, and all rights thereto were assigned  to
+     the  <A HREF="X.html">X</A>  Consortium  on  January 1, 1994.  <A HREF="X.html">X</A> Consortium, Inc.
+     closed its doors on December 31, 1996.  All rights to the  <A HREF="X.html">X</A>
+     Window System have been assigned to The Open Group.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</PRE>
+<HR>
+<ADDRESS>
+Man(1) output converted with
+<a href="http://www.oac.uci.edu/indiv/ehood/man2html.html">man2html</a>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+
+<html>
+
+<head>
+<title>DataVis - VTK: Algorithms</title>
+<meta name="GENERATOR" content="Microsoft FrontPage 1.1">
+</head>
+
+<body bgcolor="#FFFFFF">
+<h3><img src="Speckled_GradientA042.gif" align=bottom width=500 height=4></h3>
+<h3><img src="images/head.gif" align=absmiddle width=73 height=90>Advanced Computer Graphics and Data Visualization</h3>
+<p><img src="Speckled_GradientA042.gif" align=bottom width=500 height=4></p>
+<p>&#160; </p>
+<h3>Section 6: VTK: Algorithms:</h3>
+<ul>
+<li>Lets look at the objects a bit closer</li>
+<li>First we need something to visualize, how about our Cone.tcl example</li>
+<li>We first created a <strong><tt>vtkConeSource</tt></strong> object as our geometry</li>
+<li>Lets look at the object organization and functional model</li>
+</ul>
+<div align=center><center>
+<table border=1 width=75%>
+<tr><td width=50%><p align=center><img src="images/vtkalg1.gif" align=bottom width=85 height=153> </p>
+<p align=center><strong>Pipeline Model</strong> </p>
+</td><td width=50%><p align=center><img src="images/vtkalg2.gif" align=bottom width=84 height=155> </p>
+<p align=center><strong>Functional Model</strong> </p>
+</td></tr>
+</table>
+</center></div>
+<ul>
+<li>How does our example fit into the functional model?</li>
+<li>What does the Source object have to do in order to generate the appropriate information?</li>
+<li>What kind of methods are necessary for these objects to both generate geometry and render it?</li>
+<li>In general we can think of these objects into 2 groupings:<ol>
+<li>Data Creation objects: They are responsible for generating the underlying data for the geometry primitives. 
+This behavior is encapsulated in an <tt>Execute()</tt> method. If you want to create a new source object, you do 
+not need to make it a subclass of any convenience object but it should be derived from <tt>vtkSource</tt>.</li>
+<li>Geometry Display objects: Mappers map its input dataset to the appropriate rendering library/system. 
+Subclasses of the <tt>vtkMapper</tt> class must implement a <tt>Render()</tt> method. This method is exchanged by the 
+graphics systems actors and its associated mapper during the rendering process.</li>
+</ol>
+</li>
+<li>This allow the system to differentiate between generation and display of data/geometry.</li>
+<li>Now lets look at the filters</li>
+<li>We will want to create contours at some point, both 2D and 3D</li>
+</ul>
+<div align=center><center>
+<table border=1 width=75%>
+<tr><td width=50%><p align=center><img src="images/vtkalg3.gif" align=bottom width=116 height=209></p>
+<p align=center><strong>Pipeline Model</strong></p>
+</td><td width=50%><p align=center><img src="images/vtkalg2.gif" align=bottom width=84 height=155></p>
+<p align=center>&nbsp;</p>
+<p align=center><strong>Functional Model</strong></p>
+</td></tr>
+</table>
+</center></div>
+<ul>
+<li>We can see where the abstraction for the filter, or process, object is necessary</li>
+<li>We can now add more process objects based on this model</li>
+<li>Next we will be looking specifically at the <tt>vtkMarchingCubes</tt> object</li>
+</ul>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&#160;</p>
+</body>
+
+</html>

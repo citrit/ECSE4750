@@ -1,0 +1,587 @@
+#!/bin/sh
+# This is a shell archive (produced by GNU sharutils 4.2).
+# To extract the files from this archive, save it to some FILE, remove
+# everything before the `!/bin/sh' line above, then type `sh FILE'.
+#
+# Made on 1997-02-06 19:49 EST by <clarkl@marcus>.
+# Source directory was `/afs/rpi.edu/home/92/clarkl/advgra/temp'.
+#
+# Existing files will *not* be overwritten unless `-c' is specified.
+#
+# This shar contains:
+# length mode       name
+# ------ ---------- ------------------------------------------
+#    898 -rw-r--r-- Makefile.sgi
+#   8946 -rw-r--r-- hw1.c
+#
+save_IFS="${IFS}"
+IFS="${IFS}:"
+gettext_dir=FAILED
+locale_dir=FAILED
+first_param="$1"
+for dir in $PATH
+do
+  if test "$gettext_dir" = FAILED && test -f $dir/gettext \
+     && ($dir/gettext --version >/dev/null 2>&1)
+  then
+    set `$dir/gettext --version 2>&1`
+    if test "$3" = GNU
+    then
+      gettext_dir=$dir
+    fi
+  fi
+  if test "$locale_dir" = FAILED && test -f $dir/shar \
+     && ($dir/shar --print-text-domain-dir >/dev/null 2>&1)
+  then
+    locale_dir=`$dir/shar --print-text-domain-dir`
+  fi
+done
+IFS="$save_IFS"
+if test "$locale_dir" = FAILED || test "$gettext_dir" = FAILED
+then
+  echo=echo
+else
+  TEXTDOMAINDIR=$locale_dir
+  export TEXTDOMAINDIR
+  TEXTDOMAIN=sharutils
+  export TEXTDOMAIN
+  echo="$gettext_dir/gettext -s"
+fi
+touch -am 1231235999 $$.touch >/dev/null 2>&1
+if test ! -f 1231235999 && test -f $$.touch; then
+  shar_touch=touch
+else
+  shar_touch=:
+  echo
+  $echo 'WARNING: not restoring timestamps.  Consider getting and'
+  $echo "installing GNU \`touch', distributed in GNU File Utilities..."
+  echo
+fi
+rm -f 1231235999 $$.touch
+#
+if mkdir _sh52801; then
+  $echo 'x -' 'creating lock directory'
+else
+  $echo 'failed to create lock directory'
+  exit 1
+fi
+# ============= Makefile.sgi ==============
+if test -f 'Makefile.sgi' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'Makefile.sgi' '(file already exists)'
+else
+  $echo 'x -' extracting 'Makefile.sgi' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'Makefile.sgi' &&
+#
+# Sample Makefile for compilling the sample code for the
+# Advanced Computer Graphics and Data Visualization 35.6961 (Fall 1995)
+#
+# Copy this to the directory where the program resides and use
+#  
+#       make progname
+#
+# The progname would be the prefix of the source file you generated.
+# Like if your source file was hw1.c, the above line would read:
+#
+#       make hw1
+#
+# The make utility would automatically look for something with a suffix
+# it understood and would find hw1.c. There are built in rules which
+# tell it how to compile c source.
+#
+X
+LDFLAGS= -L/campus/visualization/mesa-ogl/1.2.7/@sys/lib \
+X	 -lGL -lGLU -lMesaaux -lMesatk -lglut -lXmu -lXt -lX11 -lm
+CFLAGS= -g -I/campus/visualization/mesa-ogl/1.2.7/@sys/include/glut
+CC=cc
+X
+TARGET = simple
+X
+$(TARGET): $(TARGET).o
+X	$(CC) -o $@ $? $(LDFLAGS)
+X
+lorenz:    lorenz.o
+X	$(CC) $(CFLAGS) -o $@ $? $(LIBS)
+X
+clean:
+X	/bin/rm -f *.o
+SHAR_EOF
+  $shar_touch -am 0206194597 'Makefile.sgi' &&
+  chmod 0644 'Makefile.sgi' ||
+  $echo 'restore of' 'Makefile.sgi' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'Makefile.sgi:' 'MD5 check failed'
+a911ac703d77657be3fecce582d7478a  Makefile.sgi
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'Makefile.sgi'`"
+    test 898 -eq "$shar_count" ||
+    $echo 'Makefile.sgi:' 'original size' '898,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= hw1.c ==============
+if test -f 'hw1.c' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'hw1.c' '(file already exists)'
+else
+  $echo 'x -' extracting 'hw1.c' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'hw1.c' &&
+/* Landon Clark */
+/* Adv. Computer Graphics */
+/* HW1 */
+X
+X
+X
+/* Includes required */
+#include <GL/gl.h>
+#include <GL/glut.h>
+X
+float cub_x_trans = 0, cub_y_trans = 0, cub_z_trans = 0; /* Placement of the square */  
+float cub_x_spin=0, cub_y_spin=0;
+float cub_sca = 1.0;
+float tea_x_trans = -2, tea_y_trans = 0, tea_z_trans = 0; /* Placement of the square */  
+float tea_x_spin=0, tea_y_spin=0;
+float tea_sca = 0.6;
+float sph_x_trans = 2, sph_y_trans = 0, sph_z_trans = 0; /* Placement of the square */  
+float sph_x_spin=0, sph_y_spin=0;
+float sph_sca = .6;
+/*
+X *  Clear the screen.  Set the current color to white.
+X *  Draw the cube.
+X */
+void display(void)
+{
+X  GLfloat color_sph[] = { 0.0, 0.0, 1.0, 1.0 };
+X  GLfloat color_tea[] = { .4, .4, 0.0, .25 };
+X  GLfloat color_cub[] = { 1.0, 0.0, 0.0, 1.0 };
+X
+X  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+X
+X  glPushMatrix();
+X  glTranslatef(cub_x_trans, cub_y_trans, cub_z_trans);
+X  glRotatef(cub_x_spin, 1.0, 0.0, 0.0);
+X  glRotatef(cub_y_spin, 0.0, 1.0, 0.0);
+X  glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, 100.0);
+X  glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, color_cub);
+X  glutSolidCube(cub_sca);   /*  draw the cube       */
+X  glPopMatrix();
+X
+X  glPushMatrix();
+X  glTranslatef(tea_x_trans, tea_y_trans, tea_z_trans); 
+X  glRotatef(tea_x_spin, 1.0, 0.0, 0.0);
+X  glRotatef(tea_y_spin, 0.0, 1.0, 0.0);
+X  glColor4f(0.0, 0.0, 0.0, .25);
+X  glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, 0.0);
+X  glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, color_tea);
+X  glutSolidTeapot(tea_sca);   /*  draw the teapot       */
+X  glPopMatrix();
+X
+X  glPushMatrix();
+X  glTranslatef(sph_x_trans, sph_y_trans, sph_z_trans);
+X  glRotatef(sph_x_spin, 1.0, 0.0, 0.0);
+X  glRotatef(sph_y_spin, 0.0, 1.0, 0.0);
+X  glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, 0.0);
+X  glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, color_sph);
+X  glutSolidSphere(sph_sca, 100, 100);   /*  draw the teapot       */
+X  glPopMatrix();
+X
+X  glutSwapBuffers(); 
+}
+X
+/* Initialize shading model */
+void myInit(void)
+{
+X      static float lightPos[4] = {2.0, 4.0, 2.0, 1.0};
+X      static float lightDir[4] = {-2.0, -4.0, -2.0, 1.0};
+X      static float lightAmb[4] = {0.7, 0.7, 0.7, 1.0};
+X      static float lightDiff[4] = {0.8, 0.8, 0.8, 1.0};
+X      static float lightSpec[4] = {0.4, 0.4, 0.4, 1.0};
+X
+X      glColor4f(1.0, 0.0, 0.0, .75);
+X      glEnable(GL_LIGHTING);
+X      glEnable(GL_LIGHT0);
+X      glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
+X      glLightfv(GL_LIGHT0, GL_AMBIENT, lightAmb);
+X      glLightfv(GL_LIGHT0, GL_DIFFUSE, lightDiff);
+X      glLightfv(GL_LIGHT0, GL_SPECULAR, lightSpec);
+X      glEnable(GL_DITHER); 
+X      glEnable(GL_DEPTH_TEST);
+X      glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+/*      glShadeModel (GL_FLAT);
+*     glClearColor (0.0, 0.0, 0.0, 0.0);
+X */
+}
+X
+/*
+X *  Called when the window is first opened and whenever 
+X *  the window is reconfigured (moved or resized).
+X */
+void myReshape(int w, int h)
+{
+X      glViewport (0, 0, w, h);            /*  define the viewport */
+X      glMatrixMode(GL_PROJECTION);
+X      glLoadIdentity();
+X      gluPerspective(45.0, 1.0*(GLfloat)w/(GLfloat)h, 1.0, 10.0);
+X      glTranslatef (0.0, 0.0, -5.0);     /*  viewing transformation      */
+X      glMatrixMode (GL_MODELVIEW);        /* back to modelview matrix  */
+}
+X
+/*
+X * Keyboard handler
+X */
+void
+Key(unsigned char key, int x, int y)
+{
+X    switch (key) {
+X    case 'h':
+X      glMatrixMode (GL_MODELVIEW);        /* manipulate modelview matrix  */
+X      glRotatef(15.0, 0.0,1.0,0.0);
+X      break;
+X    case 'j':
+X      glMatrixMode (GL_MODELVIEW);        /* manipulate modelview matrix  */
+X      glRotatef(15.0, 1.0,0.0,0.0);
+X      break;
+X    case 'k':
+X      glMatrixMode (GL_MODELVIEW);        /* manipulate modelview matrix  */
+X      glRotatef(-15.0, 1.0,0.0,0.0);
+X      break;
+X    case 'l':
+X      glMatrixMode (GL_MODELVIEW);        /* manipulate modelview matrix  */
+X      glRotatef(-15.0, 0.0,1.0,0.0);
+X      break;
+X    case 27:           /* Esc will quit */
+X        exit(1);
+X        break;
+X    default:
+X      break;
+X    }
+X    glutPostRedisplay();
+}
+X
+/*
+X *  Handle Menus
+X */
+void
+Select(int value)
+{
+X    switch (value) {
+X    case 1:
+X        exit(0);
+X        break;
+X    case 2:
+X	glutKeyboardFunc(Key);
+X	break;
+X    default:
+X	break;
+X      }
+}
+X
+void key_cub_rot(unsigned char key, int x, int y)
+{
+X  switch (key) {
+X  case 'h':
+X    cub_y_spin+=15;
+X    break;
+X  case 'j':
+X    cub_x_spin+=15;
+X    break;
+X  case 'k':
+X    cub_x_spin+=-15;
+X    break;
+X  case 'l':
+X    cub_y_spin+=-15;
+X    break;
+X  }
+X  if (cub_x_spin > 360)
+X    cub_x_spin -= 360;
+X  if (cub_y_spin > 360)
+X    cub_y_spin -= 360;
+X  glutPostRedisplay();
+}
+X
+void key_tea_rot(unsigned char key, int x, int y)
+{
+X  switch (key) {
+X  case 'h':
+X    tea_y_spin+=15;
+X    break;
+X  case 'j':
+X    tea_x_spin+=15;
+X    break;
+X  case 'k':
+X    tea_x_spin+=-15;
+X    break;
+X  case 'l':
+X    tea_y_spin+=-15;
+X    break;
+X  }
+X  if (tea_x_spin > 360)
+X    tea_x_spin -= 360;
+X  if (tea_y_spin > 360)
+X    tea_y_spin -= 360;
+X  glutPostRedisplay();
+}
+X
+void key_sph_rot(unsigned char key, int x, int y)
+{
+X  switch (key) {
+X  case 'h':
+X    sph_y_spin+=15;
+X    break;
+X  case 'j':
+X    sph_x_spin+=15;
+X    break;
+X  case 'k':
+X    sph_x_spin+=-15;
+X    break;
+X  case 'l':
+X    sph_y_spin+=-15;
+X    break;
+X  }
+X  if (sph_x_spin > 360)
+X    sph_x_spin -= 360;
+X  if (sph_y_spin > 360)
+X    sph_y_spin -= 360;
+X  glutPostRedisplay();
+}
+X
+void key_cub_sca(unsigned char key, int x, int y)
+{
+X  switch (key) {
+X  case 'h':
+X    cub_sca += 1.0;
+X    break;
+X  case 'j':
+X    cub_sca -= 1.0;
+X    break;
+X  default:
+X    break;
+X  }
+X  glutPostRedisplay();
+}
+X
+void key_tea_sca(unsigned char key, int x, int y)
+{
+X  switch (key) {
+X  case 'h':
+X    tea_sca += 1.0;
+X    break;
+X  case 'j':
+X    tea_sca -= 1.0;
+X    break;
+X  default:
+X    break;
+X  }
+X  glutPostRedisplay();
+}
+X
+void key_sph_sca(unsigned char key, int x, int y)
+{
+X  switch (key) {
+X  case 'h':
+X    sph_sca += 1.0;
+X    break;
+X  case 'j':
+X    sph_sca -= 1.0;
+X    break;
+X  default:
+X    break;
+X  }
+X  glutPostRedisplay();
+}
+X
+void key_cub_mov(unsigned char key, int x, int y)
+{
+X  switch (key) {
+X  case 'h':
+X    cub_x_trans -= .5;
+X    break;
+X  case 'y':
+X    cub_x_trans += .5;
+X    break;
+X  case 'u':
+X    cub_y_trans += .5;
+X    break;
+X  case 'j':
+X    cub_y_trans -= .5;
+X    break;
+X  case 'i':
+X    cub_z_trans += .5;
+X    break;
+X  case 'k':
+X    cub_z_trans -= .5;
+X    break;
+X  default:
+X    break;
+X  }
+X  glutPostRedisplay();
+}
+X
+void key_tea_mov(unsigned char key, int x, int y)
+{
+X  switch (key) {
+X  case 'h':
+X    tea_x_trans -= .5;
+X    break;
+X  case 'y':
+X    tea_x_trans += .5;
+X    break;
+X  case 'u':
+X    tea_y_trans += .5;
+X    break;
+X  case 'j':
+X    tea_y_trans -= .5;
+X    break;
+X  case 'i':
+X    tea_z_trans += .5;
+X    break;
+X  case 'k':
+X    tea_z_trans -= .5;
+X    break;
+X  default:
+X    break;
+X  }
+X  glutPostRedisplay();
+}
+X
+void key_sph_mov(unsigned char key, int x, int y)
+{
+X  switch (key) {
+X  case 'h':
+X    sph_x_trans -= .5;
+X    break;
+X  case 'y':
+X    sph_x_trans += .5;
+X    break;
+X  case 'u':
+X    sph_y_trans += .5;
+X    break;
+X  case 'j':
+X    sph_y_trans -= .5;
+X    break;
+X  case 'i':
+X    sph_z_trans += .5;
+X    break;
+X  case 'k':
+X    sph_z_trans -= .5;
+X    break;
+X  default:
+X    break;
+X  }
+X  glutPostRedisplay();
+}
+X
+void cub_menu(int item)
+{
+X  switch (item) {
+X  case 1:
+X  glutKeyboardFunc(key_cub_rot); 
+X  break;
+X
+X case 2:
+X  glutKeyboardFunc(key_cub_sca);
+X  break;
+X
+X case 3:
+X  glutKeyboardFunc(key_cub_mov);
+X  break;
+X   }
+X
+}
+X
+void tea_menu(int item)
+{
+X  switch (item) {
+X  case 1:
+X  glutKeyboardFunc(key_tea_rot); 
+X  break;
+X
+X case 2:
+X  glutKeyboardFunc(key_tea_sca);
+X  break;
+X
+X case 3:
+X  glutKeyboardFunc(key_tea_mov);
+X  break;
+X   } 
+}
+X
+void sph_menu(int item)
+{
+X  switch (item) {
+X  case 1:
+X  glutKeyboardFunc(key_sph_rot); 
+X  break;
+X
+X case 2:
+X  glutKeyboardFunc(key_sph_sca);
+X  break;
+X case 3:
+X  glutKeyboardFunc(key_sph_mov);
+X  break;  
+X   }
+X
+}
+X
+/*
+X *  Main Loop
+X *  Open window with initial window size, title bar, 
+X *  RGBA display mode, and handle input events.
+X */
+int main(int argc, char** argv) 
+{
+X      int tea, cub, sph;  /*Sub Menus */
+X
+X      glutInit(&argc, argv);
+X      glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGBA);
+X      glutInitWindowSize(750, 300);
+X      glutCreateWindow (argv[0]);
+X      myInit ();
+X      glutReshapeFunc (myReshape);
+X      glutDisplayFunc(display);
+X
+X      cub = glutCreateMenu(cub_menu);
+X      glutAddMenuEntry("Rotate", 1);
+X      glutAddMenuEntry("Scale", 2);
+X      glutAddMenuEntry("Move", 3);
+X
+X      tea = glutCreateMenu(tea_menu);
+X      glutAddMenuEntry("Rotate", 1);
+X      glutAddMenuEntry("Scale", 2);
+X      glutAddMenuEntry("Move", 3);
+X
+X      sph = glutCreateMenu(sph_menu);
+X      glutAddMenuEntry("Rotate", 1);
+X      glutAddMenuEntry("Scale", 2);
+X      glutAddMenuEntry("Move", 3);
+X
+X      glutCreateMenu(Select);
+X      glutAddMenuEntry("Quit", 1);
+X      glutAddMenuEntry("ViewPoint", 2);
+X      glutAddSubMenu("Cube", cub);
+X      glutAddSubMenu("Teapot", tea);
+X      glutAddSubMenu("Sphere", sph);
+X
+X      glutAttachMenu(GLUT_RIGHT_BUTTON);
+X      glutMainLoop();
+}
+X
+SHAR_EOF
+  $shar_touch -am 0206194497 'hw1.c' &&
+  chmod 0644 'hw1.c' ||
+  $echo 'restore of' 'hw1.c' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'hw1.c:' 'MD5 check failed'
+fbb0dff2c098acbe389341e70b0d9a44  hw1.c
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'hw1.c'`"
+    test 8946 -eq "$shar_count" ||
+    $echo 'hw1.c:' 'original size' '8946,' 'current size' "$shar_count!"
+  fi
+fi
+rm -fr _sh52801
+exit 0
+# From: Kathleen Moriarty <moriartk@cs.rpi.edu>

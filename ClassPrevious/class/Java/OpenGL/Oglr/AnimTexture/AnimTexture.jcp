@@ -1,0 +1,21 @@
+! ** JCreator Project File (C)2000
+! ********** DO NOT EDIT *********
+
+VERSION := "1.10"
+LABEL := "AnimTexture"
+JDKPROFILE := "JDK version 13RC3"
+ACTIVE := "1"
+OUTPUTPATH := ".\\"
+COMPILER := "<Default>"
+
+! Start RunTime Configuration Structure
+#[BeginRunTime]LABEL := "<Default>" RUNAPPLIC := "<Default>" RUNAPPLET := "" PARAM := "" RUN := "AnimateTexture" CHECK := "10" #[EndRunTime]
+! Start Required Libraries Structure
+
+! Start Project Folder Structure
+#[BeginFolder]
+LABEL := "Root"
+FILTER := ""
+
+#[BeginFile]SOURCE := "AnimTexture.java" #[EndFile]
+#[EndFolder]

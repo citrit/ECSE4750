@@ -1,0 +1,20 @@
+
+-- The data file needs to be terminated with a
+-1 -1
+on the very last line.  This makes reading the file a whole lot easier
+to handle.
+
+
+-- Keys for Camera movement
+  
+ q w  dec/inc X eye point coord
+ a s  dec/inc Y eye point coord
+ z x  dec/inc Z eye point coord
+ e r  dec/inc X camera point coord
+ d f  dec/inc Y camera point coord
+ c v  dec/inc Z camera point coord
+  
+
+-- Entire camera code can be disabled by commenting out 
+//define CAMERA
+  at the beginning of OGLRen.h

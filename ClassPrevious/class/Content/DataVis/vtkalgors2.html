@@ -1,0 +1,560 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+
+<html>
+
+<head>
+<title>DataVis - VTK: Algorithms II</title>
+<meta name="GENERATOR" content="Microsoft FrontPage 1.1">
+</head>
+
+<body bgcolor="#FFFFFF">
+<h3><img src="Speckled_GradientA042.gif" align=bottom width=500 height=4></h3>
+<h3><img src="images/head.gif" align=absmiddle width=73 height=90>Advanced Computer Graphics and Data Visualization</h3>
+<p><img src="Speckled_GradientA042.gif" align=bottom width=500 height=4></p>
+<p>&#160; </p>
+<h3>Section 6: VTK: Algorithms II</h3>
+<ul>
+<li>Now lets look at a few of the Filters that exists within VTK</li>
+<li>Remember where the Filter, or process object, fits into the functional model:</li>
+</ul>
+<p align=center><img src="images/vtkalg2.gif" align=bottom width=84 height=155></p>
+<ul>
+<li>If we think about this, we can deduce that the process objects needs to include these functions:<ol>
+<li>Accepts an input object that defines the type of data being acted upon<ul>
+<li>In a pure object oriented sense, this object definition would simply be a base class that defines the 
+API for future derived concrete classes for both data queries and data acess</li>
+<li>In VTK the base class is tightly coupled with the data type that is being pointed to, ie. Structured, 
+UnStrucutred points, etc.</li>
+<li>This forces the programmer to pick the appropriate filter to handle certain data inputs</li>
+<li>In VTK we also have filters to convert from one data type to another</li>
+</ul>
+</li>
+<li>Accesses the input data as the included algorithm runs<ul>
+<li>The API must be robust enough to handle access that is in a linear fashion and does not complicate 
+matters by adding virtual function overloading and other performance issues</li>
+<li>The data must be stored in the source object in a fashion that helps the data acess and does not 
+hinder performance</li>
+</ul>
+</li>
+<li>Run the algorithm and generate new data structures to hold added geometry</li>
+<li>Pass geometry out to the Mapper as defined by a Filters base class</li>
+</ol>
+</li>
+<li>One extra object required is a color lookup object</li>
+<li>This object is responsible for mapping a scalar value to a range and return a color value</li>
+<li>This can be shown by the intensity plot for RGB values and a calculated RGB lookup table</li>
+</ul>
+<div align=center><center>
+<table border=1 width=75%>
+<tr><td width=50%><img src="images/vtkalg4.gif" align=bottom width=260 height=177></td><td width=50%><p align=center><img src="images/vtkalg5.gif" align=bottom width=195 height=170></p>
+</td></tr>
+</table>
+</center></div>
+<ul>
+<li>The interface for this lookup table is straight forward; give a scalar - receive a color; set clamp range</li>
+<li>The key is choosing the lookup table entries carefully<ul>
+<li>Normally you want to ramp colors from blue (cold) to red (hot), but this may not hold for all people</li>
+<li>Color should enhance important details and not create visual artifacts because of the interaction between the 
+geometry, color, and human physiology</li>
+</ul>
+</li>
+<li>Good visualizations represent a balance between effective communication of information and aesthetically pleasing 
+presentations</li>
+</ul>
+<hr>
+<h3>Algorithm Design; Marching Squares</h3>
+<ul>
+<li>Lets see how we could have implemented marching squares in our class rendering system</li>
+</ul>
+<div align=center><center>
+<table border=1 width=90%>
+<tr><td width=100%><pre>//
+// Marching (convex) quadrilaterals
+//
+// static int edges[4][2] = { {0,1}, {1,2}, {2,3}, {3,0} };
+
+typedef int EDGE_LIST;
+typedef struct {
+       EDGE_LIST edges[5];
+} LINE_CASES;
+
+static LINE_CASES lineCases[] = { 
+  {-1, -1, -1, -1, -1},
+  {0, 3, -1, -1, -1},
+  {1, 0, -1, -1, -1},
+  {1, 3, -1, -1, -1},
+  {2, 1, -1, -1, -1},
+  {0, 3, 2, 1, -1},
+  {2, 0, -1, -1, -1},
+  {2, 3, -1, -1, -1},
+  {3, 2, -1, -1, -1},
+  {0, 2, -1, -1, -1},
+  {1, 0, 3, 2, -1},
+  {1, 2, -1, -1, -1},
+  {3, 1, -1, -1, -1},
+  {0, 1, -1, -1, -1},
+  {3, 0, -1, -1, -1},
+  {-1, -1, -1, -1, -1}
+};
+
+void 
+StructuredGrid::Contour() {
+
+  int curCont, curQuad, totQuad, i, j, pntCnt;
+  LINE_CASES *lineCase;
+  EDGE_LIST  *edge;
+  int index, *vert;
+  PointType *pts[2], *_pt;
+  PointSet *ptset = new PointSet;
+  float t, x[3];
+  PointType x1, x2;
+  LineCell *line;
+  Material *mat;
+  MaterialSet *mtset;
+
+  if ( (Data-&gt;GetTime() &lt; this-&gt;GetTime()) &amp;&amp;
+       (PtSet-&gt;GetTime() &lt; this-&gt;GetTime()) )
+    return;
+
+  pntCnt = 0;
+  totQuad = (DimX-1)*(DimY-1);
+  //
+  //  For each contour
+  //
+  for (curCont=0;curCont&lt;ContInterval-&gt;Count();curCont++) {
+    mat = new Material;
+    *mat = *(Data-&gt;LookupValue((*ContInterval)[curCont]));
+    mtset = new MaterialSet;
+    *mtset += mat;
+    //
+    //  For each Quad.
+    //
+    for (curQuad=0;curQuad&lt;totQuad;curQuad++) {
+      if (curQuad%DimX == (DimX-1)) curQuad++;
+      // Build Case table for each vertex
+      index = 0;
+      if ((*Data)[curQuad] &gt;= (*ContInterval)[curCont]) index |= 1;
+      if ((*Data)[curQuad+1] &gt;= (*ContInterval)[curCont]) index |= 2;
+      if ((*Data)[curQuad+DimX+1] &gt;= (*ContInterval)[curCont]) index |= 4;
+      if ((*Data)[curQuad+DimX] &gt;= (*ContInterval)[curCont]) index |= 8;
+      
+      lineCase = (LINE_CASES *)&amp;lineCases + index;
+      edge = lineCase-&gt;edges;
+
+      for ( ; edge[0] &gt; -1; edge += 2 )	{
+	line = new LineCell;
+	line-&gt;SetMaterials(mtset);
+	for (i=0; i&lt;2; i++) {   // insert line 
+	  vert = edges[edge[i]];
+	  t = ((*ContInterval)[curCont] - (*Data)[curQuad+vert[0]]) /
+	    ((*Data)[curQuad+vert[1]] - (*Data)[curQuad+vert[0]]);
+	  x1 = GetPoint(curQuad+vert[0]);
+	  x2 = GetPoint(curQuad+vert[1]);
+	  x[0] = x1.x + t * (x2.x - x1.x);
+	  x[1] = x1.y + t * (x2.y - x1.y);
+	  if (ScalarIsZ)
+	    x[2] = (*ContInterval)[curCont];
+	  else
+	    x[2] = x1.z + t * (x2.z - x1.z);
+	  *ptset += new PointType(x);
+	  *line += pntCnt++;
+	}
+	line-&gt;SetPoints(ptset);
+	*this += line;
+      }
+    }
+  }
+}</pre>
+</td></tr>
+</table>
+</center></div>
+<ul>
+<li>Interesting enough, lets look at the ContourFilter source code, first the base classes </li>
+</ul>
+<div align=center><center>
+<table border=1 width=90%>
+<tr><td width=100%><pre>class <strong>vtkSource</strong> : public <strong>vtkObject</strong>
+{
+public:
+  vtkSource();
+  virtual ~vtkSource() { if (this-&gt;Output) this-&gt;Output-&gt;Delete();};
+  char *GetClassName() {return &quot;vtkSource&quot;;};
+  void PrintSelf(ostream&amp; os, vtkIndent indent);
+
+  // Description:
+  // Bring object up-to-date before execution. Update() checks modified
+  // time against last execution time, and re-executes object if necessary.
+  virtual void Update();
+
+  void SetStartMethod(void (*f)(void *), void *arg);
+  void SetEndMethod(void (*f)(void *), void *arg);
+  void SetStartMethodArgDelete(void (*f)(void *));
+  void SetEndMethodArgDelete(void (*f)(void *));
+
+  // Description:
+  // Turn on/off flag to control whether this object's data is released
+  // after being used by a source.
+  virtual void SetReleaseDataFlag(int);
+  virtual int GetReleaseDataFlag();
+  vtkBooleanMacro(ReleaseDataFlag,int);
+
+  // Description:
+  // Set/Get flag indicating whether data has been released since last 
+  // execution. Used during update method to determine whether to execute 
+  // or not.
+  virtual int GetDataReleased();
+  virtual void SetDataReleased(int flag);
+
+protected:
+  virtual void Execute();
+  void (*StartMethod)(void *);
+  void (*StartMethodArgDelete)(void *);
+  void *StartMethodArg;
+  void (*EndMethod)(void *);
+  void (*EndMethodArgDelete)(void *);
+  void *EndMethodArg;
+  vtkTimeStamp ExecuteTime;
+  vtkDataSet *Output;
+}; </pre>
+</td></tr>
+</table>
+<p></p>
+</center></div>
+<div align=center><center>
+<table border=1 width=90%>
+<tr><td width=100%><pre>class <strong>vtkFilter</strong> : public <strong>vtkSource</strong>
+{
+public:
+  vtkFilter();
+  void PrintSelf(ostream&amp; os, vtkIndent indent);
+  char *GetClassName() {return &quot;vtkFilter&quot;;};
+
+  // Description:
+  // All filters must provide a method to update the visualization 
+  // pipeline. (Method interface inherited from vtkSource.)
+  void Update();
+
+protected:
+  vtkDataSet *Input;
+  char Updating;
+
+  // Every filter must have execute method.
+  void Execute();
+}; </pre>
+</td></tr>
+</table>
+<p></p>
+</center></div>
+<div align=center><center>
+<table border=1 width=90%>
+<tr><td width=100%><pre>class <strong>vtkDataSetFilter</strong> : public <strong>vtkFilter</strong>
+{
+public:
+  vtkDataSetFilter() {};
+  char *GetClassName() {return &quot;vtkDataSetFilter&quot;;};
+
+  virtual void SetInput(vtkDataSet *input);
+  void SetInput(vtkDataSet &amp;input) {this-&gt;SetInput(&amp;input);};
+  vtkDataSet *GetInput() {return this-&gt;Input;};
+};
+</pre>
+</td></tr>
+</table>
+<p></p>
+</center></div>
+<div align=center><center>
+<table border=1 width=90%>
+<tr><td width=100%><pre>class <strong>vtkDataSetToPolyFilter</strong> : public <strong>vtkDataSetFilter</strong>
+{
+public:
+  vtkDataSetToPolyFilter();
+  char *GetClassName() {return &quot;vtkDataSetToPolyFilter&quot;;};
+
+  // Description:
+  // Get the output of this filter.
+  vtkPolyData *GetOutput() {return (vtkPolyData *)this-&gt;Output;};
+
+};
+</pre>
+</td></tr>
+</table>
+</center></div>
+<ul>
+<li>Finally the Contour Filter stuff</li>
+</ul>
+<div align=center><center>
+<table border=1 width=90%>
+<tr><td width=100%><pre>class <strong>vtkContourFilter</strong> : public <strong>vtkDataSetToPolyFilter</strong>
+{
+public:
+  vtkContourFilter();
+  char *GetClassName() {return &quot;vtkContourFilter&quot;;};
+  void PrintSelf(ostream&amp; os, vtkIndent indent);
+
+  void SetValue(int i, float value);
+  float GetValue(int i) {return this-&gt;Values[i];};
+
+  // Description:
+  // Return array of contour values (size of numContours).
+  vtkGetVectorMacro(Values,float,VTK_MAX_CONTOURS);
+
+  // Description:
+  // Return the number of contour values. The number of values set (using SetValue)
+  // should match the NumberOfContours ivar value.
+  vtkSetMacro(NumberOfContours,int);
+  vtkGetMacro(NumberOfContours,int);
+
+  // Description:
+  // Set/Get the computation of normals. Normal computation is failrly expensive
+  // in both time and storage. If the output data will be processed by filters
+  // that modify topology or geometry, it may be wise to turn Norms and Grads off.
+  vtkSetMacro(ComputeNormals,int);
+  vtkGetMacro(ComputeNormals,int);
+  vtkBooleanMacro(ComputeNormals,int);
+
+  // Description:
+  // Set/Get the computation of gradients. Gradient computation is expensive
+  // in both time and storage. Note that if ComputeNormals is on, gradients will
+  // have to be calculated, but will not be stored in the output dataset.
+  // If the output data will be processed by filters that modify topology or
+  // geometry, it may be wise to turn Normals and Gradients off.
+  vtkSetMacro(ComputeGradients,int);
+  vtkGetMacro(ComputeGradients,int);
+  vtkBooleanMacro(ComputeGradients,int);
+
+  // Description:
+  // Set/Get the computation of scalars.
+  vtkSetMacro(ComputeScalars,int);
+  vtkGetMacro(ComputeScalars,int);
+  vtkBooleanMacro(ComputeScalars,int);
+
+  void GenerateValues(int numContours, float range[2]);
+  void GenerateValues(int numContours, float range1, float range2);
+
+  void SetLocator(vtkPointLocator *locator);
+  void SetLocator(vtkPointLocator&amp; locator) {this-&gt;SetLocator(&amp;locator);};
+  vtkGetObjectMacro(Locator,vtkPointLocator);
+
+  // Description:
+  // Create default locator. Used to create one when none is specified. 
+  // The locator is
+  // used to merge coincident points.
+  void CreateDefaultLocator();
+
+protected:
+  void Execute();
+
+  int ComputeNormals;
+  int ComputeGradients;
+  int ComputeScalars;
+  float Values[VTK_MAX_CONTOURS];
+  int NumberOfContours;
+  float Range[2];
+  vtkPointLocator *Locator;
+  int SelfCreatedLocator;
+
+  void StructuredPointsContour(int dim); //special cont for structured points
+};
+</pre>
+</td></tr>
+</table>
+</center></div>
+<ul>
+<li>The important method is the Execute method in the above protected section</li>
+<li>Here is the source for some select methods of the Marching Squares object</li>
+</ul>
+<div align=center><center>
+<table border=1 width=90%>
+<tr><td width=100%><pre>void <strong>vtkContourFilter</strong>::<strong>Execute</strong>()
+{
+  int cellId, i;
+  vtkIdList *cellPts;
+  vtkScalars *inScalars;
+  vtkFloatScalars cellScalars(VTK_CELL_SIZE);
+  vtkCell *cell;
+  float range[2];
+  vtkCellArray *newVerts, *newLines, *newPolys;
+  vtkFloatPoints *newPts;
+  cellScalars.ReferenceCountingOff();
+  vtkPolyData *output = this-&gt;GetOutput();
+  int numCells, estimatedSize;
+  vtkPointData *inPd, *outPd;
+
+  vtkDebugMacro(&lt;&lt; &quot;Executing contour filter&quot;);
+
+  numCells = this-&gt;Input-&gt;GetNumberOfCells();
+  inScalars = this-&gt;Input-&gt;GetPointData()-&gt;GetScalars();
+  if ( ! inScalars || numCells &lt; 1 )
+    {
+    vtkErrorMacro(&lt;&lt;&quot;No data to contour&quot;);
+    return;
+    }
+
+  // If structured points, use more efficient algorithms
+  if ( ! strcmp(this-&gt;Input-&gt;GetDataType(),&quot;vtkStructuredPoints&quot;) )
+    {
+    int dim = this-&gt;Input-&gt;GetCell(0)-&gt;GetCellDimension();
+
+    if ( this-&gt;Input-&gt;GetCell(0)-&gt;GetCellDimension() &gt;= 2 )
+      {
+      this-&gt;StructuredPointsContour(dim);
+      return;
+      }
+    }
+
+  inScalars-&gt;GetRange(range);
+//
+// Create objects to hold output of contour operation. First estimate allocation
+ size.
+//
+  estimatedSize = (int) pow ((double) numCells, .75);
+  estimatedSize = estimatedSize / 1024 * 1024; //multiple of 1024
+  if (estimatedSize &lt; 1024) estimatedSize = 1024;
+
+  newPts = new vtkFloatPoints(estimatedSize,estimatedSize);
+  newVerts = new vtkCellArray(estimatedSize,estimatedSize);
+  newLines = new vtkCellArray(estimatedSize,estimatedSize);
+  newPolys = new vtkCellArray(estimatedSize,estimatedSize);
+  // locator used to merge potentially duplicate points
+  if ( this-&gt;Locator == NULL ) this-&gt;CreateDefaultLocator();
+  this-&gt;Locator-&gt;InitPointInsertion (newPts, this-&gt;Input-&gt;GetBounds());
+
+  // interpolate data along edge
+  inPd = this-&gt;Input-&gt;GetPointData();
+  outPd = output-&gt;GetPointData();
+  outPd-&gt;InterpolateAllocate(inPd,estimatedSize,estimatedSize);
+
+  //
+  // Loop over all contour values.  Then for each contour value,
+  // loop over all cells.
+  //
+  for (cellId=0; cellId &lt; numCells; cellId++)
+    {
+    cell = Input-&gt;GetCell(cellId);
+    cellPts = cell-&gt;GetPointIds();
+    inScalars-&gt;GetScalars(*cellPts,cellScalars);
+
+    for (i=0; i &lt; this-&gt;NumberOfContours; i++)
+      {
+
+      cell-&gt;Contour(this-&gt;Values[i], &amp;cellScalars, this-&gt;Locator,
+                    newVerts, newLines, newPolys, inPd, outPd);
+
+      } // for all contour values
+    } // for all cells
+
+  vtkDebugMacro(&lt;&lt;&quot;Created: &quot;
+               &lt;&lt; newPts-&gt;GetNumberOfPoints() &lt;&lt; &quot; points, &quot;
+               &lt;&lt; newVerts-&gt;GetNumberOfCells() &lt;&lt; &quot; verts, &quot;
+               &lt;&lt; newLines-&gt;GetNumberOfCells() &lt;&lt; &quot; lines, &quot;
+               &lt;&lt; newPolys-&gt;GetNumberOfCells() &lt;&lt; &quot; triangles&quot;);
+//
+// Update ourselves.  Because we don't know up front how many verts, lines,
+// polys we've created, take care to reclaim memory.
+//
+  output-&gt;SetPoints(newPts);
+  newPts-&gt;Delete();
+
+  if (newVerts-&gt;GetNumberOfCells()) output-&gt;SetVerts(newVerts);
+  newVerts-&gt;Delete();
+
+  if (newLines-&gt;GetNumberOfCells()) output-&gt;SetLines(newLines);
+  newLines-&gt;Delete();
+
+  if (newPolys-&gt;GetNumberOfCells()) output-&gt;SetPolys(newPolys);
+  newPolys-&gt;Delete();
+
+  this-&gt;Locator-&gt;Initialize();//releases leftover memory
+  output-&gt;Squeeze();
+}
+</pre>
+</td></tr>
+</table>
+</center></div>
+<ul>
+<li>In general this algorithm loops over all included cells and asks each cell to triangulate itself</li>
+<li>This enforces the devide and conquer rule, but how does each cell handle the triangulation</li>
+<li>Lets look into the Triangle Cell, here is its contour method</li>
+</ul>
+<p>&#160;</p>
+<div align=center><center>
+<table border=1 width=90%>
+<tr><td width=100%><pre>//
+// Marching triangles
+//
+typedef int EDGE_LIST;
+typedef struct {
+       EDGE_LIST edges[3];
+} LINE_CASES;
+
+static LINE_CASES lineCases[] = {
+  {{-1, -1, -1}},
+  {{0, 2, -1}},
+  {{1, 0, -1}},
+  {{1, 2, -1}},
+  {{2, 1, -1}},
+  {{0, 1, -1}},
+  {{2, 0, -1}},
+  {{-1, -1, -1}}
+};
+
+static int edges[3][2] = { {0,1}, {1,2}, {2,0} };
+
+void vtkTriangle::Contour(float value, vtkFloatScalars *cellScalars,
+                          vtkPointLocator *locator,
+                          vtkCellArray *vtkNotUsed(verts),
+                          vtkCellArray *lines,
+                          vtkCellArray *vtkNotUsed(polys),
+                          vtkPointData *inPd, vtkPointData *outPd)
+{
+  static int CASE_MASK[3] = {1,2,4};
+  LINE_CASES *lineCase;
+  EDGE_LIST  *edge;
+  int i, j, index, *vert;
+  int pts[2];
+  float t, *x1, *x2, x[3];
+
+  // Build the case table
+  for ( i=0, index = 0; i &lt; 3; i++)
+      if (cellScalars-&gt;GetScalar(i) &gt;= value)
+          index |= CASE_MASK[i];
+
+  lineCase = lineCases + index;
+  edge = lineCase-&gt;edges;
+
+  for ( ; edge[0] &gt; -1; edge += 2 )
+    {
+    for (i=0; i&lt;2; i++) // insert line
+      {
+      vert = edges[edge[i]];
+      t = (value - cellScalars-&gt;GetScalar(vert[0])) /
+          (cellScalars-&gt;GetScalar(vert[1]) - cellScalars-&gt;GetScalar(vert[0]));
+
+      x1 = this-&gt;Points.GetPoint(vert[0]);
+      x2 = this-&gt;Points.GetPoint(vert[1]);
+      for (j=0; j&lt;3; j++) x[j] = x1[j] + t * (x2[j] - x1[j]);
+      if ( (pts[i] = locator-&gt;IsInsertedPoint(x)) &lt; 0 )
+        {
+        pts[i] = locator-&gt;InsertNextPoint(x);
+        if ( outPd )
+          {
+          int p1 = this-&gt;PointIds.GetId(vert[0]);
+          int p2 = this-&gt;PointIds.GetId(vert[1]);
+          outPd-&gt;InterpolateEdge(inPd,pts[i],p1,p2,t);
+          }
+        }
+      }
+    lines-&gt;InsertNextCell(2,pts);
+    }
+} </pre>
+</td></tr>
+</table>
+</center></div>
+<ul>
+<li>There is also a marching squares and cubes object that is specialized for structured data</li>
+<li>How does the ContourFilter method of divide and conquer match up with the marching squares example above</li>
+<li>Where is the performance gain?</li>
+</ul>
+</body>
+
+</html>

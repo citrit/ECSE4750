@@ -1,0 +1,26 @@
+
+
+Okay... the MRI files still need the MRIdata.vtk files of course but 
+it's assumed that those will be supplied...
+
+The Sample and MRIHead decimation files are respectively labeled MRIdec.tcl
+and Sample_dec.tcl. The do have the same animation potential as the 
+Sample.tcl and MRIHead.tcl but it was determine (by myself) that it would
+be better to have the animation in the decimated one turned off so one 
+can see the HUGE improvement in turning and rendering etc.
+
+That's about it... The code here is pretty much based off of the pre-existing
+code given with few modifications.
+
+Stephen Young
+youngs3@rpi.edu
+
+Finished is ...
+
+1 HedgeHog Filter
+1 VectorNormal Filter
+1 WarpVector Filter
+1 Sample -- Quadratic EQ Animation
+1 MRIHead -- MRIHead Animation
+1 MRIdec -- MRIHead Decimated
+1 Sample_dec -- Quadratic EQ Decimated

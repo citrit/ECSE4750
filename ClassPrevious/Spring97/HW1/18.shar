@@ -1,0 +1,678 @@
+#!/bin/sh
+# This is a shell archive (produced by GNU sharutils 4.2).
+# To extract the files from this archive, save it to some FILE, remove
+# everything before the `!/bin/sh' line above, then type `sh FILE'.
+#
+# Made on 1997-02-07 00:42 EST by <platom@magritte>.
+# Source directory was `/afs/rpi.edu/home/08/platom/vis'.
+#
+# Existing files will *not* be overwritten unless `-c' is specified.
+#
+# This shar contains:
+# length mode       name
+# ------ ---------- ------------------------------------------
+#    272 -rw------- read.me
+#  11705 -rw------- my.c
+#
+save_IFS="${IFS}"
+IFS="${IFS}:"
+gettext_dir=FAILED
+locale_dir=FAILED
+first_param="$1"
+for dir in $PATH
+do
+  if test "$gettext_dir" = FAILED && test -f $dir/gettext \
+     && ($dir/gettext --version >/dev/null 2>&1)
+  then
+    set `$dir/gettext --version 2>&1`
+    if test "$3" = GNU
+    then
+      gettext_dir=$dir
+    fi
+  fi
+  if test "$locale_dir" = FAILED && test -f $dir/shar \
+     && ($dir/shar --print-text-domain-dir >/dev/null 2>&1)
+  then
+    locale_dir=`$dir/shar --print-text-domain-dir`
+  fi
+done
+IFS="$save_IFS"
+if test "$locale_dir" = FAILED || test "$gettext_dir" = FAILED
+then
+  echo=echo
+else
+  TEXTDOMAINDIR=$locale_dir
+  export TEXTDOMAINDIR
+  TEXTDOMAIN=sharutils
+  export TEXTDOMAIN
+  echo="$gettext_dir/gettext -s"
+fi
+touch -am 1231235999 $$.touch >/dev/null 2>&1
+if test ! -f 1231235999 && test -f $$.touch; then
+  shar_touch=touch
+else
+  shar_touch=:
+  echo
+  $echo 'WARNING: not restoring timestamps.  Consider getting and'
+  $echo "installing GNU \`touch', distributed in GNU File Utilities..."
+  echo
+fi
+rm -f 1231235999 $$.touch
+#
+if mkdir _sh91046; then
+  $echo 'x -' 'creating lock directory'
+else
+  $echo 'failed to create lock directory'
+  exit 1
+fi
+# ============= read.me ==============
+if test -f 'read.me' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'read.me' '(file already exists)'
+else
+  $echo 'x -' extracting 'read.me' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'read.me' &&
+To control input control to the modes for each object, do the following
+X
+scale = l for larger, and j for smaller
+X
+move = l k j and their opposite directions o i u
+X
+rotate l j and opposite directions o u
+X
+camera controls l k j
+X
+toggle transparency l for on, and j for off
+X
+SHAR_EOF
+  $shar_touch -am 0207004297 'read.me' &&
+  chmod 0600 'read.me' ||
+  $echo 'restore of' 'read.me' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'read.me:' 'MD5 check failed'
+9f9cc9e895c7eee3241df15de9dcd343  read.me
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'read.me'`"
+    test 272 -eq "$shar_count" ||
+    $echo 'read.me:' 'original size' '272,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= my.c ==============
+if test -f 'my.c' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'my.c' '(file already exists)'
+else
+  $echo 'x -' extracting 'my.c' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'my.c' &&
+#include <GL/gl.h>
+#include <GL/glut.h>
+X
+float 	x_s = 0.0,
+X	y_s = 0.0,
+X	z_s = 0.0,
+X	x_t = 0.0,
+X	y_t = 0.0,
+X	z_t = 0.0,
+X	x_sq = 0.0,
+X	y_sq = 0.0,
+X	z_sq = 0.0,
+X	x_s_move = 2.0,
+X	y_s_move = 0.0,
+X	z_s_move = 0.0,
+X	x_t_move = -2.0,
+X	y_t_move = 0.0,
+X	z_t_move = 0.0,
+X	x_sq_move = 0.0,
+X	y_sq_move = 0.0,
+X	z_sq_move = 0.0,
+X	tea_scale = 1.0, sphere_scale = 1.0, square_scale = 1.0,
+X	tea_x_rotate = 0.0, tea_y_rotate = 0.0, 
+X	square_x_rotate = 0.0, square_y_rotate = 0.0, 
+X	sphere_x_rotate = 0.0, sphere_y_rotate = 0.0, pot_trans = 1.0; 
+int ro = 0, sphere = 0;
+X	
+void display(void)
+{
+X 	GLfloat mat_sphere[] = { 0.0, 0.0, 1.0, 1.0 };
+X 	GLfloat mat_teapot[] = { 0.40, 0.40, 0.0, 1.0 };
+X 	GLfloat mat_square[] = { 1.0, 0.0, 0.0, 1.0 };
+X        GLfloat mat_ambient[] = { 0.7, 0.7, 0.7, 1.0 }; 
+X        GLfloat mat_ambient_color[] = { 0.8, 0.8, 0.2, 1.0 }; 
+X        GLfloat mat_diffuse[] = { 0.1, 0.5, 0.8, 1.0 }; 
+X        GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 }; 
+X        GLfloat no_shininess[] = { 1.0 }; 
+X        GLfloat low_shininess[] = { 5.0 }; 
+X        GLfloat high_shininess[] = { 100.0 }; 
+X        GLfloat mat_emission[] = {0.3, 0.2, 0.2, 0.0}; 
+X
+X
+X    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+X 
+X     
+X    glPushMatrix();
+X    glTranslatef(x_sq_move, y_sq_move, z_sq_move);
+X    glRotatef(square_x_rotate, 1.0, 0.0, 0.0);
+X    glRotatef(square_y_rotate, 0.0, 1.0, 0.0);
+X    glMaterialfv(GL_FRONT, GL_AMBIENT, mat_square); /* Set Materials... */    
+X    glMaterialfv(GL_FRONT, GL_SHININESS, high_shininess);
+X    glScalef(square_scale, square_scale, square_scale);
+X    glutSolidCube(1.0);   /*  draw the cube       */
+X    glPopMatrix();
+X   
+X   
+X    
+X    glPushMatrix();
+X    if(pot_trans)
+X    	glEnable(GL_BLEND);
+X    else
+X    	glDisable(GL_BLEND);
+X    	
+X    /*glColor4f(0.50, 0.50, 0.0, pot_trans);*/
+X    glBlendFunc(GL_SRC_ALPHA, GL_DST_ALPHA);
+X    glMaterialfv(GL_FRONT, GL_AMBIENT, mat_teapot); /* Set Materials... */
+X    glMaterialfv(GL_FRONT, GL_SPECULAR, mat_teapot);
+X    glMaterialfv(GL_FRONT, GL_SHININESS, no_shininess);
+X    glTranslatef(x_t_move, y_t_move, z_t_move);
+X    glRotatef(tea_x_rotate, 1.0, 0.0, 0.0);
+X    glRotatef(tea_y_rotate, 0.0, 1.0, 0.0);
+X    glScalef(tea_scale, tea_scale, tea_scale);
+X    glutSolidTeapot(0.75); 
+X    glDisable(GL_BLEND);
+X    glPopMatrix();
+X     
+X    glPushMatrix();
+X    glMaterialfv(GL_FRONT, GL_AMBIENT, mat_sphere);
+X    glTranslatef(x_s_move, y_s_move, z_s_move);/*x y and z.  for this, x - rt. y up z frnt*/
+X    glRotatef(sphere_x_rotate, 1.0, 0.0, 0.0);
+X    glRotatef(sphere_y_rotate, 0.0, 1.0, 0.0);
+X    glMaterialfv(GL_FRONT, GL_SPECULAR, mat_sphere);
+X    glMaterialfv(GL_FRONT, GL_SHININESS, no_shininess);
+X    glScalef(sphere_scale, sphere_scale, sphere_scale);
+X    glutSolidSphere(0.75, 5.0, 5.0); 
+X    glPopMatrix();
+X    
+X    glutSwapBuffers(); 
+X    glFlush();
+}
+X
+/* Initialize shading model */
+void myInit(void)
+{
+X      static float lightPos[4] = {2.0, 4.0, 2.0, 1.0};
+X      static float lightDir[4] = {-2.0, -4.0, -2.0, 1.0};
+X      static float lightAmb[4] = {1.0, 1.0, 1.0, 1.0};
+X      static float lightDiff[4] = {0.8, 0.8, 0.8, 1.0};
+X      static float lightSpec[4] = {0.4, 0.4, 0.4, 1.0};
+X      
+X      glEnable(GL_BLEND);
+X      glColor3f(1.0, 1.0, 1.0);
+X      glEnable(GL_LIGHTING);
+X      glEnable(GL_LIGHT0);
+X      glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
+X      glLightfv(GL_LIGHT0, GL_AMBIENT, lightAmb);
+X      glLightfv(GL_LIGHT0, GL_DIFFUSE, lightDiff);
+X      glLightfv(GL_LIGHT0, GL_SPECULAR, lightSpec);
+X      glEnable(GL_DEPTH_TEST);
+X   
+/*     glShadeModel (GL_FLAT);
+X *     glClearColor (0.0, 0.0, 0.0, 0.0);
+X */
+}
+X
+X
+void myReshape(int w, int h)
+{
+X      glViewport (0, 0, w, h);      /*  used to w h define the viewport */
+X      glMatrixMode(GL_PROJECTION);
+X      glLoadIdentity();
+X      gluPerspective(45.0, 1.0*(GLfloat)w/(GLfloat)h, 1.0, 10.0);
+X      glTranslatef (0.0, 0.0, -5.0);     /*  viewing transformation      */
+X      glMatrixMode (GL_MODELVIEW);        /* back to modelview matrix  */
+}
+X
+void
+Key(unsigned char key, int x, int y)
+{
+X    switch (key) {
+X    case 'j':
+X      glMatrixMode (GL_MODELVIEW);        /* manipulate modelview matrix  */
+X      glRotatef(15.0, 1.0,0.0,0.0);
+X      break;
+X    case 'k':
+X      glMatrixMode (GL_MODELVIEW);        /* manipulate modelview matrix  */
+X      glRotatef(15.0, 0.0,0.0,1.0);
+X      break;
+X    case 'l':
+X      glMatrixMode (GL_MODELVIEW);        /* manipulate modelview matrix  */
+X      glRotatef(15.0, 0.0,1.0,0.0);
+X      break;
+X    case 27:           /* Esc will quit */
+X        exit(1);
+X        break;
+X    default:
+X      break;
+X    }
+X    glutPostRedisplay();
+}
+X
+X
+void
+Key_pot_rotate(unsigned char key, int x, int y)
+{
+X
+X    switch (key) {
+X    case 'l':
+X      tea_x_rotate += 15;
+X      break;
+X      
+X    case 'o':
+X      tea_x_rotate -= 15;
+X      break;
+X      
+X    case 'j':
+X      tea_y_rotate += 15;
+X      break;
+X      
+X     case 'u':
+X      tea_y_rotate -= 15;
+X      break;
+X      
+X    case 27:           /* Esc will quit */
+X      exit(1);
+X      break;
+X      
+X    default:
+X    break;
+X    }
+X  glutPostRedisplay();
+}   
+X
+void
+Key_pot_scale(unsigned char key, int x, int y)
+{
+X
+X    switch (key) {
+X   case 'j':
+X    	tea_scale = tea_scale - 0.05;
+X    	break;
+X    case 'l':
+X    	tea_scale = tea_scale + 0.05;
+X    	break;	
+X    case 27:           /* Esc will quit */
+X      exit(1);
+X      break;
+X    default:
+X    	
+X      break;
+X    }
+X    glutPostRedisplay();
+}
+X
+X
+X
+/*
+X *  Handle Menus
+X */
+void
+Select(int value)
+{
+X    switch (value) {
+X    case 1:
+X        exit(0);
+X        break;
+X    case 2:
+X    	glutKeyboardFunc(Key);
+X    	break;
+X    default:
+X    	break;
+X    	}
+}
+X
+X
+void
+Key_pot_move(unsigned char key, int x, int y)
+{
+X
+X    switch (key) {
+X   case 'l':
+X   	z_t_move = z_t_move + 0.75;
+X   	break;
+X   case 'k':
+X   	y_t_move = y_t_move + 0.75;
+X   	break;
+X   case 'j':
+X   	x_t_move = x_t_move + 0.75;
+X   	break;
+X    case 'o':
+X   	z_t_move = z_t_move - 0.75;
+X   	break;
+X   case 'i':
+X   	y_t_move = y_t_move - 0.75;
+X   	break;
+X   case 'u':
+X   	x_t_move = x_t_move - 0.75;
+X   	break;
+X   default:
+X   	break;
+X   	}
+X    glutPostRedisplay();
+}
+X
+X
+void
+Key_pot_trans(unsigned char key, int x, int y)
+{
+X
+X    switch (key) {
+X   case 'l':
+X   	pot_trans = 1.0;
+X   	break;
+X   case 'j':
+X   	pot_trans = 0.0;
+X   	break;
+X   default:
+X   	break;
+X   	}
+X    glutPostRedisplay();
+}
+X
+void
+teapot_menu(int value)
+{
+X	switch (value) {
+X	case 1:
+X		glutKeyboardFunc(Key_pot_rotate);
+X        	glutReshapeFunc (myReshape);
+X        	glutDisplayFunc(display);
+X		break;
+X	case 2:
+X		glutKeyboardFunc(Key_pot_scale);
+X        	glutReshapeFunc (myReshape);
+X        	glutDisplayFunc(display);
+X		break;
+X	case 3:
+X		glutKeyboardFunc(Key_pot_move);
+X        	glutReshapeFunc (myReshape);
+X        	glutDisplayFunc(display);
+X		break;
+X	case 4:
+X		glutKeyboardFunc(Key_pot_trans);
+X        	glutReshapeFunc (myReshape);
+X        	glutDisplayFunc(display);
+X		break;
+X	default:
+X		break;
+X		}
+X		}
+X
+void
+Key_sphere_rotate(unsigned char key, int x, int y)
+{
+X    switch (key) {
+X    case 'l':
+X      sphere_x_rotate += 15;
+X      break;
+X      
+X    case 'o':
+X      sphere_x_rotate -= 15;
+X      break;
+X      
+X    case 'j':
+X      sphere_y_rotate += 15;
+X      break;
+X      
+X     case 'u':
+X      sphere_y_rotate -= 15;
+X      break;
+X     
+X    case 27:           /* Esc will quit */
+X      exit(1);
+X      break;
+X      
+X    default:
+X    break;
+X    }
+X  glutPostRedisplay();
+}   
+X
+void
+Key_sphere_scale(unsigned char key, int x, int y)
+{
+X
+X    switch (key) {
+X   case 'j':
+X    	sphere_scale = sphere_scale - 0.05;
+X    	break;
+X    case 'l':
+X    	sphere_scale = sphere_scale + 0.05;
+X    	break;	
+X    case 27:           /* Esc will quit */
+X      exit(1);
+X      break;
+X    default:
+X    	
+X      break;
+X    }
+X    glutPostRedisplay();
+}
+X
+void
+Key_sphere_move(unsigned char key, int x, int y)
+{
+X
+X    switch (key) {
+X   case 'l':
+X   	z_s_move = z_s_move + 0.75;
+X   	break;
+X   case 'k':
+X   	y_s_move = y_s_move + 0.75;
+X   	break;
+X   case 'j':
+X   	x_s_move = x_s_move + 0.75;
+X   	break;
+X    case 'o':
+X   	z_s_move = z_s_move - 0.75;
+X   	break;
+X   case 'i':
+X   	y_s_move = y_s_move - 0.75;
+X   	break;
+X   case 'u':
+X   	x_s_move = x_s_move - 0.75;
+X   	break;
+X   default:
+X   	break;
+X   	}
+X    glutPostRedisplay();
+}
+X
+void
+sphere_menu(int value)
+{
+X	switch (value) {
+X	case 1:
+X		glutKeyboardFunc(Key_sphere_rotate);
+X        	glutReshapeFunc (myReshape);
+X        	glutDisplayFunc(display);
+X		break;
+X	case 2:
+X		glutKeyboardFunc(Key_sphere_scale);
+X        	glutReshapeFunc (myReshape);
+X        	glutDisplayFunc(display);
+X		break;
+X	case 3:
+X		glutKeyboardFunc(Key_sphere_move);
+X        	glutReshapeFunc (myReshape);
+X        	glutDisplayFunc(display);
+X		break;
+X	default:
+X		break;
+X		}
+X		}
+X
+X
+void
+Key_square_rotate(unsigned char key, int x, int y)
+{
+X
+X    switch (key) {
+X    case 'l':
+X      square_x_rotate += 15;
+X      break;
+X      
+X    case 'o':
+X      square_x_rotate -= 15;
+X      break;
+X      
+X    case 'j':
+X      square_y_rotate += 15;
+X      break;
+X      
+X     case 'u':
+X      square_y_rotate -= 15;
+X      break;
+X    case 27:           /* Esc will quit */
+X      exit(1);
+X      break;
+X      
+X    default:
+X    break;
+X    }
+X  glutPostRedisplay();
+}   
+X
+void
+Key_square_scale(unsigned char key, int x, int y)
+{
+X
+X    switch (key) {
+X   case 'j':
+X    	square_scale = square_scale - 0.05;
+X    	break;
+X    case 'l':
+X    	square_scale = square_scale + 0.05;
+X    	break;	
+X    case 27:           /* Esc will quit */
+X      exit(1);
+X      break;
+X    default:
+X    	
+X      break;
+X    }
+X    glutPostRedisplay();
+}
+X
+void
+Key_square_move(unsigned char key, int x, int y)
+{
+X
+X    switch (key) {
+X   case 'l':
+X   	z_sq_move = z_sq_move + 0.75;
+X   	break;
+X   case 'k':
+X   	y_sq_move = y_sq_move + 0.75;
+X   	break;
+X   case 'j':
+X   	x_sq_move = x_sq_move + 0.75;
+X   	break;
+X    case 'o':
+X   	z_sq_move = z_sq_move - 0.75;
+X   	break;
+X   case 'i':
+X   	y_sq_move = y_sq_move - 0.75;
+X   	break;
+X   case 'u':
+X   	x_sq_move = x_sq_move - 0.75;
+X   	break;
+X   default:
+X   	break;
+X   	}
+X    glutPostRedisplay();
+}		
+X   	
+void
+square_menu(int value)
+{
+X	switch (value) {
+X	case 1:
+X		glutKeyboardFunc(Key_square_rotate);
+X        	glutReshapeFunc (myReshape);
+X        	glutDisplayFunc(display);
+X		break;
+X	case 2:
+X		glutKeyboardFunc(Key_square_scale);
+X        	glutReshapeFunc (myReshape);
+X        	glutDisplayFunc(display);
+X		break;
+X	case 3:
+X		glutKeyboardFunc(Key_square_move);
+X        	glutReshapeFunc (myReshape);
+X        	glutDisplayFunc(display);
+X		break;
+X	
+X	default:
+X		break;
+X		}
+X		}
+X
+int main(int argc, char** argv) 
+{
+int teapot_submenu, sphere_submenu, square_submenu;
+X      glutInit(&argc, argv);
+X      glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGBA);
+X      glutInitWindowSize(500, 200);
+X      glutCreateWindow (argv[0]);
+X      myInit ();
+X      
+X
+X      /*glutKeyboardFunc(Key);*/
+X      glutReshapeFunc (myReshape);
+X      glutDisplayFunc(display);
+X      
+X      teapot_submenu = glutCreateMenu(teapot_menu);
+X      glutAddMenuEntry("Rotate - teapot", 1);
+X      glutAddMenuEntry("Scale - teapot", 2);
+X      glutAddMenuEntry("Move - teapot", 3);
+X      glutAddMenuEntry("Toggle Transparency", 4);
+X      
+X      sphere_submenu = glutCreateMenu(sphere_menu);
+X      glutAddMenuEntry("Rotate - sphere", 1);
+X      glutAddMenuEntry("Scale - sphere", 2);
+X      glutAddMenuEntry("Move - sphere", 3);
+X      
+X      square_submenu = glutCreateMenu(square_menu);
+X      glutAddMenuEntry("Rotate - square", 1);
+X      glutAddMenuEntry("Scale - square", 2);
+X      glutAddMenuEntry("Move - square", 3);
+X      
+X      glutCreateMenu(Select);
+X      glutAddMenuEntry("Camera", 2);
+X      glutAddSubMenu("Teapot", teapot_submenu);
+X      glutAddSubMenu("Square", square_submenu);
+X      glutAddSubMenu("Sphere", sphere_submenu);
+X      glutAddMenuEntry("Quit", 1);
+X      glutAttachMenu(GLUT_RIGHT_BUTTON);      
+X      
+X      
+X      glutMainLoop();
+}
+SHAR_EOF
+  $shar_touch -am 0206153097 'my.c' &&
+  chmod 0600 'my.c' ||
+  $echo 'restore of' 'my.c' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'my.c:' 'MD5 check failed'
+4f6630df15d7eee987d4f85bfe8c3c10  my.c
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'my.c'`"
+    test 11705 -eq "$shar_count" ||
+    $echo 'my.c:' 'original size' '11705,' 'current size' "$shar_count!"
+  fi
+fi
+rm -fr _sh91046
+exit 0
+# From: Mark Steven Platosh <platom>

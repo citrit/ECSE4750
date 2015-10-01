@@ -1,0 +1,37 @@
+h1 { color: red; 
+   font-family: Verdana, sans-serif;
+}
+
+h1.title { align: center; 
+	 font-family: Verdana, sans-serif;
+	 font-size: larger;
+	 font-variant: small-caps;
+	  }
+
+H2 { color: blue; 
+	 font-family: Verdana, sans-serif;
+}
+
+OL.outline {list-style-type: upper-roman;
+ font: bold italic 18pt sans-serif;}
+
+OL.outline OL {list-style-type: upper-alpha;
+    font: bold 14pt sans-serif;}
+
+OL.outline OL OL {list-style-type: decimal;
+       font: 12pt serif;}
+
+OL.outline OL OL OL {list-style-type: lower-alpha;
+	  font: 10pt serif;}
+
+OL.outline OL OL OL OL {list-style-type: lower-roman;
+	     font: 10pt sans-serif;}
+
+
+div.footer { background: rgb(220,220,220);
+	   font-size: 80%;
+	   border: none;
+	 font-family: Verdana, sans-serif;
+ }
+
+body { background: white; }

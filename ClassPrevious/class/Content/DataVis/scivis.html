@@ -1,0 +1,264 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+
+<html>
+
+<head>
+<title>Data Vis - Intro to Scientific Visualization</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 1.1">
+</head>
+
+<body bgcolor="#FFFFFF">
+<h2><img src="images/scivis1.jpg" align=bottom width=500 height=4></h2>
+<h3><img src="images/head.gif" alt="*" align=absmiddle width=73 height=90>Advanced Computer Graphics and Data Visualization</h3>
+<h2><img src="images/scivis2.jpg" align=bottom width=500 height=4></h2>
+<p>&#160;</p>
+<h2><font color="#000000">An Introduction to Vis</font>ualization</h2>
+<h2>Contents</h2>
+<ul>
+<li><a href="#What is Scientific Visualization">What is Scientific Visualization</a></li>
+<li><a href="#Terminology">Terminology</a> <ul>
+<li><a href="#Contours">Contours</a></li>
+<li><a href="#Isosurfaces">Isosurfaces</a></li>
+<li><a href="#Color Mapping">Color Mapping</a></li>
+<li><a href="#Rendering">Rendering</a></li>
+<li><a href="#Volume Rendering">Volume Rendering</a></li>
+<li><a href="#Marching Cubes">Marching Cubes</a></li>
+<li><a href="#Visualization Pipeline">Visualization Pipeline</a></li>
+</ul>
+</li>
+<li><a href="#Types of Data">Types of Data</a> <ul>
+<li><a href="#XY Data">XY Data</a></li>
+<li><a href="#XYZ Data">XYZ Data</a></li>
+<li><a href="#3D Data">3D Data</a> <ul>
+<li><a href="#Structured Grid">Structured Grid</a></li>
+<li><a href="#Unstructured Grid">Unstructured Grid</a></li>
+<li><a href="#Vector Data">Vector Data</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3><a name="What is Scientific Visualization">What is Scientific Visualization</a></h3>
+<p><b>Definitions: </b><cite><b>0</b></cite><b> </b></p>
+<ul>
+<li>In general terms, Scientific Visualization can be thought of as any method which presents scientific information in 
+a manner to facilitate the conceptualization of scientific phenomenon or statistical information. With advances in 
+computational speeds and display technology, sci-vis has experienced a revolution. Historical methods of sci-vis 
+have not become obsolete however. Graph paper and oscilloscopes have been key sci-vis tools for years, and 
+continue to be so. Scientific visualization may take advantage of any of the human senses. Sound has been used 
+as a sci-vis tool for years and is still an area of active research. New techniques are being studied which employ 
+the sense of feel, including force-feedback systems to help &quot;feel&quot; the strength of a bond between atoms, or feel 
+the molecular surface of a tooth. </li>
+</ul>
+<ul>
+<li>Here's some other explanations of visualization from the Visualization FAQ:</li>
+</ul>
+<blockquote>
+<p><i>Analytic graphics</i> -- Carol Hunter, LLNL</p>
+</blockquote>
+<blockquote>
+<p><i>Visualization:</i> The use of computer imagery to gain insight into complex phenomena.</p>
+</blockquote>
+<blockquote>
+<p><i>The purpose of visualization is insight, not virtual realities or pictures.</i> <br>
+- Eugene N. Miya, President, Bay Area ACM/SIGGRAPH</p>
+</blockquote>
+<p align=center><font size=1><cite>0</cite><i>. Hughes, M., Scientific Visualization and Graphics, University of Minnesota, http://web.msi.umn.edu/WWW/SciVis/umnscivis.html</i></font></p>
+<h2><img src="Speckled_Gradient1A5.gif" align=bottom width=500 height=4></h2>
+<h2><a name="Terminology">Terminology</a></h2>
+<h3><a name="Contours">Contours</a></h3>
+<ul>
+<li>Given a set of samples taken over a presumably continuous region, it is meaningful to consider drawing smooth 
+lines connecting together the locations on the grid containing the same data values. You are probably familiar 
+with topographic maps that show contour lines connecting together the same values of altitude of the Earth's 
+surface features, such as hills and valleys. These lines are called &quot;contour lines&quot; or &quot;isolines&quot; (iso means &quot;same&quot; or 
+&quot;equal&quot;). In most cases, the places on the surface of the sample grid that have identical data values will not 
+coincide with the grid sample points. While there is a direct correspondence between the actual appearance in 
+nature of these hills and valleys and a contour map of the region, when we plot an abstract data value such as 
+&quot;number of species of grass&quot; on a sample grid then connect with lines those data grid areas having the same 
+number of grass species, we are performing visualization.</li>
+</ul>
+<table>
+<tr><td>The visual at right is generated from sampling data on a 
+50x50x50 grid using the equation:<br>
+<br>
+<font size=2>a0x2 + a1y2 + a2z2 + a3xy + a4yz + a5xz + a6x + a7y + a8z + a9 
+= F(x,y,z)</font><br>
+</td><td><img src="images/cont.gif" align=bottom width=386 height=379></td></tr>
+</table>
+<h3><a name="Isosurfaces">Isosurfaces</a></h3>
+<ul>
+<li>When we have collected data throughout a three-dimensional space, we can identify volumetric elements defined 
+by connecting adjacent grid sample points in three dimensions using a &quot;connections&quot; component like cubes. It 
+now becomes possible to draw &quot;isosurfaces&quot; rather than &quot;isolines.&quot; An isosurface is that surface cutting through a 
+volume on which all data values are equal to a specified value. Depending on the actual distribution of the data, 
+isosurfaces may look more or less like flat sheets (the isosurface of &quot;sea level&quot; in a data set of altitudes would 
+look like this), or an isosurface might enclose a portion of our space, or an isosurface may appear as a whole set 
+of small disconnected surfaces or enclosed spaces. To create an isosurface, we pick a value of interest. Let's say 
+that according to our knowledge of meteorology, we know that the dew point (at which water condenses from 
+vapor to liquid) is at 12 degrees C in our sample. Although we measured temperatures at only a fixed number of 
+grid points, we are interested in seeing where rain formation may begin throughout the atmosphere. We could 
+show only the sample points highlighted by themselves, but once again, we make a reasonable assumption that 
+we have taken discrete samples from a continuous natural volume. In other words, rain formation will not simply 
+occur at the limited set of discrete points where we have sampled temperatures of 12 degrees C, but at all the 
+points in between that are also at 12 degrees. How do we find all those in-between points? By interpolating 
+through the volumetric elements between adjacent sample points.</li>
+</ul>
+<table>
+<tr><td><br>
+<br>
+This visual was created by generating 3D surfaces corresponding to a 
+constant function value F(x,y,z)=c</td><td><img src="images/surf.gif" alt="IsoSurface" align=bottom width=267 height=277></td></tr>
+</table>
+<h3><a name="Color Mapping">Color Mapping</a></h3>
+<ul>
+<li>A colormap represents a relationship between a continuous range of floating point numeric data values and a set 
+of color values. Frequently, you'll encounter colormaps with continuous (&quot;spectral&quot;) color tones like a rainbow, 
+but there is no requirement that colormaps appear continuous. Each colormap has associated with it a minimum 
+and a maximum scalar value. The range over which these colors are mapped normally includes the whole range 
+of measured values, you can also specify smaller ranges to highlight areas of interest.</li>
+</ul>
+<h3 align=center><img src="images/colmap.gif" alt="ColorMap" align=bottom width=343 height=319></h3>
+<h3><a name="Rendering">Rendering</a></h3>
+<ul>
+<li>The process of converting geometric data into an image which involves organizing the data into a formatted style, 
+extracting the necessary information, mapping the data to a visual. This is referred to as a visualization pipeline. 
+Using OO technology we can separate these steps and replace any one link in the pipeline with other filters or 
+data types.</li>
+</ul>
+<h3><a name="Volume Rendering">Volume Rendering</a></h3>
+<ul>
+<li>Another way to examine data collected throughout a volume of space. Imagine a glass bowl full of lemon gelatin. 
+Holding it up to a light, you can see through the gelatin because it is somewhat translucent. Now imagine that 
+you've added strawberries to the bowl of gelatin before it set up. You can see the strawberries embedded in the 
+gelatin. What is really happening, visually? Light shines through the mass of gelatin &quot;accumulating&quot; color. If you 
+look through the top corner, it will appear somewhat less yellow than if you look through the thickest part. If the 
+light strikes a strawberry as it passes through the gelatin, your eyes will detect an orange object with a distinct 
+outline, which of course enables us to find the location of the strawberries in the volume of gelatin. The 
+strawberry appears orange because its red color is partly occluded by the yellow gelatin: nevertheless, our brains 
+convert the strawberry color back to red because it is a familiar object. If someone has added a fruit unfamiliar 
+to you, you will have a hard time identifying the true color of the fruit, since our brains are not good at performing 
+subtractive color calculations. Volume rendering a data space yields an image something like our bowl of gelatin. 
+By default, a volume rendering appears somewhat transparent. As light passes through from behind the volume 
+toward your eye, it is absorbed more in areas of densely concentrated values. These areas will appear to be 
+more &quot;opaque.&quot; If you colormap your volume according to the data component, you will see indistinct colored 
+areas in their relation to each other.</li>
+</ul>
+<h3 align=center><img src="images/volume.gif" alt="Volume Rendering" align=bottom width=584 height=227></h3>
+<h3><a name="Marching Cubes">Marching Cubes</a></h3>
+<ul>
+<li>Marching cubes creates surface models of constant density from 3-D data that has connectivity. The algorithm 
+determines how the surface intersects one cube, created from eight pixels, and then moves (or marches) to the 
+next cube. The cubes share edges which ensures that the surfaces created will always connect between adjacent 
+cubes. This is the main algorithm used for IsoSurface generation.</li>
+</ul>
+<h3 align=center><img src="images/mcubes.gif" alt="Marching Cubes" align=bottom width=207 height=134></h3>
+<h3><a name="Visualization Pipeline">Visualization Pipeline</a></h3>
+<ul>
+<li>The visualization pipeline consists of objects to represent data (data objects) objects to operate on data (process 
+objects), and an indicated direction of data flow (arrowed connections between objects). Data objects represent 
+information and provide methods to create, access, and delete this information. Process objects operate on input 
+data to generate output data. A process object either derives new data from its inputs, or transforms the input 
+data into a new form.</li>
+</ul>
+<h2 align=center><img src="images/pipel.gif" alt="Visualization Pipeline" align=bottom width=512 height=257></h2>
+<h2><img src="Speckled_Gradient1A5.gif" align=bottom width=500 height=4></h2>
+<h2><a name="Types of Data">Types of Data</a></h2>
+<h3><a name="XY Data">XY Data</a></h3>
+<ul>
+<li><p align=left>Data generated for simple XY plots. This type of data shows how two dependant results act over a given range. 
+The simplest example is y = sin(x) for the range [0..(2*pi)]. </p>
+</li>
+</ul>
+<table>
+<tr><td><p align=center><br>
+<code>0 0</code><br>
+<code>0.1000 0.0998</code><br>
+<code>0.2000 0.1987</code><br>
+<code>... ...</code><br>
+<code>6.1000 -0.1822</code><br>
+<code>6.2000 -0.0831</code> </p>
+</td><td><p align=center><img src="images/sin.gif" alt="Sin Wave" align=bottom width=317 height=216> </p>
+</td></tr>
+</table>
+<h3 align=left><a name="XYZ Data">XYZ Data</a></h3>
+<ul>
+<li>Data sampled over a specific area with an X, Y, and Z component to the position. This data can be associated 
+with many types of measurements, an example may be terrain mapping where measurements are taken at 
+irregular intervals and show the topography of the land. Here is an example of positional information associated 
+with molecular positions of a methanol molecule. The Scalar value would be used to color the individual points 
+according to the current color mapping.</li>
+</ul>
+<table>
+<tr><td><p align=center><br>
+<code>X Y Z Scalar</code><br>
+<code>0.25175E-02 0.54965E-05 0.13041E+01 0.0E+00</code><br>
+<code>0.25174E-02 0.28946E-04 0.13041E+01 0.0E+00</code><br>
+<code>... ... ... ...</code><br>
+<code>0.63612E-02 -.73144E-04 -.32953E+01 0.5E-01</code><br>
+<code>0.63616E-02 -.13889E-04 -.32953E+01 0.5E-01</code><br>
+</p>
+</td><td><p align=center><code><img src="images/points.gif" alt="3D Points" align=bottom width=300 height=300></code> </p>
+</td></tr>
+</table>
+<h2><a name="3D Data">3D Data</a></h2>
+<h3><a name="Structured Grid">Structured Grid</a></h3>
+<ul>
+<li>Structured grids are made up of similar building blocks, such as cubes, forming hexahedral cells. This is the most 
+commonly used form of volumetric data and is also the easiest to manipulate. A common example is taking air 
+samples at a regular interval through a gaseous cloud and representing the readings on a regular grid. This would 
+contain an n by m matrix of values which would be extended over several layers. Here is an example of a 2 x 3 x 
+4 regular grid:</li>
+</ul>
+<table>
+<tr><td><p align=center><br>
+<code>X,Y,Z triplets</code><br>
+<br>
+<code>0., 0., 0., 1., 0., 0., 0., 1., 0.,</code><br>
+<code>1., 1., 0., 0., 2., 0., 1., 2., 0.</code><br>
+<code>0., 0., 1., 1., 0., 1., 0., 1., 1.,</code><br>
+<code>1., 1., 1., 0., 2., 1., 1., 2., 1.</code><br>
+<code>0., 0., 2., 1., 0., 2., 0., 1., 2.,</code><br>
+<code>1., 1., 2., 0., 2., 2., 1., 2., 2.</code><br>
+</p>
+</td><td><p align=center><img src="images/strugrid.gif" alt="Structured Grid" align=bottom width=300 height=300> </p>
+</td></tr>
+</table>
+<h3><a name="Unstructured Grid">Unstructured Grid</a></h3>
+<ul>
+<li>Unstructured Grids represent geometry as points (or nodes) and elements. The points are defined by a positive, 
+arbitrary integer id and a triplet of floats representing position. The elements can be any of a set of shapes such 
+as a single point, a line element defined by two nodes, a triangle element defined by three nodes, a quadrilateral 
+element defined by four element, a brick element defined by eight points, a wedge element defined by 6 
+elements, a pyramid defined by four points that form the base and a fifth point at the peak, and so on. Here is an 
+example of an unstructured grid with irregular connections and irregular positions.</li>
+</ul>
+<p align=center><img src="images/ustrgri.gif" alt="Unstructured Grid" align=bottom width=285 height=242></p>
+<h3><a name="Vector Data">Vector Data</a></h3>
+<ul>
+<li>Vector data is generally associated with a geometry and provides a triplet of values for each point in the 
+geometry. This would be to specify a direction and magnitude at each point. This is useful for air flow 
+visualizations and Finite Element calculations showing force directions and magnitude. Here is a visualization of a 
+thunder cloud showing an isosurface of a specific moisture value and glyphs (arrows) showing the direction and 
+magnitude of the airflow inside the cloud.</li>
+</ul>
+<h2 align=center><img src="images/vector.gif" align=bottom width=784 height=392></h2>
+<h2><img src="Speckled_Gradient1A5.gif" align=bottom width=500 height=4></h2>
+<h2>Example of Simulations and Visualizations:</h2>
+<h3>Fresnel Concentrator</h3>
+<p>Fresnel concentrator is an array of 121 mirror facets on a fixed array of rows. Prof. David Borton of Mechanical 
+engineering wanted to show the mechanics of how the facets were unable to focus the suns rays at certain times of the 
+year. He did the math involved and created a spreadsheet of numbers explaining his results. This graphic visualizes the 
+motion of an 11 by 11 array of mirrors throughout a solar year. The declination of the sun changes +/- 23.5 degrees 
+with the seasons. The change of the focus can be adjusted depending on the energy requirements of the solar thermal 
+application from steam heat to electricity to chemical processing. </p>
+<p align=center><img src="images/fresnel.jpg" align=bottom width=95 height=132></p>
+<h3>MRI Data and 3D Model simulation</h3>
+<p>This animation uses a MRI data set and a model created with AutoCAD and integrates them into a simulation of how 
+an MRI acquires data.</p>
+<p align=center><img src="images/mrimodel.jpg" align=bottom width=667 height=291></p>
+<p><img src="images/scivis3.jpg" align=bottom width=500 height=4></p>
+</body>
+
+</html>

@@ -1,0 +1,27 @@
+! ** JCreator Project File (C)2000
+! ********** DO NOT EDIT *********
+
+VERSION := "1.10"
+LABEL := "examples"
+JDKPROFILE := "JDK version 1.3"
+ACTIVE := "1"
+OUTPUTPATH := ".\\"
+COMPILER := "<Default>"
+
+! Start RunTime Configuration Structure
+#[BeginRunTime]LABEL := "<Default>" RUNAPPLIC := "<Default>" RUNAPPLET := "<Default>" PARAM := "" RUN := "Animate" CHECK := "10" #[EndRunTime]
+! Start Required Libraries Structure
+
+! Start Project Folder Structure
+#[BeginFolder]
+LABEL := "Root"
+FILTER := ""
+
+#[BeginFile]SOURCE := "Animate.java" #[EndFile]
+#[BeginFile]SOURCE := "Simple3.java" #[EndFile]
+#[BeginFile]SOURCE := "Simple2.java" #[EndFile]
+#[BeginFile]SOURCE := "Simple1.java" #[EndFile]
+#[BeginFile]SOURCE := "Primitives.java" #[EndFile]
+#[BeginFile]SOURCE := "Lights.java" #[EndFile]
+#[BeginFile]SOURCE := "TextureTest.java" #[EndFile]
+#[EndFolder]

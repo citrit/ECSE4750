@@ -1,0 +1,211 @@
+
+/* Includes required */
+#include "OGLRen.H"
+
+static OGLRenderer *currentRenderer;
+static GLint Black, Red, Green, Blue;
+
+void 
+OGLRenderer::BeginDraw(RenderType mode)
+{
+  switch(mode) {
+  case POINT:
+    glBegin(GL_POINTS);
+    break;
+  case POLYGON:
+    glBegin(GL_POLYGON);
+    break;
+  case LINE:
+    glBegin(GL_LINES);
+    break;
+  default:
+    break;
+  }
+}
+
+void 
+OGLRenderer::EndDraw()
+{
+  glEnd();
+  glFlush();
+}
+
+void 
+OGLRenderer::Vertex(double x, double y, double z)
+{
+  cout << x << " " << y << " " << z << endl;
+  glVertex3f(x, y, z);
+}
+
+
+void 
+OGLRenderer::Initialize(int argc, char *argv[])
+{
+  int           index;
+  static int	attributes[50];
+  XVisualInfo   *v;
+  int           ms;
+
+  if (!this->App) {
+    XtToolkitInitialize();
+    this->App = XtCreateApplicationContext();
+  }
+  if (!this->DisplayId) {
+    this->DisplayId = 
+      XtOpenDisplay(this->App,NULL,"Tomc","tomc",NULL,0,&argc,NULL);
+  }
+  else {
+    if (!this->Top) {
+      XtDisplayInitialize(this->App,this->DisplayId,
+			  "Tomc","tomc",NULL,0,&argc,NULL);
+    }
+  }
+
+  // try getting exactly what we want
+  index = 0;
+  attributes[index++] = GLX_RGBA;
+  attributes[index++] = GLX_RED_SIZE;
+  attributes[index++] = 1;
+  attributes[index++] = GLX_GREEN_SIZE;
+  attributes[index++] = 1;
+  attributes[index++] = GLX_BLUE_SIZE;
+  attributes[index++] = 1;
+  attributes[index++] = GLX_DOUBLEBUFFER;
+  attributes[index++] = GLX_DEPTH_SIZE;
+  attributes[index++] = 1;
+  attributes[index++] = None;
+
+  v = glXChooseVisual(this->DisplayId, 
+		      DefaultScreen(this->DisplayId), attributes );
+  this->ColorMap = XCreateColormap(this->DisplayId,
+				   RootWindow( this->DisplayId,  
+					      v->screen),
+				   v->visual, AllocNone );
+
+
+  if (!this->Top) {
+    this->Top = XtVaAppCreateShell("OGLR","oglr",
+				   applicationShellWidgetClass,
+				   this->DisplayId,
+				   XtNdepth, v->depth,
+				   XtNcolormap, this->ColorMap,
+				   XtNvisual, v,
+				   XtNx, x,
+				   XtNy, y,
+				   XtNwidth, width,
+				   XtNheight, height,
+				   XtNinput, True,
+				   XtNmappedWhenManaged, 0,
+				   NULL);
+  }
+
+  XtRealizeWidget(this->Top);
+  XSync(this->DisplayId,False);
+  this->WindowId = XtWindow(this->Top);
+
+  XtAddEventHandler(this->Top,
+		    KeyPressMask | ButtonPressMask | ExposureMask |
+		    StructureNotifyMask | ButtonReleaseMask,
+		    False,OGLRendererCB,(XtPointer)this);
+
+
+  /* Init OpenGL */
+  static float lightPos[4] = {2.0, 4.0, 2.0, 1.0};
+  static float lightDir[4] = {0.0, 0.0, 0.0, 1.0};
+  static float lightAmb[4] = {1.0, 1.0, 1.0, 1.0};
+       
+  glEnable(GL_LIGHTING);
+  glEnable(GL_LIGHT0);
+  glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
+  glLightfv(GL_LIGHT0, GL_AMBIENT, lightAmb);
+  
+
+  glClearColor (0.75, 0.75, 0.75, 1.0);
+  glColor3f(1.0, 1.0, 1.0);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  glEnable(GL_DEPTH_TEST);
+  glShadeModel(GL_SMOOTH);
+}
+
+void 
+OGLRenderer::MainLoop()
+{
+  /* Ready to render! */
+//  this->Render();
+  XtAppMainLoop(this->App);
+}
+
+void 
+OGLRenderer::Render(void)
+{
+  glMatrixMode(GL_MODELVIEW);
+  for (int i=0;i<this->DataSets.Count();i++) {
+    for (int j=0;j<this->DataSets[i]->Count();j++) {
+      (*(this->DataSets)[i])[j]->Render(this);
+    }
+  }
+}
+
+void
+OGLRenderer::Key(unsigned char key, int x, int y)
+{
+    switch (key) {
+    case 'h':
+      glMatrixMode (GL_MODELVIEW);        /* manipulate modelview matrix  */
+      glRotatef(15.0, 0.0,1.0,0.0);
+      break;
+    case 'j':
+      glMatrixMode (GL_MODELVIEW);        /* manipulate modelview matrix  */
+      glRotatef(15.0, 1.0,0.0,0.0);
+      break;
+    case 'k':
+      glMatrixMode (GL_MODELVIEW);        /* manipulate modelview matrix  */
+      glRotatef(-15.0, 1.0,0.0,0.0);
+      break;
+    case 'l':
+      glMatrixMode (GL_MODELVIEW);        /* manipulate modelview matrix  */
+      glRotatef(-15.0, 0.0,1.0,0.0);
+      break;
+    case 27:           /* Esc will quit */
+        exit(1);
+        break;
+    default:
+      break;
+    }
+    Render();
+}
+
+void 
+OGLRenderer::Reshape(int w, int h)
+{
+      glViewport (0, 0, w, h);            /*  define the viewport */
+      glMatrixMode(GL_PROJECTION);
+      glLoadIdentity();
+      gluPerspective(25.0, 1.0*(GLfloat)w/(GLfloat)h, 0.1, 10.0);
+      glTranslatef (0.0, 0.0, -5.0);     /*  viewing transformation      */
+      glMatrixMode (GL_MODELVIEW);        /* back to modelview matrix  */
+}
+
+void OGLRendererCB(Widget w,XtPointer client_data, 
+		   XEvent *event, Boolean *ctd)
+{
+  OGLRenderer *aren = (OGLRenderer *)client_data;
+
+  switch(event->type) {
+  case Expose :
+    aren->Render();
+    break;
+  case ConfigureNotify:
+    aren->width = ((XConfigureEvent *)event)->width;
+    aren->height = ((XConfigureEvent *)event)->height;
+    aren->Reshape(aren->width, aren->height);
+    aren->Render();
+    break;
+  case KeyPress:
+    KeySym ks;
+    static char buffer[24];
+    XLookupString((XKeyEvent *)event,buffer,20,&ks,NULL);
+    aren->Key(buffer[0], 0, 0);
+    break;
+  }
+}

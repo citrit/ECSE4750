@@ -1,0 +1,126 @@
+#//////////////////////////////////////////////////////////////////////////
+#//
+#//  This code is for instructional purposes only. It was generated for
+#//  use in a graduate level course to show certain aspects of data
+#//  storage algorithms. It has problems and should not be used 
+#//  outside the class environment.
+#//
+#//  Author:  Thomas D. Citriniti     citrit@rpi.edu
+#//  Class:   Advanced Computer Graphics and Data visualization
+#//           Rensselaer Polytechnic Institute
+#//  Date:    October 3, 1995
+#//
+#//////////////////////////////////////////////////////////////////////////
+
+.SUFFIXES: $(.SUFFIXES) .C .C~
+
+
+# CCFLAGS=-g -I/usr/lpp/xlC/include -I/locker/44/000644/Mesa/@sys/include  \
+#         -I/usr/include
+# CCC=xlC
+
+CCC=g++
+CCFLAGS=-g -I/locker/44/000644/Mesa/@sys/include
+
+OBJS= hw3.o OGLLight.o OGLCam.o OGLRen.o DataSet.o PtCell.o PlyCell.o \
+	PlyLine.o Triangle.o LineCell.o
+
+LDFLAGS=-L/locker/44/000644/Mesa/@sys/lib -lMesaGLU \
+        -lMesaGL -L/usr/local/X11/lib -lXmu -lXt -lX11 -lm
+
+hw3: $(OBJS)
+	$(CCC) -o $@  $(OBJS) $(LDFLAGS)
+
+clean:
+	rm -f *~ core hw3 *.o
+
+tidy:
+	rm -f core *~ *.o
+
+.C.o:
+        $(CCC) $(CCFLAGS) -c $<
+
+.C:
+        $(CCC) $(CCFLAGS) $< -o $@  $(LDFLAGS) 
+
+
+# DO NOT DELETE THIS LINE -- make depend depends on it.
+
+DataSet.o: DataSet.H VectorT.H /usr/include/string.h /usr/include/standards.h
+DataSet.o: /usr/include/sys/types.h Cell.H PointSet.H MatSet.H
+LineCell.o: LineCell.H PointSet.H VectorT.H /usr/include/string.h
+LineCell.o: /usr/include/standards.h /usr/include/sys/types.h Cell.H MatSet.H
+LineCell.o: Renderer.H DataSet.H Light.H Camera.H
+OGLCam.o: OGLCam.H /usr/include/GL/gl.h /usr/include/GL/glu.h Camera.H
+OGLCam.o: PointSet.H VectorT.H /usr/include/string.h /usr/include/standards.h
+OGLCam.o: /usr/include/sys/types.h Renderer.H DataSet.H Cell.H MatSet.H
+OGLCam.o: Light.H
+OGLLight.o: OGLLight.H Light.H PointSet.H VectorT.H /usr/include/string.h
+OGLLight.o: /usr/include/standards.h /usr/include/sys/types.h MatSet.H
+OGLLight.o: /usr/include/GL/gl.h OGLRen.H /usr/include/stdlib.h
+OGLLight.o: /usr/include/X11/Xlib.h /usr/include/X11/X.h
+OGLLight.o: /usr/include/X11/Xfuncproto.h /usr/include/X11/Xosdefs.h
+OGLLight.o: /usr/include/stddef.h /usr/include/X11/Xutil.h
+OGLLight.o: /usr/include/X11/Intrinsic.h /usr/include/X11/Xresource.h
+OGLLight.o: /usr/include/X11/Core.h /usr/include/X11/Composite.h
+OGLLight.o: /usr/include/X11/Constraint.h /usr/include/X11/Object.h
+OGLLight.o: /usr/include/X11/RectObj.h /usr/include/X11/StringDefs.h
+OGLLight.o: /usr/include/X11/Shell.h /usr/include/GL/glu.h
+OGLLight.o: /usr/include/GL/glx.h /usr/include/X11/Xmd.h
+OGLLight.o: /usr/include/GL/glxproto.h /usr/include/GL/glxmd.h Renderer.H
+OGLLight.o: DataSet.H Cell.H Camera.H OGLCam.H
+OGLRen.o: OGLRen.H /usr/include/stdlib.h /usr/include/standards.h
+OGLRen.o: /usr/include/X11/Xlib.h /usr/include/sys/types.h
+OGLRen.o: /usr/include/X11/X.h /usr/include/X11/Xfuncproto.h
+OGLRen.o: /usr/include/X11/Xosdefs.h /usr/include/stddef.h
+OGLRen.o: /usr/include/X11/Xutil.h /usr/include/X11/Intrinsic.h
+OGLRen.o: /usr/include/X11/Xresource.h /usr/include/string.h
+OGLRen.o: /usr/include/X11/Core.h /usr/include/X11/Composite.h
+OGLRen.o: /usr/include/X11/Constraint.h /usr/include/X11/Object.h
+OGLRen.o: /usr/include/X11/RectObj.h /usr/include/X11/StringDefs.h
+OGLRen.o: /usr/include/X11/Shell.h /usr/include/GL/gl.h /usr/include/GL/glu.h
+OGLRen.o: /usr/include/GL/glx.h /usr/include/X11/Xmd.h
+OGLRen.o: /usr/include/GL/glxproto.h /usr/include/GL/glxmd.h Renderer.H
+OGLRen.o: VectorT.H DataSet.H Cell.H PointSet.H MatSet.H Light.H Camera.H
+OGLRen.o: OGLLight.H OGLCam.H
+PlyCell.o: PlyCell.H PointSet.H VectorT.H /usr/include/string.h
+PlyCell.o: /usr/include/standards.h /usr/include/sys/types.h Cell.H MatSet.H
+PlyCell.o: Renderer.H DataSet.H Light.H Camera.H
+PlyLine.o: PlyLine.H PointSet.H VectorT.H /usr/include/string.h
+PlyLine.o: /usr/include/standards.h /usr/include/sys/types.h Cell.H MatSet.H
+PlyLine.o: Renderer.H DataSet.H Light.H Camera.H
+PtCell.o: PtCell.H PointSet.H VectorT.H /usr/include/string.h
+PtCell.o: /usr/include/standards.h /usr/include/sys/types.h Cell.H MatSet.H
+PtCell.o: Renderer.H DataSet.H Light.H Camera.H
+Triangle.o: Triangle.H PointSet.H VectorT.H /usr/include/string.h
+Triangle.o: /usr/include/standards.h /usr/include/sys/types.h Cell.H MatSet.H
+Triangle.o: Renderer.H DataSet.H Light.H Camera.H
+hw3.o: PtCell.H PointSet.H VectorT.H /usr/include/string.h
+hw3.o: /usr/include/standards.h /usr/include/sys/types.h Cell.H MatSet.H
+hw3.o: Renderer.H DataSet.H Light.H Camera.H LineCell.H PlyCell.H PlyLine.H
+hw3.o: Triangle.H OGLRen.H /usr/include/stdlib.h /usr/include/X11/Xlib.h
+hw3.o: /usr/include/X11/X.h /usr/include/X11/Xfuncproto.h
+hw3.o: /usr/include/X11/Xosdefs.h /usr/include/stddef.h
+hw3.o: /usr/include/X11/Xutil.h /usr/include/X11/Intrinsic.h
+hw3.o: /usr/include/X11/Xresource.h /usr/include/X11/Core.h
+hw3.o: /usr/include/X11/Composite.h /usr/include/X11/Constraint.h
+hw3.o: /usr/include/X11/Object.h /usr/include/X11/RectObj.h
+hw3.o: /usr/include/X11/StringDefs.h /usr/include/X11/Shell.h
+hw3.o: /usr/include/GL/gl.h /usr/include/GL/glu.h /usr/include/GL/glx.h
+hw3.o: /usr/include/X11/Xmd.h /usr/include/GL/glxproto.h
+hw3.o: /usr/include/GL/glxmd.h OGLLight.H OGLCam.H
+objTest.o: PtCell.H PointSet.H VectorT.H /usr/include/string.h
+objTest.o: /usr/include/standards.h /usr/include/sys/types.h Cell.H MatSet.H
+objTest.o: Renderer.H DataSet.H Light.H Camera.H LineCell.H PlyCell.H
+objTest.o: PlyLine.H Triangle.H OGLRen.H /usr/include/stdlib.h
+objTest.o: /usr/include/X11/Xlib.h /usr/include/X11/X.h
+objTest.o: /usr/include/X11/Xfuncproto.h /usr/include/X11/Xosdefs.h
+objTest.o: /usr/include/stddef.h /usr/include/X11/Xutil.h
+objTest.o: /usr/include/X11/Intrinsic.h /usr/include/X11/Xresource.h
+objTest.o: /usr/include/X11/Core.h /usr/include/X11/Composite.h
+objTest.o: /usr/include/X11/Constraint.h /usr/include/X11/Object.h
+objTest.o: /usr/include/X11/RectObj.h /usr/include/X11/StringDefs.h
+objTest.o: /usr/include/X11/Shell.h /usr/include/GL/gl.h
+objTest.o: /usr/include/GL/glu.h /usr/include/GL/glx.h /usr/include/X11/Xmd.h
+objTest.o: /usr/include/GL/glxproto.h /usr/include/GL/glxmd.h OGLLight.H
+objTest.o: OGLCam.H

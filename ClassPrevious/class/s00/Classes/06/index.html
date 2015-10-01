@@ -1,0 +1,495 @@
+<!-- Time-stamp: </home/wrf/cg-f99/Classes/11/index.html, Wed,  3 Nov 1999, 19:14:54 EST, wrf@benvolio.ecse.rpi.edu> -->
+<html>
+
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage Express 2.0">
+<title>ECSE-4750, RPI, Class 6</title>
+<!-- Changed by: Wm. Randolph Franklin, 13-Jan-1999 -->
+<STYLE TYPE="text/css">
+<!--
+H1 { color: red; }
+
+H2 { color: blue; }
+
+   OL.outline {list-style-type: upper-roman;
+    font: bold italic 18pt sans-serif;}
+
+   OL.outline OL {list-style-type: upper-alpha;
+       font: bold 14pt sans-serif;}
+
+   OL.outline OL OL {list-style-type: decimal;
+	  font: 12pt serif;}
+
+   OL.outline OL OL OL {list-style-type: lower-alpha;
+	     font: 10pt serif;}
+
+   OL.outline OL OL OL OL {list-style-type: lower-roman;
+		font: 10pt sans-serif;}
+   -->
+</STYLE>
+</head>
+
+<body bgcolor="#FFFFFF">
+
+<h1 align="center">Rensselaer Polytechnic Institute <br>
+ECSE-4750 Computer Graphics, Fall 1999<br>
+Class 6, Thurs Feb 27</h1>
+
+<p align="left">&nbsp;</p>
+
+<h1>Convenience Functions:</h1>
+
+<ol>
+    <li>Another more elaborate example of convenience functions
+        is <a
+        href="http://devcentral.iftech.com/learning/tutorials/misc/motif/9.asp">http://devcentral.iftech.com/learning/tutorials/misc/motif/9.asp</a></li>
+    <li>This also shows contraints and uses convenience functions
+        supplied by Motif: <a href="xeditor.c">xeditor.c</a></li>
+</ol>
+
+<h1><a name="02"></a>X Stuff</h1>
+
+<p>Here are hints about more X functionality.</p>
+
+<h2><a name="03"></a>Unused Command Line Args</h2>
+
+<p>This program, <a href="xuserargs.c">xuserargs.c</a>, prints
+any command-line args that XtVaAppInitialize doesn't recognize. </p>
+
+<p>Try these:</p>
+
+<pre>
+xuserargs
+xuserargs -bg red
+xuserargs -hi -bg red -bye 3
+</pre>
+
+<h2><a name="04"></a>Man X</h2>
+
+<p>This is the <a
+href="http://www.motifzone.com/resources/man/X.html">X man page</a>.
+It lists all the standard command-line args. </p>
+
+<h2><a name="05"></a>Events</h2>
+
+<p>There are 33 types of events, see <a
+href="http://www.motifzone.com/resources/man/XAnyEvent.html">man
+XAnyEvent</a> </p>
+
+<h2><a name="06"></a>Color Maps</h2>
+
+<p>X supports frame buffers with depths from 1 bit deep on up. It
+also supports color maps, with the user having total control.
+There are also several ways to specify colors; see man X.</p>
+
+<h2><a name="07"></a>Fonts</h2>
+
+<p>Fonts can be specified at runtime, like other resources.
+Wildcards and alternate names are allowed. There can be
+designated font servers.</p>
+
+<h2><a name="08"></a>Drawing Lines, Polygons, etc</h2>
+
+<p>The Xlib level of X does this. It's complicated. I used to
+talk about it in class. </p>
+
+<h1><a name="10"></a>Debugging Hints</h1>
+
+<h2><a name="11"></a>Meaning of Pointer -- Integer Warning</h2>
+
+<p>What causes this?</p>
+
+<p><tt>warning: assignment makes pointer from integer without a
+cast</tt> </p>
+
+<p>One common reason is that you didn't declare a routine that
+returns a pointer. Then the routine type defaults to int. This
+can happen if you copy some code from <em>xbox</em> to <em>xtext</em>
+w/o also copying the affiliated include files. E.g., <em>XmCreatePromptDialog</em>
+needs </p>
+
+<p><tt>#include &lt;Xm/SelectioB.h&gt; </tt></p>
+
+<p>See the man page or programmers guide.</p>
+
+<h2><a name="12"></a>Perror</h2>
+
+<p>Check the error code returned by <tt>open</tt>, <tt>read</tt>,
+etc. If it's an error (possibly shown by -1), then in addition
+possibly to printing your own error message, call <tt>perror</tt>
+to print the reason for failing. See the man page. </p>
+
+<h2><a name="13"></a>Graphical debuggers</h2>
+
+<p><tt>ddd</tt> and <tt>xxgdb</tt> are useful graphical debuggers
+to see where the program crashed, run it again line by line, etc.
+The following was posted to <tt>rpi.rcs</tt> by
+wilmesj@sage3101-11.its.rpi.edu (Josh Wilmes) in November 97. </p>
+
+<p>``The Data Display Debugger (DDD) is a novel graphical user
+interface to GDB and DBX, the popular UNIX debuggers. Besides
+``usual'' features such as viewing source texts and breakpoints,
+DDD provides a *graphical data display*, where data structures
+are displayed as graphs. A simple mouse click dereferences
+pointers or reveals structure contents. Complex data structures
+can be explored incrementally and interactively, using automatic
+layout if preferred. Each time the program stops, the data
+display reflects the current variable values. Using DDD, you can
+reason about your application by viewing its data, not just by
+viewing it execute lines of source code. </p>
+
+<p>``DDD is available through the ACM Bin-Man service. For more
+info on the service, see /dept/acm/Bin-Man.Service.'' </p>
+
+<h2><a name="14"></a>I/O in C</h2>
+
+<p>There are two ways to do this: either with the routines <tt>open</tt>,
+<tt>read</tt>, <tt>write</tt>, and <tt>close</tt>, or with the
+routines <tt>fopen</tt>, <tt>fread</tt>, <tt>fwrite</tt>, and <tt>fclose</tt>.
+I recommend the first set. Since you are reading files that are
+much smaller than your memory, declare a large buffer and read
+the whole file in one call. Calling <tt>getc</tt> in a loop is
+crazy. </p>
+
+<p>When using <tt>open</tt> to create a file, use the third
+argument to give a mode such as 0600. Otherwise, <tt>open</tt>
+might create the file nonwritable, and the next time that you run
+your program, it won't be able to write it. </p>
+
+<p>Here's a sample program, <a href="testopen.c"><tt>testopen.c</tt></a>.
+</p>
+
+<h2><a name="15"></a>Unix Man Usage</h2>
+
+<p>If there are both a command and a routine with the same name,
+as for <tt>write</tt>, <tt>man</tt> will give you the command man
+page. <tt>man -k write</tt> will list all the man pages with <tt>write</tt>
+as part of the title line. <tt>man 2 write</tt> will list the
+routine's man page, which is in volume 2. </p>
+
+<h1><a name="16"></a>More on Online Documentation</h1>
+
+<p>For example, here is how to find the chapter on color in the
+online Xlib Programming Manual on the SGIs.</p>
+
+<ol>
+    <li>Look at the menu that should be on your screen, which
+        looks like this. <p><img src="sgidoc1.gif" width="124"
+        height="159"> </p>
+    </li>
+    <li>Click on <em>Help</em>, to cause a menu like this to
+        appear.<p><img src="sgidoc2.gif" width="119" height="130">
+        </p>
+    </li>
+    <li>Click on <em>Online Books</em>, to cause a window like
+        this.<p><img src="sgidoc3.gif" width="550" height="700"> </p>
+    </li>
+    <li>Double click on <em>Xlib Programming Manual</em>, to
+        cause a window like this.<p><img src="sgidoc4.gif"
+        width="642" height="730"> </p>
+    </li>
+    <li>Scroll thru the Table of Contents in the upper window to
+        find <em>Chapter 7 - Color</em>. </li>
+    <li>If you wish, click on <em>+</em> to expand the table of
+        contents.</li>
+    <li>Double click on chapter 7 to display the text in the
+        lower window.</li>
+    <li>Scroll thru it.</li>
+    <li>Don't try to read every detail. You want only an
+        introduction and executive summary.</li>
+</ol>
+
+<h1><a name="09"></a>Homework 4 --- due Thurs Feb 10</h1>
+
+<p>The main part of this homework is to write a usable text
+editor, which is surprisingly easy given the Motif widgets, which
+have already done most of the work.</p>
+
+<p>* Do not hand in anything for the starred questions.</p>
+
+<ol>
+    <li>What is special about a cascade button? (Ref: the Motif
+        Programming Guide, chapter 6.)</li>
+    <li>``The windows associated with PopupMenus and
+        PulldownMenus are top-level windows. That is, the parent
+        window of such a menu is the root window of the screen,
+        not the window associated with the parent widget.'' What
+        advantage is there to this? (same ref.)</li>
+    <li>Read chapter 1 of the <em>Motif Progamming Guide</em>,
+        which has an excellent capsule summary of X, and answer
+        these questions from it. <ol>
+            <li>Tell us the definition of a <em>GUI</em>. </li>
+            <li>Tell us the definition of an <em>API</em>. </li>
+            <li>What, fundamentally, is the <em>X Window System</em>?
+            </li>
+            <li>In one sentence, what is a <em>display</em>? </li>
+            <li>What are the three most important contributions
+                of {Xt}? </li>
+            <li>What is the main function of a <em>shell widget</em>?
+            </li>
+        </ol>
+    </li>
+    <li>* Compile and play with <a href="../05/xdrawing.c">xdrawing.c</a></li>
+    <li>* Change the coordinates of the end points.</li>
+    <li>* Draw more lines and Points.</li>
+    <li>* Change the color of the GC. </li>
+    <li>* Check out the events being sent to your application. Is
+        there enough to create a drawing program?</li>
+    <li>Now that you understand xdrawing, your real homework is
+        to extend it to make an actual, usable, drawing app. Add
+        two buttons that represent the current drawing tool. One
+        is a line tool and the other is a point tool. When the
+        user presses the mouse button over the canvas your
+        application should draw according to the current tool and
+        color. If the line tool is active, you need to capture
+        the mouse down and mouse up events to get the beginning
+        and end of the line. If the point tool is active you can
+        simply capture the mouse down and simply draw a
+        point.Here are some hints:<ul>
+            <li>Lookup XtGetGC and XChangeGC for info on changing
+                the current color.</li>
+            <li>Take a look at this code snippet for color
+                allocation: <a href="get_pixel.c">get_pixel.c</a></li>
+            <li>Popup a dialog to ask for color as a string in
+                the form &quot;r,g,b&quot; and parse it
+                internally to get the pixel.</li>
+            <li>Extra credit for people who create a better color
+                chooser. (one that works and is easy to use).</li>
+        </ul>
+    </li>
+    <li>Get a screendump showing your name in the title bar of
+        your app and some drawing. Hand it, and a code listing
+        in. (You don't need to hand in a color print out.</li>
+</ol>
+
+<h1><a name="17"></a>Tcl/tk --- Another Widget Set</h1>
+
+<p>There are other widget sets besides Motif. For example, Athena
+is the demo widget set that comes with X. It's free with source
+code, but is not as fancy. Here is another one, which I'll cover
+as part of this course.</p>
+
+<p><tt>Tcl</tt> is an interpreted language designed by John
+Ousterhout at UC Berkeley, with funding from ARPA. Its purpose is
+to facilitate interactive programs. It is becoming very widely
+used. It even runs from Netscape and Internet Explorer as a
+plugin. According to the man page,</p>
+
+<p>It is actually two things: a language and a library. First,
+Tcl is a simple textual language, intended primarily for issuing
+commands to interactive programs such as text editors, debuggers,
+illustrators, and shells. It has a simple syntax and is also
+programmable, so Tcl users can write command procedures to
+provide more powerful com- mands than those in the built-in set.
+Second, Tcl is a library package that can be embedded in
+application programs.</p>
+
+<p>Several packages are built on top, such as <tt>expect</tt> and
+<tt>Tk</tt>. Expect is unrelated to this course, but is cool.
+From its man page,</p>
+
+<p>Expect is a program that ``talks'' to other interactive
+programs according to a script. Following the script, expect
+knows what can be expected from a program and what the correct
+response should be. An interpreted language provides branching
+and high-level control structures to direct the dialogue.
+(Alternatively, the user may use the C language directly. See
+libexpect(3).) In addition, the user can take control and
+interact directly when desired, afterward returning control to
+the script. Some applications are these:</p>
+
+<ol>
+    <li>Cause your computer to dial you back, so that you can
+        login without paying for the call.</li>
+    <li>Start a game (e.g., rogue) and if the optimal
+        configuration doesn't appear, restart it (again and
+        again) until it does, then hand over control to you.</li>
+</ol>
+
+<p><tt>Tk</tt> is an X11 toolkit that provides the Motif look and
+feel and is implemented using the Tcl scripting language.
+Programs are much shorter than similar C programs, tho they
+execute more slowly. There are many demo programs in <tt>/campus/tcl/tk/4.2/common/lib/tk4.2/demos/</tt>.
+To run them, you need <tt>/campus/tcl/tk/4.2/</tt>whatever<tt>/bin/</tt>
+in your PATH, then just type the name of the program, such as <tt>hello</tt>,
+the Tcl/Tk equivalent of our <tt>xgoodbye</tt>. This is its code.
+</p>
+
+<pre>
+#!/bin/sh
+# the next line restarts using wish \
+exec wish4.2 &quot;$0&quot; &quot;$@&quot;
+
+# hello --
+# Simple Tk script to create a button that prints &quot;Hello, world&quot;.
+# Click on the button to terminate the program.
+#
+# SCCS: @(#) hello 1.6 96/02/16 10:49:18
+# 
+# The first line below creates the button, and the second line
+# asks the packer to shrink-wrap the application's main window
+# around the button.
+
+button .hello -text &quot;Hello, world&quot; -command {
+    puts stdout &quot;Hello, world&quot;; destroy .
+}
+pack .hello
+</pre>
+
+<p><tt>widget</tt> shows many examples, such as editing arrow
+sizes: </p>
+
+<p align="center"><img src="arrow.gif" width="516" height="600"> </p>
+
+<p>and navigating around a floorplan for DEC's Westerm Research
+Lab. </p>
+
+<p align="center"><img src="decwrlfloor.gif" width="937"
+height="731"> </p>
+
+<p>Here is a tiny line drawing program, <a href="stroker.tcl">stroker.tcl</a>
+from Sunlabs. ``Start drawing by pressing the left mouse button,
+then draw a line by moving the mouse. When you release the left
+mouse button, the line gets entered into the canvas. You can
+delete a line by pressing the DEL key while the mouse is over a
+line.'' Here is some sample output.</p>
+
+<p align="center"><img src="stroker.gif" width="412" height="430">
+</p>
+
+<p>The code is just 32 lines. </p>
+
+<p>Here is a Tcl/Tk intro for the SGIs. It may work similarly on
+other platforms, depending the on Tcl version there. </p>
+
+<ol>
+    <li>Type <tt>wish</tt> to start the interactive widget shell
+        to get this:<p><img src="tcl1.gif" width="208"
+        height="226"> </p>
+    </li>
+    <li>Create a label widget: <tt>label .a -text Hi </tt></li>
+    <li>and realize it: <tt>pack .a</tt><p><img src="tcl2.gif"
+        width="30" height="50"> </p>
+    </li>
+    <li>Change its color: <tt>.a configure -fg red -bg cyan</tt></li>
+    <li>and its label: <tt>.a configure -text bonjour</tt>:<p><img
+        src="tcl3.gif" width="75" height="50"> </p>
+    </li>
+    <li>Make another label: <tt>label .b -text { This is a longer
+        message }</tt></li>
+    <li>and realize it also: <tt>pack .b</tt>:<p><img
+        src="tcl4.gif" width="220" height="74"> </p>
+    </li>
+    <li>Make a button with a callback and realize it:<pre>
+button .err -text {I'm an error message.
+Press me to remove.} \
+-font -*-courier-bold-r-*-*-*-200-*-*-*-*-*-* \
+-fg red -command {destroy .err}
+pack .err
+</pre>
+        <p>getting this.</p>
+        <p><img src="tcl5.gif" width="397" height="158"> </p>
+    </li>
+    <li>Click on it.<p><img src="tcl6.gif" width="220"
+        height="74"> </p>
+    </li>
+    <li>Make a popup dialog with a menu:<pre>
+tk_dialog .ddd title {Pick your favorite curriculum:} \
+{} 1 EE CSYS CS MATH
+</pre>
+        <p><img src="tcl7.gif" width="377" height="158"> </p>
+        <p>and ensure your success in this course by picking the
+        right choice. Its number, counting from 0, is returned.
+        Do <tt>man dialog</tt> to see the args.</p>
+    </li>
+    <li>Make an entry widget, which provides a line for you to
+        type input:<pre>
+entry .ee -background green
+pack .ee
+</pre>
+        <p><img src="tcl8.gif" width="220" height="102"> </p>
+    </li>
+    <li>Type something in the green space, then delete a few
+        chars to show how you can edit the text, and get the
+        result thus:<pre>
+.ee delete 2 4
+.ee get
+</pre>
+    </li>
+    <li>Finally, make a procedure to open a pipe to get the
+        result of the date command and put that into a variable.
+        Then make a button whose text is always the current value
+        of that variable, and whose callback is that procedure.<pre>
+proc getdate { } {
+  global date
+  set datef [open &quot;|date&quot;]
+  set date [read $datef] 
+  close $datef
+}
+
+getdate
+
+button .printdate -textvariable date  -fg red -command getdate
+
+pack .printdate
+</pre>
+        <p><img src="tcl9.gif" width="276" height="156"> </p>
+    </li>
+</ol>
+
+<p>For more info, try here:</p>
+
+<ol>
+    <li><a href="http://www.tcltk.com/">Tcl/Tk Information</a> </li>
+    <li><a href="http://www.TclConsortium.org/">Tcl Consortium</a>
+        - Which is unfortunately shutting down.</li>
+    <li><a href="http://www.scriptics.com/">Scriptics Corporation</a>
+    </li>
+    <li><a href="http://www.cujo.com/tcl_tut.html">Tcl Tutorial</a></li>
+    <li><a
+        href="http://www.dci.clrc.ac.uk/Publications/Cookbook/index.html">Tc/Tk
+        tutorial</a> - A good start point and relatively complete
+        (although there are hundreds of tutorials)</li>
+    <li>at rpi: <tt>/campus/tcl</tt> </li>
+</ol>
+
+<p>I would choose Tcl rather than Motif for a large GUI. </p>
+
+<p><br>
+</p>
+
+<hr>
+
+<p><a href="../10/" target="_top">Previous Class</a>, <a
+href="../12/" target="_top">Next Class</a>, <a
+href="http://www.rpi.edu/dept/ecse/graphics/index.html"
+target="_top">ECSE-4750 Fall 1999 Home Page</a> </p>
+
+<hr>
+
+<p><font size="2">Copyright © 1998-9, Wm. Randolph Franklin. You
+may use my material for non-profit education and research,
+provided that you acknowledge me and preserve this notice. </font></p>
+<div align="center"><center>
+
+<address>
+    <font size="2">Wm. Randolph Franklin, Associate Professor<br>
+    For email address, replace NOSPAM by RPI in the following:
+    wrf@ecse.NOSPAM.edu<br>
+    </font><a href="http://www.ecse.rpi.edu/Homepages/wrf/"><font
+    size="2">http://www.ecse.rpi.edu/Homepages/wrf/</font></a><font
+    size="2"><br>
+    +1 (518) 276-6077; Fax: -6261<br>
+    ECSE Dept., 6026 JEC, Rensselaer Polytechnic Inst, Troy NY,
+    12180 USA<br>
+    (PGP key available)<br>
+    </font>
+</address>
+</center></div><script>
+document.write("<i>Updated:</i> " + document.lastModified + "<br>")
+document.write("<i>URL:</i> " + document.URL + "<br>")
+</script>
+</body>
+</html>

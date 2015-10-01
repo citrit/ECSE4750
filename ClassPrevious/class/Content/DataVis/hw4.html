@@ -1,0 +1,52 @@
+<html>
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 2.0">
+<title>Data Vis - Homework 4</title>
+</head>
+<body bgcolor="#FFFFFF">
+<h3 align="center"><img src="Speckled_Gradient1A5.gif"
+width="500" height="4"></h3>
+<h3 align="center"><img src="images/head.gif" align="absmiddle"
+width="73" height="90">Advanced Computer Graphics and Data
+Visualization </h3>
+<p align="center"><img src="Speckled_Gradient1A5.gif" width="500"
+height="4"></p>
+<p align="center"><strong>Homework 4 Due: December 5, 1995 </strong></p>
+<p>&#160;</p>
+<p>This homework requires you to use the VTK library in order to
+load and display a MRI data file. The template Makefile and data
+files are in: </p>
+<p>~citrit/public/VisClass/C++/hw4 </p>
+<p>You need to create source that will load the data file into a
+Scalar object and create a pipeline to render an isosurface. The
+objects you will need are: </p>
+<pre>	vtkRenderMaster		vtkActor
+	vtkRenderWindow		vtkStructuredPoints
+	vtkRenderer		vtkShortScalars 
+	vtkMarchingCubes	vtkPolyMapper
+	vtkRenderWindowInteractor </pre>
+<p>All these objects are described in the text in the man pages
+at the end of the book. There are example programs that use the
+VTK library in: </p>
+<blockquote>
+    <p>/campus/visualization/vtk/1.1/common/examples/cc </p>
+</blockquote>
+<p>directory. Look through these to get a feel for how to use the
+objects and to create the dependancy pipeline. The data file is
+called MRIdata.bin and it contains a subsampled version of an MRI
+scan of a human head. It is a 64 x 64 x 27 regularly spaced grid.
+The data values in the file are shorts and are in row major
+order. </p>
+<p>Use 225.0 as the initial isosurface value, this should render
+a recognizable image. </p>
+<p>Please shar up only your source code. Some people sent me the
+object code in the last homework and shar did not work. Simply do
+a &quot;make clean&quot; before archiving and mailing your code.
+The Makefile's will place your object code in the /tmp directory,
+remeber to run it by using /tmp/hw4. If you are having problems
+with space, please see me.</p>
+<p><img src="Speckled_Gradient1A5.gif" width="500" height="4"></p>
+</body>
+</html>

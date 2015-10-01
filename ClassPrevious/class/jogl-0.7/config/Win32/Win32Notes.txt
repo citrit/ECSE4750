@@ -1,0 +1,20 @@
+NOTES:
+
+OpenGL_funcs.c:
+	- Added Win32 specific #ifdef 
+	- fixed a compiler warning on line 1290, conversion from double to float
+	- changed near and far variables to nearVal and farVal ( near and far 
+		are reserved in Win32 )
+	- ** line 1199, 1233, 1269, 1303 : local variable 'i' used without being
+		initialized!  What's 'i' suppose to be set too???? **
+
+OpenGLU_funcs.c
+	- Added a Win32 specific #ifdef
+	- changed near and far variables to nearVal and farVal ( near and far 
+		are reserved in Win32 )
+
+
+jogl_lib.h
+	- Added a Win32 specific #ifdef
+	- Added a BAD_VALUE macro
+	

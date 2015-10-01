@@ -1,0 +1,9 @@
+# From: Brian J Griglak <griglb>
+
+x - creating lock directory
+x - extracting MRIHead.tcl (text)
+x - extracting probehedge.tcl (text)
+x - extracting probestream.tcl (text)
+x - extracting probewarp.tcl (text)
+x - extracting quad.tcl (binary)
+x - extracting vtkInt.tcl (binary)

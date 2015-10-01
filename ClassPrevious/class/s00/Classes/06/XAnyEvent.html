@@ -1,0 +1,116 @@
+<HTML>
+<BODY>
+<PRE>
+<!-- Manpage converted by man2html 3.0.1 -->
+NAME
+     <A HREF="XAnyEvent.html">XAnyEvent</A>, <A HREF="XAnyEvent.html">XEvent</A> - generic <A HREF="X.html">X</A> event structures
+
+STRUCTURES
+     All the event structures declared in &lt;<I>X11</I>/<I>Xlib</I>.<I>h</I>&gt; have the
+     following common members:
+     typedef struct {
+          int type;
+          unsigned long serial;    /* # of last request processed by server */
+          Bool send_event;         /* true if this came from a SendEvent request */
+          Display *display;        /* Display the event was read from */
+          Window window;
+     } <A HREF="XAnyEvent.html">XAnyEvent</A>;
+
+     The type member is set to the event type constant name that
+     uniquely identifies it.  For example, when the <A HREF="X.html">X</A> server
+     reports a <I>GraphicsExpose</I> event to a client application, it
+     sends an <I><A HREF="XGraphicsExposeEvent.html">XGraphicsExposeEvent</A></I> structure with the type member
+     set to <I>GraphicsExpose</I>.  The display member is set to a
+     pointer to the display the event was read on.  The
+     send_event member is set to <I>True</I> if the event came from a
+     <I>SendEvent</I> protocol request.  The serial member is set from
+     the serial number reported in the protocol but expanded from
+     the 16-bit least-significant bits to a full 32-bit value.
+     The window member is set to the window that is most useful
+     to toolkit dispatchers.
+
+     The <I><A HREF="XAnyEvent.html">XEvent</A></I> structure is a union of the individual structures
+     declared for each event type:
+     typedef union _XEvent {
+          int type;                /* must not be changed */
+          <A HREF="XAnyEvent.html">XAnyEvent</A> xany;
+          <A HREF="XButtonEvent.html">XKeyEvent</A> xkey;
+          <A HREF="XButtonEvent.html">XButtonEvent</A> xbutton;
+          <A HREF="XButtonEvent.html">XMotionEvent</A> xmotion;
+          <A HREF="XCrossingEvent.html">XCrossingEvent</A> xcrossing;
+          <A HREF="XFocusChangeEvent.html">XFocusChangeEvent</A> xfocus;
+          <A HREF="XExposeEvent.html">XExposeEvent</A> xexpose;
+          <A HREF="XGraphicsExposeEvent.html">XGraphicsExposeEvent</A> xgraphicsexpose;
+          <A HREF="XGraphicsExposeEvent.html">XNoExposeEvent</A> xnoexpose;
+          XVisibilityEvent xvisibility;
+          <A HREF="XCreateWindowEvent.html">XCreateWindowEvent</A> xcreatewindow;
+          <A HREF="XDestroyWindowEvent.html">XDestroyWindowEvent</A> xdestroywindow;
+          <A HREF="XUnmapEvent.html">XUnmapEvent</A> xunmap;
+          <A HREF="XMapEvent.html">XMapEvent</A> xmap;
+          <A HREF="XMapRequestEvent.html">XMapRequestEvent</A> xmaprequest;
+          <A HREF="XReparentEvent.html">XReparentEvent</A> xreparent;
+          <A HREF="XConfigureEvent.html">XConfigureEvent</A> xconfigure;
+          <A HREF="XGravityEvent.html">XGravityEvent</A> xgravity;
+          <A HREF="XResizeRequestEvent.html">XResizeRequestEvent</A> xresizerequest;
+          <A HREF="XConfigureRequestEvent.html">XConfigureRequestEvent</A> xconfigurerequest;
+          <A HREF="XCirculateEvent.html">XCirculateEvent</A> xcirculate;
+          <A HREF="XCirculateRequestEvent.html">XCirculateRequestEvent</A> xcirculaterequest;
+          <A HREF="XPropertyEvent.html">XPropertyEvent</A> xproperty;
+          <A HREF="XSelectionClearEvent.html">XSelectionClearEvent</A> xselectionclear;
+          <A HREF="XSelectionRequestEvent.html">XSelectionRequestEvent</A> xselectionrequest;
+          <A HREF="XSelectionEvent.html">XSelectionEvent</A> xselection;
+          <A HREF="XColormapEvent.html">XColormapEvent</A> xcolormap;
+          <A HREF="XClientMessageEvent.html">XClientMessageEvent</A> xclient;
+          <A HREF="XMapEvent.html">XMappingEvent</A> xmapping;
+          <A HREF="XErrorEvent.html">XErrorEvent</A> xerror;
+          <A HREF="XKeymapEvent.html">XKeymapEvent</A> xkeymap;
+          long pad[24];
+     } <A HREF="XAnyEvent.html">XEvent</A>;
+
+     An <I><A HREF="XAnyEvent.html">XEvent</A></I> structure's first entry always is the type member,
+     which is set to the event type.  The second member always is
+     the serial number of the protocol request that generated the
+     event.  The third member always is send_event, which is a
+     <I>Bool</I> that indicates if the event was sent by a different
+     client.  The fourth member always is a display, which is the
+     display that the event was read from.  Except for keymap
+     events, the fifth member always is a window, which has been
+     carefully selected to be useful to toolkit dispatchers.  To
+     avoid breaking toolkits, the order of these first five
+     entries is not to change.  Most events also contain a time
+     member, which is the time at which an event occurred.  In
+     addition, a pointer to the generic event must be cast before
+     it is used to access any other information in the structure.
+
+SEE ALSO
+     <A HREF="XButtonEvent.html">XButtonEvent</A>(3X11), <A HREF="XCreateWindowEvent.html">XCreateWindowEvent</A>(3X11),
+     <A HREF="XCirculateEvent.html">XCirculateEvent</A>(3X11), <A HREF="XCirculateRequestEvent.html">XCirculateRequestEvent</A>(3X11),
+     <A HREF="XColormapEvent.html">XColormapEvent</A>(3X11), <A HREF="XConfigureEvent.html">XConfigureEvent</A>(3X11),
+     <A HREF="XConfigureRequestEvent.html">XConfigureRequestEvent</A>(3X11), <A HREF="XCrossingEvent.html">XCrossingEvent</A>(3X11),
+     <A HREF="XDestroyWindowEvent.html">XDestroyWindowEvent</A>(3X11), <A HREF="XErrorEvent.html">XErrorEvent</A>(3X11),
+     <A HREF="XExposeEvent.html">XExposeEvent</A>(3X11), <A HREF="XFocusChangeEvent.html">XFocusChangeEvent</A>(3X11),
+     <A HREF="XGraphicsExposeEvent.html">XGraphicsExposeEvent</A>(3X11), <A HREF="XGravityEvent.html">XGravityEvent</A>(3X11),
+     <A HREF="XKeymapEvent.html">XKeymapEvent</A>(3X11), <A HREF="XMapEvent.html">XMapEvent</A>(3X11), <A HREF="XMapRequestEvent.html">XMapRequestEvent</A>(3X11),
+     <A HREF="XPropertyEvent.html">XPropertyEvent</A>(3X11), <A HREF="XReparentEvent.html">XReparentEvent</A>(3X11),
+     <A HREF="XResizeRequestEvent.html">XResizeRequestEvent</A>(3X11), <A HREF="XSelectionClearEvent.html">XSelectionClearEvent</A>(3X11),
+     <A HREF="XSelectionEvent.html">XSelectionEvent</A>(3X11), <A HREF="XSelectionRequestEvent.html">XSelectionRequestEvent</A>(3X11),
+     <A HREF="XUnmapEvent.html">XUnmapEvent</A>(3X11), XVisibilityEvent(3X11)
+     <I>Xlib</I> - <I>C</I> <I>Language</I> <I><A HREF="X.html">X</A></I> <I>Interface</I>
+
+
+
+
+
+
+
+
+
+
+</PRE>
+<HR>
+<ADDRESS>
+Man(1) output converted with
+<a href="http://www.oac.uci.edu/indiv/ehood/man2html.html">man2html</a>
+</ADDRESS>
+</BODY>
+</HTML>

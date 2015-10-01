@@ -1,0 +1,256 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage Express 2.0">
+<title>Data Vis - Graphics Storage Algorithms</title>
+</head>
+
+<body bgcolor="#FFFFFF">
+
+<h2><img src="Speckled_Gradient5254.gif" width="500" height="4"></h2>
+
+<h3><img src="images/head.gif" align="absmiddle" width="73"
+height="90">Advanced Computer Graphics and Data Visualization</h3>
+
+<h2><img src="Speckled_Gradient5254.gif" width="500" height="4"></h2>
+
+<p>&nbsp;</p>
+
+<h2>Section 3: Graphics Storage Algorithms</h2>
+
+<ul>
+    <li>What we have accomplished so far with our rendering
+        system is a method to store and retrieve graphical
+        entities.</li>
+    <li>What we need now is more refined positioning and view
+        point definitions.</li>
+    <li>We will accomplish this by first creating a model for how
+        our system works.</li>
+    <li>To do this we need to:<ol>
+            <li>Define behaviors for the objects</li>
+            <li>Define behaviors for the view point manipulation</li>
+        </ol>
+    </li>
+    <li>These behaviors (or methods) are very similar in form and
+        function</li>
+    <li>Do we simply add methods or extract this behavior into
+        its own object (for re-use later)</li>
+    <li>For purposes of re-use, we will extract these methods
+        into an object</li>
+</ul>
+
+<hr>
+
+<h3>The Matrix Object</h3>
+
+<ul>
+    <li>The Matrix object is our position, scale, and rotation
+        holder.</li>
+    <li>It has within it a 4x4 matrix of floats</li>
+    <li>The matrices are widely used in computer graphics because
+        they allow us to perform the above operations by repeated
+        matrix multiplication</li>
+    <li>For example, if we wanted to translate a point (<em>x, y,
+        z</em>) by the vector (<em>t</em><font size="1"><em>x</em></font><em>,
+        t</em><font size="1"><em>y</em></font><em>, t</em><font
+        size="1"><em>z</em></font>) we need to create a
+        translation matrix</li>
+</ul>
+
+<p>&nbsp;</p>
+<div align="center"><center>
+
+<table border="0" cellpadding="4">
+    <tr>
+        <td>&nbsp;</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><em>t</em><font size="1"><em>x</em></font></td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td><em>T</em><font size="1"><em>T</em></font> = </td>
+        <td>0</td>
+        <td>1</td>
+        <td>0</td>
+        <td><em>t</em><font size="1"><em>y</em></font></td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td>0</td>
+        <td>0</td>
+        <td>1</td>
+        <td><em>t</em><font size="1"><em>z</em></font></td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>1</td>
+        <td>&nbsp;</td>
+    </tr>
+</table>
+</center></div>
+
+<ul>
+    <li>and then post-multiply it with the homogenous coordinate
+        (<em>x</em><font size="1"><em>h</em></font><em>, y</em><font
+        size="1"><em>h</em></font><em>, z</em><font size="1"><em>h</em></font><em>,
+        w</em><font size="1"><em>h</em></font>) or</li>
+</ul>
+
+<p>&nbsp;</p>
+<div align="center"><center>
+
+<table border="0" cellpadding="4">
+    <tr>
+        <td width="12%"><em>x'</em></td>
+        <td width="12%">&nbsp;</td>
+        <td width="12%">1</td>
+        <td width="12%">0</td>
+        <td width="13%">0</td>
+        <td width="13%"><em>t</em><font size="1"><em>x</em></font></td>
+        <td width="13%">&nbsp;</td>
+        <td width="13%"><em>x</em></td>
+    </tr>
+    <tr>
+        <td width="12%"><em>y'</em></td>
+        <td width="12%">=</td>
+        <td width="12%">0</td>
+        <td width="12%">1</td>
+        <td width="13%">0</td>
+        <td width="13%"><em>t</em><font size="1"><em>y</em></font></td>
+        <td width="13%">*</td>
+        <td width="13%"><em>y</em></td>
+    </tr>
+    <tr>
+        <td width="12%"><em>z'</em></td>
+        <td width="12%">&nbsp;</td>
+        <td width="12%">0</td>
+        <td width="12%">0</td>
+        <td width="13%">1</td>
+        <td width="13%"><em>t</em><font size="1"><em>z</em></font></td>
+        <td width="13%">&nbsp;</td>
+        <td width="13%"><em>z</em></td>
+    </tr>
+    <tr>
+        <td width="12%"><em>w'</em></td>
+        <td width="12%">&nbsp;</td>
+        <td width="12%">0</td>
+        <td width="12%">0</td>
+        <td width="13%">0</td>
+        <td width="13%">1</td>
+        <td width="13%">&nbsp;</td>
+        <td width="13%">1</td>
+    </tr>
+</table>
+</center></div>
+
+<ul>
+    <li>To scale an object use</li>
+</ul>
+
+<p>&nbsp;</p>
+<div align="center"><center>
+
+<table border="0" cellpadding="4">
+    <tr>
+        <td>&nbsp;</td>
+        <td><em>s</em><font size="1"><em>x</em></font></td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+    </tr>
+    <tr>
+        <td><em>T</em><font size="1"><em>S</em></font> = </td>
+        <td>0</td>
+        <td><em>s</em><font size="1"><em>y</em></font></td>
+        <td>0</td>
+        <td>0</td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td>0</td>
+        <td>0</td>
+        <td><em>s</em><font size="1"><em>y</em></font></td>
+        <td>0</td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>1</td>
+    </tr>
+</table>
+</center></div>
+
+<ul>
+    <li>See the remaining examples in the Toolkit chapter 3 (<font
+        size="1">pg. 49-51</font>)</li>
+    <li>A more detailed explenation is here: <a
+        href="MatrixTransforms.html">DataVis - Matrix
+        Transformations</a></li>
+</ul>
+
+<hr>
+
+<h3>Defining Actor behaviors</h3>
+
+<ul>
+    <li>We have objects representing the <em>Topology</em> and <em>Geometry</em>
+        of our graphical primitives</li>
+    <li>They position themselves in the scene according to their
+        underlying geometry</li>
+    <li>As the system exists now they are stuck in place</li>
+    <li>We need to define methods or extra objects to manipulate
+        them to create movement</li>
+    <li>Fortunately we have our handy Matrix object to use</li>
+    <li>We can then add methods to the Actor to manipulate the
+        internal Matrix object for each actor</li>
+    <li>The remaining question is do we want to add other objects
+        such as motors</li>
+</ul>
+
+<hr>
+
+<h3>Defining Camera Behaviors</h3>
+
+<ul>
+    <li>Now we need to allow the viewer to move about our world</li>
+    <li>There are many issues involved with how does the user
+        intertact with our world</li>
+    <li>By creating a generic interface to the camera, we can
+        connect any input device we want and simply translate the
+        devices input to our interface</li>
+    <li>As for generic camera movement issues, there are
+        generally two different methods</li>
+    <li>Movement around a focal point</li>
+</ul>
+
+<p align="center"><img src="images/camerapos1.jpg" width="344"
+height="317"></p>
+
+<ul>
+    <li>Movement centered at the camera position</li>
+</ul>
+
+<p align="center"><img src="images/camerapos2.jpg" width="346"
+height="335"></p>
+
+<ul>
+    <li>Camera positioning is much more involved than the actors
+        positioning.</li>
+    <li>For now we will pass this one on to VTK since it has a
+        working camera that will allow us freedom of movement</li>
+</ul>
+
+<p><img src="Speckled_Gradient5254.gif" width="500" height="4"> </p>
+</body>
+</html>

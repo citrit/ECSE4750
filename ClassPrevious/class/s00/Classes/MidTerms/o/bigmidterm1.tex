@@ -1,0 +1,1758 @@
+\documentclass[twoside]{article}
+% Time-stamp: </dept/ecse/graphics-f98/bigmidterm.tex, Tue, 16 Feb 1999, 18:38:23 EST, wrf@mab.ecse.rpi.edu>
+
+\include{header}
+
+\setlength{\textwidth}{6.2in}
+\setlength{\textheight}{8.3in}
+\setlength{\oddsidemargin}{0.2in}
+\setlength{\evensidemargin}{0.2in}
+\setlength{\topmargin}{-.3in}
+
+% ********* UPDATE EACH TIME:
+\newcommand{\handout}{bigmidterm}
+\renewcommand{\thepage}{\handout--\arabic{page}}  % Mitt p 446b
+
+\pagestyle{fancy}
+\rhead[ECSE-4750 Computer Graphics]{\thepage}
+\chead{Handout \handout}
+\lhead[\thepage]{ECSE-4750 Computer Graphics}
+\rfoot[Rensselaer Polytechnic Institute]{\thissemester}
+\lfoot[\thissemester]{Rensselaer Polytechnic Institute}
+\cfoot{}
+\setlength{\headrulewidth}{.1mm}
+\setlength{\footrulewidth}{.1mm}
+
+%\psdraft
+
+
+\input{wrf}   % After the other files since it may redefine things.
+
+
+\begin{document}
+%\initfloatingfigs
+\PScommands
+
+% \layout
+
+\title{
+\emph{This is not one exam!  It is a collection of all the
+questions that I've asked on midterm exams over the last several
+years.  Some questions refer to material that is not in this
+year's course.}\\
+% \ovalbox{\hspace*{.8in}\rule{0in}{.4in}} \hspace{1in} Name:
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ \\[.2in]
+ECSE-4750 Computer Graphics,  \thissemester \\
+Handout \handout\footnote{Copyright 1996-8, Wm. Randolph Franklin.
+You may copy this for nonprofit research and teaching purposes
+under these conditions:  (1) You do not change the document.  (2) You do not
+charge people to look at or to copy your copy.}
+\\
+Midterm Exam}
+\author{}
+% \date{Feb 26, 1997}
+
+
+
+\maketitle
+
+%\tableofcontents
+%\listoffigures
+
+
+% \newcounter{points}
+% \setcounter{points}{0}
+
+% \newcommand{\ite}[1]{\addtocounter{points}{#1} %
+% \item \ovalbox{\hspace*{2em}\rule{0cm}{2em}}/{\tt [#1]\ }}
+
+\newcounter{questionnumber}   %  Remembers the question number across exam sections.
+
+% asp{4}:  Leave 4 inches for the answer.
+% \newcommand{\asp}[1]{\vspace*{#1in}}
+% But not on the sample version.
+\newcommand{\asp}[1]{}
+
+% \enlargethispage*{1in}
+
+\section*{Exam Rules}
+\begin{enumerate}
+\setlength{\itemsep}{0pt}
+\item You may have one 2-sided 8.5 inch x11 inch note sheet, which may be
+mechanically printed.  Keep your cribsheet since you can use it again on
+the final.
+\item You may have your blank paper, calculator, pens, etc.
+\item You may not communicate with anyone, except Sutha or me.
+\item Answer all questions.  Brief, concise, answers are preferred.
+\item Spend time on a question proportional to its number of points.
+\item Note that the last page is number  \pageref{end}.
+\item Start immediately.  You have until 1:50.
+\item Try to write legibly.
+\item Write your NAME on top of this page.
+\item Try to write your answers on these question sheets, tho extra
+paper is allowed.  If an answer is on an extra sheet, say so in
+the normal space on this sheet.
+\item Leave the small oval boxes blank; they're for our grade.
+\item \emph{Warning:}  Be careful of questions that appear to be identical to ones that you've seen before.  Something might have changed.
+\end{enumerate}
+
+\section*{Exam}
+
+\begin{enumerate}
+
+
+\ite{4}  {\tt (points)} Name four things that \verb+XtVaAppInitialize+ does.
+\asp{2}
+
+\item Tell me about classes of X programs.
+\begin{enumerate}
+\ite{1} \texttt{(point)} Where is a program's class set?
+\asp{.5}
+\ite{1} What is the biggest use of the class?
+\asp{.5}
+\ite{1} What's the point of classes in general; i.e., why not just
+use program names?
+\asp{.5}
+\end{enumerate}
+
+
+\ite{3} Name X 3 resources that may be specified on the command line
+when running a program.
+\asp{1}
+
+\ite{4} In the following diagram, fill in the blanks with the
+following labels:
+% \enlargethispage*{.5in}
+\emph{motif,
+xlib,
+xt,
+user program}.
+
+\begin{minipage}{6in}
+\begin{verbatim}
+|----------------------------------------------------------|
+|                                                          |
+|                                                          |
+|                                                          |
+|-------------------------|                                |
+|                         |                                |
+|                         |                                |
+|                         |                                |
+|---------------------------------------|                  |
+|                                       |                  |
+|                                       |                  |
+|                                       |                  |
+|----------------------------------------------------------|
+|                                                          |
+|                                                          |
+|                                                          |
+|-----------------------------------------------------------
+\end{verbatim}
+\end{minipage}
+
+
+\ite{1}
+A widget variable in a program is a pointer to a structure, whose
+components are documented.  Why is it bad practice to access these
+components directly, instead of via things like \texttt{XtName}?
+\asp{1}
+
+\ite{40} Here is an alphabetical list of names that occur in X,
+including routines, macros, and so on.   Use them to answer the
+question starting on \pageref{p:q}.
+
+\begin{multicols}{2}
+
+\begin{enumerate}
+\setlength{\itemsep}{0in}
+\renewcommand{\theenumii}{\arabic{enumii}}
+\item argc
+\item argv
+\item Buttonpress
+\item ButtonPressMask
+\item callback
+\item CancelButtonCallback
+\item CapRound
+\item cascade button
+\item Class
+\item ClearButtonCallBack
+\item Coloredit
+\item colormap
+\item colorpanel
+\item Colors
+\item DefaultRootWindow
+\item Draw
+\item editres
+\item Event
+\item EventMask
+\item Expose
+\item ExposureMask
+\item GC
+\item JoinBevel
+\item Keypress
+\item I18N
+\item LineDoubleDash
+\item Manage
+\item Map
+\item OkButtonCallback
+\item OSF
+\item PrintButtonCallBack
+\item PushButton
+\item Redraw
+\item RowColumn
+\item Widget
+\item XAllocColor
+\item XBlackPixel
+\item XButtonEvent
+\item XColor
+\item XCreateColormap
+\item XCreateGC
+\item XCreateSimpleWindow
+\item XDefaultColormap
+\item XDefaultScreen
+\item XDisplayHeight
+\item XDisplayHeightMM
+\item XDrawLine
+\item XDrawString
+\item XEvent
+\item XExam
+\item XExposeEvent
+\item XFarewell
+\item XFillArc
+\item XFillPolygon
+\item XKeyEvent
+\item Xlib
+\item XLookupString
+\item Xm
+\item XMapRaised
+\item XmATTACH
+\item XmBulletinBoard
+\item xmCascadeButtonWidgetClass
+\item XmCreateInformationDialog
+\item XmCreateMenuBar
+\item XmCreatePromptDialog
+\item XmCreatePulldownMenu
+\item XmCreatePushButton
+\item XmDIALOG
+\item XmFONTLIST
+\item xmFormWidgetClass
+\item XmLabel
+\item xmLabelWidgetClass
+\item XmMainWindowSetAreas
+\item xmMainWindowWidgetClass
+\item XmMessageBoxGetChild
+\item XmNactivateCallback
+\item XmNcancelCallback
+\item XmNdragCallback
+\item XmNeditMode
+\item XmNheight
+\item XmNlabelString
+\item XmNleftAttachment
+\item XmNmaximum
+\item XmNmenuHelpWidget
+\item XmNminimum
+\item XmNokCallback
+\item XmNsubMenuId
+\item XmNtextString
+\item XmNvalue
+\item XmNvalueChangedCallback
+\item XmNwidth
+\item XmNwordWrap
+\item XmNx
+\item XmNy
+\item XMove
+\item xmRowColumnWidgetClass
+\item XmScale
+\item XmScaleCallbackStruct
+\item xmScaleWidgetClass
+\item XmSelectionBoxCallbackStruct
+\item xmSeparatorWidgetClass
+\item XmString
+\item XmStringConcat
+\item XmStringCreate
+\item XmStringCreateSimple
+\item XmStringFree
+\item XmTextGetString
+\item XmTextSetString
+\item xmTextWidgetClass
+\item XNextEvent
+\item XOpenDisplay
+\item XPoint
+\item XQueryColor
+\item XRootWindow
+\item XSelectInput
+\item XServerVendor
+\item XSetBackground
+\item XSetForeground
+\item XSetLineAttributes
+\item XSetWindowColormap
+\item XStoreColor
+\item Xt
+\item XtActionProc
+\item XtActionsRec
+\item XtAddCallback
+\item XtAddEventHandler
+\item XtAppAddActions
+\item XtAppContext
+\item XtAppMainLoop
+\item XtCreateManagedWidget
+\item XtCreateWidget
+\item XtDestroyWidget
+\item XtDisplay
+\item XText
+\item XtFree
+\item XtGrabNone
+\item XtMalloc
+\item XtManageChild
+\item XtName
+\item XtNbackground
+\item XtNumber
+\item XtOverrideTranslations
+\item XtParent
+\item XtParseTranslationTable
+\item XtPointer
+\item XtPopup
+\item XtRealizeWidget
+\item XtSetArg
+\item XtSetValues
+\item XtUnmanageChild
+\item XtVaAppInitialize
+\item XtVaCreateManagedWidget
+\item XtVaGetValues
+\item XtVaSetValues
+\item XtWindow
+\item XWhitePixel
+\end{enumerate}
+\end{multicols}
+
+\noindent\label{p:q} Here is a list of X-related operations to perform,
+resources, data types, concepts, etc.
+Before each item, write down the item NUMBER in the above
+list that is most applicable.
+\newcommand{\itemsp}{\item \rule{1in}{.01in}}
+\begin{enumerate}
+\renewcommand{\theenumii}{\arabic{enumii}}
+\itemsp A button designed for calling up a pulldown menu.
+\itemsp A data type containing graphics properties of a line, such as color, width, and style.
+\itemsp A data type of a string of text including font info.
+\itemsp A data type whose components are \emph{x} and \emph{y}.
+\itemsp A particular program that queries and changes another program's resources.
+\itemsp A resource name to cause two widgets to be positioned side-by-side.
+\itemsp A resource to tie a pulldown menu to the button that will make it appear.
+\itemsp A struct containing components like red, green, blue, and pixel.
+\itemsp A widget designed to take several children, which it will lay out itself without any more user control.
+\itemsp Converts a Motif string into a C string.
+\itemsp Copies a C variable into a widget's resource value.
+\itemsp Copies a widget's resource value into a C variable.
+\itemsp Creates a popup convenience widget to ask the user for a small amount of input.
+\itemsp Creates a widget and tells its parent to determine its size and position.
+\itemsp Creates a window for a widget that doesn't yet have one.
+\itemsp Creates the top level widget.
+\itemsp Deletes a widget.
+\itemsp Determines a widget's size and location, and does the same for other widgets that have this widget as a parent.
+\itemsp Draws a line.
+\itemsp Draws text at the Xlib level.
+\itemsp Find the row of the color map containing the color white.
+\itemsp For a graphics context, sets the color to draw a solid line in.
+\itemsp Find the address of the ok button in a dialog widget.
+\itemsp Frees a Motif string that is no longer needed.
+\itemsp Gets a widget's name.
+\itemsp Gives a user routine to call when a button is activated.
+\itemsp Installs a desired color into the color map.
+\itemsp Internationalization.
+\itemsp Loops while waiting for X events.
+\itemsp Processes X arguments on the command line.
+\itemsp Reads the resource file.
+\itemsp Returns the display associated with a widget.
+\itemsp Returns the number of pixels from top to bottom on your display.
+\itemsp Returns the widget whose child this widget is.
+\itemsp Returns the window associated with a widget.
+\itemsp Specifies what classes of events to accept.
+\itemsp The industrial consortium behind X.
+\itemsp The number of arguments that an X program was run with.
+\itemsp Tries to connect to the X server.
+\itemsp Waits for the next user input or system status change, like a keypress or window expose.
+\end{enumerate}
+
+\ite{8} Here are some lines from \texttt{xfarewell.c}.
+Unfortunately, I accidently ran them thru the \texttt{sort}
+program, so that they are now in alphabetical order.  Please
+place them in the proper order, by writing the proper number of
+each line, 1,2,3, or whatever, before that line.   I've numbered
+the first three lines.
+\begin{enumerate}
+
+\item 1
+\begin{verbatim}
+#include <Xm/PushB.h>		
+\end{verbatim}
+\item 2
+\begin{verbatim}
+#include <Xm/Xm.h>		
+\end{verbatim}
+\item 3
+\begin{verbatim}
+#include <stdio.h>		
+\end{verbatim}
+\itemsp
+\begin{verbatim}
+XtAppAddActions (app_context, my_actions, XtNumber (my_actions));
+\end{verbatim}
+\itemsp
+\begin{verbatim}
+XtAppContext app_context;
+\end{verbatim}
+\itemsp
+\begin{verbatim}
+XtAppMainLoop (app_context);}
+\end{verbatim}
+\itemsp
+\begin{verbatim}
+XtRealizeWidget (top_level);	
+\end{verbatim}
+\itemsp
+\begin{verbatim}
+exit (0);}
+\end{verbatim}
+\itemsp
+\begin{verbatim}
+farewell_widget = 
+	XtVaCreateManagedWidget ("farewell", xmPushButtonWidgetClass,
+	   		         top_level, NULL);
+\end{verbatim}
+\itemsp
+\begin{verbatim}
+main (int argc, char **argv)
+\end{verbatim}
+\itemsp
+\begin{verbatim}
+static XtActionsRec my_actions[] = {{"confirm", (XtActionProc) Confirm}, 
+				    {"quit", (XtActionProc) Quit}};
+\end{verbatim}
+\itemsp
+\begin{verbatim}
+top_level = XtVaAppInitialize (&app_context, "XFarewell", NULL, 0,
+			       &argc, argv, NULL, NULL);
+\end{verbatim}
+\itemsp
+\begin{verbatim}
+void Confirm (Widget w, XButtonEvent * event, String * params, 
+	      Cardinal * num_params)
+\end{verbatim}
+\itemsp
+\begin{verbatim}
+void Quit (Widget w, XButtonEvent * event, String * params, 
+           Cardinal * num_params)
+\end{verbatim}
+\itemsp
+\begin{verbatim}
+{Widget top_level, farewell_widget;
+\end{verbatim}
+\itemsp
+\begin{verbatim}
+{fprintf (stderr, "Are you sure you want to exit?\n\
+Click with the middle pointer button if you're sure.\n");}
+\end{verbatim}
+\itemsp
+\begin{verbatim}
+{fprintf (stderr, "It was nice knowing you.\n");
+\end{verbatim}
+\end{enumerate}
+
+\ite{8} Here are some lines from \texttt{xgoodbye.c}.
+Unfortunately, I accidently ran them thru the \texttt{sort}
+program, so that they are now in alphabetical order.  Please
+place them in the proper order, by writing the proper number of
+each line, 1,2,3, or whatever, before that line.   Make variables
+local, not global, if possible.
+\begin{enumerate}
+
+\itemsp
+\begin{verbatim}
+#include <Xm/Xm.h>
+\end{verbatim}
+\itemsp
+\begin{verbatim}
+goodbye_widget = XtVaCreateManagedWidget("goodbye",
+xmPushButtonWidgetClass, top_level_widget, NULL); 
+\end{verbatim}
+\itemsp
+\begin{verbatim}
+top_level_widget = XtVaAppInitialize(&app, "XGoodbye", NULL, 0,
+&argc, argv, NULL, NULL); 
+\end{verbatim}
+\itemsp
+\begin{verbatim}
+void main(int argc, char **argv)
+\end{verbatim}
+\itemsp
+\begin{verbatim}
+Widget  top_level_widget, goodbye_widget;
+\end{verbatim}
+\itemsp
+\begin{verbatim}
+XtAddCallback(goodbye_widget, XmNactivateCallback, Quit, 0);
+\end{verbatim}
+\itemsp
+\begin{verbatim}
+XtAppMainLoop(app);     
+\end{verbatim}
+\itemsp
+\begin{verbatim}
+XtRealizeWidget(top_level_widget);
+\end{verbatim}
+\end{enumerate}
+
+\ite{2} Altho SpecTcl usually makes laying out a GUI much easier, 
+there is one program that we saw that would be much harder to do
+with SpecTcl, than in Motif or Tcl/Tk.  The reason is that in
+SpecTcl, you have lay out the widgets individually.  Circle that
+program, from the following list, which might extend to the next
+page if this question is at the bottom of the page.
+
+\begin{enumerate}
+\item xbox.c
+\item xdraw1.c
+\item xdraw2.c
+\item xfarewell.c
+\item xgoodbye.c
+\item xhello.c
+\item xlots.c
+\item xmove.c
+\item xtext.c
+\end{enumerate}
+
+\ite{8} Here is a list of structs that X uses.  Following, is a 
+list of names.  For each name, write the number of the struct
+that this applies to.   You are not expected ever to have seen
+the struct contents before.  The idea is to use your knowledge of 
+what each data type does to find a struct whose components look
+appropriate.
+
+\begin{enumerate}
+\item
+\begin{verbatim}
+typedef struct {
+    short x, y;
+} 
+\end{verbatim}
+
+\item
+\begin{verbatim}
+typedef struct {
+	unsigned long pixel;
+	unsigned short red, green, blue;
+	char flags;  /* do_red, do_green, do_blue */
+	char pad;
+} 
+\end{verbatim}
+
+\item
+\begin{verbatim}
+typedef struct {
+	int type;		/* of event */
+	unsigned long serial;	/* # of last request processed by server */
+	Bool send_event;	/* true if this came from a SendEvent request */
+	Display *display;	/* Display the event was read from */
+	Window window;	        /* "event" window it is reported relative to */
+	Window root;	        /* root window that the event occured on */
+	Window subwindow;	/* child window */
+	Time time;		/* milliseconds */
+	int x, y;		/* pointer x, y coordinates in event window */
+	int x_root, y_root;	/* coordinates relative to root */
+	unsigned int state;	/* key or button mask */
+	unsigned int button;	/* detail */
+	Bool same_screen;	/* same screen flag */
+} 
+\end{verbatim}
+
+\item
+\begin{verbatim}
+typedef struct {
+	int function;		/* logical operation */
+	unsigned long plane_mask;/* plane mask */
+	unsigned long foreground;/* foreground pixel */
+	unsigned long background;/* background pixel */
+	int line_width;		/* line width */
+	int line_style;	 	/* LineSolid, LineOnOffDash, LineDoubleDash */
+	int cap_style;	  	/* CapNotLast, CapButt, 
+				   CapRound, CapProjecting */
+	int join_style;	 	/* JoinMiter, JoinRound, JoinBevel */
+	int fill_style;	 	/* FillSolid, FillTiled, 
+				   FillStippled, FillOpaeueStippled */
+	int fill_rule;	  	/* EvenOddRule, WindingRule */
+	int arc_mode;		/* ArcChord, ArcPieSlice */
+	Pixmap tile;		/* tile pixmap for tiling operations */
+	Pixmap stipple;		/* stipple 1 plane pixmap for stipping */
+	int ts_x_origin;	/* offset for tile or stipple operations */
+	int ts_y_origin;
+        Font font;	        /* default text font for text operations */
+	int subwindow_mode;     /* ClipByChildren, IncludeInferiors */
+	Bool graphics_exposures;/* boolean, should exposures be generated */
+	int clip_x_origin;	/* origin for clipping */
+	int clip_y_origin;
+	Pixmap clip_mask;	/* bitmap clipping; other calls for rects */
+	int dash_offset;	/* patterned/dashed line information */
+	char dashes;
+} 
+\end{verbatim}
+
+
+\end{enumerate}
+
+\begin{enumerate}
+
+\itemsp GC
+\itemsp XButtonEvent
+\itemsp XColor
+\itemsp XPoint
+
+\end{enumerate}
+
+\ite{5} For each of the following properties, decide whether it
+applies more to the basic C character strings, or to Motif
+compound strings.  Write a \textbf{C} or an \textbf{M}, as
+appropriate, before each statement.
+
+\begin{enumerate}
+\itemsp The data type is XmString.
+\itemsp The usual routine that catenates two of it modifies its first argument.
+\itemsp It makes GUIs that function in other languages easier to write.
+\itemsp The routines that manipulate it allocate their own storage.
+\itemsp The number of bytes that a variable of this type occupies is less
+likely to correspond to the number of characters in the string.
+\end{enumerate}
+
+
+
+\item Consider the following X program:
+
+\lgrindfile{xexam}
+
+\begin{enumerate}
+
+\ite{4} What does this program do?
+\asp{2}
+
+\ite{2} Sketch the tree of widgets from the top level widget to
+the leaves.
+\asp{3}
+
+\ite{2} How many push button widgets are there?  Which routine is called
+when each is clicked on?
+\asp{1}
+
+\ite{2} What are the labels that will print in the command widgets by default?
+\asp{1.5}
+
+\ite{1} What file where in your account will resources be read from (assuming that
+things are configured as I've described in class)?
+\asp{.5}
+
+\ite{1} Suppose you want to change the label printed inside (only) the first
+leaf widget.  Give a possible line to add to the resources
+file.
+\asp{.5}
+
+\ite{1} Suppose you run the program thus: {\tt xexam -bg red}.
+Where, if anywhere, in your program is the bg resource recognized?
+\asp{.5}
+
+\end{enumerate}
+
+
+
+\ite{1}  How can your X program tell the user ran it with
+command-line arguments that are not X resources and values?
+\asp{.5}
+
+\ite{1} In \texttt{xgoodbye.c}, why did I place the \texttt{Quit} routine before
+\emph{main}?  For reference, here is part of that program, w/o comments.
+
+\begin{verbatim}
+void Quit(w, client_data, call_data)
+    Widget  w;
+    XtPointer client_data, call_data;
+{   printf("It was nice knowing you.\n");
+    exit(0); }
+
+void main(int argc, char **argv)
+{   Widget  top_level, goodbye_widget;
+    XtAppContext app;
+    top_level = XtVaAppInitialize(&app, "XGoodbye", NULL, 0, &argc, argv, NULL, NULL);
+    goodbye_widget = XtVaCreateManagedWidget("goodbye", xmPushButtonWidgetClass, 
+						top_level, NULL);
+    XtAddCallback(goodbye_widget, XmNactivateCallback, Quit, 0);
+    XtRealizeWidget(top_level);      
+    XtAppMainLoop(app);      
+}
+\end{verbatim}
+\asp{.5}
+
+
+
+\ite{1} In \texttt{xlots.c}, what are the names of the widgets
+created with the following code:
+\begin{verbatim}
+for (i = 0; i < N; i++)
+   {   sprintf (s, "%d", i);
+       w[i] = XtVaCreateManagedWidget (s, xmLabelWidgetClass, bb, NULL);
+   }
+\end{verbatim}
+\asp{.5}
+
+\ite{2} What are the names of the widgets
+created with the following code:
+\begin{verbatim}
+char *a[]={"Sun", "DEC", "IBM", "MS"};
+char s[100];
+char *t;
+
+for (i = 0; i < N; i++)
+   {   sprintf (s, "%d", i);
+       t=strcat(s,a[i]);
+       w[i] = XtVaCreateManagedWidget (s, xmLabelWidgetClass, bb, NULL);
+   }
+\end{verbatim}
+\asp{.5}
+
+
+\ite{1} Program \texttt{xbox.c} has the following code:
+
+\begin{verbatim}
+/* PopupDialog:  callback for the PRESSME button. */
+void PopupDialog(w, client_data, call_data)
+    Widget  w;
+    XtPointer client_data, call_data;
+{
+    Widget  parent;
+    static Widget dialogbox = (Widget) NULL;
+    parent = (Widget) client_data;
+
+    if (!dialogbox) {  /* Create this only the first time thru. */
+	dialogbox = XmCreatePromptDialog(parent, "dialogbox", NULL, 0);	
+    }
+    XtManageChild(dialogbox);
+}
+\end{verbatim}
+How is it that the \texttt{if} test creates the dialogbox only the
+first time thru?
+\asp{.6}
+
+
+
+\ite{2} There is something unusual about the identity of the
+widget returned when you call \texttt{XmCreatePromptDialog}, in
+contrast to most of the other widget creation routines.  What? 
+\asp{.6}
+
+
+
+\ite{2} In \texttt{xfarewell.c}, what is the following doing?
+\begin{verbatim}
+  static XtActionsRec my_actions[] =
+  {
+    {"confirm", (XtActionProc) Confirm},
+    {"quit", (XtActionProc) Quit},
+  };
+  ...
+  XtAppAddActions (app_context, my_actions, XtNumber (my_actions));
+\end{verbatim}
+\asp{1}
+
+
+\ite{1} Various programs have had code like the following to set a
+widget's label:
+\begin{verbatim}
+    s2=XmStringCreateSimple("newlabel");
+    XtVaSetValues (but, XmNlabelString, s2, NULL);
+\end{verbatim}
+Since I can set a widget's label in a resource file w/o going thru
+this mess, 
+why can't I just say this in the program?
+\begin{verbatim}
+    XtVaSetValues (but, XmNlabelString, "newlabel", NULL);
+\end{verbatim}
+\asp{.6}
+
+
+\ite{1} In \texttt{xdraw2.c}, why did I realize the top level
+widget before creating the graphics contexts?
+\asp{1}
+
+
+\ite{1} In \texttt{xtext.c}, what does the following code
+accomplish:
+\begin{verbatim}
+XtUnmanageChild(XmMessageBoxGetChild(help_widget, XmDIALOG_CANCEL_BUTTON));
+\end{verbatim}
+\asp{.7}
+
+
+\ite{1} What is the purpose of a cascade button on a menu bar?
+\asp{.7}
+
+
+\ite{3}
+What is a resource in X?  Name 4 resources.
+\asp{1.5}
+
+\ite{2}  What does it mean to \emph{manage} a widget?
+\asp{1}
+
+
+\ite{2}
+When you call {\tt XtMainLoop()} your program loses control to the
+X system.  Name two ways for it to get back control later (without
+terminating the X system)?
+\asp{1}
+
+
+\item
+\begin{enumerate}
+
+\ite{1}
+Why might you want to have the same callback routine for more than one
+widget?
+\asp{.5}
+
+\ite{1}
+In the above case, name one way for the routine tell which widget
+it is responding to?
+\asp{1}
+\end{enumerate}
+
+
+\ite{2} You can pass one variable to the callback routine, in the client
+data field.  Suppose that you wish to make two variables used in
+the main program to be available in the callback routine.  Give
+two different ways to do it.
+\asp{1}
+
+
+
+\ite{1} When does a widget not have a window associated with it?
+\asp{.7}
+
+
+\ite{4}
+For each of the following routines, say whether it is an
+\emph{Xlib} routine, an \emph{Xt} routine, or a \emph{Motif}
+routine:
+\begin{enumerate}
+\setlength{\itemsep}{0in}
+\item XtVaAppinitialize
+\item XmStringCreateSimple
+\item  XtVaSetValues
+\item XFillArc
+\end{enumerate}
+\asp{.6}
+
+
+\item Graphics contexts:
+\begin{enumerate}
+\ite{1} How does a graphics context lower load on the net?
+\asp{1}
+
+
+\ite{2} Name 3 attributes stored in a GC.
+\asp{1}
+\end{enumerate}
+
+
+\ite{2} One Motif design principle is called
+\emph{I18N}. What does this mean?  Name one feature that we've
+seen that supports this. 
+\asp{.8}
+
+\ite{2} What's wrong with this C program:
+\begin{verbatim}
+char command[4]="ls ";
+char arg[5]="/tmp";
+char line[100];
+
+line=strcat(command,arg);
+system(line);
+\end{verbatim}
+\asp{1}
+
+
+\ite{1} 
+Why is it advantageous for the several clients on one graphics
+server to use the same colors, instead of each using slightly
+different colors?
+\asp{1}
+
+\ite{1}
+Suppose that one program wants to use 250 colors on its own.  How
+might it do something with color maps to lessen the impact on
+others clients?
+\asp{1}
+
+
+\ite{1}  It's clear why 8-bit frame buffers use color maps (i.e.,
+to select which 256 colors of the $2^{24}$ possible ones to use).
+However, some 24-bit buffers also use color maps.  (It's not one
+$2^{24}$ entry cmap, but 3 256-entry cmaps, one per primary
+color.)  Why might they want to do this since it does make things
+more complicated?
+\asp{.7}
+
+
+\item Convenience widgets:
+\begin{enumerate}
+\ite{1} What are they?
+\asp{.7}
+\ite{1} Name one.
+\asp{.5}
+\end{enumerate}
+
+
+\ite{1} Suppose that you create an information dialog widget, but
+don't want the cancel button to appear.  How can you effect this?
+\asp{.6}
+
+
+\ite{1} How does a program know which file to read to get the
+resources?
+
+\ite{1} What does \verb+XtAppMainLoop+ do?
+
+\ite{2} What does \verb+XtRealizeWidget+ do?  It really does
+several things; I'll take any one.
+\asp{.5}
+
+
+\ite{1}
+Why does X use special data types, like \verb+Point+, instead of just
+saying \verb+struct { int x,y }+?
+\asp{.5}
+
+
+\ite{1}
+Why does X use special data types, like \verb+Position+, instead of just
+saying \verb+int+?
+\asp{.5}
+
+
+\ite{4} Give two advantages and two disadvantages of Motif compared to the
+Athena widgets.
+\asp{1}
+
+
+\ite{2}
+In your C program, Motif uses the preprocessor symbol \texttt{XmNx}
+to represent the resource that would be named {\em x} in your
+resource file.   How does this help to catch typos in your program?
+\asp{1}
+
+
+\item Motif uses compound text strings.
+\begin{enumerate}
+\ite{1} What are they?
+\ite{2} Give 2 advantages of them.  The following is not
+acceptable.
+\begin{quote}
+``It's harder to debug compound strings, so you use more CPU time.
+Motif comes from the OSF, of which IBM is a partner.  So, compound
+strings help IBM to sell more computers.''
+\end{quote}
+\end{enumerate}
+\asp{1.3}
+
+\item
+The resource file for \verb+charset.c+ said this:
+
+\begin{verbatim}
+*pb1.fontList: -*-courier-*-r-*--12-*=charset
+*pb2.fontList: -*-courier-*-r-*--14-*=charset
+*pb3.fontList: -*-courier-*-r-*--18-*=charset
+\end{verbatim}
+\asp{1.2}
+
+
+\begin{enumerate}
+\ite{2} What is this \verb+charset+ used for and where in the
+program might I refer to it?
+
+\ite{1} Why is it not a problem for the three widgets all to use
+the same \verb+charset+?  That is, won't the last use of
+\verb+charset+ override the previous two?
+\end{enumerate}
+
+
+\ite{2} In \texttt{xcharset.c}, how can the 3 widgets' different
+resources cause their labels to have different type fonts, when
+labels are exactly the same compound char string?  FYI, here is
+the relevant part of the program:
+\begin{verbatim}
+    XmString      text;
+
+    toplevel = XtVaAppInitialize(&app, "XCharset", NULL, 0,
+        &argc, argv, fallbacks, NULL);
+    text = XmStringCreateSimple("Testing, testing...");
+    rowcol_widget = XtVaCreateManagedWidget("rowcol",
+        xmRowColumnWidgetClass, toplevel, NULL);
+    XtVaCreateManagedWidget("pb1", xmPushButtonGadgetClass, rowcol_widget,
+        XmNlabelString, text, NULL);
+    XtVaCreateManagedWidget("pb2", xmPushButtonGadgetClass, rowcol_widget,
+        XmNlabelString, text, NULL);
+    XtVaCreateManagedWidget("pb3", xmPushButtonGadgetClass, rowcol_widget,
+        XmNlabelString, text, NULL);
+\end{verbatim}
+\noindent and the resource file:
+\begin{verbatim}
+*pb1.fontList: -*-courier-*-r-*--12-*=charset
+*pb2.fontList: -*-courier-*-r-*--14-*=charset
+*pb3.fontList: -*-courier-*-r-*--18-*=charset
+\end{verbatim}
+\asp{1}
+
+
+\ite{1}
+Name one programming error wrt compound strings that can lead
+to a storage leak.
+\asp{.6}
+
+
+\ite{1}
+One compound string can have several fonts.  Different X servers
+can have different fonts available.  This would seem to suggest
+that there might be a problem with a compound string referring to
+a font that doesn't exist on some servers.  Name one feature in
+the compound string format that ameliorates this possible problem.
+\asp{.6}
+
+
+\ite{1} What is a \emph{font server}?
+\asp{.5}
+
+
+\ite{1} Compound strings usually should be freed when you are
+finished with them.  What happens if you don't?
+
+
+\ite{3} Name 3 differences between standard C character strings
+and Motif compound text strings.
+
+
+\ite{2} Suppose that we wish to put 3 label widgets and 5 command
+widgets in a popup.  How can we do this, given that a transient shell
+widget can have only one child?
+\asp{.5}
+
+
+\ite{2} Consider the following widget definition:
+\begin{verbatim}
+jambo=XtVaCreateManagedWidget("gday",labelWidgetClass,box,NULL);
+\end{verbatim}
+and the following fragment from a resource file:
+\begin{verbatim}
+*jambo.command: Yes
+*jambo.labelString: No
+*gday.command: Maybe
+*gday.labelstring: bon jiorno
+*end.label: Freeze!
+*Command.labelString: Finish!
+*labelString: Default.
+*label: Itty Bitty Machines
+\end{verbatim}
+
+What will be the label on this widget?
+\asp{.5}
+
+
+\ite{2} Consider the following widget definition in a program
+whose class is \texttt{XExam}
+\begin{verbatim}
+jambo=XtVaCreateManagedWidget("gday",labelWidgetClass,box,NULL);
+\end{verbatim}
+and the following fragment from a resource file:
+\begin{verbatim}
+*jambo.command: Yes
+*jambo.labelString: No
+*gday.command: Maybe
+*gday.labelstring: bon jiorno
+*end.label: Freeze!
+*Command.labelString: Finish!
+*labelString: Default
+*label: Itty Bitty Machines
+XExam*labelString:  Forty two
+\end{verbatim}
+
+What will be the label on this widget?
+\asp{.5}
+
+
+\ite{2}
+Sometimes you see a line such as this:
+\begin{verbatim} 	XtSetArg(arg[i], XtNwidth, &width);    i++;
+\end{verbatim}
+but sometimes it is written thus:
+\begin{verbatim}	XtSetArg(arg[i], XtNwidth, width);    i++;
+\end{verbatim}
+Why is {\tt width} passed by value sometimes and by address at others?
+
+\ite{2}  What is the difference between an event and an action?
+\asp{1}
+
+
+\item  Events fall into two broad categories.
+\begin{enumerate}
+\ite{2} What are they?
+\asp{.6}
+\ite{2} Give an example of each.
+\asp{.6}
+\end{enumerate}
+
+\ite{1} How do you establish the relation between an event and an
+action?
+\asp{.5}
+
+\ite{1} There are events that are user inputs, and then there are
+events that are system status changes.  Name one of the latter.
+\asp{.6}
+
+
+\ite{3} Three types of manager widgets are \emph{rowColumn},
+\emph{form}, and \emph{bulletinBoard}.  Distinguish between them.
+\asp{1}
+
+
+\ite{1}
+In the mainwindow widget menu bar, what's the purpose of declaring
+one button to be the help button?
+\asp{1}
+
+
+\item Window managers:
+\begin{enumerate}
+\ite{2} Name 2 things that a window manager does.
+\asp{1}
+
+\ite{2} If you kill the window manager, what changes in the
+appearance on the screen?  What functionality do you lose?
+\asp{1}
+
+\ite{1} Name any one window manager in general use on RCS.
+\asp{.6}
+\end{enumerate}
+
+
+\ite{1}
+Resources are grouped into classes, just as programs are.  E.g,
+\texttt{foreground} and \texttt{bottomShadowColor} are both class
+\texttt{Foreground}. However, the background resource is in a
+different class, \texttt{Background}.  It would seem more logical
+to group all color-related resources into one class called
+\texttt{Color}.  Why do think that the OSF did not do this?
+\asp{1}
+
+
+
+\ite{2} While browsing the resources file for \verb+Netscape+, I
+found this piece of a translation table.
+\begin{verbatim}
+*globalTranslations:                    #override                       \n\
+        Meta ~Ctrl<Key>A:               addBookmark()                   \n\
+         Alt ~Ctrl<Key>A:               addBookmark()                   \n\
+        Meta ~Ctrl<Key>B:               viewBookmark()                  \n\
+         Alt ~Ctrl<Key>B:               viewBookmark()                  \n\
+        Meta ~Ctrl<Key>C:               copy()                          \n\
+         Alt ~Ctrl<Key>C:               copy()                          
+\end{verbatim}
+Which are the actions, and which the events here?
+\asp{1}
+
+\ite{2} While browsing the resources file for \verb+xcalc+, I
+found this piece of a translation table.
+\begin{verbatim}
+*hp.bevel.screen.LCD.Translations:	#replace\n\
+				<Key>p:pi()\n\
+				<Key>i:inverse()\n\
+*ti.button5.Translations: #override<Btn1Up>:off()unset()\n\
+			  <Btn3Up>:quit()
+\end{verbatim}
+Which are the actions, and which the events here?
+\asp{1}
+
+
+\item Look at this line from \verb+xtext.c+.
+\begin{verbatim}
+XtVaSetValues(clear, XmNleftAttachment, XmATTACH_WIDGET,
+	      XmNleftWidget, 	print, NULL);
+\end{verbatim}
+\begin{enumerate}
+\ite{1} What does the \verb+Va+ mean as part of the routine name?
+\asp{.7}
+\ite{1} This routine claims that it is setting values.  What sort
+of values.  E.g., is it assigning C variables?
+\asp{.7}
+\ite{1} What is the approximate effect of this values setting?
+\asp{.7}
+\end{enumerate}
+
+
+\ite{1} How do you establish the relation between a routine in your
+program and an action?
+
+
+\item The designers of X made some choices about the capabilities
+of a graphics server, and picked a middle road.
+\begin{enumerate}
+\ite{2} Name one capability that they included in the server, which
+they might have omitted.  Give an advantage of including it.
+\asp{.6}
+\ite{2} Name one capability that they omitted, which they might
+have included.  Give a disadvantage of omitting it.
+\asp{.6}
+\end{enumerate}
+
+
+\ite{1} Consider this code, which creates two widgets.
+
+\begin{verbatim}
+Widget but;
+but = XtVaCreateManagedWidget("but",xmPushButtonWidgetClass,top_level,NULL);
+but = XtVaCreateManagedWidget("but2",xmLabelWidgetClass,top_level,NULL);
+\end{verbatim}
+
+\noindent and this extract from the resource file.
+
+\begin{verbatim}
+*but.labelString: jambo!
+\end{verbatim}
+
+Does this affect the button widget, the label widget, both, or neither?
+\asp{.5}
+
+
+\item
+For certain technical reasons, a few resources cannot be specified
+in a resource file, but must be specified in the program.  I'm not
+thinking of a reason like that it is undesirable to allow the
+user access to it.  This resource just cannot be given a value in
+the resource file, even if you, the programmer, wanted to.
+\begin{enumerate}
+\setlength{\itemsep}{0in}
+\ite{1} Name one such resource.
+\asp{.5}
+\ite{1} Why cannot it be specified in the resource file?
+\end{enumerate}
+\asp{1}
+
+
+\ite{1} Suppose that you create a widget, and then assign it to
+another variable:
+
+\begin{verbatim}
+Widget hello, hello2;
+hello = XtVaCreateManagedWidget("hello2",xmLabelWidgetClass,top_level,NULL);
+hello2= hello;
+\end{verbatim}
+
+If you want to set a resource for the widget referenced by the C variable \texttt{hello}, should you do this:
+\begin{verbatim}
+*hello.labelString: jambo!
+\end{verbatim}
+or this:
+\begin{verbatim}
+*hello2.labelString: jambo!
+\end{verbatim}
+or does it not matter?
+\asp{.5}
+
+
+\ite{1} Suppose that you create a widget, and then assign it to
+another variable:
+
+\begin{verbatim}
+Widget hello, hello2;
+hello = XtVaCreateManagedWidget("hello",xmLabelWidgetClass,top_level,NULL);
+hello2= hello;
+\end{verbatim}
+
+If you want to set a resource for hello2, should you do this:
+\begin{verbatim}
+*hello.labelString: jambo!
+\end{verbatim}
+or this:
+\begin{verbatim}
+*hello2.labelString: jambo!
+\end{verbatim}
+or does it not matter?
+\asp{.5}
+
+\ite{2} What's the difference between a rowcolumn widget, a paned
+widget, and a menubar widget?
+
+
+\ite{2}
+Xlib, at least as we've seen it, counts coordinates in pixels.
+How would you write a program to display the same on the different
+CRTs at RPI, which have 3 different resolutions?  How would you
+get any information that you propose to use?
+\asp{.6}
+
+
+
+\ite{1}
+If your screen is 1024x1024, and has 8 bits per pixel, how much
+memory does the frame buffer take?
+\asp{.6}
+
+
+\item
+Suppose that you want to write a calculator program to run on both
+the Suns, with $900\times1152$-resolution displays, and the X stations, with
+$480\times640$-resolution displays.  You want the program with all its
+buttons to fill 1/2 of the screen in either case.
+
+\begin{enumerate}
+\ite{2}    Would it be easier to hold
+the buttons in a \emph{form} widget or a \emph{bulletinboard}
+widget?  Why?
+\asp{.6}
+
+\ite{1} 
+Why should you not use a \emph{rowcolumn} widget?
+\asp{.5}
+\end{enumerate}
+
+
+\ite{2}
+What's wrong with this?  Fix it.
+
+\begin{verbatim}
+char *c;
+c[0]='h';
+c[1]='i';
+c[2]='\0';
+printf("The message of the day is: %s\n",c);
+\end{verbatim}
+\asp{.5}
+
+
+\item
+Suppose that Bill is running on \texttt{whitehouse.gov} and he
+wishes to start an \verb+xeyes+ program to display on Newt's
+personal workstation, 
+\texttt{house.gov}.
+\begin{enumerate}
+\ite{1} How does Bill tell xeyes to display on Newt's machine?
+\asp{.5}
+\ite{1} How does Newt permit Bill's program to display on his
+machine?
+\asp{.5}
+\ite{1} Which is the client and which the server?
+\asp{.5}
+\end{enumerate}
+
+\ite{2} What functionality does the \emph{Xt} level add to the X
+window system?
+\asp{.5}
+
+\ite{2} Near the start of my programs, there are these lines:
+
+\begin{verbatim}
+#include <Xm/Xm.h>       /* Needed by all Motif programs. */
+#include <Xm/Label.h>   /* This is for the Motif Label Widget */
+\end{verbatim}
+
+When you compile the program, how does the compiler know where to
+look for the include files?
+\asp{.7}
+
+\ite{2} What is the difference between the client data and the
+call data in a callback routine?
+
+\ite{1} Name one type of information that we saw passed passed in the
+\texttt{call\_data} argument to a callback routine.
+\asp{.5}
+
+
+\ite{1} Why does X make it so complicated to use new colors in Xlib?
+Whether or not the MIT grad students who wrote much of X are sadistic is
+not relevant.
+\asp{1}
+
+
+\ite{1} Consider the file
+\texttt{/campus/X11/R5/\-core/1.0/\-@sys/lib/\-X11/rgb.txt}, which maps
+from color names, like cyan, to values.
+\begin{enumerate}
+\ite{1}
+We see lines like this:
+
+\begin{verbatim}
+255 228 181		moccasin
+\end{verbatim}
+
+What does 255 mean?
+\asp{.5}
+
+\ite{1}
+There's another line like this:
+
+\rule{1.2in}{.15in}\verb+   Blue+
+
+Unfortunately the first half of the line is unreadable :-).  Tell
+me what number(s) are hidden by the black box.
+\end{enumerate}
+
+
+\ite{2} In \texttt{xdraw2.c}, there are expressions like this:
+
+\begin{center}
+\texttt{XAllocColor(display, cmap, \&orange)}
+\end{center}
+
+\noindent Why is \texttt{cmap} passed directly, but the address of
+\texttt{orange} is passed in?
+\asp{.5}
+
+\ite{1} Why might \texttt{XAllocColor} fail on a color display?
+\asp{.5}
+
+
+\ite{1}
+An X server has no protection or hiding between its various
+clients.  Name one program that we've seen that uses this.
+\asp{.6}
+
+
+\item
+Client-server communications operate asynchronously.  
+\begin{enumerate}
+\ite{1} What does this mean?
+\asp{.6}
+\ite{2}Name an advantage and a disadvantage of this.
+\asp{.6}
+\end{enumerate}
+
+
+\ite{1}
+Name a widget class in the widget class hierarchy, is
+subclassed from the label widget class
+\asp{.6}
+
+
+\ite{1} Normally the widget instance hierarchy matches the window
+hierarchy.  Name an exception. 
+\asp{.6}
+
+
+
+\ite{6}
+For each of the following  properties, say whether it applies more to Motif
+and to Tcl/tk.
+
+\begin{enumerate}
+\item More industry standard.
+\item Easier to use.
+\item Faster to execute.
+\item Funded by ARPA.
+\item Funded by OSF.
+\item Source code freely available.
+\end{enumerate}
+
+\item  Look at the following Tcl program.
+
+\begin{verbatim}
+#! /home/wrf/bin/wish -f
+
+proc getdate { } {
+  global date
+  set datef [open "|date"]
+  set date [read $datef] 
+  close $datef
+}
+
+getdate
+
+button .hello -textvariable date  -fg red -command getdate
+
+pack .hello 
+\end{verbatim}
+ 
+\begin{enumerate}
+
+\ite{1} What does \texttt{-textvariable} do?
+\asp{.6}
+\ite{1} What does \texttt{-command} do?
+\asp{.6}
+\ite{1} What does the program as a whole do?
+\asp{.6}
+\end{enumerate}
+
+
+
+
+\ite{2} When the Bresenham line algorithm was invented, floating
+point operations were much slower than fixed point.  However, on
+current CPUs, floating point is generally as fast as fixed (maybe
+faster!).   However, the Bresenham algorithm still is useful in
+modern hi-performance graphics.  Why?
+\asp{1}
+
+\ite{2} What is the difference between \verb+http+ and
+\verb+html+?
+
+\ite{1} Which one of the following is correct?
+\begin{verbatim}
+Position x,y;
+\end{verbatim}
+\begin{enumerate}
+\item \verb+    XtVaGetValues (top_level, XmNx, &x, XmNy, &y, NULL);+
+\item \verb+    XtVaGetValues (top_level, XmNx, x, XmNy, y, NULL);+
+\end{enumerate}
+
+\ite{2}  What file is accessed by the following URL?
+
+\verb+http://www.rpi.edu/~pipes/+
+
+\item Look at the condensed class home page below.
+
+\begin{center}
+\footnotesize
+\begin{boxitpara}{rectcartouche}
+\begin{verbatim}
+<head><title>35.475 Computer Graphics, Spring 1995, Index Page</title></head>
+
+<BODY><P>
+
+<H1>35.475 Computer Graphics</H1>
+<hr>
+<H3> When and Where</H3>
+Lectures: MW 11am - noon in CC3051.  <br>
+Lab: F, either 11-noon in VCC-N, or noon-1 in VCC-S.
+</DL>
+<hr>
+<H3>Misc Pages</H3>
+<MENU>
+<LI> <A HREF="lectures.html">List of lectures</A>
+<LI> <A HREF="register.html">Please register yourself.</A>
+<LI> <A HREF="comment.html">Give us your comments or suggestions.</A>
+<LI> <A HREF="class_list.html">Class List.</A>
+</MENU>
+<hr>
+
+<H3>Handouts and Old Homeworks</H3>
+
+My secretary, Audrey Hayner, in JEC 6012, has copies of most old
+handouts, and of old graded homeworks that were not picked up in
+class.
+
+<hr>
+<i>Last updated: 27 Feb 95</i>
+<hr>
+<P><ADDRESS>
+<A HREF="http://www.ecse.rpi.edu/~wrf/">
+Wm. Randolph Franklin</A>, ECSE Dept, Rensselaer Polytechnic
+Institute, wrf@ecse.rpi.edu
+</ADDRESS>
+</BODY>
+\end{verbatim}
+\end{boxitpara}
+\leavevmode % w/o this get a latex error
+\end{center}
+
+\begin{enumerate}
+\ite{1} What does \verb+<h3>+ mean?
+\ite{1} What does \verb+<hr>+ mean?
+\ite{3} List the last URL seen on the page.  What machine is the
+page retrieved from?  What is the pathname of the file on that machine?
+\end{enumerate}
+\end{enumerate}
+
+
+
+\setcounter{questionnumber}{\value{enumi}}
+
+\subsection*{$\overline{X}$ questions}
+
+\begin{enumerate}
+\setcounter{enumi}{\value{questionnumber}}
+
+\item About the Salim Abi-Ezzi patent:
+\begin{enumerate}
+\ite{1} What does {\bf NURBS} stand for?
+\ite{2} The {\bf R} represents a choice that was made.  What was
+the alternative, and why was the {\bf R} choice better?
+\end{enumerate}
+
+\item About {\em Foley}, chap 1:
+\begin{enumerate}
+\ite{1} Why is raster graphics better than vector graphics?
+\ite{1} So, why didn't people use raster graphics a lot 20 years
+ago?
+\end{enumerate}
+
+\ite{4} Calculate the pixels on a circle of radius 19 using the
+Bresenham method.  Show your work.
+
+\ite{3} What are bundled attributes?  Give an advantage and a
+disadvantage of them.
+
+\ite{3} When filling a polygon, which is defined by a list of vertices,
+the simple way, what problem is caused by the current scan line going
+through a vertex?  How do you work around this problem?
+
+\ite{1} Portability has at least one disadvantage, other than making it
+easier for your competitor to copy your program.  Name it.
+
+\ite{1} What is the advantage of a Bresenham-style algorithm compared to
+simpler, more obvious methods?
+
+\ite{1} Why do graphics packages contain polyline routines in spite of
+the fact that users could easily just call the line routine many times?
+
+\ite{2} Name an advantage and a disadvantage of specifying attributes
+for, e.g., a line, in every call to draw the line.
+
+\ite{2}
+Suppose you used a paint program to outline a region by setting pixels
+around its border.
+Describe how the paint program could operate to fill its interior.
+Illustrate this by filling the interior of the letter {\LARGE B}.
+
+\ite{2}
+How can the above method be used when colorizing movies?  The problem is
+that a frame of a black-and-white movie doesn't have pixels of a certain
+value outlining each region that should be a single color.
+
+\ite{1}  Why would you be interested in doing a Bresenham algorithm at a
+sub-pixel accuracy instead of simply rounding the line endpoints (or
+circle center and radius) to the nearest pixel before applying
+Bresenham?
+
+\ite{1}  Why would you be interested in doing a Bresenham algorithm at a
+sub-pixel accuracy instead of simply using a higher resolution device?
+
+\ite{2} Write your name clearly on the top of your answer sheet.
+
+\item Consider the program \verb+coloredit.c+.  Ignore any
+Motif features that are new to you, except for the ones summarized
+below; understanding the others is not necessary for answering this
+question.
+
+
+\lgrindfile{coloredit}
+\ \
+
+\noindent \emph{Summary of new routines}
+\begin{itemize}
+
+\item \texttt{XtInitialize} returns a top level widget, like
+\texttt{XtVaAppInitialize}.
+\item \texttt{XtCreateManagedWidget} and \texttt{XtCreateWidget} are like
+\texttt{XtVaCreateManagedWidget}; their relevant args are the first three: name,
+widget types, parent widget.
+\end{itemize}
+\begin{enumerate}
+\ite{1} What is the program's class?
+\ite{4} Sketch the tree of widget instances.
+\ite{3} Name the three row column widgets.
+\ite{5} Name the label widgets.
+\end{enumerate}
+
+\ite{1} Correct this program.
+\begin{verbatim}
+main()
+   {
+        char *s;
+        s[0]='h';
+        s[1]='i';
+   }
+\end{verbatim}
+
+% \ite{0} What does this C program in Figure \vref{f:schnitzi} do?
+
+% \begin{figure}[!htb]
+% \footnotesize
+% \begin{center}
+% \begin{verbatim}
+% #include <stdio.h>
+% int r=0,x,y=0,    /*
+% nt                 /
+% c
+% lx  /\ / \ /|\ /|\
+% u,  \/ \\/ \-/ \ /
+% dn                        ]
+% e= ||| /|\  /\  /\        =                     p p
+%  0  \/ \ / |||  \/        f        f       f    r r
+% <,                        tw       t       s s  i i
+% sy  || /|\      /\     i  eh       e       e c  n n
+% t= /-  \ /     |||     n  li       l       e a  t t
+% d0     |||             t  ll       l  {<   k n  f f
+% i,  ||     /|\ /|\        (e s     (  fr   ( f  ( (
+% o    _ ||\ \ / \-/     tu s( t    usw o; i s (  " "
+% .   || - /           c [[ tg rv   [th rx=f t "  % \
+% h                   mh111 de{l)   +di (+'( d+%  c n+
+% >                   aa000 itte; > +il x+ n inc  " "+
+%  /                  ir000[ns[nytyrrne<=)'<xn,"  , );
+%  */                 n         =             0     ;
+%                main        (       )   {
+%                 char       v   [
+%                 100    ]                   ,  s;
+%           int t[100     ]                    ,
+%               u[100               ]     ;  u
+%                   [                   0
+%       ]=ftell(stdin        )       ;
+%          while(gets (v    )                 )
+%                  {t  [         r ]=
+%              strlen                 (
+%                v);y=
+%                  t[         r             ]
+%                  >y             ?        t [
+%                   r         ]    :   y;
+%               u[++r   ]     =
+%         ftell(stdin )   ;                          }
+%               while          (                    n
+%                   <              y        )
+%             {for(x=0             ;         x
+%             <r;x++) {                           s
+%                =' '       ;
+%               if(n<             t        [
+%                   x            ]     )    {
+%         fseek(stdin    ,u       [     x    ]
+%                  +n   ,  0 )                     ;
+%         scanf("%c",                          &
+%                                        s        )
+%                    ;                             }
+%        printf("%c",   s                       )
+%                                             ;      }
+%       printf("\n");                 n
+%                  ++   ;            }           }
+% \end{verbatim}
+% 
+% \leavevmode % w/o this get a latex error
+% \caption{schnitzi.c}
+% \label{f:schnitzi}
+% \end{center}
+% \end{figure}
+
+\ite{4} Print your name legibly on the top of page one, if you
+haven't already.
+
+\end{enumerate}
+
+
+{\tt Total: \thepoints\ points}
+
+{\em End of exam} \label{end}
+
+\vfill\hfill {\footnotesize \today, \printtime\ /dept/ecse/graphics/ho\handout.tex}
+\end{document}
+
+% Emacs vars
+% Local Variables:
+% eval: (outline-minor-mode)
+% outline-regexp: "\\\\sec\\|\\\\subs\\|% Em"
+% font-lock-keywords-p: t
+% font-lock-keywords: (("\\(\\\\\\w+\\)\\W" 1 font-lock-keyword-face t) ("\\(\\\\\\w+\\){\\([-a-zA-Z0-9 .?]+\\)}" 2 font-lock-function-name-face t) ("\\(\\\\\\w+\\){\\(\\w+\\)}{\\(\\w+\\)}" 3 font-lock-function-name-face t) ("\\(\\\\\\w+\\){\\(\\w+\\)}{\\(\\w+\\)}{\\(\\w+\\)}" 4 font-lock-function-name-face t) ("{\\\\em\\([^}]+\\)}" 1 font-lock-comment-face t) ("{\\\\bf\\([^}]+\\)}" 1 font-lock-keyword-face t) ("^[ 	^j]*\\\\def[\\\\@]\\(\\w+\\)\\W" 1 font-lock-function-name-face t) ("[^\\\\]\\$\\([^$]*\\)\\$" 1 font-lock-string-face t))
+% eval: (font-lock-fontify-buffer)
+% End:
+
+
+

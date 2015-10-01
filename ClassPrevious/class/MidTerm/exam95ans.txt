@@ -1,0 +1,143 @@
+
+
+Advanced Computer Graphics and Data Visualization - 35.6961 Exam 1
+
+Page 1 Advanced Computer Graphics and Data Visualization
+
+35-6961   Exam 1
+
+November 7, 1995
+
+Name _________________________________________ You have the whole class to finish the exam, take your time and remember to answer the questionsyou know first. Each question is worth 5 points total with the points divided between the various parts.
+
+1. OpenGL
+
+a. (1 Pt) What is OpenGL?
+
+b. (1 Pt) What is meant by immediate mode graphics? c. (3 Pts) Name and describe each of the material color components.
+
+A platform independant, 2D and 3D graphics API. As you issue OpenGL drawing commands, the specified object is drawn to a display. Emitted light is the simplest, it originates from an object and is unaffected by any light sources. The ambient component is the light from that source that's been scattered so much by the  environment  that  its  direction  is  impossible  to  determine.  When  ambient  light strikes a surface it is scattered in all directions.Diffuse
+
+ light comes from one direction, so it is brighter if it comes down s quarely on the surface rather than at an angle.  Any light coming from any direction has a diffuse component.Specular
+
+ light comes from a direction and bounces off a surface in a particu lar direction. Shiny metal and plastic have a high specular component and chalk and carpet have almost none. You can think of specularity as shininess.
+
+Advanced Computer Graphics and Data Visualization - 35.6961 Exam 1
+
+Page 2 2. OpenGL
+
+a. (2 Pts) Explain why OpenGL needs an Aux/GLUT library.
+
+b. (3 Pts) Describe Display Lists and discuss why they are important in terms of the graph-ics pipeline and specialized hardware. OpenGL was designed as a platform independant API. Therefore it needs an extra level of interface to user interfaces/window systems and display hardware and also higher level data/geometric objects.
+
+A display List is a group of OpenGL commands that have been stored for later  execution. When a display list is invoked, the commands in it are executed in the order they were issued.
+
+It is helpful in that the underlying API can store the graphics primitive information is optimized storage arrays and/or move them directly to hardware.
+
+In an object oriented rendering model, special objects can act as display list holders and reference the display list instead of regenerating the geometry from data objects.
+
+Display Lists allow the API to push the transformation calculations and data structures to specialized hardware.
+
+Advanced Computer Graphics and Data Visualization - 35.6961 Exam 1
+
+Page 3 3. Data Storage
+
+a. (3Pts)   The choice of data representation is important because it effects our ability tointerface to external data and the performance of the overall visualization system. Name and de
+
+scribe 3 of the 5 design criterion for data representation described in class and in the text
+
+b. (2 Pts) Based on the idea that a DataSet is made up of Cells and associated data values,describe what is meant by the DataSet, and contained Cells, structure and attributes. Compact: Since we know visualization data tends to be very large, we need to design our structures to minimize computer memory requirements.Efficient
+
+: Visualization data needs to be accessed many times and we would like to retrieve and store data in our structures in constant time.Mappable
+
+: Data representations need to efficiently map into graphics primitives. We must be able to easily convert external data into internal visualization data structures.Minimal Coverage
+
+: We must create a data representation that minimizes the number of data types while covering a large portion of external data types. We wish to balance efficiency with the number of data types.Simple
+
+: Simple algorithms and data sets are easier to implement and also easier to extend.
+
+Structure is made of of two components:Topology
+
+: the information about the structure of the dataset (e.g. Triangle)..Geometry
+
+: the instantiation of the Topology (the x,y,z's).
+
+Attributes are supplimental information associated with the geometry such as temperature, pressure, or density. They consist of scalars, vectors, normals, texture coordinates, tensors, and user defined data.
+
+Advanced Computer Graphics and Data Visualization - 35.6961 Exam 1
+
+Page 4   static Point res;   float mins, maxs, normv;
+
+  if (Sc1 < Sc2) {     mins = Sc1;     maxs = Sc2;   }   else {     mins = Sc2;     maxs = Sc1;   }
+
+  val = ((val<mins)?mins:val);   val = ((val>maxs)?maxs:val);
+
+  normv = (val - min) / (max - min);   if (Sc1 < Sc2) {     res.x = ((Pt2.x - Pt1.x)* normv) + Pt1.x;     res.y = ((Pt2.y - Pt1.y)* normv) + Pt1.y;     res.z = ((Pt2.z - Pt1.z)* normv) + Pt1.z;   }   else {     res.x = ((Pt1.x - Pt2.x)* normv) + Pt2.x;     res.y = ((Pt1.y - Pt2.y)* normv) + Pt2.y;     res.z = ((Pt1.z - Pt2.z)* normv) + Pt2.z;   }
+
+4. Data Algorithms(5 PTS) Based on your work with homework 3 and marching quads, write a C++ algorithm to extract where a given scalar value val will fall between the given points Pt1 and Pt2 withscalar values Sc1 and Sc2. This algorithm should assign the calculated x,y,z to res and work for any given val.
+
+Pt1 Pt2 Sc1 Sc2
+
+typedef Struct Point {
+
+float x, y, z; };
+
+Point& GetPoint(Point Pt1, Point Pt2,
+
+float Sc1, float Sc2, float val) {
+
+   Point res; // You fill in the blank.    return res; }
+
+  static Point res;   float normv;
+
+  val = ((val<mins)?mins:val);   val = ((val>maxs)?maxs:val);
+
+  normv = (val - Sc1) / (Sc2 - Sc1);   res.x = ((Pt2.x - Pt1.x)* normv) + Pt1.x;   res.y = ((Pt2.y - Pt1.y)* normv) + Pt1.y;   res.z = ((Pt2.z - Pt1.z)* normv) + Pt1.z;
+
+Advanced Computer Graphics and Data Visualization - 35.6961 Exam 1
+
+Page 5 5. Data algorithmsa. (3 Pts) Describe the differences between Volume Rendering and Marching Cubes. Include in your discussion what the final image represents and what type of data is calculated by theunderlying algorithms.
+
+b. (2 Pts) Based on our discussions of the Visualization Pipeline in class, describe the modeof network execution that best fits the visualization system we used in class for homework 2 and 3. Volume Rendering represents a 3D volume as an accumulation of colors along a view plane perpendicular to the view plane. It generates a 2D image as the final result.
+
+Marching  cubes  uses  an  interpolation  algorithm  to  generate  a  surface  of  continuity within a volume. It generates a collection of polyginal surfaces which represent the surface of continuity.
+
+Implicit, the Render method from the Renderer is sent to all pipeline objects which in turn check their internal dependancies and any dependant objects and execute if necessary. Two pass execution mode which is implemented using a recursive type algorithm.
+
+Advanced Computer Graphics and Data Visualization - 35.6961 Exam 1
+
+Page 6 6. Data algorithmsa. (2 Pts) Our StructuredGrid class can implicitly contain the position information or it can refer to an external pointset. For both cases, describe a situation in which we would want to useone over the other.
+
+b. (3 Pts) In the Visualization Pipeline section of class we discussed reasons for incorporat-ing the Process methods into the Data Object and also extracting the process method into its own object. Give reasons for and against both of these paradigms.
+
+Extra credit:(2 Pts) Describe Object Order and Image order Rendering.
+
+Object Order: Take each element of the volume and map it onto the imageImage Order: For each element of the image, compute a color value from the volume.
+
+(2 Pts) What are some weaknesses of the Object Rendering system we used for hw2 and 3?Renderer too dependant on OpenGL.
+
+No transformation Cells/nodes to move objects.Inefficient Collection object. Its slow because of Mesa, sorry this answer did not count. (1 Pt) What is your quest? What is your favorite color? :-).Feebie.
+
+Implicit:
+
+Use if the grid is regularly spaced or some linear pattern, good if memory is low.
+
+External:
+
+Use if the pointset is irregularly spaced, memory is not a concern but speed is, or if other objects need access to the pointset.
+
+Process inside Data Objects:For
+
+: The processes, which are data  manipulation algorithms, have direct access
+
+to the data which makes for fast code.Against
+
+:Users generally think of data algorithms as separate objects. Algorithms must be implemented in all objects of any data type we may create. Also if we change our contouring algorithm this must be changed in each data object that implements this process.
+
+Seperate process objects:For
+
+: More intuitive for the user, easier to re-use data objects in the Visualization
+
+pipeline.Against
+
+: Generalized data algorithms require general data objects restricting our base data types. More difficult to implement.

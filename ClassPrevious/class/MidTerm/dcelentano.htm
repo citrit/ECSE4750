@@ -1,0 +1,121 @@
+<!-- saved from url=(0022)http://internet.e-mail -->
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="Generator" CONTENT="Microsoft Word 97">
+<TITLE>DataVis - Mid Term Exam</TITLE>
+<META NAME="Template" CONTENT="C:\Program Files\Microsoft Office\Office\html.dot">
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080" BGCOLOR="#ffffff">
+
+<P>&nbsp;</P>
+<H2>Advanced Computer Graphics and Data Visualization </H2>
+<STRONG><P>ECSE-6800 Mid-Term Exam<BR>
+March 7, 2001</P>
+</STRONG><P>&nbsp;</P>
+<P>Name <U>David Celentano .</P>
+</U><P>You have the whole class to finish the exam, take your time and remember to answer the questions you know first. Each question is worth 5 points total with the points divided between the various parts. Please feel free to use the back of the page.</P>
+<P>&nbsp;</P>
+<H3>1. OpenGL</H3>
+<BLOCKQUOTE>a. (1 Pt) What is OpenGL?</BLOCKQUOTE>
+<P>&nbsp;<B>OpenGL is a graphical software interface that uses the specific hardware that the software is running on and optimizes the software to use whatever if any hardware accelerators there are for the graphics.</P>
+</B><BLOCKQUOTE>b. (1 Pt) What is meant by immediate mode graphics? </BLOCKQUOTE>
+<P>&nbsp;<B>Immediate mode graphics are graphics that are sent to the screen as they are rendered as opposed to graphics that are rendered virtually and then sent to the screen as a single output.</P>
+</B><BLOCKQUOTE>c. (3 Pts) Name and describe each of the material color components.</BLOCKQUOTE>
+<B><BLOCKQUOTE>The material color components are the three primary colors Red Green Blue that are specified as a number between 0 and 1 with one being all on and 0 being all off. There is also an intensity variable.</BLOCKQUOTE>
+</B><H3>&nbsp;2. OpenGL</H3>
+<BLOCKQUOTE>a. (2 Pts) Explain why OpenGL needs an Aux/GLUT library.</BLOCKQUOTE>
+<P>&nbsp;<B>The Aux/GLUT library gives a software to software interface for the particular machine that OpenGL is running on.</P>
+</B><BLOCKQUOTE>b. (3 Pts) Explain what is happening with this OpenGL code snippet, and any possible problems (Assume that there are enough values in x,y,z and mat to draw the graphic).</BLOCKQUOTE>
+<PRE>&#9;g.begin(GL.POLYGON);  &#9;&#9;<B>//This line starts OpenGL drawing a freeform 
+&#9;&#9;&#9;&#9;&#9;// polygon by connecting vertices that are passed 
+&#9;&#9;&#9;&#9;&#9;// to it.
+</B>
+&#9;for (int i=0;i&lt;3;i++) {&#9;&#9;<B>//A for loop that will be traversed three times
+&#9;&#9;&#9;&#9;&#9;// to retrieve three vertices
+</B>&#9;&#9;gl.vertex(x[i], y[i], z[i]);<B>// Retrieve the coordinates of the vertice
+</B>&#9;&#9;gl.materialfv(GL.FRONT_AND_BACK, GL.AMBIENT_AND_DIFFUSE, mat[i]);
+&#9;&#9;&#9;<B>// The material properties are specified first) 
+&#9;&#9;&#9;//&#9;&#9;The material will be applied to the front and back
+&#9;&#9;&#9;//&#9;second) the lighting properties are given
+</B>&#9;&#9;&#9;<B>//&#9;third)  the color to be used is set</B> 
+&#9;}
+&#9;gl.end();&#9;<B>// designates that the polygon is completed</PRE>
+<P>I am sure there is a problem or you would not have asked but I don't have a clue.</P>
+</B><H3>3. Scientific Visualization</H3>
+<BLOCKQUOTE>a) (2 Pts) What is meant by implicit and explicit control of a rendering system? Which does our rendering system use?</BLOCKQUOTE>
+<B><P>Explicit control is when each object informs the program controller that it has changed.</P>
+<P>Implicit control is when the controller polls each object to be rendered to see if it has changed.</P>
+</B><P>&nbsp;</P>
+<BLOCKQUOTE>b) (3 Pts) We know that Color Maps represent the relationship between a continuous range of data values and color values. From an OO viewpoint, discuss how iso-surface and data cut plane objects would need to interface with a color map object, or what would they need to ask for from the color map object.</BLOCKQUOTE>
+<B><P>When the surface of the object is rendering itself using the data, it must call a material set for the edge being rendered this material set must also use a normalized data value as a look up for the color map to define the material color.</P>
+</B><P>&nbsp;</P>
+<H3>4. Data Storage</H3>
+<BLOCKQUOTE>a. (3Pts) The choice of data representation is important because it effects our ability to interface to external data and the performance of the overall visualization system. Name and describe 3 of the 5 design criterion for our visualization system described in class and in the text.</BLOCKQUOTE>
+<P>&nbsp;<B>The design should be simple so anyone can use it without having to make complex algorithms in their code.</P>
+<P>The data should be stored so it is retrievable.</P>
+<P>The data should be stored to take up the smallest space possible and prevent memory leakage.</P>
+</B><P>&nbsp;</P>
+<BLOCKQUOTE>b. (2 Pts) If we group our Actor classes and contained Cells as data sets, describe what is meant by structure and attributes?</BLOCKQUOTE>
+<P>&nbsp;<B>The structure of the data is what is used to define the shape of the graphical output while the attributes are additional data that describes what is going on at a location within the graphical output ie: you might graphically represent a rain cloud based on space and humidity but add in an attribute like temperature.</P>
+</B><P>&nbsp;</P>
+<H3>5. Data algorithms</H3>
+<BLOCKQUOTE>(5 Pts) Based on our discussions of marching quads, fill in the GetPoint Java algorithm to extract where a given scalar value <FONT FACE="Courier New"><STRONG>val</FONT></STRONG> will fall between the given points <FONT FACE="Courier New"><STRONG>Pt1</FONT></STRONG> and <FONT FACE="Courier New"><STRONG>Pt2</FONT></STRONG> with given scalar range values <FONT FACE="Courier New"><STRONG>Sc1</FONT></STRONG> and <FONT FACE="Courier New"><STRONG>Sc2</FONT></STRONG>. This algorithm should assign the calculated x,y,z to <FONT FACE="Courier New"><STRONG>res</FONT></STRONG> and work for any given <FONT FACE="Courier New"><STRONG>val</FONT></STRONG> .</BLOCKQUOTE><DIR>
+<DIR>
+<DIR>
+<DIR>
+<DIR>
+
+<PRE>typedef Struct Point {
+&#9;float x, y, z;
+};
+Point res = new Point(); 
+Point&amp; GetPoint(Point Pt1, Point Pt2,
+&#9;&#9;float Sc1, float Sc2, float val) {
+&#9;// You fill in the blank.
+<B>If (Sc1 &gt; val &amp;&amp; Sc2 &lt; val)
+&#9; {
+  res = (Pt1 - Pt2)* ((val - Sc2)/(Sc1 - Sc2));
+  }
+else if (Sc1 &lt; val &amp;&amp; Sc2 &gt; val)
+&#9; {
+  res = (Pt2 - Pt1)* ((val - Sc1)/(Sc2 - Sc1));
+  } 
+else
+  {
+  res = 0;
+  }
+</B> &#9;return res; 
+}</PRE></DIR>
+</DIR>
+</DIR>
+</DIR>
+</DIR>
+
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<H3>6. Data algorithms</H3>
+<BLOCKQUOTE>a. (2 Pts) Based on our discussion of OpenInventor and scene graphs, explain how properties (materials and geometry) are shared.</BLOCKQUOTE>
+<B><P>Materials and geometric shapes are parent classes that can be inherited from by multiple objects.</P>
+</B><BLOCKQUOTE>b. (3 Pts) In the Visualization Pipeline section of class we discussed reasons for incorporating the Process methods into the Data Object and also extracting the process method into its own object. Give reasons for and against both of these paradigms.</BLOCKQUOTE>
+<BLOCKQUOTE><BR>
+<B>A data object should know how to process itself for fast processing of the data; however there is a loss of flexibility it can be difficult to change or reuse algorithms if the are incapacitated in the data object.</BLOCKQUOTE>
+</B><H3>7. Data Storage</H3>
+<BLOCKQUOTE>(5 Pts) Based on our discussions of the Scene Graph structure, fill in the blanks below with the position and color of each of the objects.</BLOCKQUOTE>
+<B><BLOCKQUOTE>I am assuming that this was discussed the day I missed because I'm just guessing!</BLOCKQUOTE>
+</B><BLOCKQUOTE>&nbsp;</BLOCKQUOTE>
+<P><IMG SRC="sceneGraph.JPG" WIDTH=575 HEIGHT=306></P>
+<PRE>Object&#9;Position   &#9;Color
+1&#9;<B><U>___1_________</U>&#9;__<U>Red________
+</B></U>2&#9;<B><U>___2_________</U>&#9;<U>__Green______
+</B></U>3&#9;<B><U>___3_________</U>&#9;__<U>Red________
+</B></U>4&#9;<B><U>___5_________</U>&#9;__<U>Red________
+</B></U>5&#9;<B><U>___4_________</U>&#9;__<U>Blue_______
+</B></U>6&#9;<B><U>___6_________</U>&#9;__<U>Blue_______</PRE>
+</B></U><P>&nbsp;</P>
+<P>&nbsp;</P>
+<STRONG><P>Extra credit:<BR>
+</STRONG>(2 Pts) What does VRML stand for?<BR>
+(2 Pts) What are some weaknesses of the Object Rendering system we used for class?<BR>
+(1 Pt) What is your quest? What is your favorite color? :-). <B>To Find the Holy Grail. Blue no Red ahhhhhhhhh!</P></B></BODY>
+</HTML>

@@ -1,0 +1,45 @@
+#!/bin/sh
+dnl configure.in file for Autoconf -*-sh-*-
+
+AC_INIT(jogl/JoglCanvas.java)
+
+dnl Use config subdir to keep toplevel dir clean
+AC_CONFIG_AUX_DIR(config)
+
+dnl Use config.h to hold information needed by the native code
+AM_CONFIG_HEADER(config.h:config.hin)
+
+AC_CANONICAL_HOST
+
+case "${host_os}" in
+
+irix*.*)
+    AC_DEFINE(NEED_OWN_WINDOW)
+;;
+
+esac
+
+AM_INIT_AUTOMAKE(jogl, 0.7)
+
+libtool_shared_default="--disable-static"
+
+AC_PROG_CC
+AM_PROG_LIBTOOL
+
+AC_PATH_OPENGL
+
+if test -z "${OGL_LIBS}" ; then
+    AC_MSG_ERROR([Couldn't find OpenGL libraries.  
+    Please use --with-opengl-prefix])
+fi
+
+LIBS="${OGL_LIBS} ${X_LIBS} ${X_PRE_LIBS} -lXext -lX11 ${X_EXTRA_LIBS} -lm"
+
+AC_PATH_JDK
+AC_PATH_JNI
+AC_PROG_JAVAC
+AC_PROG_JAVAH
+
+CPPFLAGS="${CPPFLAGS} ${OGL_CFLAGS} ${JNI_CFLAGS} -I.."
+
+AC_OUTPUT([Makefile lib/Makefile])

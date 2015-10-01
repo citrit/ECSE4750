@@ -1,0 +1,65 @@
+# DO NOT DELETE THIS LINE -- make depend depends on it.
+
+LineCell.o: LineCell.h PointSet.h PObject.h /usr/include/sys/types.h
+LineCell.o: /usr/include/standards.h /usr/include/time.h VectorT.h
+LineCell.o: /usr/include/string.h Cell.h MatSet.h Renderer.h Actor.h Matrix.h
+LineCell.o: Light.h Camera.h
+Matrix.o: /usr/include/math.h /usr/include/standards.h Matrix.h PObject.h
+Matrix.o: /usr/include/sys/types.h /usr/include/time.h
+OGLWin32Ren.o: OGLWin32Ren.h /usr/include/stdlib.h /usr/include/standards.h
+OGLWin32Ren.o: /usr/include/GL/gl.h /usr/include/GL/glu.h Renderer.h
+OGLWin32Ren.o: PObject.h /usr/include/sys/types.h /usr/include/time.h
+OGLWin32Ren.o: VectorT.h /usr/include/string.h Actor.h Cell.h PointSet.h
+OGLWin32Ren.o: MatSet.h Matrix.h Light.h Camera.h OGLLight.h OGLCam.h
+OGLWin32Ren.o: OGLActor.h
+OGLXRen.o: OGLXRen.h /usr/include/stdlib.h /usr/include/standards.h
+OGLXRen.o: /usr/include/X11/Xlib.h /usr/include/sys/types.h
+OGLXRen.o: /usr/include/X11/X.h /usr/include/X11/Xfuncproto.h
+OGLXRen.o: /usr/include/X11/Xosdefs.h /usr/include/stddef.h
+OGLXRen.o: /usr/include/X11/Xutil.h /usr/include/X11/Intrinsic.h
+OGLXRen.o: /usr/include/X11/Xresource.h /usr/include/string.h
+OGLXRen.o: /usr/include/X11/Core.h /usr/include/X11/Composite.h
+OGLXRen.o: /usr/include/X11/Constraint.h /usr/include/X11/Object.h
+OGLXRen.o: /usr/include/X11/RectObj.h /usr/include/X11/StringDefs.h
+OGLXRen.o: /usr/include/X11/Shell.h /usr/include/GL/gl.h
+OGLXRen.o: /usr/include/GL/glu.h /usr/include/GL/glx.h /usr/include/X11/Xmd.h
+OGLXRen.o: /usr/include/GL/glxproto.h /usr/include/GL/glxmd.h
+OGLXRen.o: /usr/include/GL/glxtokens.h Renderer.h PObject.h
+OGLXRen.o: /usr/include/time.h VectorT.h Actor.h Cell.h PointSet.h MatSet.h
+OGLXRen.o: Matrix.h Light.h Camera.h OGLActor.h OGLLight.h OGLCam.h
+PlyGCell.o: PlyGCell.h PointSet.h PObject.h /usr/include/sys/types.h
+PlyGCell.o: /usr/include/standards.h /usr/include/time.h VectorT.h
+PlyGCell.o: /usr/include/string.h Cell.h MatSet.h Renderer.h Actor.h Matrix.h
+PlyGCell.o: Light.h Camera.h
+PlyLCell.o: PlyLCell.h PointSet.h PObject.h /usr/include/sys/types.h
+PlyLCell.o: /usr/include/standards.h /usr/include/time.h VectorT.h
+PlyLCell.o: /usr/include/string.h Cell.h MatSet.h Renderer.h Actor.h Matrix.h
+PlyLCell.o: Light.h Camera.h
+PtCell.o: PtCell.h PointSet.h PObject.h /usr/include/sys/types.h
+PtCell.o: /usr/include/standards.h /usr/include/time.h VectorT.h
+PtCell.o: /usr/include/string.h Cell.h MatSet.h Renderer.h Actor.h Matrix.h
+PtCell.o: Light.h Camera.h
+StructG.o: StructG.h LineCell.h PointSet.h PObject.h /usr/include/sys/types.h
+StructG.o: /usr/include/standards.h /usr/include/time.h VectorT.h
+StructG.o: /usr/include/string.h Cell.h MatSet.h Renderer.h Actor.h Matrix.h
+StructG.o: Light.h Camera.h DataType.h
+TriCell.o: TriCell.h PointSet.h PObject.h /usr/include/sys/types.h
+TriCell.o: /usr/include/standards.h /usr/include/time.h VectorT.h
+TriCell.o: /usr/include/string.h Cell.h MatSet.h Renderer.h Actor.h Matrix.h
+TriCell.o: Light.h Camera.h
+objtest.o: PtCell.h PointSet.h PObject.h /usr/include/sys/types.h
+objtest.o: /usr/include/standards.h /usr/include/time.h VectorT.h
+objtest.o: /usr/include/string.h Cell.h MatSet.h Renderer.h Actor.h Matrix.h
+objtest.o: Light.h Camera.h LineCell.h PlyGCell.h PlyLCell.h TriCell.h
+objtest.o: OGLXRen.h /usr/include/stdlib.h /usr/include/X11/Xlib.h
+objtest.o: /usr/include/X11/X.h /usr/include/X11/Xfuncproto.h
+objtest.o: /usr/include/X11/Xosdefs.h /usr/include/stddef.h
+objtest.o: /usr/include/X11/Xutil.h /usr/include/X11/Intrinsic.h
+objtest.o: /usr/include/X11/Xresource.h /usr/include/X11/Core.h
+objtest.o: /usr/include/X11/Composite.h /usr/include/X11/Constraint.h
+objtest.o: /usr/include/X11/Object.h /usr/include/X11/RectObj.h
+objtest.o: /usr/include/X11/StringDefs.h /usr/include/X11/Shell.h
+objtest.o: /usr/include/GL/gl.h /usr/include/GL/glu.h /usr/include/GL/glx.h
+objtest.o: /usr/include/X11/Xmd.h /usr/include/GL/glxproto.h
+objtest.o: /usr/include/GL/glxmd.h /usr/include/GL/glxtokens.h OGLActor.h
+objtest.o: OGLLight.h OGLCam.h

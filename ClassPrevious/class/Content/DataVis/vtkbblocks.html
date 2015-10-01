@@ -1,0 +1,312 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage Express 2.0">
+<title>DataVis - VTK: The Building Blocks</title>
+</head>
+
+<body bgcolor="#FFFFFF">
+
+<h3><img src="Speckled_GradientA042.gif" width="500" height="4"></h3>
+
+<h3><img src="images/head.gif" align="absmiddle" width="73"
+height="90">Advanced Computer Graphics and Data Visualization</h3>
+
+<p><img src="Speckled_GradientA042.gif" width="500" height="4"></p>
+
+<h2>VTK: The Building Blocks</h2>
+
+<ul>
+    <li>VTK uses eight basic objects to build a scene:<ol>
+            <li><strong><tt>vtkRenderMaster</tt></strong>:
+                coordinates device independant methods; udes to
+                create a rendering window</li>
+            <li><strong><tt>vtkRenderWindow</tt></strong>:
+                manages window on display device; one or more
+                renderers draw to an instance of vtkRenderWindow</li>
+            <li><strong><tt>vtkRenderer</tt></strong>:
+                coordinates the rendering process involving the
+                lights, cameras, and actors</li>
+            <li><strong><tt>vtkActor</tt></strong>: represents an
+                entity rendered in the scene, holds both the
+                properties and position</li>
+            <li><strong><tt>vtkMapper</tt></strong>: the
+                geometric representation for an actor</li>
+            <li><strong><tt>vtkProperty</tt></strong>: defines
+                the appearance of the entity, includes color,
+                transparancy, and lighting</li>
+            <li><strong><tt>vtkLight</tt></strong>: source of
+                light to illuminate the scene</li>
+            <li><strong><tt>vtkCamera</tt></strong>: defines the
+                view position and other properties</li>
+        </ol>
+    </li>
+    <li>Here is a graphical representation of the scene object
+        organization</li>
+</ul>
+
+<p>&nbsp;</p>
+
+<p align="center"><img src="images/vtkscene.gif" width="695"
+height="488"></p>
+
+<ul>
+    <li>In this scene there is one actor that is shown in several
+        viewports</li>
+    <li>What is actually represented by these views?</li>
+    <li>Lets look at the <tt>vtkRenderWindow</tt> header:</li>
+</ul>
+<div align="center"><center>
+
+<table border="1" width="75%">
+    <tr>
+        <td width="100%"><pre>class VTK_EXPORT vtkRenderWindow : public vtkWindow
+{
+public:
+  vtkRenderWindow();
+  ~vtkRenderWindow();
+  static vtkRenderWindow *New();
+  const char *GetClassName() {return &quot;vtkRenderWindow&quot;;};
+  void PrintSelf(ostream&amp; os, vtkIndent indent);
+
+  void AddRenderer(vtkRenderer *);
+  void RemoveRenderer(vtkRenderer *);
+  vtkRendererCollection *GetRenderers() {return &amp;(this-&gt;Renderers);};
+
+  virtual void Render();
+
+  // Description:
+  // Initialize the rendering process.
+  virtual void Start() {};
+
+  // Description:
+  // A termination method performed at the end of the rendering process
+  // to do things like swapping buffers (if necessary) or similar actions.
+  virtual void Frame() {};
+
+  // Description:
+  // Performed at the end of the rendering process to generate image.
+  // This is typically done right before swapping buffers.
+  virtual void CopyResultFrame();
+
+  // Description:
+  // Create a device specific renderer. This is the only way to create
+  // a renderer that will work. This method is implemented in the
+  // subclasses of vtkRenderWindow so that each subclass will return
+  // the correct renderer for its graphics library.
+  virtual vtkRenderer  *MakeRenderer();
+
+
+	...	</pre>
+        <pre>}; </pre>
+        </td>
+    </tr>
+</table>
+</center></div>
+
+<ul>
+    <li>So now it gets busy, Why the empty virtual functions?</li>
+    <li>Lets move onto the vtkRenderer and its header:</li>
+</ul>
+<div align="center"><center>
+
+<table border="1" width="75%">
+    <tr>
+        <td width="100%"><pre>class VTK_EXPORT vtkRenderer : public vtkViewport
+{
+public:
+  vtkRenderer();
+  ~vtkRenderer();
+  static vtkRenderer *New();
+  const char *GetClassName() {return &quot;vtkRenderer&quot;;};
+  void PrintSelf(ostream&amp; os, vtkIndent indent);
+
+  void AddLight(vtkLight *);
+  void AddActor(vtkActor *);
+  void AddVolume(vtkVolume *);
+
+  void RemoveLight(vtkLight *);
+  void RemoveActor(vtkActor *);
+  void RemoveVolume(vtkVolume *);
+
+  vtkLightCollection *GetLights();
+  vtkActorCollection *GetActors();
+  vtkVolumeCollection *GetVolumes();
+
+  void SetActiveCamera(vtkCamera *);
+  vtkCamera *GetActiveCamera();
+
+  // Description:
+  // Set the intensity of ambient lighting.
+  vtkSetVector3Macro(Ambient,float);
+  vtkGetVectorMacro(Ambient,float,3);
+
+  // Description:
+  // Set/Get the amount of time this renderer is allowed to spend
+  // rendering its scene. Zero indicates an infinite amount of time.
+  // This is used by vtkLODActor's.
+  vtkSetMacro(AllocatedRenderTime,float);
+  vtkGetMacro(AllocatedRenderTime,float);
+
+  // Description:
+  // Create an image. Subclasses of vtkRenderer must implement this method.
+  virtual void Render() {};
+
+  // Description:
+  // Ask all actors to build and draw themselves.
+  // Returns the number of actors processed.
+  virtual int UpdateActors(void) {return 0;};
+
+	...
+}; </pre>
+        </td>
+    </tr>
+</table>
+</center></div>
+
+<ul>
+    <li>Hey, no drawing commands? How does the geometry get
+        drawn?</li>
+    <li>Lets move onto the <tt>vtkActors</tt> and their header:</li>
+</ul>
+<div align="center"><center>
+
+<table border="1" width="100%">
+    <tr>
+        <td width="100%"><pre><font size="2">class VTK_EXPORT vtkActor : public vtkProp
+{
+ public:
+  vtkActor();
+  ~vtkActor();
+  static vtkActor *New();
+  const char *GetClassName() {return &quot;vtkActor&quot;;};
+  void PrintSelf(ostream&amp; os, vtkIndent indent);
+
+  virtual void Render(vtkRenderer *ren);
+  virtual void Render(vtkRenderer *, vtkMapper *) {};
+
+  vtkActor &amp;operator=(const vtkActor&amp; actor);
+
+  // Description: 
+  // Set/Get the property object that controls this
+  // actors surface properties.  This should be an instance of a
+  // vtkProperty object.  Every actor must have a property associated
+  // with it.  If one isn't specified, then one will be generated
+  // automatically. Multiple actors can share one property object.
+  void SetProperty(vtkProperty *lut);
+  void SetProperty(vtkProperty&amp; lut) {this-&gt;SetProperty(&amp;lut);};
+  vtkProperty *GetProperty();
+
+  void SetBackfaceProperty(vtkProperty *lut);
+  void SetBackfaceProperty(vtkProperty&amp; lut) {this-&gt;SetBackfaceProperty(&amp;lut);};
+  vtkProperty *GetBackfaceProperty();
+
+  // Description: 
+  // Set/Get the texture object to control rendering
+  // texture maps.  This will be a vtkTexture object. An actor does
+  // not need to have an associated texture map and multiple actors
+  // can share one texture.
+  vtkSetObjectMacro(Texture,vtkTexture);
+  vtkGetObjectMacro(Texture,vtkTexture);
+
+  // Description:
+  // This is the method that is used to connect an actor to the end of a
+  // visualization pipeline, i.e. the mapper. This should be a subclass
+  // of vtkMapper. Typically vtkPolyDataMapper and vtkDataSetMapper will
+  // be used.
+  vtkSetObjectMacro(Mapper,vtkMapper);
+
+
+	...
+}; </font></pre>
+        </td>
+        <td><img src="images/vtkactors.gif" width="125"
+        height="95"></td>
+    </tr>
+</table>
+</center></div>
+
+<ul>
+    <li>&nbsp;A bunch of gets and sets of various things, notice
+        when you do look into the source the reference to <tt>vtkMatrix4x4</tt></li>
+    <li>The <tt>vtkActor</tt> is where the position information
+        is kept as well as the properties and textures</li>
+    <li>The next object is the vtkMapper, it maps raw geometry
+        into vtk primitives</li>
+    <li>Heres the header:</li>
+</ul>
+
+<p>&nbsp;</p>
+<div align="center"><center>
+
+<table border="1" width="100%">
+    <tr>
+        <td width="100%"><pre><font size="2">class VTK_EXPORT vtkMapper : public vtkObject 
+{
+public:
+  vtkMapper();
+  ~vtkMapper();
+  const char *GetClassName() {return &quot;vtkMapper&quot;;};
+  void PrintSelf(ostream&amp; os, vtkIndent indent);
+  void operator=(const vtkMapper&amp; m);
+
+  unsigned long int GetMTime();
+
+  void SetStartRender(void (*f)(void *), void *arg);
+  void SetEndRender(void (*f)(void *), void *arg);
+  void SetStartRenderArgDelete(void (*f)(void *));
+  void SetEndRenderArgDelete(void (*f)(void *));
+
+  // Description:
+  // Method initiates the mapping process. Generally sent by the actor 
+  // as each frame is rendered.
+  virtual void Render(vtkRenderer *ren, vtkActor *a) = 0;
+
+  void SetLookupTable(vtkLookupTable *lut);
+  void SetLookupTable(vtkLookupTable&amp; lut) {this-&gt;SetLookupTable(&amp;lut);};
+  vtkLookupTable *GetLookupTable();
+
+  // Description:
+  // Create default lookup table. Generally used to create one when none
+  // is available.
+  virtual void CreateDefaultLookupTable();
+
+  // Description:
+  // Turn on/off flag to control whether scalar data is used to color objects.
+  vtkSetMacro(ScalarVisibility,int);
+  vtkGetMacro(ScalarVisibility,int);
+  vtkBooleanMacro(ScalarVisibility,int);
+
+  // Description:
+  // Turn on/off flag to control whether data is rendered using
+  // immediate mode or note. Immediate mode rendering
+  // tends to be slower but it can handle larger datasets.
+  // The default value is immediate mode off. If you are 
+  // having problems rendering a large dataset you might
+  // want to consider using imediate more rendering.
+  vtkSetMacro(ImmediateModeRendering,int);
+  vtkGetMacro(ImmediateModeRendering,int);
+  vtkBooleanMacro(ImmediateModeRendering,int);
+	...
+};</font></pre>
+        </td>
+        <td><img src="images/vtkmappers.gif" width="364"
+        height="216"></td>
+    </tr>
+</table>
+</center></div>
+
+<ul>
+    <li>More pure virtual functions? wheres the drawing?</li>
+    <li>&nbsp;</li>
+</ul>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+</body>
+</html>

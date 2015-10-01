@@ -1,0 +1,24 @@
+
+Couple of C++ hints... 
+
+--File naming conventions can also be .cc and .h for c++ (I hate upper case :)
+
+--In C++ classes, make the order 
+public:
+protected:
+private:
+
+since anything not defined will automatically be public... so this
+hierarchy makes more sense.  Also the first time user wants to see the
+public section first... its the one he has access to.
+
+-- MORE COMMENTS IN HEADER FILES!!!
+Explain why things are done the way they are... it makes it much
+easier for someone else to understand the intent and structure of the
+code and data structures.
+
+-- MORE COMMENTS IN COMPLEX CODE!!!
+Like the OGLRen.cc file... :)
+
+-- C++ compiler flags are in CXXFLAGS
+

@@ -1,0 +1,192 @@
+
+	Advanced Computer Graphics and Data Visualization
+
+
+
+
+Section 6: Understanding DataExplorer's data model
+
+Data Explorer is a programming environment which enables the visual exploration of large and time-dependent data sets
+Visual programming paradigm - block diagram, data flow language 
+Data 
+multidimensional 
+multiparameter 
+regular and irregular grids
+Extensive and extensible library of functional modules which can be applied to data sets 
+Client-Server paradigm 
+User interface on workstation 
+Data and computation on server 
+Image displayed on workstation
+
+How does your data get into DX?
+Import Module
+ The Import module is supplied with DX. 
+ The Import module reads a "header file" which describes your data in DX terms. 
+ The "name" field of the Import module must contain the path to the header file. 
+ The header file contains a description of your data. 
+file name of your data file 
+grid dimensions 
+ascii/binary flag 
+scalar/vector flags 
+layout control for formatted ascii files (e.g. FORTRAN) 
+It can created using the Data Prompter application or with any ASCII editor.
+The data file contains your instrumental or simulation data. Several data sets may be in the same file (e.g. temp and pressure and wind velocity) 
+
+Header file contents:
+
+file = pathname-to-datafile 
+grid = NxNyNx... or points = n 
+Data format -- text or binary 
+Data layout 
+record
+temp1 temp2...
+pressure1 pressure2...
+field
+temp1 pressure1
+temp2 pressure2
+   ....
+Data structure -- scalar, 1-vector, 2-vector,... 
+Data type -- byte, int, float 
+majority 
+row (last dim fastest, like C) 
+column (first dim fastest, like FORTRAN)
+Skip beginning of the file (for a text header) 
+Layout control (column-wise formatting like FORTRAN) 
+Skip lines/comments between records or time series 
+Control grid location and spacing 
+
+Import
+There is at least one Import module in almost all networks. Import reads data files from your 
+disk in several formats
+General Import format (.general) 
+Short text header files that describe the data 
+Usually the data itself is in another file (text or binary) 
+Useful for reading in fairly straightforward arrays 
+DX (.dx) format 
+More formal data description 
+Usually it is convenient to put the data (the numbers) in separate file(s) 
+Data can be text or binary; different components can be either .dx format can describe more complex data structures than .general 
+Other data file types that Import can read: 
+bin (special binary file type for Power Visualization Server only) 
+netCDF 
+HDF 
+External filter 
+ !command instead of filename means execute my custom command 
+
+
+
+General Import format (.general)
+
+An example: 3-D Binary Data
+
+Header file: MRIdata.general
+#
+# The data are found in the file MRIdata.bin
+file = /locker/11/000611/DXExamples/MRIdata.bin
+#
+# The grid is 64x64x27
+grid = 64x64x27
+#
+# The data values in the file are bytes
+type = short
+#
+# the data component contains the colors, which are scalars
+structure = scalar
+#
+# the following line specifies that the data are organized such that the
+# last index (in this case z) varies fastest when reading the data.
+majority = row
+#
+# The data is stored in binary format
+format = msb binary
+#
+# The name of the field
+field = data
+#
+# Skip no bytes, there is no header
+header = bytes 0
+
+Data file: MRIdata.bin
+The data file contains numbers stored in two byte shorts. The file has no delimiters and is representative of the way scanning instruments will output their data. The short data type will cause troubles since the Isosurface module wants its data in either char or float form.
+
+
+The Visual Program:
+
+
+Results:
+
+
+
+
+
+
+
+
+
+DX format (.dx) 
+A Data Explorer file consists of a header section followed by an optional data section. 
+The header section consists of a textual description of a collection of objects. 
+The data section contains the array object data, either as text or in binary, and is referred to 
+by the header section. 
+A header section may refer to objects and data either within the current file or in other files. 
+Data Explorer is an object oriented system so your data needs to be encapsulated in an 
+object.
+Anatomy of a DX object: The output of the import module using the DX format:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+An example: 3-D Data File
+
+#
+# water molecule electron density
+#
+object 1 class array items 48000 data follows
+          0         0         0         0         0         0
+          0         0         0         0         0         0
+          0         0         0         0         0         0
+          0         0         0         0         0         0
+          0         0         0         0         0         0
+          0         0         0         0         0         0
+   0.000001  0.000001  0.000001  0.000001  0.000001  0.000001
+   0.000001  0.000001  0.000001  0.000001         0         0
+          0         0         0         0  0.000001  0.000001
+    ...
+          0         0         0         0         0         0
+          0         0         0         0         0         0
+  
+ attribute "dep" string "positions"
+
+object 2 class gridpositions counts 40 60 20
+ origin  -1.0  -3.0  -2.0 
+ delta    0.1   0.0   0.0
+ delta    0.0   0.1   0.0
+ delta    0.0   0.0   0.1
+
+object 3 class gridconnections counts 40 60 20
+ attribute "element type" string "cubes"
+ attribute "ref" string "positions"
+
+object "electron density" class field
+ component "data" 1
+ component "positions" 2
+ component "connections" 3
+
+

@@ -1,0 +1,21 @@
+#ifndef _OGLCAMERA_H_
+#define _OGLCAMERA_H_
+
+/*
+ * OGLCamera.H
+ */
+#include "Camera.H"
+
+class OGLCamera : public Camera {
+  public:
+  OGLCamera() {}
+  ~OGLCamera() {}
+  void Initialize(void);
+  void Render(Renderer *);
+  void Elevate(double);
+  void Azimuth(double);
+  void Zoom(double);
+  void LookAt();
+};
+
+#endif

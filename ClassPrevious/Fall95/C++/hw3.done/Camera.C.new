@@ -1,0 +1,117 @@
+#include <math.h>
+#include "Camera.H"
+#define PI 3.14159265
+#define D2R(deg) ((deg)*PI/180.0)
+
+/*
+ * Convenience routine for computing cross product
+ */
+static void cross(float *dest, float *a, float*b)
+{
+  dest[0] = a[1]*b[2] - b[1]*a[2];
+  dest[1] = b[0]*a[2] - a[0]*b[2];
+  dest[2] = a[0]*b[1] - b[0]*a[1];
+}
+
+void Camera::set_aspect_ratio(double ar)
+{
+  aspect_ratio = ar;
+}
+
+void Camera::set_position(double x, double y, double z)
+{
+  position[0] = x;
+  position[1] = y;
+  position[2] = z;
+}
+
+void Camera::set_focal_point(double x, double y, double z)
+{
+  focal_point[0] = x;
+  focal_point[1] = y;
+  focal_point[2] = z;
+}
+
+void Camera::set_view_angle(double a)
+{
+  view_angle = a;
+}
+
+void Camera::set_view_up(double x, double y, double z)
+{
+  view_up[0] = x;
+  view_up[1] = y;
+  view_up[2] = z;
+}
+
+void Camera::set_near(double x)
+{
+  near = x;
+}
+
+void Camera::set_far(double x)
+{
+  far = x;
+}
+
+void Camera::Initialize(void)
+{
+  set_position(0,0,10);
+  set_focal_point(0,0,0);
+  set_view_angle(30);
+  set_near(2);
+  set_far(20);
+  set_view_up(0,1,0);
+  set_aspect_ratio(1);
+}
+
+void Camera::view_bounding_box(double min_x, double max_x, double min_y,
+			       double max_y, double min_z, double max_z)
+{
+  double mid_x, mid_y, mid_z;
+  double xlen, ylen, zlen, len;
+  double effective_view_angle;
+  double dist;
+  float vec[3];
+  int i;
+  
+
+  /* Find center */
+  mid_x = (min_x+max_x)/2.0;
+  mid_y = (min_y+max_y)/2.0;
+  mid_z = (min_z+max_z)/2.0;
+
+  /* Find max length of dataset */
+  xlen = max_x - min_x;
+  ylen = max_y - min_y;
+  zlen = max_z - min_z;
+  len = sqrt(xlen*xlen + ylen*ylen + zlen*zlen);
+
+  /* We want the whole thing to fit not just within the view_angle
+   * but within some border we will call the effective view angle
+   */
+  effective_view_angle = 0.95 * this->view_angle;
+  
+  /*
+   * Compute necessary distance from data
+   */
+  dist = (len / 2.0) / tan(D2R(effective_view_angle/2.0));
+
+  /*
+   * Compute current vector from mid point to camera position,
+   * and rescale it so its length is "dist", thereby calculating
+   * new position
+   */
+  vec[0] = position[0] - mid_x;
+  vec[1] = position[1] - mid_y;
+  vec[2] = position[2] - mid_z;
+  len = sqrt(vec[0]*vec[0] + vec[1]*vec[1] + vec[2]*vec[2]);
+  vec[0] *= dist/len;
+  vec[1] *= dist/len;
+  vec[2] *= dist/len;
+
+  focal_point[0] = mid_x; focal_point[1] = mid_y; focal_point[2] = mid_z;
+  for (i=0; i<3; i++) {
+    position[i] = focal_point[i] + vec[i];
+  }
+}

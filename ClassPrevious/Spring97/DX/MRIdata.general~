@@ -1,0 +1,25 @@
+
+#
+# The data are found in the file "head.1"
+file = /locker/11/000611/DXExamples/SmallMRIHead.bin
+#
+# The grid is  64x64x27
+grid = 64x64x27
+#
+# The data values in the file are bytes
+type = short
+#
+# the data component contains the colors, which are scalars
+structure = scalar
+#
+# the following line specifies that the data are organized such that the
+# first index (in this case x) varies fastest when reading the data.
+majority = column
+#
+# The data is stored in binary format
+format = lsb binary
+#
+#
+#  Skip no bytes, there is no header
+header = bytes 0
+

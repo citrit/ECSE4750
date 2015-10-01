@@ -1,0 +1,19 @@
+! ** JCreator Workspace File (C)2000
+! ********** DO NOT EDIT *********
+
+VERSION := "1.00"
+LABEL := "Hw2"
+
+! Start Project Structure
+#[BeginProject]SOURCE := "Hw2.jcp" #[EndProject]
+
+! Start Last Document Structure
+#[BeginFile]SOURCE := "STLReader.java" #[EndFile]
+#[BeginFile]SOURCE := "objectReader.java" #[EndFile]
+#[BeginFile]SOURCE := "Actor.java" #[EndFile]
+#[BeginFile]SOURCE := "PolygonCell.java" #[EndFile]
+#[BeginFile]SOURCE := "Hw2.java" #[EndFile]
+#[BeginFile]SOURCE := "OGLRenderer.java" #[EndFile]
+#[BeginFile]SOURCE := "Camera.java" #[EndFile]
+#[BeginFile]SOURCE := "OGLCamera.java" #[EndFile]
+

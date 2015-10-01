@@ -1,0 +1,297 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage Express 2.0">
+<title>DataVis - Mid Term Exam</title>
+</head>
+
+<body bgcolor="#FFFFFF">
+
+<h2>Advanced Computer Graphics and Data Visualization </h2>
+
+<p><strong>35-6961 MidTerm Exam<br>
+March 3, 1999</strong></p>
+
+<p>&nbsp;</p>
+
+<p>Name _________________________________________</p>
+
+<p>You have the whole class to finish the exam, take your time
+and remember to answer the questions you know first. Each
+question is worth 5 points total with the points divided between
+the various parts. Please feel free to use the back of the page.</p>
+
+<p>&nbsp;</p>
+
+<h3>1. OpenGL</h3>
+
+<blockquote>
+    <p>a. (1 Pt) What is OpenGL?</p>
+</blockquote>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<blockquote>
+    <p>b. (1 Pt) What is meant by immediate mode graphics? </p>
+</blockquote>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<blockquote>
+    <p>c. (3 Pts) Name and describe each of the material color
+    components.<br>
+    </p>
+    <p>&nbsp;</p>
+</blockquote>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<h3>2. OpenGL</h3>
+
+<blockquote>
+    <p>a. (2 Pts) Explain why OpenGL needs an Aux/GLUT library.</p>
+</blockquote>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<blockquote>
+    <p>b. (3 Pts) Explain what is happening with this OpenGL code
+    snippet, and any possible problems (Assume that there are
+    enough values in x,y,z and pts to draw the graphic).</p>
+</blockquote>
+
+<pre>	g.begin(GL.POLYGON);
+	for (int i=0;i&lt;3;i++) {
+		gl.vertex(x[i], y[i], z[i]);
+		gl.materialfv(GL.FRONT_AND_BACK, GL.AMBIENT_AND_DIFFUSE,
+				pts[i]);
+	}
+	gl.end();</pre>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<h3>3. Scientific Visualization</h3>
+
+<blockquote>
+    <p>a) (2 Pts) Discuss the differences and similarities
+    between contours and iso-surfaces.</p>
+</blockquote>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<blockquote>
+    <p>b) (3 Pts) We know that Color Maps represent the
+    relationship between a continuous range of data values and
+    color values. From an OO viewpoint, discuss how iso-surface
+    and data cut plane objects would need to interface with a
+    color map object, or what would they need to ask for from the
+    color map object.</p>
+</blockquote>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<h3>4. Data Storage</h3>
+
+<blockquote>
+    <p>a. (3Pts) The choice of data representation is important
+    because it effects our ability to interface to external data
+    and the performance of the overall visualization system. Name
+    and describe 3 of the 5 design criterion for our
+    visualization system described in class and in the text.</p>
+</blockquote>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<blockquote>
+    <p>b. (2 Pts) If we group our Actor classes and contained
+    Cells as data sets, describe what is meant by structure and
+    attributes.</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+</blockquote>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<h3>5. Data algorithms</h3>
+
+<blockquote>
+    <p>a. (2 Pts) Based on our discussion of OpenInventor and
+    scene graphs, explain how properties (materials and geometry)
+    are shared.</p>
+</blockquote>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<blockquote>
+    <p>b. (3 Pts) Using the objects from homework 2, discuss how
+    to include the decimation algorithm into the class hierarchy.
+    Specifically, explain where the algorithm would exist (in its
+    own object or attached to some other object) also would there
+    be a need to change the class hierarchy.</p>
+</blockquote>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<h3>6. Data Algorithms</h3>
+
+<blockquote>
+    <p>(5 Pts) Based on our discusions of the Scene Graph
+    structure, fill in the blanks below with the position and
+    color of each of the objects.</p>
+</blockquote>
+
+<p><img src="sceneGraph.JPG" width="719" height="383"></p>
+
+<pre>Object	Position   	Color</pre>
+
+<pre>1	_____________	_____________</pre>
+
+<pre>2	_____________	_____________</pre>
+
+<pre>3	_____________	_____________</pre>
+
+<pre>4	_____________	_____________</pre>
+
+<pre>5	_____________	_____________</pre>
+
+<pre>6	_____________	_____________</pre>
+
+<p>&nbsp;</p>
+
+<p><strong>Extra credit:<br>
+</strong>(2 Pts) Describe manifold and non-manifold geometry.<br>
+(2 Pts) What are some weaknesses of the Object Rendering system
+we used for hw2?<br>
+(1 Pt) What is your quest? What is your favorite color? :-).</p>
+</body>
+</html>

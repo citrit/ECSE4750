@@ -1,0 +1,51 @@
+#//////////////////////////////////////////////////////////////////////////
+#//
+#//  This code is for instructional purposes only. It was generated for
+#//  use in a graduate level course to show certain aspects of data
+#//  storage algorithms. It has problems and should not be used 
+#//  outside the class environment.
+#//
+#//  Author:  Thomas D. Citriniti     citrit@rpi.edu
+#//  Class:   Advanced Computer Graphics and Data visualization
+#//           Rensselaer Polytechnic Institute
+#//  Date:    October 3, 1995
+#//
+#//////////////////////////////////////////////////////////////////////////
+
+.SUFFIXES: $(.SUFFIXES) .C .C~
+
+
+# CCFLAGS=-g -I/usr/lpp/xlC/include -I/locker/44/000644/Mesa/@sys/include  \
+#         -I/usr/include
+# CCC=xlC
+
+CCC=g++
+CCFLAGS=-g -I/locker/44/000644/Mesa/@sys/include
+
+OBJS= OGLLight.o OGLCam.o OGLRen.o CellSet.o PtCell.o PlyGCell.o \
+	PlyLCell.o TriCell.o LineCell.o 
+
+LDFLAGS=-L/locker/44/000644/Mesa/@sys/lib -lMesaGLU \
+        -lMesaGL -L/usr/local/X11/lib -lXmu -lXt -lX11 -lm
+
+hw3: hw3.o $(OBJS)
+	$(CCC) -o $@  hw3.o $(OBJS) $(LDFLAGS)
+
+objTest: objTest.o $(OBJS)
+	$(CCC) -o $@  objTest.o $(OBJS) $(LDFLAGS)
+
+
+clean:
+	rm -f *~ core hw3 *.o
+
+tidy:
+	rm -f core *~ *.o
+
+.C.o:
+        $(CCC) $(CCFLAGS) -c $<
+
+.C:
+        $(CCC) $(CCFLAGS) $< -o $@  $(LDFLAGS) 
+
+
+# DO NOT DELETE THIS LINE -- make depend depends on it.

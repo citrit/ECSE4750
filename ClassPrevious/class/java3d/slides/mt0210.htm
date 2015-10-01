@@ -1,0 +1,139 @@
+
+<HTML>
+<HEAD>
+<!-- Created by mktalk.pl on 7/16/98 at 3:58:23 PM -->
+<TITLE>Using Texture Modes</TITLE>
+</HEAD>
+
+<BODY
+	
+	BGCOLOR=#000000
+	TEXT=#FFFFFF
+	LINK=#FFFFFF
+	ALINK=#00FF00
+	VLINK=#888888
+>
+<TABLE WIDTH=100%
+	BORDER=0
+	CELLSPACING=0
+	CELLPADDING=0
+>
+<TR >
+<TD ALIGN=CENTER WIDTH=24%>
+	<FONT
+		COLOR=#FFFFFF
+		SIZE=-1
+	>
+	<A HREF=mt0000.htm><B><IMG SRC="../images/arwtoc2.gif" BORDER=0 WIDTH=24 HEIGHT=24></B></A>
+</TD>
+<TD ALIGN=CENTER WIDTH=24%>
+	<FONT
+		COLOR=#FFFFFF
+		SIZE=-1
+	>
+	<A HREF=mt0205.htm><B><IMG SRC="../images/arwndx2.gif" BORDER=0 WIDTH=24 HEIGHT=24></B></A>
+</TD>
+<TD ALIGN=CENTER WIDTH=24%>
+	<FONT
+		COLOR=#FFFFFF
+		SIZE=-1
+	>
+	<A HREF=mt0209.htm><B><IMG SRC="../images/arwprev2.gif" BORDER=0 WIDTH=24 HEIGHT=24></B></A>
+</TD>
+<TD ALIGN=CENTER WIDTH=24%>
+	<FONT
+		COLOR=#FFFFFF
+		SIZE=-1
+	>
+	<A HREF=mt0211.htm><B><IMG SRC="../images/arwnext2.gif" BORDER=0 WIDTH=24 HEIGHT=24></B></A>
+</TD>
+<TD ALIGN=CENTER WIDTH=4%>
+	<FONT
+		COLOR=#FFFFFF
+		SIZE=-1
+	>
+	210
+</TD>
+</TR>
+</TABLE>
+<P>
+
+<FONT COLOR=#FFFF00 SIZE=+0>
+<CENTER>Controlling the Appearance of Texture Mapping</CENTER>
+<FONT COLOR=#FFFF00 SIZE=+3>
+<CENTER><B><I>Using Texture Modes</I></B></CENTER>
+<CENTER><IMG SRC="../images/red.jpg" HEIGHT=2 WIDTH=70% BORDER=0></CENTER>
+<P>
+<FONT COLOR=#FFFFFF SIZE=+2>
+
+<DL>
+
+<p>
+<center>
+<table border=1>
+
+<tr VALIGN=TOP>
+<th><FONT SIZE=+2 COLOR=#FFFFFF>Mode</FONT></TH>
+<th><FONT SIZE=+2 COLOR=#FFFFFF>P'<SUB>rgb</SUB></FONT></TH>
+<th><FONT SIZE=+2 COLOR=#FFFFFF>P'<SUB>a</SUB></FONT></TH>
+</tr>
+
+<tr VALIGN=TOP>
+<td><b><B><TT><FONT COLOR=#00FF00 SIZE=+2>REPLACE</FONT></TT></B></b></TD>
+<td><FONT SIZE=+2 COLOR=#FFFFFF><FONT COLOR=#FFFF00>T<SUB>rgb</SUB></FONT></FONT></TD>
+<td><FONT SIZE=+2 COLOR=#FFFFFF><FONT COLOR=#FFFF00>T<SUB>a</SUB></FONT></FONT></TD>
+</tr>
+
+<tr VALIGN=TOP>
+<td><b><B><TT><FONT COLOR=#00FF00 SIZE=+2>DECAL</FONT></TT></B></b></TD>
+<td><FONT SIZE=+2 COLOR=#FFFFFF><FONT COLOR=#FFFF00>P<SUB>rgb</SUB>*(1-T<SUB>a</SUB>)+T<SUB>rgb</SUB>*T<SUB>a</SUB></YELLOW></FONT></FONT></TD>
+<td><FONT SIZE=+2 COLOR=#FFFFFF><FONT COLOR=#FFFF00>P<SUB>a</SUB></YELLOW></FONT></FONT></TD>
+</tr>
+
+<tr VALIGN=TOP>
+<td><b><B><TT><FONT COLOR=#00FF00 SIZE=+2>MODULATE</FONT></TT></B></b></TD>
+<td><FONT SIZE=+2 COLOR=#FFFFFF><FONT COLOR=#FFFF00>P<SUB>rgb</SUB>*T<SUB>rgb</SUB></FONT></FONT></TD>
+<td><FONT SIZE=+2 COLOR=#FFFFFF><FONT COLOR=#FFFF00>P<SUB>a</SUB>*T<SUB>a</SUB></FONT></FONT></TD>
+</tr>
+
+<tr VALIGN=TOP>
+<td><b><B><TT><FONT COLOR=#00FF00 SIZE=+2>BLEND</FONT></TT></B></b></TD>
+<td><FONT SIZE=+2 COLOR=#FFFFFF><FONT COLOR=#FFFF00>P<SUB>rgb</SUB>*(1-T<SUB>rgb</SUB>)+B<SUB>rgb</SUB>*T<SUB>rgb</SUB></FONT></FONT></TD>
+<td><FONT SIZE=+2 COLOR=#FFFFFF><FONT COLOR=#FFFF00>P<SUB>a</SUB>*T<SUB>a</SUB></FONT></FONT></TD>
+</tr>
+
+</table>
+</center>
+
+<p>
+<DD><LI>Where:
+<DL>
+
+<DD><TT><FONT COLOR=#FFFF00>P<SUB>rgb</SUB></FONT></TT> is the color of the pixel being texture mapped,
+as if no texture-mapping was to take place
+
+<DD><TT><FONT COLOR=#FFFF00>P<SUB>a</SUB></FONT></TT> is the alpha of the pixel being texture mapped,
+as if no texture-mapping was to take place
+
+<DD><TT><FONT COLOR=#FFFF00>T<SUB>rgb</SUB></FONT></TT> is the texture color
+
+<DD><TT><FONT COLOR=#FFFF00>T<SUB>a</SUB></FONT></TT> is the texture alpha
+
+<DD><TT><FONT COLOR=#FFFF00>B<SUB>rgb</SUB></FONT></TT> is the blend color
+
+<DD><TT><FONT COLOR=#FFFF00>B<SUB>a</SUB></FONT></TT> is the blend alpha
+
+<DD>Non-primed quantities denote <i>before</i>
+
+<DD>Primed quantities denote <i>after</i>
+
+</DL>
+
+</DL>
+
+
+
+<!------------------------------------------------------------------------>
+
+</BODY>
+</HTML>

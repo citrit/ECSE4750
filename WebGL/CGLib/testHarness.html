@@ -1,0 +1,51 @@
+<html>
+<script type="text/javascript" src="cgCoords.js"></script>
+<script type="text/javascript" src="cgPointShape.js"></script>
+<script type="text/javascript" src="cgLineShape.js"></script>
+<script type="text/javascript" src="cgRenderer.js"></script>
+<script type="text/javascript" src="cgTransform.js"></script>
+<head>
+    <script>
+        function debugMsg(msg) {
+            document.getElementById("debugMsg").innerHTML = document.getElementById("debugMsg").innerHTML + msg + "<br>";
+        }
+    function runTests() {
+        //Create an instance of the class
+        var pts = new CGLib.CGPointList();
+        var pt = new CGLib.CGPoint(1,1,1);
+        pts.AddPoint(pt);
+        pt = new CGLib.CGPoint(20,20,20);
+        pts.AddPoint(pt);
+        pt = new CGLib.CGPoint(30,30,30);
+        pts.AddPoint(pt);
+        pt = new CGLib.CGPoint(40,40,40);
+        pts.AddPoint(pt);
+        pt = new CGLib.CGPoint(50,50,50);
+        pts.AddPoint(pt);
+        debugMsg(pts.toString());
+        var ptShp = new CGLib.CGPointShape();
+        ptShp.AddPoints(pts);
+        var rend = new CGLib.Renderer("myCanvas");
+        rend.AddShape(ptShp);
+        
+        var pts = new CGLib.CGPointList();
+        pts.AddPoint(new CGLib.CGPoint(20,20,20));
+        pts.AddPoint(new CGLib.CGPoint(20,100,20));
+        pts.AddPoint(new CGLib.CGPoint(70,100,20));
+        var lShp = new CGLib.CGLineShape();
+        lShp.AddPoints(pts);
+        rend.AddShape(lShp);
+        
+        rend.Render();
+    }
+    </script>
+</head>
+<body>
+    <input type="button" onclick="runTests();" value="Run Tests">
+    <canvas id="myCanvas" width="300" height="200" style="border:1px solid #d3d3d3;background:#ffffff;">
+        YourbrowserdoesnotsupporttheHTML5canvastag.</canvas>
+
+    <p id="debugMsg"></p>
+    
+</body>    
+</html>

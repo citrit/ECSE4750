@@ -1,0 +1,397 @@
+
+<HTML>
+<HEAD>
+<!-- Created by mktalk.pl on 7/16/98 at 3:58:23 PM -->
+<TITLE>Creating Interpolators</TITLE>
+</HEAD>
+
+<BODY
+	
+	BGCOLOR=#000000
+	TEXT=#FFFFFF
+	LINK=#FFFFFF
+	ALINK=#00FF00
+	VLINK=#888888
+>
+<TABLE WIDTH=100%
+	BORDER=0
+	CELLSPACING=0
+	CELLPADDING=0
+>
+<TR >
+<TD ALIGN=CENTER WIDTH=24%>
+	<FONT
+		COLOR=#FFFFFF
+		SIZE=-1
+	>
+	<A HREF=mt0000.htm><B><IMG SRC="../images/arwtoc2.gif" BORDER=0 WIDTH=24 HEIGHT=24></B></A>
+</TD>
+<TD ALIGN=CENTER WIDTH=24%>
+	<FONT
+		COLOR=#FFFFFF
+		SIZE=-1
+	>
+	<A HREF=mt0288.htm><B><IMG SRC="../images/arwndx2.gif" BORDER=0 WIDTH=24 HEIGHT=24></B></A>
+</TD>
+<TD ALIGN=CENTER WIDTH=24%>
+	<FONT
+		COLOR=#FFFFFF
+		SIZE=-1
+	>
+	<A HREF=mt0287.htm><B><IMG SRC="../images/arwprev2.gif" BORDER=0 WIDTH=24 HEIGHT=24></B></A>
+</TD>
+<TD ALIGN=CENTER WIDTH=24%>
+	<FONT
+		COLOR=#FFFFFF
+		SIZE=-1
+	>
+	<A HREF=mt0289.htm><B><IMG SRC="../images/arwnext2.gif" BORDER=0 WIDTH=24 HEIGHT=24></B></A>
+</TD>
+<TD ALIGN=CENTER WIDTH=4%>
+	<FONT
+		COLOR=#FFFFFF
+		SIZE=-1
+	>
+	288
+</TD>
+</TR>
+</TABLE>
+<P>
+
+<FONT COLOR=#FFFF00 SIZE=+2>
+<CENTER>Creating Interpolators</CENTER>
+<CENTER><IMG SRC="../images/red.jpg" HEIGHT=2 WIDTH=70% BORDER=0></CENTER>
+<P>
+
+<CENTER>
+<TABLE WIDTH=100% CELLSPACING=8 CELLPADDING=8>
+<TD VALIGN=TOP WIDTH=100%>
+<TABLE WIDTH=100% CELLSPACING=0 CELLPADDING=0>
+<TR>
+<TD WIDTH=0%>&nbsp;</TD>
+<TD NOWRAP>
+	<FONT COLOR=#FFFFFF SIZE=+0>
+	<A HREF=mt0289.htm>Motivation</A>&nbsp;
+</TD>
+<TD VALIGN=top WIDTH=100%>
+	<HR SIZE=1>
+</TD>
+<TD VALIGN=top ALIGN=right>
+	<FONT COLOR=#FFFFFF SIZE=+0>
+	&nbsp;289
+</TD>
+</TR>
+</TABLE>
+
+<TABLE WIDTH=100% CELLSPACING=0 CELLPADDING=0>
+<TR>
+<TD WIDTH=0%>&nbsp;</TD>
+<TD NOWRAP>
+	<FONT COLOR=#FFFFFF SIZE=+0>
+	<A HREF=mt0290.htm>Interpolator Mapping</A>&nbsp;
+</TD>
+<TD VALIGN=top WIDTH=100%>
+	<HR SIZE=1>
+</TD>
+<TD VALIGN=top ALIGN=right>
+	<FONT COLOR=#FFFFFF SIZE=+0>
+	&nbsp;290
+</TD>
+</TR>
+</TABLE>
+
+<TABLE WIDTH=100% CELLSPACING=0 CELLPADDING=0>
+<TR>
+<TD WIDTH=0%>&nbsp;</TD>
+<TD NOWRAP>
+	<FONT COLOR=#FFFFFF SIZE=+0>
+	<A HREF=mt0291.htm>Mapping Time to Alpha</A>&nbsp;
+</TD>
+<TD VALIGN=top WIDTH=100%>
+	<HR SIZE=1>
+</TD>
+<TD VALIGN=top ALIGN=right>
+	<FONT COLOR=#FFFFFF SIZE=+0>
+	&nbsp;291
+</TD>
+</TR>
+</TABLE>
+
+<TABLE WIDTH=100% CELLSPACING=0 CELLPADDING=0>
+<TR>
+<TD WIDTH=5%>&nbsp;</TD>
+<TD NOWRAP>
+	<FONT COLOR=#FFFFFF SIZE=+0>
+	<A HREF=mt0292.htm>Mapping Time to Alpha</A>&nbsp;
+</TD>
+<TD VALIGN=top WIDTH=95%>
+	<HR SIZE=1>
+</TD>
+<TD VALIGN=top ALIGN=right>
+	<FONT COLOR=#FFFFFF SIZE=+0>
+	&nbsp;292
+</TD>
+</TR>
+</TABLE>
+
+<TABLE WIDTH=100% CELLSPACING=0 CELLPADDING=0>
+<TR>
+<TD WIDTH=5%>&nbsp;</TD>
+<TD NOWRAP>
+	<FONT COLOR=#FFFFFF SIZE=+0>
+	<A HREF=mt0293.htm>Alpha One-Shot and Cyclic Behaviors</A>&nbsp;
+</TD>
+<TD VALIGN=top WIDTH=95%>
+	<HR SIZE=1>
+</TD>
+<TD VALIGN=top ALIGN=right>
+	<FONT COLOR=#FFFFFF SIZE=+0>
+	&nbsp;293
+</TD>
+</TR>
+</TABLE>
+
+<TABLE WIDTH=100% CELLSPACING=0 CELLPADDING=0>
+<TR>
+<TD WIDTH=5%>&nbsp;</TD>
+<TD NOWRAP>
+	<FONT COLOR=#FFFFFF SIZE=+0>
+	<A HREF=mt0294.htm>Alpha Class Hierarchy</A>&nbsp;
+</TD>
+<TD VALIGN=top WIDTH=95%>
+	<HR SIZE=1>
+</TD>
+<TD VALIGN=top ALIGN=right>
+	<FONT COLOR=#FFFFFF SIZE=+0>
+	&nbsp;294
+</TD>
+</TR>
+</TABLE>
+
+<TABLE WIDTH=100% CELLSPACING=0 CELLPADDING=0>
+<TR>
+<TD WIDTH=5%>&nbsp;</TD>
+<TD NOWRAP>
+	<FONT COLOR=#FFFFFF SIZE=+0>
+	<A HREF=mt0295.htm>Alpha Class Methods</A>&nbsp;
+</TD>
+<TD VALIGN=top WIDTH=95%>
+	<HR SIZE=1>
+</TD>
+<TD VALIGN=top ALIGN=right>
+	<FONT COLOR=#FFFFFF SIZE=+0>
+	&nbsp;295
+</TD>
+</TR>
+</TABLE>
+
+<TABLE WIDTH=100% CELLSPACING=0 CELLPADDING=0>
+<TR>
+<TD WIDTH=5%>&nbsp;</TD>
+<TD NOWRAP>
+	<FONT COLOR=#FFFFFF SIZE=+0>
+	<A HREF=mt0296.htm>Alpha Class Methods</A>&nbsp;
+</TD>
+<TD VALIGN=top WIDTH=95%>
+	<HR SIZE=1>
+</TD>
+<TD VALIGN=top ALIGN=right>
+	<FONT COLOR=#FFFFFF SIZE=+0>
+	&nbsp;296
+</TD>
+</TR>
+</TABLE>
+
+<TABLE WIDTH=100% CELLSPACING=0 CELLPADDING=0>
+<TR>
+<TD WIDTH=0%>&nbsp;</TD>
+<TD NOWRAP>
+	<FONT COLOR=#FFFFFF SIZE=+0>
+	<A HREF=mt0297.htm>Types of Interpolators</A>&nbsp;
+</TD>
+<TD VALIGN=top WIDTH=100%>
+	<HR SIZE=1>
+</TD>
+<TD VALIGN=top ALIGN=right>
+	<FONT COLOR=#FFFFFF SIZE=+0>
+	&nbsp;297
+</TD>
+</TR>
+</TABLE>
+
+<TABLE WIDTH=100% CELLSPACING=0 CELLPADDING=0>
+<TR>
+<TD WIDTH=5%>&nbsp;</TD>
+<TD NOWRAP>
+	<FONT COLOR=#FFFFFF SIZE=+0>
+	<A HREF=mt0298.htm>Types of Interpolators</A>&nbsp;
+</TD>
+<TD VALIGN=top WIDTH=95%>
+	<HR SIZE=1>
+</TD>
+<TD VALIGN=top ALIGN=right>
+	<FONT COLOR=#FFFFFF SIZE=+0>
+	&nbsp;298
+</TD>
+</TR>
+</TABLE>
+
+<TABLE WIDTH=100% CELLSPACING=0 CELLPADDING=0>
+<TR>
+<TD WIDTH=5%>&nbsp;</TD>
+<TD NOWRAP>
+	<FONT COLOR=#FFFFFF SIZE=+0>
+	<A HREF=mt0299.htm>Interpolator Class Hierarchy</A>&nbsp;
+</TD>
+<TD VALIGN=top WIDTH=95%>
+	<HR SIZE=1>
+</TD>
+<TD VALIGN=top ALIGN=right>
+	<FONT COLOR=#FFFFFF SIZE=+0>
+	&nbsp;299
+</TD>
+</TR>
+</TABLE>
+
+<TABLE WIDTH=100% CELLSPACING=0 CELLPADDING=0>
+<TR>
+<TD WIDTH=5%>&nbsp;</TD>
+<TD NOWRAP>
+	<FONT COLOR=#FFFFFF SIZE=+0>
+	<A HREF=mt0300.htm>Using Interpolators</A>&nbsp;
+</TD>
+<TD VALIGN=top WIDTH=95%>
+	<HR SIZE=1>
+</TD>
+<TD VALIGN=top ALIGN=right>
+	<FONT COLOR=#FFFFFF SIZE=+0>
+	&nbsp;300
+</TD>
+</TR>
+</TABLE>
+
+<TABLE WIDTH=100% CELLSPACING=0 CELLPADDING=0>
+<TR>
+<TD WIDTH=5%>&nbsp;</TD>
+<TD NOWRAP>
+	<FONT COLOR=#FFFFFF SIZE=+0>
+	<A HREF=mt0301.htm>Interpolator Abstract Class Methods</A>&nbsp;
+</TD>
+<TD VALIGN=top WIDTH=95%>
+	<HR SIZE=1>
+</TD>
+<TD VALIGN=top ALIGN=right>
+	<FONT COLOR=#FFFFFF SIZE=+0>
+	&nbsp;301
+</TD>
+</TR>
+</TABLE>
+
+<TABLE WIDTH=100% CELLSPACING=0 CELLPADDING=0>
+<TR>
+<TD WIDTH=5%>&nbsp;</TD>
+<TD NOWRAP>
+	<FONT COLOR=#FFFFFF SIZE=+0>
+	<A HREF=mt0302.htm>RotationInterpolator Class Methods</A>&nbsp;
+</TD>
+<TD VALIGN=top WIDTH=95%>
+	<HR SIZE=1>
+</TD>
+<TD VALIGN=top ALIGN=right>
+	<FONT COLOR=#FFFFFF SIZE=+0>
+	&nbsp;302
+</TD>
+</TR>
+</TABLE>
+
+<TABLE WIDTH=100% CELLSPACING=0 CELLPADDING=0>
+<TR>
+<TD WIDTH=5%>&nbsp;</TD>
+<TD NOWRAP>
+	<FONT COLOR=#FFFFFF SIZE=+0>
+	<A HREF=mt0303.htm>PositionInterpolator Class Methods</A>&nbsp;
+</TD>
+<TD VALIGN=top WIDTH=95%>
+	<HR SIZE=1>
+</TD>
+<TD VALIGN=top ALIGN=right>
+	<FONT COLOR=#FFFFFF SIZE=+0>
+	&nbsp;303
+</TD>
+</TR>
+</TABLE>
+
+<TABLE WIDTH=100% CELLSPACING=0 CELLPADDING=0>
+<TR>
+<TD WIDTH=0%>&nbsp;</TD>
+<TD NOWRAP>
+	<FONT COLOR=#FFFFFF SIZE=+0>
+	<A HREF=mt0304.htm>Interpolator Example Code</A>&nbsp;
+</TD>
+<TD VALIGN=top WIDTH=100%>
+	<HR SIZE=1>
+</TD>
+<TD VALIGN=top ALIGN=right>
+	<FONT COLOR=#FFFFFF SIZE=+0>
+	&nbsp;304
+</TD>
+</TR>
+</TABLE>
+
+<TABLE WIDTH=100% CELLSPACING=0 CELLPADDING=0>
+<TR>
+<TD WIDTH=5%>&nbsp;</TD>
+<TD NOWRAP>
+	<FONT COLOR=#FFFFFF SIZE=+0>
+	<A HREF=mt0305.htm>Interpolator Example</A>&nbsp;
+</TD>
+<TD VALIGN=top WIDTH=95%>
+	<HR SIZE=1>
+</TD>
+<TD VALIGN=top ALIGN=right>
+	<FONT COLOR=#FFFFFF SIZE=+0>
+	&nbsp;305
+</TD>
+</TR>
+</TABLE>
+
+<TABLE WIDTH=100% CELLSPACING=0 CELLPADDING=0>
+<TR>
+<TD WIDTH=5%>&nbsp;</TD>
+<TD NOWRAP>
+	<FONT COLOR=#FFFFFF SIZE=+0>
+	<A HREF=mt0306.htm>Summary</A>&nbsp;
+</TD>
+<TD VALIGN=top WIDTH=95%>
+	<HR SIZE=1>
+</TD>
+<TD VALIGN=top ALIGN=right>
+	<FONT COLOR=#FFFFFF SIZE=+0>
+	&nbsp;306
+</TD>
+</TR>
+</TABLE>
+
+<TABLE WIDTH=100% CELLSPACING=0 CELLPADDING=0>
+<TR>
+<TD WIDTH=5%>&nbsp;</TD>
+<TD NOWRAP>
+	<FONT COLOR=#FFFFFF SIZE=+0>
+	<A HREF=mt0307.htm>Summary</A>&nbsp;
+</TD>
+<TD VALIGN=top WIDTH=95%>
+	<HR SIZE=1>
+</TD>
+<TD VALIGN=top ALIGN=right>
+	<FONT COLOR=#FFFFFF SIZE=+0>
+	&nbsp;307
+</TD>
+</TR>
+</TABLE>
+
+</TD>
+</TABLE>
+</CENTER>
+
+</BODY>
+</HTML>

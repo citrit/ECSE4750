@@ -1,0 +1,1095 @@
+#!/bin/sh
+# This is a shell archive (produced by GNU sharutils 4.2).
+# To extract the files from this archive, save it to some FILE, remove
+# everything before the `!/bin/sh' line above, then type `sh FILE'.
+#
+# Made on 1997-02-08 23:57 EST by <youngs3@jec321>.
+# Source directory was `/afs/rpi.edu/home/33/youngs3/private/GRAPH_VIS/homework1'.
+#
+# Existing files will *not* be overwritten unless `-c' is specified.
+#
+# This shar contains:
+# length mode       name
+# ------ ---------- ------------------------------------------
+#   1260 -rw-r--r-- Makefile
+#   1880 -rw------- README
+#    765 -rw------- basics.h
+#    197 -rw------- draw_all.c
+#    811 -rw------- draw_blob.c
+#    761 -rw------- draw_box.c
+#    855 -rw------- draw_tea.c
+#    798 -rw------- initial.c
+#   2391 -rw------- key_press.c
+#   2023 -rw------- keyback.c
+#    349 -rw------- main.c
+#   1073 -rw------- menu.c
+#    239 -rw------- move_camera.c
+#    250 -rw------- reshape.c
+#
+save_IFS="${IFS}"
+IFS="${IFS}:"
+gettext_dir=FAILED
+locale_dir=FAILED
+first_param="$1"
+for dir in $PATH
+do
+  if test "$gettext_dir" = FAILED && test -f $dir/gettext \
+     && ($dir/gettext --version >/dev/null 2>&1)
+  then
+    set `$dir/gettext --version 2>&1`
+    if test "$3" = GNU
+    then
+      gettext_dir=$dir
+    fi
+  fi
+  if test "$locale_dir" = FAILED && test -f $dir/shar \
+     && ($dir/shar --print-text-domain-dir >/dev/null 2>&1)
+  then
+    locale_dir=`$dir/shar --print-text-domain-dir`
+  fi
+done
+IFS="$save_IFS"
+if test "$locale_dir" = FAILED || test "$gettext_dir" = FAILED
+then
+  echo=echo
+else
+  TEXTDOMAINDIR=$locale_dir
+  export TEXTDOMAINDIR
+  TEXTDOMAIN=sharutils
+  export TEXTDOMAIN
+  echo="$gettext_dir/gettext -s"
+fi
+touch -am 1231235999 $$.touch >/dev/null 2>&1
+if test ! -f 1231235999 && test -f $$.touch; then
+  shar_touch=touch
+else
+  shar_touch=:
+  echo
+  $echo 'WARNING: not restoring timestamps.  Consider getting and'
+  $echo "installing GNU \`touch', distributed in GNU File Utilities..."
+  echo
+fi
+rm -f 1231235999 $$.touch
+#
+if mkdir _sh10553; then
+  $echo 'x -' 'creating lock directory'
+else
+  $echo 'failed to create lock directory'
+  exit 1
+fi
+# ============= Makefile ==============
+if test -f 'Makefile' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'Makefile' '(file already exists)'
+else
+  $echo 'x -' extracting 'Makefile' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'Makefile' &&
+#
+# Sample Makefile for compilling the sample code for the
+# Advanced Computer Graphics and Data Visualization 35.6961 (Fall 1995)
+#
+# Copy this to the directory where the program resides and use
+#  
+#       make progname
+#
+# The progname would be the prefix of the source file you generated.
+# Like if your source file was hw1.c, the above line would read:
+#
+#       make hw1
+#
+# The make utility would automatically look for something with a suffix
+# it understood and would find hw1.c. There are built in rules which
+# tell it how to compile c source.
+#
+X
+LDFLAGS= -L/campus/visualization/mesa-ogl/1.2.7/@sys/lib \
+X	 -lGL -lGLU -lMesaaux -lMesatk -lglut -lXmu -lXt -lX11 -lm
+CFLAGS= -g -I/campus/visualization/mesa-ogl/1.2.7/@sys/include/glut
+CC=gcc
+ARGS =-D DEBUG
+X
+homework1: main.o
+X	$(CC) -o hw1 main.o draw_box.o draw_tea.o initial.o reshape.o \
+X	menu.o draw_blob.o draw_all.o key_press.o move_camera.o \
+X	$(LDFLAGS) $(ARGS)
+X	
+main.o: main.c menu.o initial.o reshape.o draw_all.o key_press.o move_camera.o
+keypress.o: keypress.c
+initial.o: initial.c
+draw_box.o: draw_box.c 
+draw_teap.o: draw_tea.c
+draw_blob.o: draw_blob.c
+reshape.o: reshape.c
+draw_all.o: draw_all.c draw_box.o draw_tea.o draw_blob.o 
+move_camera.o: move_camera.c
+X
+clean:
+X	/bin/rm -f *.o
+SHAR_EOF
+  $shar_touch -am 0208225797 'Makefile' &&
+  chmod 0644 'Makefile' ||
+  $echo 'restore of' 'Makefile' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'Makefile:' 'MD5 check failed'
+be7e2d02971461576c31403849a3e7df  Makefile
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'Makefile'`"
+    test 1260 -eq "$shar_count" ||
+    $echo 'Makefile:' 'original size' '1260,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= README ==============
+if test -f 'README' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'README' '(file already exists)'
+else
+  $echo 'x -' extracting 'README' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'README' &&
+Well here are a few directions on the use of this homework project.
+X
+1] One problem which was never solved was how to switch between double and
+X single buffered windows without killing the original window. It appears that
+X the only way to set the buffers is through the glutInitDisplayMode which is 
+X a bitmask and no other command seems able to reset that bitmask.
+X
+2] I never did figure out how to do lighting correctly. I managed to get the
+material lighting but never managed to get that 3D looking affect. The only
+benefit that I got from NOT being able to do the lighting is that the 
+transparency was easier to do (from not having to turn off lights)
+X
+Okay basically the following occurs in the program.
+X
+A] Toggle between affecting the movement of the
+X   camera, teapot, cube, or sphere with the menus
+X
+i = move +0.2 in i (x in engineering terms) direction
+I = move -0.2 in i direction
+X
+j = move +0.2 in j (y in engineering terms) direction
+J = move -0.2 in j direction
+X
+k = move +0.2 in k (z in engineering terms) direction  
+K = move -0.2 in k direction 
+X
+x = move +15.0 degrees rotation about x axis
+XX = move -15.0 degrees rotation about x axis
+X
+y = move +15.0 degrees rotation about y axis
+Y = move -15.0 degrees rotation about Y axis
+X
+z = move +15.0 degrees rotation about z axis
+Z = move -15.0 degrees rotation about Z axis
+X
+- = scale down (only on objects)
++ = scale up (only on objects)
+X
+f = Full solid mode (teapot only)
+F = transparent attempt (teapot only)
+X
+B] Double and single buffer toggling doesn't work. 
+X
+X
+I haven't thrown headers onto the top of my files. Since I'm assuming that 
+this README will have been read. I hereby acknowledge that this project is 
+2 days late. PLEASE send me email if you need comments on the code! I also
+haven't had time to comment any code yet!
+X
+This program was compiled on a SGI Indy
+X
+Stephen Young
+2/8/97
+X
+youngs3@rpi.edu
+SHAR_EOF
+  $shar_touch -am 0208235697 'README' &&
+  chmod 0600 'README' ||
+  $echo 'restore of' 'README' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'README:' 'MD5 check failed'
+3c901bb8a2c98ebeda2a4a302b2a7431  README
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'README'`"
+    test 1880 -eq "$shar_count" ||
+    $echo 'README:' 'original size' '1880,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= basics.h ==============
+if test -f 'basics.h' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'basics.h' '(file already exists)'
+else
+  $echo 'x -' extracting 'basics.h' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'basics.h' &&
+#include <stdlib.h>
+#ifdef _WIN32
+#include <windows.h>
+#endif
+#include <GL/gl.h>
+#include <GL/glut.h>
+#include <GL/glu.h>
+X
+void clear_scr(void);
+void main_menu(int value);
+void camera_options(int value);
+void draw_tea(void);
+void draw_box(void);
+void draw_blob(void);
+void init_all(void);
+void reshape_fun(GLsizei w,GLsizei h);
+void draw_all(void);
+void key_press(unsigned char key, int x, int y);
+void set_lighting(void);
+void move_camera(void);
+X
+#define TEA_T 100
+#define BOX_T 200
+#define BLOB_T 300
+#define CAM_T 400
+X
+struct fig_vals
+{
+X  float x_disp;
+X  float y_disp;
+X  float z_disp;
+X  float x_rot;
+X  float y_rot;
+X  float z_rot;
+X  float scale_val;
+};
+X
+typedef struct fig_vals fig;
+X  
+fig tea;
+fig box;
+fig blob;
+fig cam;
+X
+int toggler;
+int filled;
+float angle;
+X
+SHAR_EOF
+  $shar_touch -am 0208230997 'basics.h' &&
+  chmod 0600 'basics.h' ||
+  $echo 'restore of' 'basics.h' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'basics.h:' 'MD5 check failed'
+951214eb51af4980b3eb6c535cb6aff0  basics.h
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'basics.h'`"
+    test 765 -eq "$shar_count" ||
+    $echo 'basics.h:' 'original size' '765,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= draw_all.c ==============
+if test -f 'draw_all.c' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'draw_all.c' '(file already exists)'
+else
+  $echo 'x -' extracting 'draw_all.c' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'draw_all.c' &&
+#include "basics.h"
+X
+void draw_all(void)
+{
+X
+X  glOrtho(-1.0,1.0,-1.0,1.0,-1.0,1.0);
+X  clear_scr();
+X
+X  draw_box();
+X  draw_tea();
+X  draw_blob();
+X  move_camera();
+X  
+X  glFlush;
+X  glutSwapBuffers();
+}
+X
+SHAR_EOF
+  $shar_touch -am 0208232197 'draw_all.c' &&
+  chmod 0600 'draw_all.c' ||
+  $echo 'restore of' 'draw_all.c' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'draw_all.c:' 'MD5 check failed'
+74dc081581677f3c5b43f6ca5a87b6be  draw_all.c
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'draw_all.c'`"
+    test 197 -eq "$shar_count" ||
+    $echo 'draw_all.c:' 'original size' '197,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= draw_blob.c ==============
+if test -f 'draw_blob.c' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'draw_blob.c' '(file already exists)'
+else
+  $echo 'x -' extracting 'draw_blob.c' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'draw_blob.c' &&
+#include "basics.h"
+X
+void draw_blob(void)
+{
+X  glPushMatrix();
+X
+X  glColorMaterial(GL_FRONT,GL_AMBIENT_AND_DIFFUSE);
+X  glEnable(GL_COLOR_MATERIAL);
+X  glColor3f(0.1,0.25,0.4);
+X  glTranslatef(blob.x_disp,blob.y_disp,blob.z_disp);
+X
+X  if (blob.x_rot>360)
+X    blob.x_rot=blob.x_rot-360;
+X  if (blob.x_rot<-360)
+X    blob.x_rot=blob.x_rot+360;
+X  
+X  if (blob.y_rot>360)
+X    blob.y_rot=blob.y_rot-360;
+X  if (blob.y_rot<-360)
+X    blob.y_rot=blob.y_rot+360;
+X  
+X  if (blob.z_rot>360)
+X    blob.z_rot=blob.z_rot-360;
+X  if (blob.x_rot<-360)
+X    blob.z_rot=blob.z_rot+360;
+X
+X  glRotatef(blob.x_rot,1.0,0.0,0.0);
+X  glRotatef(blob.y_rot,0.0,1.0,0.0);
+X  glRotatef(blob.z_rot,0.0,0.0,1.0);
+X
+X
+X  if (blob.scale_val<0)
+X    blob.scale_val=0;
+X  
+X  glutSolidSphere(blob.scale_val,100,100);
+X  glDisable(GL_COLOR_MATERIAL);
+X  glPopMatrix();
+}
+SHAR_EOF
+  $shar_touch -am 0208215997 'draw_blob.c' &&
+  chmod 0600 'draw_blob.c' ||
+  $echo 'restore of' 'draw_blob.c' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'draw_blob.c:' 'MD5 check failed'
+4bb49f5ae8cc28635e54be984b2aabbe  draw_blob.c
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'draw_blob.c'`"
+    test 811 -eq "$shar_count" ||
+    $echo 'draw_blob.c:' 'original size' '811,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= draw_box.c ==============
+if test -f 'draw_box.c' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'draw_box.c' '(file already exists)'
+else
+  $echo 'x -' extracting 'draw_box.c' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'draw_box.c' &&
+#include "basics.h"
+X
+void draw_box(void)
+{
+X  glPushMatrix();
+X  glTranslatef(box.x_disp,box.y_disp,box.z_disp);
+X
+X  if (box.x_rot>360)
+X    box.x_rot=box.x_rot-360;
+X  if (box.x_rot<-360)
+X    box.x_rot=box.x_rot+360;
+X  
+X  if (box.y_rot>360)
+X    box.y_rot=box.y_rot-360;
+X  if (box.y_rot<-360)
+X    box.y_rot=box.y_rot+360;
+X  
+X  if (box.z_rot>360)
+X    box.z_rot=box.z_rot-360;
+X  if (box.x_rot<-360)
+X    box.z_rot=box.z_rot+360;  
+X
+X
+X
+X  glRotatef(box.x_rot,1.0,0.0,0.0);
+X  glRotatef(box.y_rot,0.0,1.0,0.0);
+X  glRotatef(box.z_rot,0.0,0.0,1.0);
+X
+X  glColorMaterial(GL_FRONT,GL_SPECULAR);
+X  glEnable(GL_COLOR_MATERIAL);
+X  glColor3f(0.8,0.0,0.0);
+X  if (box.scale_val<0)
+X    box.scale_val=0;
+X
+X  glutSolidCube(box.scale_val);
+X  glDisable(GL_COLOR_MATERIAL);
+X  glPopMatrix();
+}
+SHAR_EOF
+  $shar_touch -am 0208222997 'draw_box.c' &&
+  chmod 0600 'draw_box.c' ||
+  $echo 'restore of' 'draw_box.c' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'draw_box.c:' 'MD5 check failed'
+fadc3042a86beb906e29ac44b74b8393  draw_box.c
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'draw_box.c'`"
+    test 761 -eq "$shar_count" ||
+    $echo 'draw_box.c:' 'original size' '761,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= draw_tea.c ==============
+if test -f 'draw_tea.c' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'draw_tea.c' '(file already exists)'
+else
+  $echo 'x -' extracting 'draw_tea.c' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'draw_tea.c' &&
+#include "basics.h"
+X
+void draw_tea (void)
+{  
+X  glPushMatrix();
+X  glColorMaterial(GL_FRONT,GL_AMBIENT_AND_DIFFUSE);
+X  glEnable(GL_COLOR_MATERIAL);
+X  glColor3f(0.8,0.8,0.0);
+X  glTranslatef(tea.x_disp,tea.y_disp,tea.z_disp);
+X  
+X  if (tea.x_rot>360)
+X    tea.x_rot=tea.x_rot-360;
+X  if (tea.x_rot<-360)
+X    tea.x_rot=tea.x_rot+360;
+X  
+X  if (tea.y_rot>360)
+X    tea.y_rot=tea.y_rot-360;
+X  if (tea.y_rot<-360)
+X    tea.y_rot=tea.y_rot+360;
+X  
+X  if (tea.z_rot>360)
+X    tea.z_rot=tea.z_rot-360;
+X  if (tea.x_rot<-360)
+X    tea.z_rot=tea.z_rot+360;  
+X  
+X  glRotatef(tea.x_rot,1.0,0.0,0.0);
+X  glRotatef(tea.y_rot,0.0,1.0,0.0);
+X  glRotatef(tea.z_rot,0.0,0.0,1.0);
+X
+X  if (tea.scale_val<0)
+X    tea.scale_val=0;
+X
+X  if (filled==0)
+X    glutWireTeapot(tea.scale_val);
+X  
+X  else 
+X    glutSolidTeapot(tea.scale_val);
+X     
+X  glDisable(GL_COLOR_MATERIAL);
+X  glPopMatrix();
+}
+X
+X
+X
+X
+X
+SHAR_EOF
+  $shar_touch -am 0208223897 'draw_tea.c' &&
+  chmod 0600 'draw_tea.c' ||
+  $echo 'restore of' 'draw_tea.c' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'draw_tea.c:' 'MD5 check failed'
+e861ae1139a94323f59830a5e0b03b54  draw_tea.c
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'draw_tea.c'`"
+    test 855 -eq "$shar_count" ||
+    $echo 'draw_tea.c:' 'original size' '855,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= initial.c ==============
+if test -f 'initial.c' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'initial.c' '(file already exists)'
+else
+  $echo 'x -' extracting 'initial.c' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'initial.c' &&
+#include "basics.h"
+X
+void init_tea(void)
+{
+X  tea.x_disp=-2.0;
+X  tea.y_disp=0.0;
+X  tea.z_disp=0.0;
+X  tea.x_rot=0.0;
+X  tea.y_rot=0.0;
+X  tea.z_rot=0.0;
+X  tea.scale_val=0.5;
+}
+X
+void init_box(void)
+{
+X  box.x_disp=0.0;
+X  box.y_disp=0.0;
+X  box.z_disp=0.0;
+X  box.x_rot=0.0;
+X  box.y_rot=0.0;
+X  box.z_rot=0.0;
+X  box.scale_val=1.0;
+}
+X
+void init_blob(void)
+{
+X  blob.x_disp=2.0;
+X  blob.y_disp=0.0;
+X  blob.z_disp=0.0;
+X  blob.x_rot=0.0;
+X  blob.y_rot=0.0;
+X  blob.z_rot=0.0;
+X  blob.scale_val=0.5;
+}
+X
+void init_cam(void)
+{
+X  cam.x_disp=0.0;
+X  cam.y_disp=0.0;
+X  cam.z_disp=0.0;
+X  cam.x_rot=0.0;
+X  cam.y_rot=0.0;
+X  cam.z_rot=0.0;
+}
+X
+void init_all(void)
+{ 
+X  glOrtho(-3.0,3.0,-1.0,1.0,-3.0,3.0);
+X  toggler=0;
+X  filled=1;
+X  init_cam();
+X  init_box();
+X  init_tea();
+X  init_blob();
+X  glShadeModel(GL_FLAT);
+}
+X
+X
+X
+X
+X
+X
+X
+X
+X
+X
+X
+X
+X
+X
+SHAR_EOF
+  $shar_touch -am 0208231997 'initial.c' &&
+  chmod 0600 'initial.c' ||
+  $echo 'restore of' 'initial.c' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'initial.c:' 'MD5 check failed'
+bbc92d406a87334e856922e45e4f1e82  initial.c
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'initial.c'`"
+    test 798 -eq "$shar_count" ||
+    $echo 'initial.c:' 'original size' '798,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= key_press.c ==============
+if test -f 'key_press.c' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'key_press.c' '(file already exists)'
+else
+  $echo 'x -' extracting 'key_press.c' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'key_press.c' &&
+#include "basics.h"
+X
+void key_press(unsigned char key, int x, int y)
+{
+X  float alter_x;
+X  float alter_y;
+X  float alter_z;
+X  float scaler;
+X  float move_x;
+X  float move_y;
+X  float move_z;
+X  float angle;
+X  int fill_flag;
+X  
+X  alter_x=0;
+X  alter_y=0;
+X  alter_z=0;
+X  move_x=0;
+X  move_y=0;
+X  move_z=0;
+X  scaler=0;
+X  fill_flag=filled;
+X
+X  switch (key)
+X    {
+X    case 'y':
+X      alter_y=15.0;
+X      break;
+X    case 'Y':
+X      alter_y=-15.0;
+X      break;
+X    case 'x':
+X      alter_x=15.0;
+X      break;
+X    case 'X':
+X      alter_x=-15.0;
+X      break;
+X    case 'z':
+X      alter_z=15.0;
+X      break;
+X    case 'Z':
+X      alter_z=-15.0;
+X      break;
+X      
+X    case '+':
+X      scaler=scaler+0.1;
+X      break;
+X
+X    case '-':
+X      scaler=scaler-0.1;
+X      break;
+X     
+X    case 'i':
+X      move_x=move_x+0.2;
+X      break;
+X    case 'I':
+X      move_x=move_x-0.2;
+X      break;
+X    case 'j':
+X      move_y=move_y+0.2;
+X      break;
+X    case 'J':
+X      move_y=move_y-0.2;
+X      break;
+X    case 'k':
+X      move_z=move_z+0.2;
+X      break;
+X    case 'K':
+X      move_z=move_z-0.2;
+X      break;
+X
+X    case 'f':
+X      fill_flag=1;
+X      break;
+X    
+X    case 'F':
+X      fill_flag=0;
+X      break;
+X
+X    default:
+X      break;
+X    }
+X  
+X  switch (toggler)
+X    {
+X    case TEA_T:
+X      glPushMatrix();
+X      tea.x_disp=tea.x_disp+move_x;
+X      tea.y_disp=tea.y_disp+move_y;
+X      tea.z_disp=tea.z_disp+move_z;
+X      tea.scale_val=tea.scale_val+scaler;
+X      tea.x_rot=tea.x_rot+alter_x;
+X      tea.y_rot=tea.y_rot+alter_y;
+X      tea.z_rot=tea.z_rot+alter_z;
+X      filled=fill_flag;
+X
+X      break;
+X
+X    case BOX_T:
+X
+X      box.x_rot=box.x_rot+alter_x;
+X      box.y_rot=box.y_rot+alter_y;
+X      box.z_rot=box.z_rot+alter_z;
+X      box.x_disp=box.x_disp+move_x;
+X      box.y_disp=box.y_disp+move_y;
+X      box.z_disp=box.z_disp+move_z;
+X      box.scale_val=box.scale_val+scaler;
+X      break;
+X
+X    case BLOB_T:
+X      blob.x_rot=blob.x_rot+alter_x;
+X      blob.y_rot=blob.y_rot+alter_y;
+X      blob.z_rot=blob.z_rot+alter_z;
+X      blob.x_disp=blob.x_disp+move_x;
+X      blob.y_disp=blob.y_disp+move_y;
+X      blob.z_disp=blob.z_disp+move_z;
+X      blob.scale_val=blob.scale_val+scaler;
+X
+X      break;
+X
+X    case CAM_T:
+X      cam.x_rot=-alter_x;
+X      cam.y_rot=-alter_y;
+X      cam.z_rot=-alter_z;
+X      cam.x_disp=-move_x;
+X      cam.y_disp=-move_y;
+X      cam.z_disp=-move_z;
+X      
+X      break;
+X
+X      
+X    default:
+X      break;
+X    }
+X  draw_all();
+}
+SHAR_EOF
+  $shar_touch -am 0208233497 'key_press.c' &&
+  chmod 0600 'key_press.c' ||
+  $echo 'restore of' 'key_press.c' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'key_press.c:' 'MD5 check failed'
+99cdc7e61d72ca4c4ec33c4ec7d500be  key_press.c
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'key_press.c'`"
+    test 2391 -eq "$shar_count" ||
+    $echo 'key_press.c:' 'original size' '2391,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= keyback.c ==============
+if test -f 'keyback.c' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'keyback.c' '(file already exists)'
+else
+  $echo 'x -' extracting 'keyback.c' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'keyback.c' &&
+#include "basics.h"
+X
+void key_press(unsigned char key, int x, int y)
+{
+X  float alter_x;
+X  float alter_y;
+X  float alter_z;
+X  float scaler;
+X  float move_x;
+X  float move_y;
+X  float move_z;
+X  float angle;
+X  
+X  alter_x=0;
+X  alter_y=0;
+X  alter_z=0;
+X  move_x=0;
+X  move_y=0;
+X  move_z=0;
+X  scaler=0;
+X  
+X  switch (key)
+X    {
+X    case 'y':
+X      alter_y++;
+X      break;
+X    case 'Y':
+X      alter_y--;
+X      break;
+X    case 'x':
+X      alter_x++;
+X      break;
+X    case 'X':
+X      alter_x--;
+X      break;
+X    case 'z':
+X      alter_z++;
+X      break;
+X    case 'Z':
+X      alter_z--;
+X      break;
+X      
+X    case '+':
+X      scaler=scaler+0.1;
+X      break;
+X
+X    case '-':
+X      scaler=scaler-0.1;
+X      break;
+X     
+X    case 'i':
+X      move_x=move_x+0.1;
+X      break;
+X    case 'I':
+X      move_x=move_x-0.1;
+X      break;
+X    case 'j':
+X      move_y=move_y+0.1;
+X      break;
+X    case 'J':
+X      move_y=move_y-0.1;
+X      break;
+X    case 'k':
+X      move_z=move_z+0.1;
+X      break;
+X    case 'K':
+X      move_z=move_z-0.1;
+X      break;
+X
+X    default:
+X      break;
+X    }
+X  
+X  switch (toggler)
+X    {
+X    case TEA_T:
+X      tea.x_rot=tea.x_rot+alter_x;
+X      tea.y_rot=tea.y_rot+alter_y;
+X      tea.z_rot=tea.z_rot+alter_z;
+X      tea.x_disp=tea.x_disp+move_x;
+X      tea.y_disp=tea.y_disp+move_y;
+X      tea.z_disp=tea.z_disp+move_z;
+X      tea.scale_val=tea.scale_val+scaler;
+X      break;
+X
+X    case BOX_T:
+X
+X      box.x_rot=box.x_rot+alter_x;
+X      box.y_rot=box.y_rot+alter_y;
+X      box.z_rot=box.z_rot+alter_z;
+X      box.x_disp=box.x_disp+move_x;
+X      box.y_disp=box.y_disp+move_y;
+X      box.z_disp=box.z_disp+move_z;
+X      box.scale_val=box.scale_val+scaler;
+X      break;
+X
+X    case BLOB_T:
+X      blob.x_rot=blob.x_rot+alter_x;
+X      blob.y_rot=blob.y_rot+alter_y;
+X      blob.z_rot=blob.z_rot+alter_z;
+X      blob.x_disp=blob.x_disp+move_x;
+X      blob.y_disp=blob.y_disp+move_y;
+X      blob.z_disp=blob.z_disp+move_z;
+X      blob.scale_val=blob.scale_val+scaler;
+X
+X      break;
+X      
+X    default:
+X      break;
+X    }
+/*  glutPostRedisplay();*/
+X  draw_all();
+}
+SHAR_EOF
+  $shar_touch -am 0208142497 'keyback.c' &&
+  chmod 0600 'keyback.c' ||
+  $echo 'restore of' 'keyback.c' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'keyback.c:' 'MD5 check failed'
+872b64fa9a100aa35343076246c748c8  keyback.c
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'keyback.c'`"
+    test 2023 -eq "$shar_count" ||
+    $echo 'keyback.c:' 'original size' '2023,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= main.c ==============
+if test -f 'main.c' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'main.c' '(file already exists)'
+else
+  $echo 'x -' extracting 'main.c' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'main.c' &&
+#include "basics.h"
+X
+int main(int argc, char** argv)
+{
+X  glutInitWindowSize(400,200);
+X  glutInit(&argc,argv);
+X  glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
+X  glutCreateWindow(argv[0]);
+X
+X  glutKeyboardFunc(key_press);
+X  glutSwapBuffers();
+X  init_all();
+X  glutDisplayFunc(draw_all);
+X  glutReshapeFunc(reshape_fun);
+X  set_menus();
+X  glutMainLoop();
+}
+SHAR_EOF
+  $shar_touch -am 0208231397 'main.c' &&
+  chmod 0600 'main.c' ||
+  $echo 'restore of' 'main.c' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'main.c:' 'MD5 check failed'
+b6261ad936e30634614a197371ad4d51  main.c
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'main.c'`"
+    test 349 -eq "$shar_count" ||
+    $echo 'main.c:' 'original size' '349,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= menu.c ==============
+if test -f 'menu.c' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'menu.c' '(file already exists)'
+else
+  $echo 'x -' extracting 'menu.c' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'menu.c' &&
+#include "basics.h"
+/*
+X * Start with basics set the screen to black. 
+X *
+X */
+X
+void clear_scr(void)
+{
+X  glClearColor(0.0, 0.0, 0.0, 0.0);
+X  glClear(GL_COLOR_BUFFER_BIT);
+}
+X
+X
+void main_menu(int value)
+{
+X    if (value==911)
+X      {
+X	exit(0);
+X      }
+X    
+X    else if (value==TEA_T)
+X      {
+X	toggler=TEA_T;
+X      }
+X    else if (value==BOX_T)
+X      {
+X	toggler=BOX_T;
+X      }
+X    else if (value==BLOB_T)
+X      {
+X	toggler=BLOB_T;
+X      }
+}
+X
+void camera_options(int value)
+{
+X  switch(value)
+X    {
+X    case 1:
+X      toggler=CAM_T;
+X      break;
+X    default:
+X      break;
+X    }
+X  
+}
+X
+void set_menus(void)  
+{ 
+X
+X  int cam_options;
+X  
+X  cam_options=glutCreateMenu(camera_options);
+X  glutAddMenuEntry("Move Camera Point",1);
+X  glutAddMenuEntry("Single buffered",2);
+X  glutAddMenuEntry("Double buffered",3);
+X  
+X  glutCreateMenu(main_menu);
+X  glutAddMenuEntry("Quit",911);
+X  glutAddSubMenu("Camera Options",cam_options);
+X  glutAddMenuEntry("Adjust Teapot",TEA_T);
+X  glutAddMenuEntry("Adjust Cube",BOX_T);
+X  glutAddMenuEntry("Adjust Sphere",BLOB_T);
+X  glutAttachMenu(GLUT_RIGHT_BUTTON);
+}
+X
+SHAR_EOF
+  $shar_touch -am 0208231597 'menu.c' &&
+  chmod 0600 'menu.c' ||
+  $echo 'restore of' 'menu.c' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'menu.c:' 'MD5 check failed'
+7ef61f8b24b0617b346493d217fa500b  menu.c
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'menu.c'`"
+    test 1073 -eq "$shar_count" ||
+    $echo 'menu.c:' 'original size' '1073,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= move_camera.c ==============
+if test -f 'move_camera.c' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'move_camera.c' '(file already exists)'
+else
+  $echo 'x -' extracting 'move_camera.c' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'move_camera.c' &&
+#include "basics.h"
+X
+void move_camera(void)
+{
+X  glMatrixMode(GL_MODELVIEW);
+X  
+X  glRotatef(cam.x_rot,1.0,0.0,0.0);
+X  glRotatef(cam.y_rot,0.0,1.0,0.0);
+X  glRotatef(cam.z_rot,0.0,0.0,1.0);
+X  glTranslatef(cam.x_disp,cam.y_disp,cam.z_disp);
+}
+SHAR_EOF
+  $shar_touch -am 0208233397 'move_camera.c' &&
+  chmod 0600 'move_camera.c' ||
+  $echo 'restore of' 'move_camera.c' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'move_camera.c:' 'MD5 check failed'
+26a11bf72fbe2b929c7aacd091a777b3  move_camera.c
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'move_camera.c'`"
+    test 239 -eq "$shar_count" ||
+    $echo 'move_camera.c:' 'original size' '239,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= reshape.c ==============
+if test -f 'reshape.c' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'reshape.c' '(file already exists)'
+else
+  $echo 'x -' extracting 'reshape.c' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'reshape.c' &&
+#include "basics.h"
+X
+void reshape_fun(GLsizei w, GLsizei h)
+{
+X  glViewport (0, 0, w, h);            /*  define the viewport */
+X  glMatrixMode(GL_PROJECTION);
+X  glLoadIdentity();
+X  glMatrixMode (GL_MODELVIEW);        /* back to modelview matrix  */
+}
+SHAR_EOF
+  $shar_touch -am 0208094197 'reshape.c' &&
+  chmod 0600 'reshape.c' ||
+  $echo 'restore of' 'reshape.c' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'reshape.c:' 'MD5 check failed'
+dfc8aa84a3752cda5dffae53d19b7edb  reshape.c
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'reshape.c'`"
+    test 250 -eq "$shar_count" ||
+    $echo 'reshape.c:' 'original size' '250,' 'current size' "$shar_count!"
+  fi
+fi
+rm -fr _sh10553
+exit 0
+# From: Stephen Young <youngs3>

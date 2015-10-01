@@ -1,0 +1,13 @@
+Microsoft Visual Studio Solution File, Format Version 1.00
+Project("{66355F20-A65B-11D0-BFB5-00A0C91EBFA0}") = "vtkExamp", "vtkExamp.vjp", "{065A0D15-F6C4-4720-A2C2-EC6C44DFB7B0}"
+EndProject
+Global
+	GlobalSection(LocalDeployment) = postSolution
+		StartupProject = {065A0D15-F6C4-4720-A2C2-EC6C44DFB7B0}
+	EndGlobalSection
+	GlobalSection(BuildOrder) = postSolution
+		0 = {065A0D15-F6C4-4720-A2C2-EC6C44DFB7B0}
+	EndGlobalSection
+	GlobalSection(DeploymentRoot) = postSolution
+	EndGlobalSection
+EndGlobal

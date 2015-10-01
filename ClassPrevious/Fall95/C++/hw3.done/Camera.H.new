@@ -1,0 +1,44 @@
+#ifndef _CAMERA_H_
+#define _CAMERA_H_
+/*
+ * Camera.H
+ *
+ */
+
+class Renderer;
+
+class Camera {
+  protected:
+  
+  float position[3];
+  float focal_point[3];
+  float view_angle;
+  float view_up[3];
+  float near;
+  float far;
+  float aspect_ratio;
+
+  public: 
+  Camera() {}
+  virtual ~Camera() {}
+  virtual void Initialize(void);
+  virtual void Render(Renderer *) = 0;
+
+  void set_aspect_ratio(double);
+  void set_position(double, double, double);
+  void set_focal_point(double, double, double);
+  void set_view_angle(double);
+  void set_view_up(double, double, double);
+  void set_near(double);
+  void set_far(double);
+  /*
+   * I use OpenGL specific code to do the transformations for
+   * azimuth and elevation, so I define them in OGLCamera
+   */
+  virtual void Elevate(double) = 0;
+  virtual void Azimuth(double) = 0;
+  virtual void Zoom(double) = 0;
+  void view_bounding_box(double,double,double,double,double,double);
+};
+
+#endif

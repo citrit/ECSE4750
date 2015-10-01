@@ -1,0 +1,888 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>GUI toolkits: What are your options?</TITLE>
+<META NAME="description" content="GUI toolkits: What are your options?">
+<META NAME="keywords" content="GUI, X, Motif, toolkit">
+<META NAME="author" content="Cameron Laird and Kathryn Soraiz">
+<META NAME="date" content="Sun Mar 1 00:01:00 GMT 1998">
+<META NAME="live" content="yes">
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000" LINK="#0000FF" ALINK="#FF0000" VLINK="#551a8b">
+
+
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" WIDTH="100%" BGCOLOR="#003399">
+<TR>
+<TD ALIGN="CENTER">
+
+<TABLE CELLPADDING="8" CELLSPACING="0" BORDER="0">
+<TR>
+<TD>
+<FONT COLOR="#CCCCCC" SIZE="-1">Advertisement: Support SunWorld, click here!</FONT><BR>
+<NOLAYER>
+<IFRAME SRC="http://ad.doubleclick.net/adi/idg.sw.com/archives;sz=468x60" height=60 width=468 marginwidth=0 marginheight=0 hspace=0 vspace=0 frameborder=0 scrolling=no><A HREF="http://ad.doubleclick.net/jump/idg.sw.com/archives;sz=468x60"><IMG SRC="http://ad.doubleclick.net/ad/idg.sw.com/archives;sz=468x60" height=60 width=468></A></IFRAME>
+</NOLAYER>
+<ilayer id=ph1 visibility=hide height=60 width=468></ilayer>
+<BR CLEAR="ALL">
+</TD>
+</TR>
+</TABLE>
+</TD>
+</TR>
+</TABLE>
+
+<TABLE ALIGN="LEFT" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+<TR>
+<TD COLSPAN="4" BGCOLOR="#003399">&#160;</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" ROWSPAN="4"><IMG SRC="/sunworldonline/icons-rd/blue-ul.gif" WIDTH="9" HEIGHT="9" BORDER="0"></TD>
+</TR>
+<TR>
+<TD COLSPAN="4" BGCOLOR="#003399"><a href="/index.html"><IMG SRC="/sunworldonline/icons-rd/sw-logo.gif" WIDTH="160" HEIGHT="56" BORDER="0"></a></TD>
+</TR>
+<TR>
+<TD ALIGN="RIGHT" COLSPAN="4" BGCOLOR="#003399">
+<FONT SIZE="-1" COLOR="#FFFFFF" FACE="Arial,Helvetica,Sans-serif">
+March 1998&nbsp;
+</FONT>
+</TD>
+</TR>
+<TR>
+<TD VALIGN="BOTTOM" ALIGN="RIGHT" COLSPAN="4" BGCOLOR="#003399"><IMG SRC="/sunworldonline/icons-rd/blue-corner.gif" WIDTH="9" HEIGHT="9" BORDER="0"></TD>
+</TR>
+<TR>
+<TD ALIGN="LEFT" COLSPAN="5" BGCOLOR="#FFFFFF"><IMG SRC="/sunworldonline/icons-rd/slice.gif" WIDTH="11" HEIGHT="2"></TD>
+</TR>
+<!-- block 1 -->
+<TR>
+<TD ALIGN="left" VALIGN="TOP" BGCOLOR="#FFFFFF"><IMG SRC="/sunworldonline/icons-rd/vslice.gif" WIDTH="2" HEIGHT="9" BORDER="0"></TD>
+<TD WIDTH="9" ALIGN="LEFT" VALIGN="TOP" BGCOLOR="#003399"><IMG SRC="/sunworldonline/icons-rd/overlap.gif" WIDTH="9" HEIGHT="9" BORDER="0"></TD>
+<TD WIDTH="134" BGCOLOR="#003399">
+<FONT COLOR="#FFFFFF" FACE="Arial,Helvetica,Sans-serif">&#160;Search</FONT>
+</TD>
+<TD BGCOLOR="#003399">&nbsp;</TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR>
+<TD VALIGN="TOP" ROWSPAN="1" BGCOLOR="#FFFFFF"><IMG SRC="/sunworldonline/icons-rd/dot_clear.gif" WIDTH="1" HEIGHT="1" BORDER="0"></TD>
+<TD WIDTH="9" VALIGN="TOP" BGCOLOR="#FFFFFF"><IMG SRC="/sunworldonline/icons-rd/dot_clear.gif" WIDTH="9" HEIGHT="1" BORDER="0"></TD>
+<TD WIDTH="134" ALIGN="LEFT" BGCOLOR="#FFFFFF">
+
+<!-- search -->
+<FORM ACTION="http://search.sunworld.com/query.html" METHOD="GET" name="seek">
+<TABLE BORDER="0" CELLPADDING="0">
+<TR>
+<TD>
+<INPUT TYPE="HIDDEN" NAME="col" SIZE="-1" VALUE="sw"> 
+<!-- This is the text box for search terms -->
+<!--See above--> 
+<INPUT TYPE="TEXT" NAME="qt" SIZE="10" MAXLENGTH="2047">
+</TD>
+<TD>&#160;<INPUT TYPE="IMAGE" SRC="/sunworldonline/icons-rd/go.gif" WIDTH="27" HEIGHT="22" BORDER="0"></TD>
+</TR>
+</TABLE>
+</FORM>
+
+</TD>
+<TD BGCOLOR="#003399">&nbsp;</TD>
+<TD>&nbsp;</TD>
+</TR>
+<!-- block 2 -->
+<TR>
+<TD VALIGN="TOP" ROWSPAN="2" BGCOLOR="#FFFFFF"><IMG SRC="/sunworldonline/icons-rd/dot_clear.gif" WIDTH="1" HEIGHT="1" BORDER="0"></TD>
+<TD WIDTH="9" VALIGN="TOP" BGCOLOR="#003399"><IMG SRC="/sunworldonline/icons-rd/blue-left.gif" WIDTH="9" HEIGHT="9" BORDER="0"></TD>
+<TD WIDTH="134" ALIGN="LEFT" BGCOLOR="#003399">
+<FONT COLOR="#FFFFFF" FACE="Arial,Helvetica,Sans-serif">&#160;Navigate</FONT>
+</TD>
+<TD BGCOLOR="#003399">&nbsp;</TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR>
+<TD WIDTH="9">&#160;</TD>
+<TD>
+
+
+<TABLE WIDTH="125" CELLSPACING="0" CELLPADDING="2" BORDER="0">
+
+<TR>
+<TD ALIGN="CENTER"><A HREF="/sunworldonline/home.html"><IMG SRC="/sunworldonline/icons-rd/sw-house.gif" WIDTH="14" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"></A></TD>
+<TD>
+<FONT FACE="Arial,Helvetica,Sans-serif">
+<A HREF="/sunworldonline/home.html">Home</A>
+</FONT>
+</TD>
+</TR>
+<TR>
+<TD ALIGN="CENTER"><A HREF="/sunworldonline/cgi-bin/swol-mailToFriend.cgi?head=GUI%20toolkits%3A%20What%20are%20your%20options%3F&author=Cameron%20Laird%20and%20Kathryn%20Soraiz&summary=This%20article%20provides%20an%20overview%20of%20the%20various%20toolkits%20%28or%20programming%0Ainterfaces%29%20available%20for%20Solaris.%20%20Among%20these%2C%0Awe%20selected%20only%20the%20most%20portable%2C%20commercially%0Aapplicable%2C%20and%20modestly%20priced%20packages.%20The%20toolkits%20described%20here%20are%0Abest%20for%20office%20automation%20projects%2C%20graphical%20information%0Asystem%20%28GIS%29%20jobs%2C%20GUIfication%20of%20legacy%20programs%2C%20%0Asystem%20administration%20utilities%20that%20are%20easy%20to%20run%2C%20and%0Aso%20on.%20%20%0A%3CP%3E%0A%3Cp%3E%0AWe%20cover%20the%20following%20toolkits%3A%20OLIT%2C%20XView%2C%20TNT%2C%20Motif%2C%20Java%2C%20OpenStep%2C%20Tk%2C%20MFC%2C%20MacOS%20toolkit%2C%20Amulet%2C%20GTK%2C%20MetaCard%2C%20and%20Qt.%20You%20can%20see%20how%20these%20toolkits%20compare%20by%20checking%20out%20our%20sidebar%2C%20%3Ca%20href%3D%22%23sidebar1%22%20name%3D%22return1%22%3EToolkit%20roundup%3C%2Fa%3E.%20%3Cem%3E%283%2C000%20words%29%3C%2Fem%3E%0A"><IMG SRC="/sunworldonline/icons-rd/sw-envelope.gif" WIDTH="14" HEIGHT="9" BORDER="0"></A></TD>
+<TD>
+<FONT FACE="Arial,Helvetica,Sans-serif">
+<A HREF="/sunworldonline/cgi-bin/swol-mailToFriend.cgi?head=GUI%20toolkits%3A%20What%20are%20your%20options%3F&author=Cameron%20Laird%20and%20Kathryn%20Soraiz&summary=This%20article%20provides%20an%20overview%20of%20the%20various%20toolkits%20%28or%20programming%0Ainterfaces%29%20available%20for%20Solaris.%20%20Among%20these%2C%0Awe%20selected%20only%20the%20most%20portable%2C%20commercially%0Aapplicable%2C%20and%20modestly%20priced%20packages.%20The%20toolkits%20described%20here%20are%0Abest%20for%20office%20automation%20projects%2C%20graphical%20information%0Asystem%20%28GIS%29%20jobs%2C%20GUIfication%20of%20legacy%20programs%2C%20%0Asystem%20administration%20utilities%20that%20are%20easy%20to%20run%2C%20and%0Aso%20on.%20%20%0A%3CP%3E%0A%3Cp%3E%0AWe%20cover%20the%20following%20toolkits%3A%20OLIT%2C%20XView%2C%20TNT%2C%20Motif%2C%20Java%2C%20OpenStep%2C%20Tk%2C%20MFC%2C%20MacOS%20toolkit%2C%20Amulet%2C%20GTK%2C%20MetaCard%2C%20and%20Qt.%20You%20can%20see%20how%20these%20toolkits%20compare%20by%20checking%20out%20our%20sidebar%2C%20%3Ca%20href%3D%22%23sidebar1%22%20name%3D%22return1%22%3EToolkit%20roundup%3C%2Fa%3E.%20%3Cem%3E%283%2C000%20words%29%3C%2Fem%3E%0A">Mail&nbsp;this&nbsp;Article</A>
+</FONT>
+</TD>
+</TR>
+<!--print-->
+<TR>
+<TD ALIGN="CENTER" VALIGN="TOP"><A HREF="/sunworldonline/swol-03-1998/swol-03-gui_p.html"><IMG SRC="/sunworldonline/icons-rd/sw-printer.gif" WIDTH="16" HEIGHT="16" ALIGN="BOTTOM" BORDER="0"></A></TD>
+<TD>
+<FONT FACE="Arial,Helvetica,Sans-serif">
+<A HREF="/sunworldonline/swol-03-1998/swol-03-gui_p.html">Printer-Friendly Version</A>
+</FONT>
+</TD>
+</TR>
+<!--end_print-->
+</TABLE>
+
+</TD>
+<TD BGCOLOR="#003399">&nbsp;</TD>
+<TD>&nbsp;</TD>
+</TR>
+<!-- block 3 -->
+<TR>
+<TD ROWSPAN="4"><IMG SRC="/sunworldonline/icons-rd/dot_clear.gif" WIDTH="1" HEIGHT="1"></TD>
+<TD WIDTH="9" VALIGN="TOP" BGCOLOR="#003399"><IMG SRC="/sunworldonline/icons-rd/blue-left.gif" WIDTH="9" HEIGHT="9" BORDER="0"></TD>
+<TD WIDTH="134" BGCOLOR="#003399">
+<FONT COLOR="#FFFFFF" FACE="Arial,Helvetica,Sans-serif">Navigate</FONT>
+</TD>
+<TD BGCOLOR="#003399">&nbsp;</TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR><TD COLSPAN="2"><IMG SRC="/sunworldonline/icons-rd/dot_clear.gif" WIDTH="0" HEIGHT="4" BORDER="0"></TD>
+<TD BGCOLOR="#003399">&nbsp;</TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR>
+<TD WIDTH="9" VALIGN="TOP" BGCOLOR="#FFFFFF"><IMG SRC="/sunworldonline/icons-rd/dot_clear.gif" WIDTH="9" HEIGHT="1" BORDER="0"></TD>
+<TD WIDTH="134" ALIGN="LEFT" BGCOLOR="#FFFFFF">
+<FONT SIZE="-1" FACE="Arial,Helvetica,Sans-serif">
+<A HREF="/sunworldonline/subscribe.html">Subscribe, It's Free</A><BR>
+<A HREF="/sunworldonline/common/swol-siteindex.html">Topical Index</A><BR>
+<A HREF="/common/swol-backissues.html">Backissues</A><BR>
+<A HREF="/sunworldonline/sunwhere.html">SunWHERE</A><BR>
+<A HREF="/sunworldonline/swol-09-1999/swol-09-letters.html">Letters to the Editor</A><BR>
+<A HREF="/sunworldonline/common/swol-calendar.html">Events Calendar</A><BR>
+<A HREF="http://www.techdispatch.com">TechDispatch Newsletters</A><BR>
+</FONT>
+</TD>
+<TD BGCOLOR="#003399">&nbsp;</TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR>
+<TD COLSPAN="2"><IMG SRC="/sunworldonline/icons-rd/dot_clear.gif" WIDTH="0" HEIGHT="4" BORDER="0"></TD>
+<TD BGCOLOR="#003399">&nbsp;</TD>
+<TD>&nbsp;</TD>
+</TR>
+<!-- block 4 -->
+<TR>
+<TD ROWSPAN="4"><IMG SRC="/sunworldonline/icons-rd/dot_clear.gif" WIDTH="1" HEIGHT="1"></TD>
+<TD WIDTH="9" VALIGN="TOP" BGCOLOR="#003399"><IMG SRC="/sunworldonline/icons-rd/blue-left.gif" WIDTH="9" HEIGHT="9" BORDER="0"></TD>
+<TD WIDTH="134" ALIGN="LEFT" BGCOLOR="#003399"><FONT COLOR="#FFFFFF" FACE="Arial,Helvetica,Sans-serif">&#160;Technical FAQs</FONT></TD>
+<TD BGCOLOR="#003399">&nbsp;</TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR>
+<TD COLSPAN="2"><IMG SRC="/sunworldonline/icons-rd/dot_clear.gif" WIDTH="0" HEIGHT="4" BORDER="0"></TD>
+<TD BGCOLOR="#003399">&nbsp;</TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR>
+<TD WIDTH="9" VALIGN="TOP" BGCOLOR="#FFFFFF"><IMG SRC="/sunworldonline/icons-rd/dot_clear.gif" WIDTH="9" HEIGHT="1" BORDER="0"></TD>
+<TD WIDTH="134" ALIGN="LEFT" BGCOLOR="#FFFFFF">
+<FONT SIZE="-1" FACE="Arial,Helvetica,Sans-serif">
+<A HREF="/sunworldonline/common/security-faq.html">Solaris Security</A><BR>
+<A HREF="/sunworldonline/swol-08-1998/swol-08-security.html">Secure Programming</A><BR>
+<A HREF="/sunworldonline/common/cockcroft.letters.html">Performance&#160;Q&amp;A</A><BR>
+<A HREF="/sunworldonline/swol-01-1998/swol-01-perf.html">SE Toolkit</A><BR>
+</FONT>
+</TD>
+<TD BGCOLOR="#003399">&nbsp;</TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR><TD COLSPAN="2"><IMG SRC="/sunworldonline/icons-rd/dot_clear.gif" WIDTH="0" HEIGHT="4" BORDER="0"></TD>
+<TD BGCOLOR="#003399">&nbsp;</TD>
+<TD>&nbsp;</TD>
+</TR>
+<!-- block 5 -->
+<TR>
+<TD ROWSPAN="4"><IMG SRC="/sunworldonline/icons-rd/dot_clear.gif" WIDTH="1" HEIGHT="1"></TD>
+<TD WIDTH="9" VALIGN="TOP" BGCOLOR="#003399"><IMG SRC="/sunworldonline/icons-rd/blue-left.gif" WIDTH="9" HEIGHT="9" BORDER="0"></TD>
+<TD WIDTH="134" ALIGN="LEFT" BGCOLOR="#003399"><FONT COLOR="#FFFFFF" FACE="Arial,Helvetica,Sans-serif">&#160;SunWorld Partners</FONT></TD>
+<TD BGCOLOR="#003399">&nbsp;</TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR>
+<TD COLSPAN="2"><IMG SRC="/sunworldonline/icons-rd/dot_clear.gif" WIDTH="0" HEIGHT="4" BORDER="0"></TD>
+<TD BGCOLOR="#003399">&nbsp;</TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR>
+<TD WIDTH="9" VALIGN="TOP" BGCOLOR="#FFFFFF"><IMG SRC="/sunworldonline/icons-rd/dot_clear.gif" WIDTH="9" HEIGHT="1" BORDER="0"></TD>
+<TD WIDTH="134" ALIGN="LEFT" BGCOLOR="#FFFFFF">
+<FONT SIZE="-1" FACE="Arial,Helvetica,Sans-serif">
+<A HREF="http://www.pparadise.com/sunworld/">Software Store</A><BR>
+<A HREF="http://www.careercentral.com/html/sunworldhome.asp">Career Central</A><BR>
+<A HREF="http://www.sun.com/">Sun Microsystems</A>
+<!--PARTNER_ADS-->
+</FONT>
+</TD>
+<TD BGCOLOR="#003399">&nbsp;</TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR>
+<TD COLSPAN="2"><IMG SRC="/sunworldonline/icons-rd/dot_clear.gif" WIDTH="0" HEIGHT="4" BORDER="0"></TD>
+<TD BGCOLOR="#003399">&nbsp;</TD>
+<TD>&nbsp;</TD>
+</TR>
+<!-- block 6 -->
+<TR>
+<TD ROWSPAN="4"><IMG SRC="/sunworldonline/icons-rd/dot_clear.gif" WIDTH="1" HEIGHT="1"></TD>
+<TD WIDTH="9" VALIGN="TOP" BGCOLOR="#003399"><IMG SRC="/sunworldonline/icons-rd/blue-left.gif" WIDTH="9" HEIGHT="9" BORDER="0"></TD>
+<TD WIDTH="134" ALIGN="LEFT" BGCOLOR="#003399"><FONT COLOR="#FFFFFF" FACE="Arial,Helvetica,Sans-serif">&#160;About SunWorld</FONT></TD>
+<TD BGCOLOR="#003399">&nbsp;</TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR>
+<TD COLSPAN="2"><IMG SRC="/sunworldonline/icons-rd/dot_clear.gif" WIDTH="0" HEIGHT="4" BORDER="0"></TD>
+<TD BGCOLOR="#003399">&nbsp;</TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR>
+<TD WIDTH="9" VALIGN="TOP" BGCOLOR="#FFFFFF">&#160;</TD>
+<TD WIDTH="134" ALIGN="LEFT" BGCOLOR="#FFFFFF">
+<FONT SIZE="-1" FACE="Arial,Helvetica,Sans-serif">
+<A HREF="/sunworldonline/common/swol-faq.html">SunWorld FAQ</A><BR>
+<A HREF="http://www.wpi.com/sunworld/sw-adopportunity.html">Advertising Info</A><BR>
+<A HREF="/sunworldonline/common/swol-editors4.html">SunWorld Editors</A><BR>
+<A HREF="/sunworldonline/common/swol-masthead5.html">Masthead</A><BR>
+<A HREF="/sunworldonline/common/swol-editcalendar.html">Editorial Calendar<BR></A>
+<A HREF="/sunworldonline/common/swol-guidelines.html">Writers Guidelines</A><BR>
+<A HREF="/sunworldonline/common/swol-ppstatement.html">Privacy Policy</A><BR>
+<A HREF="/sunworldonline/common/linking.html">Link To Us!</A><BR>
+<A HREF="/sunworldonline/common/swol-copyright.html">Copyright</A><BR>
+</FONT>
+</TD>
+<TD BGCOLOR="#003399">&nbsp;</TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR>
+<TD COLSPAN="2"><IMG SRC="/sunworldonline/icons-rd/dot_clear.gif" WIDTH="0" HEIGHT="4" BORDER="0"></TD>
+<TD BGCOLOR="#003399">&nbsp;</TD>
+<TD>&nbsp;</TD>
+</TR>
+
+<TR>
+<TD ROWSPAN="4"><IMG SRC="/sunworldonline/icons-rd/dot_clear.gif" WIDTH="1" HEIGHT="1"></TD>
+<TD WIDTH="9" VALIGN="TOP" BGCOLOR="#003399"><IMG SRC="/sunworldonline/icons-rd/blue-left.gif" WIDTH="9" HEIGHT="9" ALIGN="BOTTOM" BORDER="0"></TD>
+<TD WIDTH="134" ALIGN="LEFT" BGCOLOR="#003399"><FONT COLOR="#FFFFFF" FACE="Arial,Helvetica,Sans-serif">&#160;Advertisement</FONT></TD>
+<TD BGCOLOR="#003399">&nbsp;</TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR>
+<TD COLSPAN="2"><IMG SRC="/sunworldonline/icons-rd/dot_clear.gif" WIDTH="0" HEIGHT="4" ALIGN="BOTTOM" BORDER="0"></TD>
+<TD BGCOLOR="#003399">&nbsp;</TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR>
+<TD WIDTH="9" VALIGN="TOP" BGCOLOR="#FFFFFF">&#160;</TD>
+<TD WIDTH="134" ALIGN="LEFT" BGCOLOR="#FFFFFF">
+<BR>
+<NOLAYER>
+<IFRAME SRC="http://ad.doubleclick.net/adi/idg.sw.com/archives;sz=125x125;tile=1" height=125 width=125 marginwidth=0 marginheight=0 hspace=0 vspace=0 frameborder=0 scrolling=no><A HREF="http://ad.doubleclick.net/jump/idg.sw.com/archives;sz=125x125;tile=1"><IMG SRC="http://ad.doubleclick.net/ad/idg.sw.com/archives;sz=125x125;tile=1" height=125 width=125></A></IFRAME>
+</NOLAYER>
+<ilayer id=ph2 visibility=hide height=125 width=125></ilayer>
+<P>
+<NOLAYER>
+<IFRAME SRC="http://ad.doubleclick.net/adi/idg.sw.com/archives;sz=125x125;tile=2" height=125 width=125 marginwidth=0 marginheight=0 hspace=0 vspace=0 frameborder=0 scrolling=no><A HREF="http://ad.doubleclick.net/jump/idg.sw.com/archives;sz=125x125;tile=2"><IMG SRC="http://ad.doubleclick.net/ad/idg.sw.com/archives;sz=125x125;tile=2" height=125 width=125></A></IFRAME>
+</NOLAYER>
+<ilayer id=ph3 visibility=hide height=125 width=125></ilayer>
+<P>
+
+</TD>
+<TD BGCOLOR="#003399">&nbsp;</TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR>
+<TD COLSPAN="2"><IMG SRC="/sunworldonline/icons-rd/dot_clear.gif" WIDTH="0" HEIGHT="4" ALIGN="BOTTOM" BORDER="0"></TD>
+<TD BGCOLOR="#003399">&nbsp;</TD>
+<TD>&nbsp;</TD>
+</TR>
+
+<TR>
+<TD COLSPAN="3" BGCOLOR="#003399"><IMG SRC="/sunworldonline/icons-rd/dot_clear.gif" WIDTH="1" HEIGHT="5" BORDER="0"></TD>
+<TD ALIGN="RIGHT" VALIGN="BOTTOM" BGCOLOR="#003399"><IMG SRC="/sunworldonline/icons-rd/blue-bottom.gif" WIDTH="3" HEIGHT="3" ALIGN="BOTTOM" BORDER="0"></TD>
+<TD><IMG SRC="/sunworldonline/icons-rd/dot_clear.gif" WIDTH="1" HEIGHT="1"></TD>
+</TR>
+<TR>
+<TD COLSPAN="5">&#160;</TD>
+</TR>
+</TABLE>
+
+
+<H1 ALIGN="CENTER">
+GUI toolkits: What are your options?
+</H1>
+
+<H3 ALIGN="CENTER">
+An overview of today's best-bet GUI toolkits
+</H3>
+
+<BLOCKQUOTE>
+<STRONG>Summary</STRONG><BR>
+This article provides an overview of the various toolkits (or programming
+interfaces) available for Solaris.  Among these,
+we selected only the most portable, commercially
+applicable, and modestly priced packages. The toolkits described here are
+best for office automation projects, graphical information
+system (GIS) jobs, GUIfication of legacy programs, 
+system administration utilities that are easy to run, and
+so on.  
+<P>
+<p>
+We cover the following toolkits: OLIT, XView, TNT, Motif, Java, OpenStep, Tk, MFC, MacOS toolkit, Amulet, GTK, MetaCard, and Qt. You can see how these toolkits compare by checking out our sidebar, <a href="#sidebar1" name="return1">Toolkit roundup</a>. <em>(3,000 words)</em>
+
+</BLOCKQUOTE>
+
+<STRONG>By <A HREF="mailto:cameron.laird@sunworld.com">Cameron Laird and Kathryn Soraiz</A></STRONG>
+
+<P>
+<HR NOSHADE>
+<P>
+<IMG ALIGN="LEFT" width="32" height="29" SRC="/sunworldonline/abcs/H.gif" ALT="H">ave 
+you had your GUI toolkit in for its annual checkup?  No?  Well,
+now is a good time to do it.  As the wired world moves away
+from Motif, and toward Java and scripting technologies, you might be
+better off with a new toolkit.  Let's walk through your options
+together.
+<P>
+<P>
+<FONT SIZE="+1"><STRONG>What's a toolkit?</STRONG></FONT><BR>
+Most applications built today fit the windows-icon-
+menu-pointer (WIMP) model of operations.  That is,
+in our daily work we program
+things that users point-and-click.  The vernacular
+word for the application programming interfaces (APIs)
+that manage graphical user interfaces (GUIs) is "toolkit."
+<P>
+While most Unix professionals probably know
+of only one or two toolkits there are dozens of useful alternatives available.  This article will help you learn which of them will best meet your needs. We'll leave the discussion of specialized toolkits designed for three-dimensional or virtual reality displays for another article.
+<P>
+The difficulty in understanding GUI toolkits lies in the number
+of subtly different concepts involved.  When people speak of
+"Motif," for example, they may have in mind any one of a number of different things:
+<ul>
+<LI>The licensed product that bundles several pieces
+<li>The specification for a style of GUI interfaces
+<li>The windowing manager included with a Motif license
+<li>The toolkit that implements a Motif specification
+<li>A completely different (and mistaken) notion, i.e., 
+the X bitmap model that underlies Motif
+</ul>
+<P>
+<P>
+<FONT SIZE="+1"><STRONG>X: The base for Unix GUIs</STRONG></FONT><BR>
+First, you'll need to understand the foundation on which most of
+these toolkits rest.  "The X Window System provides the base
+technology for developing [Unix-oriented] graphical user
+interfaces," according to a statement from its current custodian,
+the Open Group.  X is a freely-available windowing package, first
+released as X10.4 in 1986.  It provides a consistent API for
+graphical operations across all Unixes.   X has spread in recent
+years to OpenVMS, Windows, MacOS, and other operating systems.  It
+defines a particular client/server model of operation that segments
+applications into a display portion and a computational portion.
+One of the charms of X is that these two portions can run on
+different machines.  This makes it possible to run a weather
+simulation on the largest supercomputer in the world, yet manage and
+observe its results from a low-end screen located across the
+country.
+<P>
+X is not a toolkit, though, at least not for the purpose of this
+article.  X is low level.  Most developers insulate themselves from
+its tedium by using one of the toolkits described below.  The
+important thing to understand about X is where the
+responsibility for different features lies. For instance, almost all
+toolkits share font management and screen redirection functionality
+because they rely on X for these chores.  How a menu posts, though,
+is specific to a particular toolkit.
+<P>
+Most of the toolkits profiled below are APIs layered on top of X.
+At the same time, several have been implemented over alternative
+low-level display protocols.  Tk programmers write the same scripts
+whether working on a Macintosh or a SPARCstation.  Underneath, the
+Solaris version of Tk calls X routines, and the Mac Tk invokes MacOS
+system calls.  OpenWin exemplifies another instance of this
+distinction:  It was originally an environment for users and
+programmers built above Sun's Network Extensible Window System (NEWS).  With
+version 3.3, though, it was rebuilt on top of X.
+<P>
+<P>
+<FONT SIZE="+1"><STRONG>OpenWindows, SunView, NEWS</STRONG></FONT><BR>
+In a few Sun-oriented shops around the world, OpenWindows,
+SunView, or NEWS are the canonical GUIs.  OpenWindows -- sometimes
+called xnews or openwin -- is a windowing environment Sun
+has distributed as part of its standard bundle since July 1990.
+Several of the pieces appeared in earlier Sun products
+as early as 1985. OpenWindows implements Open Look.  Open Look is a
+specification for GUIs that Sun and AT&T published.
+<P>
+SunView was an earlier, proprietary windowing environment, as
+was Network Extensible Window System (NEWS).  Sun continues to support
+SunView and NEWS in ways too complex to unravel here.
+<P>
+Sun bundled the Open Look Intrinsics Toolkit (OLIT)
+with OpenWindows.  Sun also bundled The NEWS Toolkit (TNT) with
+most releases of OpenWindows.
+<P>
+XView is Sun's toolkit for X11.  Its API is similar to the
+SunView programmer interface.  XView and its sources are free.
+<P>
+The elegance and visual appeal of NEWS and SunView are widely
+admired.   There is no future for them, though.  Sun made a
+strategic decision to keep them proprietary, and they lost to
+X and Motif.  While programmers continue to maintain and
+occasionally even write Open Look applications, the numbers
+decline every year.
+<P>
+<P>
+<FONT SIZE="+1"><STRONG>Motif: The default choice</STRONG></FONT><BR>
+The single most widely used toolkit in the Unix world is Motif.
+Motif is the child of a committee.  Other Unix vendors feared
+success for Open Look would benefit Sun disproportionately.
+Their response was to create the Open Software Foundation (OSF).
+OSF produced Motif in 1989.
+<P>
+Motif is so ubiquitous that many Unix users confuse it with GUI
+operations or window managers, or other pieces of technology,
+and speak as if Motif is the <em>only</em> GUI foundation or
+toolkit.
+<P>
+Now, the Open Group maintains both X and Motif.  With Motif, unlike X, 
+users must pay for their licenses.  Most Unix customers
+don't realize this because such vendors as Sun, Hewlett-Packard,
+and Silicon Graphics, along with many others, bundle a Motif
+version with their Unix operating systems.  The Motif
+license fee is simply part of the purchase price
+for the operating system.  Motif remains logically distinct from
+the OS, though, and third parties sell more recent or otherwise
+enhanced Motifs for most platforms.
+<P>
+Motif is the market leader among Unix GUI toolkits.  As it nears
+its 10th birthday, it enjoys both the advantages and disadvantages
+of maturity.  It has the most advanced support for text from
+languages other than English, a wealth of third-party tools support
+it, and hundreds of books and online documents explain it.  It's
+also mediocre in performance, difficult to program, and a poor
+fit for modern object-oriented styles.
+<P>
+<!-- break -->
+
+<P ALIGN="RIGHT">
+<strong><font size="-1" face="Arial, Helvetica, Sans-serif">
+Page 1 of 2,
+<a href="/sunworldonline/swol-03-1998/swol-03-gui-2.html"><font color="#FF0000">continued...</font></a>
+</font></strong>
+<DIV ALIGN="CENTER">
+<BR>
+<TABLE CELLPADDING="0" BORDER="0">
+<TR>
+<TD>
+<strong>
+<font face="Arial,Helvetica,Sans-serif">
+
+Page 1. Introduction<BR>
+Page 2. <a href="/sunworldonline/swol-03-1998/swol-03-gui-2.html">Why use Motif?</a><BR>
+<A HREF="/sunworldonline/swol-03-1998/swol-03-gui_p.html">Printer-friendly (all-in-one) version</a>
+</font>
+</strong>
+</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+<A NAME="bio">
+<TABLE CELLPADDING="0" CELLSPACING="3" BORDER="0">
+<TR>
+<TD VALIGN="TOP">
+<!--IMG-->
+</TD>
+<TD BGCOLOR="#000000"><IMG SRC="/sunworldonline/icons-rd/dot_clear.gif" WIDTH="2" HEIGHT="1" ALIGN="BOTTOM" BORDER="0"></TD>
+<TD VALIGN="TOP">
+<STRONG>
+<FONT SIZE="-1" FACE="Arial,Helvetica,Sans-serif">
+About the author
+</FONT>
+</STRONG><BR>
+Cameron Laird and Kathryn Soraiz manage their own software consultancy,
+Network Engineered Solutions, from just outside Houston, Texas. They
+invite you to e-mail them for notice of upcoming articles.
+
+</TD>
+</TR>
+</TABLE>
+
+<P>
+<DIV ALIGN="CENTER">
+<FONT FACE="Arial,Helvetica,Sans-serif">
+
+<A HREF="/home.html">Home</A> |
+<A HREF="/sunworldonline/cgi-bin/swol-mailToFriend.cgi?head=GUI%20toolkits%3A%20What%20are%20your%20options%3F&author=Cameron%20Laird%20and%20Kathryn%20Soraiz&summary=This%20article%20provides%20an%20overview%20of%20the%20various%20toolkits%20%28or%20programming%0Ainterfaces%29%20available%20for%20Solaris.%20%20Among%20these%2C%0Awe%20selected%20only%20the%20most%20portable%2C%20commercially%0Aapplicable%2C%20and%20modestly%20priced%20packages.%20The%20toolkits%20described%20here%20are%0Abest%20for%20office%20automation%20projects%2C%20graphical%20information%0Asystem%20%28GIS%29%20jobs%2C%20GUIfication%20of%20legacy%20programs%2C%20%0Asystem%20administration%20utilities%20that%20are%20easy%20to%20run%2C%20and%0Aso%20on.%20%20%0A%3CP%3E%0A%3Cp%3E%0AWe%20cover%20the%20following%20toolkits%3A%20OLIT%2C%20XView%2C%20TNT%2C%20Motif%2C%20Java%2C%20OpenStep%2C%20Tk%2C%20MFC%2C%20MacOS%20toolkit%2C%20Amulet%2C%20GTK%2C%20MetaCard%2C%20and%20Qt.%20You%20can%20see%20how%20these%20toolkits%20compare%20by%20checking%20out%20our%20sidebar%2C%20%3Ca%20href%3D%22%23sidebar1%22%20name%3D%22return1%22%3EToolkit%20roundup%3C%2Fa%3E.%20%3Cem%3E%283%2C000%20words%29%3C%2Fem%3E%0A">Mail&nbsp;this&nbsp;Story</A> |
+<!--print-->
+<A HREF="/sunworldonline/swol-03-1998/swol-03-gui_p.html">Printer-Friendly&nbsp;Version</A> |
+<!--end_print-->
+<A HREF="#mini-ditka">Comment&nbsp;on&nbsp;this&nbsp;Story</A> |
+<A HREF="#resources">Resources&nbsp;and&nbsp;Related&nbsp;Links</A>
+</FONT>
+</DIV>
+
+<P>
+<DIV ALIGN="CENTER">
+<FORM METHOD="POST" ACTION="/sunworldonline/cgi-bin/swol-nav.cgi">
+<SELECT NAME="jump_list">
+<option value="http://www.sunworld.com/sunworldonline/index.html">
+Also this month in SunWorld
+<option value="http://www.sunworld.com/sunworldonline/index.html"> 
+Features:
+<OPTION VALUE="http://www.sun.com/sunworldonline/swol-03-1998/swol-03-wiring.html"> - Untangling network wiring
+<OPTION VALUE="http://www.sun.com/sunworldonline/swol-03-1998/swol-03-24x7.html"> - Is mainframe-class availability possible in a Unix environment?
+<OPTION VALUE="http://www.sun.com/sunworldonline/swol-03-1998/swol-03-adtran.html"> - Adding network hard disk storage -- painlessly  
+<OPTION VALUE="http://www.sun.com/sunworldonline/swol-03-1998/swol-03-gui.html"> - Choosing a GUI toolkit
+
+<option value="http://www.sunworld.com/sunworldonline/index.html">
+News & Views:
+<OPTION VALUE="http://www.sun.com/sunworldonline/swol-03-1998/swol-03-bookshelf.html"> - Bill's Bookshelf: The secrets of Intel
+<OPTION VALUE="http://www.sun.com/sunworldonline/swol-03-1998/swol-03-eyeoncomp.html"> - Up-to-the-minute news on Sun's rivals
+<OPTION VALUE="http://www.sun.com/sunworldonline/swol-03-1998/swol-03-sunspots.html"> - Sun Spots: The latest on Sun deals and product news
+<OPTION VALUE="http://www.sun.com/sunworldonline/swol-03-1998/swol-03-career.html"> - Career Advisor: Regretting your job change
+<OPTION VALUE="http://www.sun.com/sunworldonline/swol-03-1998/swol-03-if.html"> - The Internet Files: News on the latest Internet standards and struggles
+<OPTION VALUE="http://www.sun.com/sunworldonline/swol-03-1998/swol-03-elvis.html"> - Elvis+ to sing new tune
+<OPTION VALUE="http://www.sun.com/sunworldonline/swol-03-1998/swol-03-sequent.html"> - Sequent plans Unix-NT interoperability with NumaCenter
+<OPTION VALUE="http://www.sun.com/sunworldonline/swol-03-1998/swol-03-microjustice.html"> - Sun, Netscape lawyers Slam Microsoft's business practices		
+<OPTION VALUE="http://www.sun.com/sunworldonline/swol-03-1998/swol-03-itarchitect.html"> - The world of the technical architect
+<OPTION VALUE="http://www.sun.com/sunworldonline/swol-03-1998/swol-03-unixware.html"> - SCO debuts UnixWare 7
+<OPTION VALUE="http://www.sun.com/sunworldonline/swol-03-1998/swol-03-raymond.html"> - 'Net ethnographer explains freeware to corporate natives
+<OPTION VALUE="http://www.sun.com/sunworldonline/swol-03-1998/swol-03-elvisupdate.html"> - Elvis+ president clarifies company's future plans
+<OPTION VALUE="http://www.sun.com/sunworldonline/swol-03-1998/swol-03-clones.html"> - The state of the Sun clone market
+<OPTION VALUE="http://www.sun.com/sunworldonline/swol-03-1998/swol-03-timeline.html"> - Microsoft Under Siege: An Updated Timeline
+<OPTION VALUE="http://www.sun.com/sunworldonline/swol-03-1998/swol-03-subpoena.html"> - DOJ subpoenas Sun in Microsoft case
+<OPTION VALUE="http://www.sun.com/sunworldonline/swol-03-1998/swol-03-timeline.html"> - Microsoft Under Siege: An Updated Timeline
+<OPTION VALUE="http://www.sun.com/sunworldonline/swol-03-1998/swol-03-hpjava.html"> - HP wakes up to Java
+<OPTION VALUE="http://www.sun.com/sunworldonline/swol-03-1998/swol-03-javaone.html"> - News from JavaOne
+<OPTION VALUE="http://www.sun.com/sunworldonline/swol-03-1998/swol-03-javaone.html"> - News from JavaOne
+
+<option value="http://www.sunworld.com/sunworldonline/index.html">
+Tech Expertise:
+<OPTION VALUE="http://www.sun.com/sunworldonline/swol-03-1998/swol-03-unix101.html"> - Unix 101: Getting more out of your disk drives
+<OPTION VALUE="http://www.sun.com/sunworldonline/swol-03-1998/swol-03-webmaster.html"> - Webmaster: Web site management tips
+<OPTION VALUE="http://www.sun.com/sunworldonline/swol-03-1998/swol-03-perf.html"> - Performance Q&A: Sizing up memory in Solaris
+<OPTION VALUE="http://www.sun.com/sunworldonline/swol-03-1998/swol-03-insidesolaris.html"> - Fiddling around with files, part two
+<OPTION VALUE="http://www.sun.com/sunworldonline/swol-03-1998/swol-03-connectivity.html"> - Connectivity: Cable networks -- in ins and outs
+<OPTION VALUE="http://www.sun.com/sunworldonline/swol-03-1998/swol-03-security.html"> - More on mastering the secure shell
+
+</SELECT>
+<INPUT TYPE="SUBMIT" VALUE="Go">
+</FORM>
+</DIV>
+
+<DIV ALIGN="CENTER">
+<P>
+<TABLE CELLPADDING="5" CELLSPACING="0" BORDER="0">
+<TR>
+<TD>
+<FONT COLOR="#333333" SIZE="-1">Advertisement: Support SunWorld, click here!</FONT><BR>
+<NOLAYER>
+<IFRAME SRC="http://ad.doubleclick.net/adi/idg.sw.com/archives;sz=468x60" height=60 width=468 marginwidth=0 marginheight=0 hspace=0 vspace=0 frameborder=0 scrolling=no><A HREF="http://ad.doubleclick.net/jump/idg.sw.com/archives;sz=468x60"><IMG SRC="http://ad.doubleclick.net/ad/idg.sw.com/archives;sz=468x60" height=60 width=468></A></IFRAME>
+</NOLAYER>
+<ilayer id=ph4 visibility=hide height=60 width=468></ilayer>
+<BR CLEAR="ALL">
+</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<A NAME="resources">
+<P>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="0">
+<TR>
+<TD VALIGN="TOP" BGCOLOR="#003399"><IMG SRC="/sunworldonline/icons-rd/blue-left.gif" WIDTH="9" HEIGHT="9" ALIGN="BOTTOM" BORDER="0"></TD>
+<TD COLSPAN="2" BGCOLOR="#003399"><FONT COLOR="#FFFFFF" FACE="Arial,Helvetica,Sans-serif"><STRONG>Resources and Related Links</STRONG></FONT></TD>
+</TR>
+<TR>
+<TD>&#160;</TD>
+<TD>
+<UL>
+</ul><strong>Toolkit resources</strong><ul><LI>The GUI Toolkit Framework Page -- a reference for all kinds of GUI toolkits
+<BR><A HREF="http://www.geocities.com/SiliconValley/Vista/7184/guitool.html">http://www.geocities.com/SiliconValley/Vista/7184/guitool.html</A><LI>Amulet Project home page
+<BR><A HREF="http://www.cs.cmu.edu/afs/cs/project/amulet/www/amulet-home.html">http://www.cs.cmu.edu/afs/cs/project/amulet/www/amulet-home.html</A><LI>Free Software Foundation
+<BR><A HREF="http://www.fsf.org">http://www.fsf.org</A><LI>The GIMP ToolKit [GTK]
+<BR><A HREF="http://www.gimp.org/gtk/">http://www.gimp.org/gtk/</A><LI>KDE FAQ
+<BR><A HREF="http://www.kde.org/kdp/kde_faq.html">http://www.kde.org/kdp/kde_faq.html</A><LI>Latitude home page
+<BR><A HREF="http://www.metrowerks.com/desktop/latitude/">http://www.metrowerks.com/desktop/latitude/</A><LI>LessTif
+<BR><A HREF="http://starbase.neosoft.com/~claird/comp.windows.x.motif/lesstif.html">http://starbase.neosoft.com/~claird/comp.windows.x.motif/lesstif.html</A><LI>MainWin
+<BR><A HREF="http://www.mainsoft.com/map.htm#mainwin">http://www.mainsoft.com/map.htm#mainwin</A><LI>MetaCard
+<BR><A HREF="http://www.metacard.com">http://www.metacard.com</A><LI>Motif
+<BR><A HREF="http://starbase.neosoft.com/~claird/comp.windows.x.motif/motif.html">http://starbase.neosoft.com/~claird/comp.windows.x.motif/motif.html</A><LI>Open Group Desktop Technologies -- X Window System
+<BR><A HREF="http://www.camb.opengroup.org/tech/desktop/x/">http://www.camb.opengroup.org/tech/desktop/x/</A><LI>OPENSTEP home page
+<BR><A HREF="http://software.apple.com/openstep/">http://software.apple.com/openstep/</A><LI>Python
+<BR><A HREF="http://www.python.org/">http://www.python.org/</A><LI>Qt product information
+<BR><A HREF="http://www.troll.no/qtinfo.html">http://www.troll.no/qtinfo.html</A><LI>Tk information (Tech Corner)
+<BR><A HREF="http://sunscript.sun.com/techcorner/">http://sunscript.sun.com/techcorner/</A><LI>XTC, the X Tool Collection
+<BR><A HREF="http://www.cs.umb.edu/~eugene/XTC/">http://www.cs.umb.edu/~eugene/XTC/</A></ul><strong>More resources</strong><ul><LI>"Choosing a scripting language," October 1997 feature story in <em>SunWorld</em>
+<BR><A HREF="http://www.sun.com/sunworldonline/swol-10-1997/swol-10-scripting.html">http://www.sun.com/sunworldonline/swol-10-1997/swol-10-scripting.html</A><LI>"Does Sun want to become the next Microsoft?" a <em>SunWorld</em> update on Sun's OpenStep applications group
+<BR><A HREF="http://www.sun.com/sunworldonline/swol-02-1998/swol-02-lighthouse.html">http://www.sun.com/sunworldonline/swol-02-1998/swol-02-lighthouse.html</A><LI>"Getting started with Python," February 1998 feature story in <em>SunWorld</em>
+<BR><A HREF="http://www.sun.com/sunworldonline/swol-02-1998/swol-02-python.html">http://www.sun.com/sunworldonline/swol-02-1998/swol-02-python.html</A><LI>"Writing common code for Unix and NT," April 1997 feature story in <em>SunWorld</em>
+<BR><A HREF="http://www.sun.com/sunworldonline/swol-04-1997/swol-04-porting.html">http://www.sun.com/sunworldonline/swol-04-1997/swol-04-porting.html</A><LI>Cameron Laird's updates and amplifications of this article
+<BR><A HREF="http://starbase.neosoft.com/~claird/comp.windows.misc/toolkits.html">http://starbase.neosoft.com/~claird/comp.windows.misc/toolkits.html</A>
+</UL>
+<TD>&#160;</TD>
+</TR>
+</TABLE>
+
+<A NAME="sidebar1">
+<P>
+<TABLE WIDTH="100%" CELLPADDING="1" CELLSPACING="0" BORDER="0">
+<TR>
+<TD BGCOLOR="#FFCC66">
+<font face="Arial,Helvetica,Sans-serif"><STRONG>Toolkit roundup</STRONG></FONT>
+</TD>
+</TR>
+<TR>
+<TD>&nbsp;</TD>
+</TR>
+<TR>
+<TD BGCOLOR="#FFFFFF">
+<P>
+<table bgcolor="#70DBDB" cellpadding="4" cellspacing="4" border="1">
+<tr bgcolor="#70DB93">
+<th align="center">Toolkit</th>
+<th align="center">Market presence</th>
+<th align="center">Market momentum</th>
+<th align="center">License fee</th>
+<th align="center">Technical advantages</th>
+<th align="center">Technical disadvantages</th>
+<th align="center">Portable beyond Unix?</th>
+<th align="center">Scriptable?</th>
+</tr>
+<tr>
+<th align="left" valign="top">Amulet</th> 
+<td align="left" valign="top">tiny</td>
+<td align="left" valign="top">unclear</td>
+<td align="left" valign="top">free</td>
+<td align="left" valign="top">animation</td> 
+<td align="left" valign="top">unusual</td>
+<td align="left" valign="top">yes</td>
+<td align="left" valign="top">yes</td>
+</tr>
+<tr>
+<th align="left" valign="top">GTK</th> 
+<td align="left" valign="top">tiny</td>
+<td align="left" valign="top">unclear</td>
+<td align="left" valign="top">free</td>
+<td align="left" valign="top">speed of performance  </td> 
+<td align="left" valign="top">no docs</td>
+<td align="left" valign="top">no</td>
+<td align="left" valign="top">yes</td>
+</tr>
+<tr>
+<th align="left" valign="top">Java </th> 
+<td align="left" valign="top">medium</td>
+<td align="left" valign="top">exploding</td>
+<td align="left" valign="top">free</td>
+<td align="left" valign="top">Java</td> 
+<td align="left" valign="top">juvenile</td>
+<td align="left" valign="top">yes</td>
+<td align="left" valign="top">yes</td>
+</tr>
+<tr>
+<th align="left" valign="top">MacOS toolkit</th> 
+<td align="left" valign="top">medium</td>
+<td align="left" valign="top">static</td>
+<td align="left" valign="top">$399</td> 
+<td align="left" valign="top">Mac compatible</td>
+<td align="left" valign="top">difficult</td>
+<td align="left" valign="top">yes</td>
+<td align="left" valign="top">no</td>
+</tr>
+<tr>
+<th align="left" valign="top">MetaCard</th> 
+<td align="left" valign="top">tiny</td> 
+<td align="left" valign="top">growing</td>
+<td align="left" valign="top">$995</td>
+<td align="left" valign="top">ease-of-use, computer based training</td>
+<td align="left" valign="top">small developer community</td>
+<td align="left" valign="top">yes</td>
+<td align="left" valign="top">yes</td>
+</tr>
+<tr>
+<th align="left" valign="top">MFC</th> 
+<td align="left" valign="top">dominant</td>
+<td align="left" valign="top">static</td>
+<td align="left" valign="top">$0-1000</td>
+<td align="left" valign="top">Win compatible</td> 
+<td align="left" valign="top">complex</td>
+<td align="left" valign="top">yes</td>
+<td align="left" valign="top">yes</td>
+</tr>
+<tr>
+<th align="left" valign="top">Motif</th> 
+<td align="left" valign="top">dominant</td>
+<td align="left" valign="top">static</td>
+<td align="left" valign="top">$0-1000</td>
+<td align="left" valign="top">maturity</td> 
+<td align="left" valign="top">difficult</td>
+<td align="left" valign="top">barely</td>
+<td align="left" valign="top">yes</td>
+</tr>
+<tr>
+<th align="left" valign="top">OLIT, XView, TNT</th> 
+<td align="left" valign="top">medium</td>
+<td align="left" valign="top">steep decline</td>
+<td align="left" valign="top">bundled</td>
+<td align="left" valign="top">legacy compatible, pretty</td> 
+<td align="left" valign="top">old</td>
+<td align="left" valign="top">no</td>
+<td align="left" valign="top">no</td>
+</tr>
+<tr>
+<th align="left" valign="top">OpenStep</th> 
+<td align="left" valign="top">niche</td>
+<td align="left" valign="top">unclear</td>
+<td align="left" valign="top">~$1000</td>
+<td align="left" valign="top">power, beauty</td> 
+<td align="left" valign="top">inconsistent platform support</td>
+<td align="left" valign="top">yes</td>
+<td align="left" valign="top">no</td>
+</tr>
+<tr>
+<th align="left" valign="top">Qt</th> 
+<td align="left" valign="top">tiny</td>
+<td align="left" valign="top">growing</td>
+<td align="left" valign="top">$0-1470</td>
+<td align="left" valign="top">quality</td> 
+<td align="left" valign="top">long maintenance cycle</td>
+<td align="left" valign="top">yes</td>
+<td align="left" valign="top">yes</td>
+</tr>
+<tr>
+<th align="left" valign="top">Tk</th> 
+<td align="left" valign="top">medium</td>
+<td align="left" valign="top">growing</td>
+<td align="left" valign="top">free</td>
+<td align="left" valign="top">ease-of-use, portable</td> 
+<td align="left" valign="top">few built-in widgets</td>
+<td align="left" valign="top">yes</td>
+<td align="left" valign="top">yes</td>
+</tr>
+</table>
+<P>
+</TD>
+</TR>
+<TR>
+<TD>&nbsp;</TD>
+</TR>
+<TR>
+<TD ALIGN="RIGHT" BGCOLOR="#FFCC66">
+<font size="-1" face="Arial,Helvetica,Sans-serif"><A HREF="#return1">Return to article</A></FONT>
+</TD>
+</TR>
+</TABLE>
+</A>
+
+
+<a name="mini-ditka">
+<BR>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="0">
+<TR>
+<TD VALIGN="TOP" BGCOLOR="#003399"><IMG SRC="/sunworldonline/icons-rd/blue-left.gif" WIDTH="9" HEIGHT="9" ALIGN="BOTTOM" BORDER="0"></TD>
+<TD COLSPAN="2" BGCOLOR="#003399">
+<FONT COLOR="#FFFFFF" FACE="Arial,Helvetica,Sans-serif"><STRONG>Tell Us What You Thought of This Story</STRONG></FONT>
+</TD>
+</TR>
+<TR>
+<TD>&#160;</TD>
+<TD>
+<BR>
+<FORM METHOD="POST" ACTION="/sunworldonline/cgi-bin/swol-mini-survey.cgi?1998-swol-03-gui.html">
+
+<TABLE WIDTH="100%" ALIGN="CENTER" CELLPADDING="0" BORDER="0">
+<TR><TD ALIGN="LEFT" VALIGN="TOP" ROWSPAN="1" COLSPAN="1">
+
+<INPUT TYPE="radio" NAME="worth" VALUE="3">-Very worth reading<br>
+<INPUT TYPE="radio" NAME="worth" VALUE="2">-Worth reading<br>
+<INPUT TYPE="radio" NAME="worth" VALUE="1">-Not worth reading<br>
+
+</td><td align="left" valign="top" rowspan="1" colspan="1">
+
+<INPUT TYPE="radio" NAME="length" VALUE="3">-Too long<br>
+<INPUT TYPE="radio" NAME="length" VALUE="2">-Just right<br>
+<INPUT TYPE="radio" NAME="length" VALUE="1">-Too short<br>
+
+</td><td align="left" valign="top" rowspan="1" colspan="1">
+
+<INPUT TYPE="radio" NAME="tech" VALUE="3">-Too technical<br>
+<INPUT TYPE="radio" NAME="tech" VALUE="2">-Just right<br>
+<INPUT TYPE="radio" NAME="tech" VALUE="1">-Not technical enough<br>
+
+</TD></TR></TABLE>
+
+<TABLE CELLPADDING="0" BORDER="0">
+<TR>
+<TD ALIGN="LEFT" VALIGN="TOP" ROWSPAN="1" COLSPAN="1">
+<TEXTAREA NAME="comments" COLS="40" ROWS="3" WRAP="VIRTUAL">Comments:
+</TEXTAREA>
+</TD>
+<TD>&nbsp;</TD>
+
+<TR>
+<TD ALIGN="LEFT" VALIGN="TOP" ROWSPAN="1" COLSPAN="1">
+<TEXTAREA NAME="comments" COLS="30" ROWS="1" WRAP="VIRTUAL">Name:
+</TEXTAREA>
+</TD>
+<TD>&nbsp;</TD>
+</TR> 
+
+<TR>
+<TD ALIGN="LEFT" VALIGN="TOP" ROWSPAN="1" COLSPAN="1">
+<TEXTAREA NAME="comments" COLS="30" ROWS="1" WRAP="VIRTUAL">Email:
+</TEXTAREA>
+</TD>
+<TD>&nbsp;</TD>
+</TR> 
+
+<TR>
+<TD ALIGN="LEFT" VALIGN="TOP" ROWSPAN="1" COLSPAN="1">
+<TEXTAREA NAME="comments" COLS="30" ROWS="1" WRAP="VIRTUAL">Company Name:
+</TEXTAREA>
+&nbsp;&nbsp;&nbsp;&nbsp;
+</TD>
+
+<TD ALIGN="LEFT" VALIGN="BOTTOM">
+<INPUT TYPE="submit" VALUE="Send data">
+</TD>
+</TR>
+</TABLE>
+
+</FORM>
+<TD>&#160;</TD>
+</TR>
+</TABLE>
+</a>
+
+<P>
+<DIV ALIGN="CENTER">
+<A HREF="/sunworldonline/common/swol-copyright.html"><IMG BORDER="0" width="400" height="22" SRC="/sunworldonline/icons/b-copyright99.gif" ALT="(c) Copyright 1998 Web Publishing Inc., and IDG Communication company"></A>
+</DIV>
+<P>
+If you have technical problems with this magazine, contact 
+<A NAME="webmaster" HREF="/sunworldonline/cgi-bin/swol-mailto.cgi?webmaster@sunworld.com+/swol-03-1998/swol-03-gui.html+webmaster">webmaster@sunworld.com</A>
+<P>
+<STRONG>URL</STRONG>: http://www.sunworld.com/swol-03-1998/swol-03-gui.html
+<BR>
+<STRONG>Last modified:</STRONG> Tuesday, September 21, 1999
+
+<layer src="http://ad.doubleclick.net/adl/idg.sw.com/archives;sz=468x60" visibility=hide onload="moveToAbsolute(ph1.pageX, ph1.pageY);visibility='show';"></layer>
+
+<layer src="http://ad.doubleclick.net/adl/idg.sw.com/archives;sz=125x125;tile=1" visibility=hide onload="moveToAbsolute(ph2.pageX, ph2.pageY);visibility='show';"></layer>
+<layer src="http://ad.doubleclick.net/adl/idg.sw.com/archives;sz=125x125;tile=2" visibility=hide onload="moveToAbsolute(ph3.pageX, ph3.pageY);visibility='show';"></layer>
+
+<layer src="http://ad.doubleclick.net/adl/idg.sw.com/archives;sz=468x60" visibility=hide onload="moveToAbsolute(ph4.pageX, ph4.pageY);visibility='show';"></layer>
+
+</BODY>
+</HTML>

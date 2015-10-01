@@ -1,0 +1,75 @@
+This readme is for GNU jogl release 0.6.
+
+Welcome!
+-------
+
+This is the third generation release of a package originally put
+together by Leo Chan.  Adam King re-released the package with some
+additions and fixes.  Tommy Reilly is currently maintaining the
+package and has added autoconf/automake/libtool support to ease
+building the shared libs on all unix platforms as well as finding the
+necessary Java/OpenGL headers, libraries and programs.  In addition we
+have set down what are goals are for this project:
+
+ - become a mature GNU project (ie. a './configure' and a 'make' 
+	work to build the package on all Java/OGL enabled systems)
+ - develop solid autoconf/automake Java/OGL configuration code that
+   can eventually be fed back into those products and in general
+   make Java a first class citizen with the GNU project.
+ - Maintain conformance with the evolving Java system.
+ - Serve as the Java-OGL bindings package for Adam King's java3d
+   implementation (see http://www.magma.ca/~aking/java)
+
+Mailing List
+------------
+
+If you are going to be using jogl we recommend subscribing to the jogl
+mailing list.  People on the list should be able to help with problems
+or questions.  To subscribe send mail to majordomo@pajato.com with the
+following in the body (not subject):
+
+subscribe jogl
+
+After you get mail back saying you're on the list you can send mail to
+jogl@pajato.com.   
+
+
+Installation
+------------
+
+For compiling/installation instructions, please read the INSTALL file.
+
+Use
+---
+Have a look at the test/Jogl.java file included with this release.  It
+shows how to create a java application that can show an OpenGL object.  I
+will be adding more details on the steps required to create an OpenGL
+application in the following releases.  
+
+The jogl home page is at:
+
+  http://www.pajato.com/projects/jogl
+
+
+Known Bugs
+----------
+
+Well, just cause we not aware of any doesn't mean they aren't there. 
+
+Bug Reporting
+-------------
+
+If you come across any bugs please email me with details, and please
+include the following information:
+
+Which Operating System and version, jogl version, and OpenGL library
+being used and version. 
+
+or if you have any suggestions, please email tom@pajato.com.
+
+License:
+-------
+This package is now covered by the GNU GPL.  Please see the
+file COPYING for details.
+
+Enjoy!

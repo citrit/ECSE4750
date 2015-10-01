@@ -1,0 +1,1751 @@
+Return-Path: lohnen
+Received: from vccnorth26.its.rpi.edu (vccnorth26.its.rpi.edu [128.113.69.136]) by mail1.its.rpi.edu (8.6.9/8.6.4) with ESMTP id AAA09701 for <citrit@rpi.edu>; Fri, 6 Oct 1995 00:13:17 -0400
+From: Nils Lohner <lohnen>
+Received: (lohnen@localhost) by vccnorth26.its.rpi.edu (8.6.9/8.6.4) id AAA25270 for citrit@rpi.edu; Fri, 6 Oct 1995 00:13:15 -0400
+Date: Fri, 6 Oct 1995 00:13:15 -0400
+Message-Id: <199510060413.AAA25270@vccnorth26.its.rpi.edu>
+To: citrit@rpi.edu
+Subject: Homework 2
+
+#! /bin/sh
+# This is a shell archive.  Remove anything before this line, then unpack
+# it by saving it into a file and typing "sh file".  To overwrite existing
+# files, type "sh file -c".  You can also feed this as standard input via
+# unshar, or by typing "sh <file", e.g..  If this archive is complete, you
+# will see the following message at the end:
+#		"End of shell archive."
+# Contents:  Cell.h DataSet.h LineCell.h Makefile Makefile.aix
+#   Makefile.bak OGLRen.cc OGLRen.h PlyCell.h PointSet.h
+#   PolyLineCell.h PtCell.h README.first Renderer.h TriangleCell.h
+#   VectorT.h example.dat example.dat.orig.bad example.dat.simple
+#   hints.tom objtest.cc
+# Wrapped by lohnen@vccnorth26.its.rpi.edu on Fri Oct  6 00:12:31 1995
+PATH=/bin:/usr/bin:/usr/ucb ; export PATH
+if test -f 'Cell.h' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'Cell.h'\"
+else
+echo shar: Extracting \"'Cell.h'\" \(1304 characters\)
+sed "s/^X//" >'Cell.h' <<'END_OF_FILE'
+X//////////////////////////////////////////////////////////////////////////
+X//
+X//  This code is for instructional purposes only. It was generated for
+X//  use in a graduate level course to show certain aspects of data
+X//  storage algorithms. It has problems and should not be used 
+X//  outside the class environment.
+X//
+X//  Author:  Thomas D. Citriniti     citrit@rpi.edu
+X//  Class:   Advanced Computer Graphics and Data visualization
+X//           Rensselaer Polytechnic Institute
+X//  Date:    October 3, 1995
+X//
+X//////////////////////////////////////////////////////////////////////////
+X
+X
+X#ifndef _CELL_H_
+X#define _CELL_H_
+X
+X#include "VectorT.h"
+X#include "PointSet.h"
+X
+class Renderer;
+X
+class Cell : public VectorType<int> {
+X  public:
+X    Cell() {}
+X	// all these are virtual... everything should be subclassed!!
+X    virtual ~Cell() {}
+X    virtual void  Render(Renderer *rnd) = 0;
+X    virtual char *CellType() { return "AbstractCell"; }
+X
+X	// set the point set that this cell is associated with
+X    void SetPoints(PointSet *pts) { PtSet = pts; }
+X
+X    void SetColor(float R, float G, float B, float A) 
+X                 { red = R; green = G; blue = B; alpha = A;}
+X  protected:
+X	// only give friends and children access to the PtSet structure
+X    PointSet *PtSet;
+X    float red, green, blue, alpha;
+X
+X};
+X
+X#endif
+END_OF_FILE
+if test 1304 -ne `wc -c <'Cell.h'`; then
+    echo shar: \"'Cell.h'\" unpacked with wrong size!
+fi
+# end of 'Cell.h'
+fi
+if test -f 'DataSet.h' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'DataSet.h'\"
+else
+echo shar: Extracting \"'DataSet.h'\" \(717 characters\)
+sed "s/^X//" >'DataSet.h' <<'END_OF_FILE'
+X//////////////////////////////////////////////////////////////////////////
+X//
+X//  This code is for instructional purposes only. It was generated for
+X//  use in a graduate level course to show certain aspects of data
+X//  storage algorithms. It has problems and should not be used 
+X//  outside the class environment.
+X//
+X//  Author:  Thomas D. Citriniti     citrit@rpi.edu
+X//  Class:   Advanced Computer Graphics and Data visualization
+X//           Rensselaer Polytechnic Institute
+X//  Date:    October 3, 1995
+X//
+X//////////////////////////////////////////////////////////////////////////
+X
+X
+X#ifndef _DATA_SET_H_
+X#define _DATA_SET_H_
+X
+X#include "VectorT.h"
+X#include "Cell.h"
+X
+typedef VectorType<Cell *> DataSet; 
+X
+X
+X#endif
+END_OF_FILE
+if test 717 -ne `wc -c <'DataSet.h'`; then
+    echo shar: \"'DataSet.h'\" unpacked with wrong size!
+fi
+# end of 'DataSet.h'
+fi
+if test -f 'LineCell.h' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'LineCell.h'\"
+else
+echo shar: Extracting \"'LineCell.h'\" \(1190 characters\)
+sed "s/^X//" >'LineCell.h' <<'END_OF_FILE'
+X//////////////////////////////////////////////////////////////////////////
+X//
+X//  This code is for instructional purposes only. It was generated for
+X//  use in a graduate level course to show certain aspects of data
+X//  storage algorithms. It has problems and should not be used 
+X//  outside the class environment.
+X//
+X//  Author:  Thomas D. Citriniti     citrit@rpi.edu
+X//  Class:   Advanced Computer Graphics and Data visualization
+X//           Rensselaer Polytechnic Institute
+X//  Date:    October 3, 1995
+X//
+X//////////////////////////////////////////////////////////////////////////
+X
+X
+X#ifndef _LINE_CELL_H_
+X#define _LINE_CELL_H_
+X
+X#include "PointSet.h"
+X#include "Cell.h"
+X#include "Renderer.h"
+X
+class LineCell : public Cell {
+X  private:
+X
+X  public:
+X    LineCell() {}
+X    ~LineCell() {}
+X    void Render(Renderer *aren);
+X    char *CellType() { return "LineCell"; }
+X    
+X};
+X
+void
+LineCell::Render(Renderer *aren)
+X{
+X
+X  aren->BeginDraw(Renderer::LINE);
+X  aren->Color(red, green, blue, alpha);
+X  for (int i=0;i<this->Count();i++) {
+X    aren->Vertex((*PtSet)[(*this)[i]]->x, 
+X                 (*PtSet)[(*this)[i]]->y, 
+X                 (*PtSet)[(*this)[i]]->z);
+X  }
+X  aren->EndDraw();
+X
+X}
+X
+X
+X#endif
+END_OF_FILE
+if test 1190 -ne `wc -c <'LineCell.h'`; then
+    echo shar: \"'LineCell.h'\" unpacked with wrong size!
+fi
+# end of 'LineCell.h'
+fi
+if test -f 'Makefile' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'Makefile'\"
+else
+echo shar: Extracting \"'Makefile'\" \(2055 characters\)
+sed "s/^X//" >'Makefile' <<'END_OF_FILE'
+X#//////////////////////////////////////////////////////////////////////////
+X#//
+X#//  This code is for instructional purposes only. It was generated for
+X#//  use in a graduate level course to show certain aspects of data
+X#//  storage algorithms. It has problems and should not be used 
+X#//  outside the class environment.
+X#//
+X#//  Author:  Thomas D. Citriniti     citrit@rpi.edu
+X#//  Class:   Advanced Computer Graphics and Data visualization
+X#//           Rensselaer Polytechnic Institute
+X#//  Date:    October 3, 1995
+X#//
+X#//////////////////////////////////////////////////////////////////////////
+X
+X
+X# CCFLAGS=-g -I/locker/44/000644/Mesa/@sys/include
+CCFLAGS=-g -I/usr/lpp/xlC/include -I/locker/44/000644/Mesa/@sys/include  \
+CXXFLAGS=-g -I/usr/lpp/xlC/include -I/locker/44/000644/Mesa/@sys/include  \
+X        -I/usr/include
+X#CCC=xlC
+CCC=g++
+X
+CXXFLAGS = -g
+X
+LDFLAGS=-L/locker/44/000644/Mesa/@sys/lib -lglut -lMesaGLU \
+X        -lMesaGL -lXmu -lXt -lX11 -lm
+X
+X
+objtest: objtest.o OGLRen.o 
+X	$(CCC) -g -o $@  $@.o OGLRen.o $(LDFLAGS)
+X
+X
+clean:
+X	rm -f *~ core objtest *.o
+X
+tidy:
+X	rm -f core *~ *.o
+X
+X# DO NOT DELETE THIS LINE -- make depend depends on it.
+X
+objtest.o: PtCell.h PointSet.h VectorT.h /usr/include/string.h
+objtest.o: /usr/include/standards.h /usr/include/sys/types.h Cell.h
+objtest.o: Renderer.h DataSet.h LineCell.h PolyLineCell.h PlyCell.h
+objtest.o: TriangleCell.h OGLRen.h /usr/include/stdlib.h
+objtest.o: /usr/include/X11/Xlib.h /usr/include/X11/X.h
+objtest.o: /usr/include/X11/Xfuncproto.h /usr/include/X11/Xosdefs.h
+objtest.o: /usr/include/stddef.h /usr/include/X11/Xutil.h
+objtest.o: /usr/include/X11/Intrinsic.h /usr/include/X11/Xresource.h
+objtest.o: /usr/include/X11/Core.h /usr/include/X11/Composite.h
+objtest.o: /usr/include/X11/Constraint.h /usr/include/X11/Object.h
+objtest.o: /usr/include/X11/RectObj.h /usr/include/X11/Shell.h
+objtest.o: /usr/include/X11/StringDefs.h /usr/include/GL/gl.h
+objtest.o: /usr/include/GL/glu.h /usr/include/GL/glx.h /usr/include/X11/Xmd.h
+objtest.o: /usr/include/GL/glxproto.h /usr/include/GL/glxmd.h
+END_OF_FILE
+if test 2055 -ne `wc -c <'Makefile'`; then
+    echo shar: \"'Makefile'\" unpacked with wrong size!
+fi
+# end of 'Makefile'
+fi
+if test -f 'Makefile.aix' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'Makefile.aix'\"
+else
+echo shar: Extracting \"'Makefile.aix'\" \(2055 characters\)
+sed "s/^X//" >'Makefile.aix' <<'END_OF_FILE'
+X#//////////////////////////////////////////////////////////////////////////
+X#//
+X#//  This code is for instructional purposes only. It was generated for
+X#//  use in a graduate level course to show certain aspects of data
+X#//  storage algorithms. It has problems and should not be used 
+X#//  outside the class environment.
+X#//
+X#//  Author:  Thomas D. Citriniti     citrit@rpi.edu
+X#//  Class:   Advanced Computer Graphics and Data visualization
+X#//           Rensselaer Polytechnic Institute
+X#//  Date:    October 3, 1995
+X#//
+X#//////////////////////////////////////////////////////////////////////////
+X
+X
+X# CCFLAGS=-g -I/locker/44/000644/Mesa/@sys/include
+CCFLAGS=-g -I/usr/lpp/xlC/include -I/locker/44/000644/Mesa/@sys/include  \
+CXXFLAGS=-g -I/usr/lpp/xlC/include -I/locker/44/000644/Mesa/@sys/include  \
+X        -I/usr/include
+X#CCC=xlC
+CCC=g++
+X
+CXXFLAGS = -g
+X
+LDFLAGS=-L/locker/44/000644/Mesa/@sys/lib -lglut -lMesaGLU \
+X        -lMesaGL -lXmu -lXt -lX11 -lm
+X
+X
+objtest: objtest.o OGLRen.o 
+X	$(CCC) -g -o $@  $@.o OGLRen.o $(LDFLAGS)
+X
+X
+clean:
+X	rm -f *~ core objtest *.o
+X
+tidy:
+X	rm -f core *~ *.o
+X
+X# DO NOT DELETE THIS LINE -- make depend depends on it.
+X
+objtest.o: PtCell.h PointSet.h VectorT.h /usr/include/string.h
+objtest.o: /usr/include/standards.h /usr/include/sys/types.h Cell.h
+objtest.o: Renderer.h DataSet.h LineCell.h PolyLineCell.h PlyCell.h
+objtest.o: TriangleCell.h OGLRen.h /usr/include/stdlib.h
+objtest.o: /usr/include/X11/Xlib.h /usr/include/X11/X.h
+objtest.o: /usr/include/X11/Xfuncproto.h /usr/include/X11/Xosdefs.h
+objtest.o: /usr/include/stddef.h /usr/include/X11/Xutil.h
+objtest.o: /usr/include/X11/Intrinsic.h /usr/include/X11/Xresource.h
+objtest.o: /usr/include/X11/Core.h /usr/include/X11/Composite.h
+objtest.o: /usr/include/X11/Constraint.h /usr/include/X11/Object.h
+objtest.o: /usr/include/X11/RectObj.h /usr/include/X11/Shell.h
+objtest.o: /usr/include/X11/StringDefs.h /usr/include/GL/gl.h
+objtest.o: /usr/include/GL/glu.h /usr/include/GL/glx.h /usr/include/X11/Xmd.h
+objtest.o: /usr/include/GL/glxproto.h /usr/include/GL/glxmd.h
+END_OF_FILE
+if test 2055 -ne `wc -c <'Makefile.aix'`; then
+    echo shar: \"'Makefile.aix'\" unpacked with wrong size!
+fi
+# end of 'Makefile.aix'
+fi
+if test -f 'Makefile.bak' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'Makefile.bak'\"
+else
+echo shar: Extracting \"'Makefile.bak'\" \(1151 characters\)
+sed "s/^X//" >'Makefile.bak' <<'END_OF_FILE'
+X#//////////////////////////////////////////////////////////////////////////
+X#//
+X#//  This code is for instructional purposes only. It was generated for
+X#//  use in a graduate level course to show certain aspects of data
+X#//  storage algorithms. It has problems and should not be used 
+X#//  outside the class environment.
+X#//
+X#//  Author:  Thomas D. Citriniti     citrit@rpi.edu
+X#//  Class:   Advanced Computer Graphics and Data visualization
+X#//           Rensselaer Polytechnic Institute
+X#//  Date:    October 3, 1995
+X#//
+X#//////////////////////////////////////////////////////////////////////////
+X
+X
+X# CCFLAGS=-g -I/locker/44/000644/Mesa/@sys/include
+CCFLAGS=-g -I/usr/lpp/xlC/include -I/locker/44/000644/Mesa/@sys/include  \
+CXXFLAGS=-g -I/usr/lpp/xlC/include -I/locker/44/000644/Mesa/@sys/include  \
+X        -I/usr/include
+X#CCC=xlC
+CCC=g++
+X
+CXXFLAGS = -g
+X
+LDFLAGS=-L/locker/44/000644/Mesa/@sys/lib -lglut -lMesaGLU \
+X        -lMesaGL -lXmu -lXt -lX11 -lm
+X
+X
+objtest: objtest.o OGLRen.o 
+X	$(CCC) -g -o $@  $@.o OGLRen.o $(LDFLAGS)
+X
+X
+clean:
+X	rm -f *~ core objtest *.o
+X
+tidy:
+X	rm -f core *~ *.o
+X
+X# DO NOT DELETE THIS LINE -- make depend depends on it.
+END_OF_FILE
+if test 1151 -ne `wc -c <'Makefile.bak'`; then
+    echo shar: \"'Makefile.bak'\" unpacked with wrong size!
+fi
+# end of 'Makefile.bak'
+fi
+if test -f 'OGLRen.cc' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'OGLRen.cc'\"
+else
+echo shar: Extracting \"'OGLRen.cc'\" \(7509 characters\)
+sed "s/^X//" >'OGLRen.cc' <<'END_OF_FILE'
+X//////////////////////////////////////////////////////////////////////////
+X//
+X//  This code is for instructional purposes only. It was generated for
+X//  use in a graduate level course to show certain aspects of data
+X//  storage algorithms. It has problems and should not be used 
+X//  outside the class environment.
+X//
+X//  Author:  Thomas D. Citriniti     citrit@rpi.edu
+X//  Class:   Advanced Computer Graphics and Data visualization
+X//           Rensselaer Polytechnic Institute
+X//  Date:    October 3, 1995
+X//
+X//////////////////////////////////////////////////////////////////////////
+X
+X
+X/* Includes required */
+X#include "OGLRen.h"
+X
+static OGLRenderer *currentRenderer;
+static GLint Black, Red, Green, Blue;
+X
+void 
+OGLRenderer::BeginDraw(RenderType mode)
+X{
+X	// we know what data type we are being called with, so thats
+X	// what we need GL to begin
+X  switch(mode) {
+X  case POINT:
+X    glBegin(GL_POINTS);
+X    break;
+X  case POLYGON:
+X    glBegin(GL_POLYGON);
+X    break;
+X  case LINE:
+X    glBegin(GL_LINES);
+X    break;
+X  default:
+X    break;
+X  }
+X}
+X
+void 
+OGLRenderer::EndDraw()
+X{
+X	// simple: we finished the data, so end the item and flush teh
+X	// pipe!
+X  glEnd();
+X  glFlush();
+X}
+X
+void 
+OGLRenderer::Vertex(double x, double y, double z)
+X{
+X//  cout << x << " " << y << " " << z << endl;
+X  glVertex3f(x, y, z);
+X}
+X
+void 
+OGLRenderer::Color(float r, float g, float b, float a)
+X{
+X//cout << "RBG: " << r << " " << g << " " << b << endl;
+X  glColor4f(r, g, b, a);
+X}
+X
+void 
+OGLRenderer::Render(void)
+X{
+X  glClear((GLbitfield)(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) );
+X
+X//  cout << "Start Render" << endl;
+X  glMatrixMode(GL_MODELVIEW);
+X
+X#ifdef CAMERA
+X    glLoadIdentity();
+X        // switch the position we are looking at the scene from...
+X    gluLookAt(eyex, eyey, eyez,
+X              centerx, centery, centerz,
+X              0.0, 1.0, 0.0);
+X#endif
+X
+X  for (int i=0;i<this->DataSets.Count();i++) {
+X    for (int j=0;j<this->DataSets[i]->Count();j++) {
+X      (*(this->DataSets)[i])[j]->Render(this);
+X    }
+X  }
+X  glXSwapBuffers(this->DisplayId, this->WindowId);
+X}
+X
+X
+void 
+OGLRenderer::Initialize(int argc, char *argv[])
+X{
+X  int           index;
+X  static int	attributes[50];
+X  XVisualInfo   *v;
+X  XSetWindowAttributes swa;
+X  int           ms, dummy;
+X  static int dblbuf[] ={GLX_RGBA, GLX_DEPTH_SIZE, 8, 
+X			GLX_DOUBLEBUFFER, None};
+X
+X  this->DisplayId = XOpenDisplay(NULL);
+X  if (!DisplayId) {
+X    cerr << "Could not open Display" << endl;
+X    exit(10);
+X  }
+X
+X  v = glXChooseVisual(this->DisplayId, DefaultScreen(this->DisplayId),
+X		      dblbuf);
+X
+X  this->ContextId = glXCreateContext(this->DisplayId, v, None, GL_TRUE);
+X
+X  this->ColorMap = XCreateColormap(this->DisplayId, 
+X				   RootWindow(this->DisplayId, v->screen),
+X				   v->visual, AllocNone);
+X  swa.colormap = this->ColorMap;
+X  swa.border_pixel = 0;
+X  swa.event_mask = ExposureMask | ButtonPressMask | KeyPressMask |
+X                   StructureNotifyMask;
+X
+X  this->WindowId = XCreateWindow(this->DisplayId,
+X				 RootWindow(this->DisplayId, v->screen),
+X				 this->x, this->y, this->width, this->height,
+X				 0, v->depth, InputOutput, v->visual,
+X				 CWBorderPixel | CWColormap | CWEventMask,
+X				 &swa);
+X  XSetStandardProperties(this->DisplayId, this->WindowId,
+X			 "OGLRen", "oglren", None, argv, argc, NULL);
+X
+X  glXMakeCurrent(this->DisplayId, this->WindowId, this->ContextId);
+X  XMapWindow(this->DisplayId, this->WindowId);
+X
+X#ifdef CAMERA
+X	// initialize the camera coordinates
+X    eyex=0.0;
+X    eyey=0.0;
+X    eyez=2.0;
+X    centerx=0.0;
+X    centery=0.0;
+X    centerz=0.0;
+X#endif
+X
+X  /* Init OpenGL */
+X  static float lightPos[4] = {2.0, 4.0, 2.0, 1.0};
+X  static float lightDir[4] = {0.0, 0.0, 0.0, 1.0};
+X  static float lightAmb[4] = {1.0, 1.0, 1.0, 1.0};
+X       
+X//glEnable(GL_LIGHTING);
+X//glEnable(GL_LIGHT0);
+X  glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
+X  glLightfv(GL_LIGHT0, GL_AMBIENT, lightAmb);
+X  
+X
+X  glClearColor (0.0, 0.0, 0.0, 0.0);
+X  glColor3f(1.0, 1.0, 1.0);
+X  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+X  glEnable(GL_DEPTH_TEST);
+X  glShadeModel(GL_SMOOTH);
+X  glClear((GLbitfield)(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) );
+X}
+X
+void 
+OGLRenderer::MainLoop()
+X{
+X  XEvent event;
+X  static char buffer[20];
+X  KeySym key;
+X  XComposeStatus compose;
+X  int cnt;
+X
+X  while(1) {
+X    do {
+X      XNextEvent(this->DisplayId, &event);
+X      switch (event.type) {
+X      case KeyPress:
+X	cnt = XLookupString((XKeyEvent *)&event, buffer, 20, &key, &compose);
+X	this->Key(buffer[0], ((XKeyEvent *)&event)->x, ((XKeyEvent *)&event)->y);
+X	break;
+X      case ConfigureNotify:
+X	this->height = ((XConfigureEvent *)&event)->height;
+X	this->width = ((XConfigureEvent *)&event)->width;
+X	this->Reshape(this->width, this->height);
+X	this->Render();
+X	break;
+X      case Expose:
+X	if (((XExposeEvent *)&event)->count == 1)
+X	  this->Render();
+X	break;
+X      }
+X    } while(XPending(this->DisplayId));
+X  }
+X}
+X
+X#ifdef CAMERA
+void
+OGLRenderer::SetCamera(float ex, float ey, float ez,
+X                       float cx, float cy, float cz)
+X{
+X    eyex += ex;
+X    eyey += ey; 
+X    eyez += ez; 
+X    centerx += cx; 
+X    centery += cy; 
+X    centerz += cz; 
+X}
+X#endif
+X
+X
+void
+OGLRenderer::Key(unsigned char key, int x, int y)
+X{
+X  glMatrixMode (GL_PROJECTION);        /* manipulate viewport matrix  */
+X  switch (key) {
+X#ifdef CAMERA
+X    case 'w': SetCamera( 0.5, 0.0, 0.0, 0.0, 0.0, 0.0); break;
+X    case 'q': SetCamera(-0.5, 0.0, 0.0, 0.0, 0.0, 0.0); break;
+X    case 's': SetCamera( 0.0, 0.5, 0.0, 0.0, 0.0, 0.0); break;
+X    case 'a': SetCamera( 0.0,-0.5, 0.0, 0.0, 0.0, 0.0); break;
+X    case 'x': SetCamera( 0.0, 0.0, 0.5, 0.0, 0.0, 0.0); break;
+X    case 'z': SetCamera( 0.0, 0.0,-0.5, 0.0, 0.0, 0.0); break;
+X    case 'r': SetCamera( 0.0, 0.0, 0.0, 0.5, 0.0, 0.0); break;
+X    case 'e': SetCamera( 0.0, 0.0, 0.0,-0.5, 0.0, 0.0); break;
+X    case 'f': SetCamera( 0.0, 0.0, 0.0, 0.0, 0.5, 0.0); break;
+X    case 'd': SetCamera( 0.0, 0.0, 0.0, 0.0,-0.5, 0.0); break;
+X    case 'v': SetCamera( 0.0, 0.0, 0.0, 0.0, 0.0, 0.5); break;
+X    case 'c': SetCamera( 0.0, 0.0, 0.0, 0.0, 0.0,-0.5); break;
+X#endif
+X  case 'h':
+X    glRotatef(10.0, 0.0,1.0,0.0);
+X    break;
+X  case 'j':
+X    glRotatef(10.0, 1.0,0.0,0.0);
+X    break;
+X  case 'k':
+X    glRotatef(-10.0, 1.0,0.0,0.0);
+X    break;
+X  case 'l':
+X    glRotatef(-10.0, 0.0,1.0,0.0);
+X    break;
+X  case '+':
+X    glTranslatef(0.0, 0.0, 1.0);
+X    break;
+X  case '-':
+X    glTranslatef(0.0, 0.0, -1.0);
+X    break;
+X  case 'n':
+X    this->Reshape(this->width, this->height);
+X    break;
+X  case 27:           /* Esc will quit */
+X    exit(1);
+X    break;
+X  default:
+X    break;
+X  }
+X  Render();
+X}
+X
+void 
+OGLRenderer::Reshape(int w, int h)
+X{
+X  this->width = w;
+X  this->height = h;
+X  glViewport (0, 0, w, h);            /*  define the viewport */
+X  glMatrixMode(GL_PROJECTION);
+X  glLoadIdentity();
+X  gluPerspective(25.0, 1.0*(GLfloat)w/(GLfloat)h, 0.1, 100.0);
+X  glTranslatef (0.0, 0.0, -5.0);     /*  viewing transformation      */
+X  glMatrixMode (GL_MODELVIEW);        /* back to modelview matrix  */
+X}
+X
+void OGLRendererCB(Widget w,XtPointer client_data, 
+X		   XEvent *event, Boolean *ctd)
+X{
+X  OGLRenderer *aren = (OGLRenderer *)client_data;
+X  KeySym ks;
+X  static char buffer[24];
+X  
+X  switch(event->type) {
+X  case Expose :
+X    aren->Render();
+X    break;
+X  case ConfigureNotify:
+X    aren->width = ((XConfigureEvent *)event)->width;
+X    aren->height = ((XConfigureEvent *)event)->height;
+X    aren->Reshape(aren->width, aren->height);
+X    aren->Render();
+X    break;
+X  case KeyPress:
+X    XLookupString((XKeyEvent *)event,buffer,20,&ks,NULL);
+X    aren->Key(buffer[0], 0, 0);
+X    break;
+X  }
+X}
+END_OF_FILE
+if test 7509 -ne `wc -c <'OGLRen.cc'`; then
+    echo shar: \"'OGLRen.cc'\" unpacked with wrong size!
+fi
+# end of 'OGLRen.cc'
+fi
+if test -f 'OGLRen.h' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'OGLRen.h'\"
+else
+echo shar: Extracting \"'OGLRen.h'\" \(2148 characters\)
+sed "s/^X//" >'OGLRen.h' <<'END_OF_FILE'
+X//////////////////////////////////////////////////////////////////////////
+X//
+X//  This code is for instructional purposes only. It was generated for
+X//  use in a graduate level course to show certain aspects of data
+X//  storage algorithms. It has problems and should not be used 
+X//  outside the class environment.
+X//
+X//  Author:  Thomas D. Citriniti     citrit@rpi.edu
+X//  Class:   Advanced Computer Graphics and Data visualization
+X//           Rensselaer Polytechnic Institute
+X//  Date:    October 3, 1995
+X//
+X//////////////////////////////////////////////////////////////////////////
+X
+X
+X#ifndef _OGLR_RENDERER_H_
+X#define _OGLR_RENDERER_H_
+X
+X	// Camera on...
+X#define CAMERA
+X
+X#include <stdlib.h>
+X#include <X11/Xlib.h>
+X#include <X11/Xutil.h>
+X#include <X11/Intrinsic.h>
+X#include <X11/Shell.h>
+X#include <X11/StringDefs.h>
+X#include "GL/gl.h"
+X#include "GL/glu.h"
+X#include "GL/glx.h"
+X
+X#include "Renderer.h"
+X
+typedef void (*OGLRkeyboardCB) (unsigned char, int, int);
+X
+class OGLRenderer : public Renderer {
+X  public:
+X    OGLRenderer() { x = 10; y = 10; width = 400; height = 300;
+X		    Top = 0;App = 0;DisplayId = 0;}
+X    ~OGLRenderer() { }
+X    void BeginDraw(RenderType mode);
+X    void EndDraw();
+X    void Vertex(double x, double y, double z = 0);
+X    void Color(float r, float g, float b, float a);
+X//  void AddKeyHandler(OGLRkeyboardCB *keyb);
+X    void Initialize(int argc, char *argv[]);
+X    void MainLoop();
+X    void Render(void);
+X#ifdef CAMERA
+X    void SetCamera(float ex,
+X                   float ey,
+X                   float ez,
+X                   float cx,
+X                   float cy,
+X                   float cz);
+X#endif
+X 
+X
+X  protected:
+X    int x, y, width, height;
+X    Display *DisplayId;
+X    Window   WindowId;
+X    Widget   Top;
+X    XtAppContext App;
+X    Colormap ColorMap;
+X    GLXContext ContextId;
+X    OGLRkeyboardCB *KeyB;
+X    void Reshape(int w, int h);
+X    void Key(unsigned char key, int x, int y);
+X    friend void OGLRendererCB(Widget w,XtPointer client_data, 
+X			      XEvent *event, Boolean *ctd);
+X#ifdef CAMERA
+X    float eyex;
+X    float eyey;
+X    float eyez;
+X    float centerx;
+X    float centery;
+X    float centerz;
+X#endif
+X};
+X
+X#endif
+X
+END_OF_FILE
+if test 2148 -ne `wc -c <'OGLRen.h'`; then
+    echo shar: \"'OGLRen.h'\" unpacked with wrong size!
+fi
+# end of 'OGLRen.h'
+fi
+if test -f 'PlyCell.h' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'PlyCell.h'\"
+else
+echo shar: Extracting \"'PlyCell.h'\" \(1495 characters\)
+sed "s/^X//" >'PlyCell.h' <<'END_OF_FILE'
+X//////////////////////////////////////////////////////////////////////////
+X//
+X//  This code is for instructional purposes only. It was generated for
+X//  use in a graduate level course to show certain aspects of data
+X//  storage algorithms. It has problems and should not be used 
+X//  outside the class environment.
+X//
+X//  Author:  Thomas D. Citriniti     citrit@rpi.edu
+X//  Class:   Advanced Computer Graphics and Data visualization
+X//           Rensselaer Polytechnic Institute
+X//  Date:    October 3, 1995
+X//
+X//////////////////////////////////////////////////////////////////////////
+X
+X
+X#ifndef _POLY_CELL_H_
+X#define _POLY_CELL_H_
+X
+X#include "PointSet.h"
+X#include "Cell.h"
+X#include "Renderer.h"
+X
+class PolygonCell : public Cell {
+X  public:
+X    PolygonCell() {}
+X    ~PolygonCell() {}
+X
+X	// declare the render finction
+X    void Render(Renderer *aren);
+X
+X	// declare the type in a simple manner if we ask for it
+X    char *CellType() { return "PolygonCell"; }
+X  private:
+X    
+X};
+X
+void
+PolygonCell::Render(Renderer *aren)
+X{
+X	// begin the rendering of the polygon: sequence of points!!
+X  aren->BeginDraw(Renderer::POLYGON);
+X  aren->Color(red, green, blue, alpha);
+X
+X	// loop over the vertices in the polygon
+X  for (int i=0; i<this->Count(); i++)
+X    {
+X	// call the renderer, feeding it an individual point
+X      aren->Vertex((*PtSet)[(*this)[i]]->x, 
+X                   (*PtSet)[(*this)[i]]->y, 
+X                   (*PtSet)[(*this)[i]]->z);
+X    }
+X
+X	// end the rendering set
+X  aren->EndDraw();
+X
+X}
+X
+X#endif
+END_OF_FILE
+if test 1495 -ne `wc -c <'PlyCell.h'`; then
+    echo shar: \"'PlyCell.h'\" unpacked with wrong size!
+fi
+# end of 'PlyCell.h'
+fi
+if test -f 'PointSet.h' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'PointSet.h'\"
+else
+echo shar: Extracting \"'PointSet.h'\" \(1199 characters\)
+sed "s/^X//" >'PointSet.h' <<'END_OF_FILE'
+X//////////////////////////////////////////////////////////////////////////
+X//
+X//  This code is for instructional purposes only. It was generated for
+X//  use in a graduate level course to show certain aspects of data
+X//  storage algorithms. It has problems and should not be used 
+X//  outside the class environment.
+X//
+X//  Author:  Thomas D. Citriniti     citrit@rpi.edu
+X//  Class:   Advanced Computer Graphics and Data visualization
+X//           Rensselaer Polytechnic Institute
+X//  Date:    October 3, 1995
+X//
+X//////////////////////////////////////////////////////////////////////////
+X
+X
+X#ifndef _POINT_SET_H_
+X#define _POINT_SET_H_
+X
+X#include "VectorT.h"
+X
+class PointType {
+X  public:
+X    double x, y, z;
+X
+X	// generic constructor
+X    PointType() { x = y = z = 0; }
+X
+X	// given an array of three floats, put them into the structure
+X    PointType(float pt[3]) 
+X      { x = pt[0]; y = pt[1]; z = pt[2]; }
+X
+X	// a copy operator using the = sign
+X    PointType& operator=(float pt[3])
+X      { x = pt[0]; y = pt[1]; z = pt[2]; return *this; }
+X
+X	// not sure why this exists... returns a pointer to the struct
+X    PointType& operator!(void) {return *this; }
+X};
+X
+typedef VectorType<PointType *> PointSet;
+X
+X#endif
+END_OF_FILE
+if test 1199 -ne `wc -c <'PointSet.h'`; then
+    echo shar: \"'PointSet.h'\" unpacked with wrong size!
+fi
+# end of 'PointSet.h'
+fi
+if test -f 'PolyLineCell.h' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'PolyLineCell.h'\"
+else
+echo shar: Extracting \"'PolyLineCell.h'\" \(1195 characters\)
+sed "s/^X//" >'PolyLineCell.h' <<'END_OF_FILE'
+X//////////////////////////////////////////////////////////////////////////
+X//
+X//  This code is for instructional purposes only. It was generated for
+X//  use in a graduate level course to show certain aspects of data
+X//  storage algorithms. It has problems and should not be used 
+X//  outside the class environment.
+X//
+X//  Author:  Thomas D. Citriniti     citrit@rpi.edu
+X//  Class:   Advanced Computer Graphics and Data visualization
+X//           Rensselaer Polytechnic Institute
+X//  Date:    October 3, 1995
+X//
+X//////////////////////////////////////////////////////////////////////////
+X
+X
+X#ifndef _POLY_LINE_CELL_H_
+X#define _POLY_LINE_CELL_H_
+X
+X#include "PointSet.h"
+X#include "Cell.h"
+X#include "Renderer.h"
+X
+class PolyLineCell : public Cell {
+X  public:
+X    PolyLineCell() {}
+X    ~PolyLineCell() {}
+X    void Render(Renderer *aren);
+X    char *CellType() { return "PolyLineCell"; }
+X  private:
+X    
+X};
+X
+void
+PolyLineCell::Render(Renderer *aren)
+X{
+X
+X  aren->BeginDraw(Renderer::LINE);
+X  aren->Color(red, green, blue, alpha);
+X  for (int i=0;i<this->Count();i++) {
+X    aren->Vertex((*PtSet)[(*this)[i]]->x, 
+X		   (*PtSet)[(*this)[i]]->y, 
+X		   (*PtSet)[(*this)[i]]->z);
+X  }
+X  aren->EndDraw();
+X
+X}
+X
+X
+X#endif
+END_OF_FILE
+if test 1195 -ne `wc -c <'PolyLineCell.h'`; then
+    echo shar: \"'PolyLineCell.h'\" unpacked with wrong size!
+fi
+# end of 'PolyLineCell.h'
+fi
+if test -f 'PtCell.h' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'PtCell.h'\"
+else
+echo shar: Extracting \"'PtCell.h'\" \(1353 characters\)
+sed "s/^X//" >'PtCell.h' <<'END_OF_FILE'
+X//////////////////////////////////////////////////////////////////////////
+X//
+X//  This code is for instructional purposes only. It was generated for
+X//  use in a graduate level course to show certain aspects of data
+X//  storage algorithms. It has problems and should not be used 
+X//  outside the class environment.
+X//
+X//  Author:  Thomas D. Citriniti     citrit@rpi.edu
+X//  Class:   Advanced Computer Graphics and Data visualization
+X//           Rensselaer Polytechnic Institute
+X//  Date:    October 3, 1995
+X//
+X//////////////////////////////////////////////////////////////////////////
+X
+X
+X#ifndef _POINT_CELL_H_
+X#define _POINT_CELL_H_
+X
+X#include "PointSet.h"
+X#include "Cell.h"
+X#include "Renderer.h"
+X
+class PointCell : public Cell {
+X  public:
+X    PointCell() {}
+X    ~PointCell() {}
+X
+X	// define the virtual render function for the PointCell
+X    void Render(Renderer *aren);
+X
+X	// and the cell type for inquiries
+X    char *CellType() { return "PointCell"; }
+X  private:
+X
+X};
+X
+void
+PointCell::Render(Renderer *aren)
+X{
+X	// we're drawing POINTS here...
+X
+X  aren->BeginDraw(Renderer::POINT);
+X  aren->Color(red, green, blue, alpha);
+X
+X	// feed it x,y,z for the point
+X  for (int i=0;i<this->Count();i++) {
+X    aren->Vertex((*PtSet)[(*this)[i]]->x, 
+X                 (*PtSet)[(*this)[i]]->y, 
+X                 (*PtSet)[(*this)[i]]->z);
+X  }
+X  aren->EndDraw();
+X}
+X
+X
+X#endif
+END_OF_FILE
+if test 1353 -ne `wc -c <'PtCell.h'`; then
+    echo shar: \"'PtCell.h'\" unpacked with wrong size!
+fi
+# end of 'PtCell.h'
+fi
+if test -f 'README.first' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'README.first'\"
+else
+echo shar: Extracting \"'README.first'\" \(478 characters\)
+sed "s/^X//" >'README.first' <<'END_OF_FILE'
+X
+X-- The data file needs to be terminated with a
+X-1 -1
+on the very last line.  This makes reading the file a whole lot easier
+to handle.
+X
+X
+X-- Keys for Camera movement
+X  
+X q w  dec/inc X eye point coord
+X a s  dec/inc Y eye point coord
+X z x  dec/inc Z eye point coord
+X e r  dec/inc X camera point coord
+X d f  dec/inc Y camera point coord
+X c v  dec/inc Z camera point coord
+X  
+X
+X-- Entire camera code can be disabled by commenting out 
+X//define CAMERA
+X  at the beginning of OGLRen.h
+END_OF_FILE
+if test 478 -ne `wc -c <'README.first'`; then
+    echo shar: \"'README.first'\" unpacked with wrong size!
+fi
+# end of 'README.first'
+fi
+if test -f 'Renderer.h' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'Renderer.h'\"
+else
+echo shar: Extracting \"'Renderer.h'\" \(1292 characters\)
+sed "s/^X//" >'Renderer.h' <<'END_OF_FILE'
+X//////////////////////////////////////////////////////////////////////////
+X//
+X//  This code is for instructional purposes only. It was generated for
+X//  use in a graduate level course to show certain aspects of data
+X//  storage algorithms. It has problems and should not be used 
+X//  outside the class environment.
+X//
+X//  Author:  Thomas D. Citriniti     citrit@rpi.edu
+X//  Class:   Advanced Computer Graphics and Data visualization
+X//           Rensselaer Polytechnic Institute
+X//  Date:    October 3, 1995
+X//
+X//////////////////////////////////////////////////////////////////////////
+X
+X
+X#ifndef _RENDERER_H_
+X#define _RENDERER_H_
+X
+X#include "VectorT.h"
+X#include "DataSet.h"
+X
+class Renderer {
+X  public:
+X	// what we can draw...
+X    enum RenderType { POLYGON, LINE, POINT };
+X
+X    Renderer() { }
+X    virtual ~Renderer() { }
+X    void AddDataSet(DataSet *ds) { DataSets += ds; }
+X
+X	// we expect each real cell to define these virtuals
+X    virtual void BeginDraw(RenderType mode) = 0;
+X    virtual void EndDraw() = 0;
+X    virtual void Vertex(double x, double y, double z = 0) = 0;
+X    virtual void Color(float r, float g, float b, float a) = 0;
+X    
+X    virtual void Initialize(int argc, char *argv[]) = 0;
+X    virtual void MainLoop() = 0;
+X
+X  protected:
+X    VectorType<DataSet *> DataSets;
+X
+X};
+X
+X#endif
+END_OF_FILE
+if test 1292 -ne `wc -c <'Renderer.h'`; then
+    echo shar: \"'Renderer.h'\" unpacked with wrong size!
+fi
+# end of 'Renderer.h'
+fi
+if test -f 'TriangleCell.h' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'TriangleCell.h'\"
+else
+echo shar: Extracting \"'TriangleCell.h'\" \(1725 characters\)
+sed "s/^X//" >'TriangleCell.h' <<'END_OF_FILE'
+X//////////////////////////////////////////////////////////////////////////
+X//
+X//  This code is for instructional purposes only. It was generated for
+X//  use in a graduate level course to show certain aspects of data
+X//  storage algorithms. It has problems and should not be used 
+X//  outside the class environment.
+X//
+X//  Author:  Thomas D. Citriniti     citrit@rpi.edu
+X//  Class:   Advanced Computer Graphics and Data visualization
+X//           Rensselaer Polytechnic Institute
+X//  Date:    October 3, 1995
+X//
+X//////////////////////////////////////////////////////////////////////////
+X
+X
+X#ifndef _TRIANGLE_CELL_H_
+X#define _TRIANGLE_CELL_H_
+X
+X#include "PointSet.h"
+X#include "Cell.h"
+X#include "Renderer.h"
+X
+class TriangleCell : public Cell {
+X  public:
+X    TriangleCell() {}
+X    ~TriangleCell() {}
+X
+X	// declare the render function
+X    void Render(Renderer *aren);
+X
+X	// declare the type in a simple manner if we ask for it
+X    char *CellType() { return "TriangleCell"; }
+X  private:
+X    
+X};
+X
+void
+TriangleCell::Render(Renderer *aren)
+X{
+X  if (this->Count() != 4) 
+X      cout << "This triangle does not have three points, 
+X               therefore it can not be a triangle" << endl;
+X	// begin the rendering of the triangle: sequence of points!!
+X	// yes, a triangle is a polygon
+X  aren->BeginDraw(Renderer::POLYGON);
+X  aren->Color(red, green, blue, alpha);
+X  aren->Color(1.0, 0.0, 0.0, alpha);
+X
+X	// loop over the vertices in the polygon
+X
+X  for (int i=0; i<this->Count(); i++)
+X    {
+X	// call the renderer, feeding it an individual point
+X      aren->Vertex((*PtSet)[(*this)[i]]->x, 
+X                   (*PtSet)[(*this)[i]]->y, 
+X                   (*PtSet)[(*this)[i]]->z);
+X    }
+X
+X	// end the rendering set
+X  aren->EndDraw();
+X
+X}
+X
+X#endif
+END_OF_FILE
+if test 1725 -ne `wc -c <'TriangleCell.h'`; then
+    echo shar: \"'TriangleCell.h'\" unpacked with wrong size!
+fi
+# end of 'TriangleCell.h'
+fi
+if test -f 'VectorT.h' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'VectorT.h'\"
+else
+echo shar: Extracting \"'VectorT.h'\" \(2150 characters\)
+sed "s/^X//" >'VectorT.h' <<'END_OF_FILE'
+X//////////////////////////////////////////////////////////////////////////
+X//
+X//  This code is for instructional purposes only. It was generated for
+X//  use in a graduate level course to show certain aspects of data
+X//  storage algorithms. It has problems and should not be used 
+X//  outside the class environment.
+X//
+X//  Author:  Thomas D. Citriniti     citrit@rpi.edu
+X//  Class:   Advanced Computer Graphics and Data visualization
+X//           Rensselaer Polytechnic Institute
+X//  Date:    October 3, 1995
+X//
+X//////////////////////////////////////////////////////////////////////////
+X
+X
+X// Vector.H
+X
+X#ifndef Vector_H
+X#define Vector_H
+X
+X#include <string.h>
+X#include <iostream.h>
+X
+X#define	DEFAULTINCREMENT	100
+X
+template <class T> class VectorType
+X{
+public:
+X   VectorType()
+X   {
+X      Allocated=DEFAULTINCREMENT;
+X      Data=new T[Allocated];
+X      Used=0;
+X   }
+X
+X   ~VectorType(void)
+X   {
+X      delete[] Data;
+X   }
+X
+X/*   VectorType<T>& operator!(void)
+X   {
+X      int i;
+X      if(Data)
+X      {
+X         for(i=0;i<Allocated;i++)
+X            !Data[i];
+X      }
+X      Data=NULL;
+X      Allocated=0;
+X      Used=0;
+X      return *this;
+X   } */
+X
+X   void Reserve(int newSize)
+X   {
+X      T *temp;
+X      int i,oldSize;
+X
+X      if(newSize >= Allocated)
+X      {
+X         oldSize=Allocated;
+X         Allocated=newSize+DEFAULTINCREMENT;
+X         temp=Data;
+X         Data=new T[Allocated];
+X         if(Data==NULL)
+X         {
+X            cout << "Vector.Reserve failed.  newSize=" << newSize << endl;
+X            return;
+X         }
+X         memcpy((void*)Data, (void*)temp, oldSize*sizeof(T));
+X/*         for(i=0;i<oldSize;i++)
+X            !temp[i]; */
+X         delete[] temp;
+X      }
+X   }
+X
+X   void Demand(int newSize)
+X   {
+X      Reserve(newSize);
+X      Used=newSize;
+X   }
+X
+X   int Count(void)
+X   {
+X      return Used;
+X   }
+X
+X   T& operator[](int index)
+X   {
+X     if (index > Used)
+X       Demand(index);
+X     return Data[index];
+X   }
+X
+X   operator T*()
+X   {
+X      return Data;
+X   }
+X
+X   VectorType<T>& operator+=(T datum)
+X   {
+X      Reserve(Used+1);
+X      Data[Used]=datum;
+X      Used++;
+X      return *this;
+X   }
+X
+protected:
+X   T *Data;
+X   int Allocated;
+X   int Used;
+X};
+X
+X#endif
+END_OF_FILE
+if test 2150 -ne `wc -c <'VectorT.h'`; then
+    echo shar: \"'VectorT.h'\" unpacked with wrong size!
+fi
+# end of 'VectorT.h'
+fi
+if test -f 'example.dat' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'example.dat'\"
+else
+echo shar: Extracting \"'example.dat'\" \(4425 characters\)
+sed "s/^X//" >'example.dat' <<'END_OF_FILE'
+X0   50  1.0 1.0 1.0
+X0.0 0.0 0.0    2.76914 3.48572 0.0    2.73401 3.52084 0.0    2.6655 3.52084 0.0    2.63212 3.48923 0.0    2.63212 3.35401 0.0    2.6655 3.32239 0.0    2.73225 3.32239 0.0    2.76739 3.35576 0.0    2.83239 3.5226 0.0    2.83239 3.32239 0.0    2.9659 3.32239 0.0    2.9659 3.52084 0.0    3.03266 3.32239 0.0    3.03266 3.51733 0.0    3.09766 3.39088 0.0    3.16441 3.51908 0.0    3.16441 3.32239 0.0    3.23293 3.32239 0.0    3.23293 3.52084 0.0    3.33131 3.52084 0.0    3.36468 3.48747 0.0    3.36468 3.45411 0.0    3.33131 3.4225 0.0    3.23293 3.4225 0.0    3.43144 3.52084 0.0    3.43144 3.35401 0.0    3.46482 3.32239 0.0    3.53158 3.32415 0.0    3.56495 3.35576 0.0    3.56495 3.5226 0.0    3.62995 3.52084 0.0    3.76698 3.5226 0.0    3.69847 3.52084 0.0    3.69847 3.32239 0.0    3.96549 3.52084 0.0    3.83198 3.52084 0.0    3.83198 3.32239 0.0    3.96549 3.32239 0.0    3.83198 3.4225 0.0    3.89874 3.4225 0.0    4.03225 3.32239 0.0    4.03225 3.52084 0.0    4.13414 3.52084 0.0    4.16752 3.48747 0.0    4.16752 3.45762 0.0    4.13239 3.4225 0.0    4.03225 3.42425 0.0    4.06739 3.4225 0.0    4.16752 3.32239 0.0    
+X5   1  0.0 0.0 1.0
+X1 2 3 4 5 6 7 8 -1
+X5   1  0.0 0.0 1.0
+X9 10 11 12 9 -1
+X5   1  0.0 0.0 1.0
+X13 14 15 16 17 -1
+X5   1  0.0 0.0 1.0
+X18 19 20 21 22 23 24 -1
+X5   1  0.0 0.0 1.0
+X25 26 27 28 29 30 -1
+X2   2  1.0 1.0 0.0
+X31  32    33  34    
+X5   1  0.0 0.0 1.0
+X35 36 37 38 -1
+X2   1  1.0 1.0 0.0
+X39  40    
+X5   1  0.0 0.0 1.0
+X41 42 43 44 45 46 47 -1
+X2   1  1.0 1.0 0.0
+X48  49    
+X0   17  1.0 1.0 1.0
+X0.0 0.0 0.0   1.26663 3.52113 0.0    1.26663 3.32312 0.0    1.56527 3.52113 0.0    1.56679 3.3216 0.0    1.69783 3.3216 0.0    1.76487 3.52113 0.0    1.76639 3.3216 0.0    1.89895 3.3216 0.0    1.89895 3.52113 0.0    1.96447 3.52113 0.0    2.06503 3.3216 0.0    2.16559 3.52113 0.0    2.36519 3.52113 0.0    2.23111 3.51961 0.0    2.23111 3.3216 0.0    2.36519 3.3216 0.0    
+X2   3  1.0 1.0 0.0
+X1  2    3  4    4  5    
+X5   1  0.0 0.0 1.0
+X6 7 8 9 -1
+X5   1  0.0 0.0 1.0
+X10 11 12 -1
+X5   1  0.0 0.0 1.0
+X13 14 15 16 -1
+X0   3  1.0 1.0 1.0
+X0.0 0.0 0.0 2.23111 3.42213 0.0    2.3012 3.42213 0.0    
+X2   1  1.0 1.0 0.0
+X1  2    
+X0   19  1.0 1.0 1.0
+X0.0 0.0 0.0    2.13347 2.64008 0.0    2.69611 2.63786 0.0    2.97551 2.14949 0.0    2.69227 1.66334 0.0    2.12963 1.66556 0.0    1.85023 2.15393 0.0    2.09756 2.03418 0.1    2.16169 1.96473 0.1    2.2472 1.92199 0.1    2.39683 1.9113 0.1    2.59457 1.92199 0.1    2.70145 1.96473 0.1    2.77093 2.03418 0.1    2.41821 2.27992 0.1    2.48769 2.11431 0.1    2.34874 2.11431 0.1    2.20979 2.39211 0.1    2.62663 2.39211 0.1    
+X3   1  0.0 1.0 1.0
+X1 2 3 4 5 6 -1
+X5   1  0.0 0.0 1.0
+X7 8 9 10 11 12 13 -1
+X4   1  1.0 0.0 1.0
+X14 15 16    
+X1   2  1.0 0.0 0.0
+X17 18 
+X0   56  1.0 1.0 1.0
+X0.0 0.0 0.0   1.36476 3.19093 0.0    1.26495 3.19093 0.0    1.23168 3.15592 0.0    1.23168 3.01938 0.0    1.2632 2.98788 0.0    1.36476 2.98788 0.0    1.36476 3.08765 0.0    1.33149 3.08765 0.0    1.4313 2.98613 0.0    1.4313 3.18918 0.0    1.53111 3.18918 0.0    1.56438 3.15592 0.0    1.56438 3.11916 0.0    1.53286 3.0894 0.0    1.4313 3.08765 0.0    1.46282 3.08765 0.0    1.56438 2.98788 0.0    1.63267 2.98963 0.0    1.63267 3.05614 0.0    1.70097 3.18918 0.0    1.76751 3.05614 0.0    1.76751 2.98788 0.0    1.63443 3.05614 0.0    1.76751 3.05789 0.0    1.83405 2.98963 0.0    1.83405 3.19093 0.0    1.93211 3.19093 0.0    1.96538 3.15417 0.0    1.96538 3.11916 0.0    1.93211 3.08765 0.0    1.8323 3.08765 0.0    2.03192 2.98963 0.0    2.03367 3.18743 0.0    2.165 3.18918 0.0    2.165 2.98788 0.0    2.165 3.08765 0.0    2.03192 3.08765 0.0    2.26481 3.18918 0.0    2.26481 2.98788 0.0    2.4977 3.02113 0.0    2.46618 2.98963 0.0    2.39789 2.98788 0.0    2.36462 3.02113 0.0    2.36462 3.15417 0.0    2.39789 3..18918 0.0    2.46443 3.18918 0.0    2.49945 3.15417 0.0    2.70083 3.15592 0.0    2.66756 3.19093 0.0    2.59926 3.19093 0.0    2.56599 3.15417 0.0    2.70083 3.02113 0.0    2.66756 2.98963 0.0    2.59926 2.98963 0.0    2.56599 3.02113 0.0    
+X5   1  0.0 0.0 1.0
+X1 2 3 4 5 6 7 8 -1
+X5   1  0.0 0.0 1.0
+X9 10 11 12 13 14 15 -1
+X2   1  1.0 1.0 0.0
+X16  17    
+X5   1  0.0 0.0 1.0
+X18 19 20 21 22 -1
+X2   1  1.0 1.0 0.0
+X23  24    
+X5   1  0.0 0.0 1.0
+X25 26 27 28 29 30 31 -1
+X2   3  1.0 1.0 0.0
+X32  33    34  35    36  37    
+X2   1  1.0 1.0 0.0
+X38  39    
+X5   1  0.0 0.0 1.0
+X40 41 42 43 44 45 46 47 -1
+X5   1  0.0 0.0 1.0
+X48 49 50 51 52 53 54 55 -1
+X-1 -1
+END_OF_FILE
+if test 4425 -ne `wc -c <'example.dat'`; then
+    echo shar: \"'example.dat'\" unpacked with wrong size!
+fi
+# end of 'example.dat'
+fi
+if test -f 'example.dat.orig.bad' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'example.dat.orig.bad'\"
+else
+echo shar: Extracting \"'example.dat.orig.bad'\" \(4413 characters\)
+sed "s/^X//" >'example.dat.orig.bad' <<'END_OF_FILE'
+X0   50  1.0 1.0 1.0
+X0.0 0.0 0.0    2.76914 3.48572 0.0    2.73401 3.52084 0.0    2.6655 3.52084 0.0    2.63212 3.48923 0.0    2.63212 3.35401 0.0    2.6655 3.32239 0.0    2.73225 3.32239 0.0    2.76739 3.35576 0.0    2.83239 3.5226 0.0    2.83239 3.32239 0.0    2.9659 3.32239 0.0    2.9659 3.52084 0.0    3.03266 3.32239 0.0    3.03266 3.51733 0.0    3.09766 3.39088 0.0    3.16441 3.51908 0.0    3.16441 3.32239 0.0    3.23293 3.32239 0.0    3.23293 3.52084 0.0    3.33131 3.52084 0.0    3.36468 3.48747 0.0    3.36468 3.45411 0.0    3.33131 3.4225 0.0    3.23293 3.4225 0.0    3.43144 3.52084 0.0    3.43144 3.35401 0.0    3.46482 3.32239 0.0    3.53158 3.32415 0.0    3.56495 3.35576 0.0    3.56495 3.5226 0.0    3.62995 3.52084 0.0    3.76698 3.5226 0.0    3.69847 3.52084 0.0    3.69847 3.32239 0.0    3.96549 3.52084 0.0    3.83198 3.52084 0.0    3.83198 3.32239 0.0    3.96549 3.32239 0.0    3.83198 3.4225 0.0    3.89874 3.4225 0.0    4.03225 3.32239 0.0    4.03225 3.52084 0.0    4.13414 3.52084 0.0    4.16752 3.48747 0.0    4.16752 3.45762 0.0    4.13239 3.4225 0.0    4.03225 3.42425 0.0    4.06739 3.4225 0.0    4.16752 3.32239 0.0    
+X5   1  0.0 0.0 1.0
+X1 2 3 4 5 6 7 8 -1
+X5   1  0.0 0.0 1.0
+X9 10 11 12 9 -1
+X5   1  0.0 0.0 1.0
+X13 14 15 16 17 -1
+X5   1  0.0 0.0 1.0
+X19 18 20 21 22 23 24 -1
+X5   1  0.0 0.0 1.0
+X25 26 27 28 29 30 -1
+X2   2  1.0 1.0 0.0
+X31  32    33  34    
+X5   1  0.0 0.0 1.0
+X35 36 37 38 -1
+X2   1  1.0 1.0 0.0
+X39  40    
+X5   1  0.0 0.0 1.0
+X41 42 43 44 45 46 47 -1
+X2   1  1.0 1.0 0.0
+X48  49    
+X0   17  1.0 1.0 1.0
+X0.0 0.0 0.0   1.26663 3.52113 0.0    1.26663 3.32312 0.0    1.56527 3.52113 0.0    1.56679 3.3216 0.0    1.69783 3.3216 0.0    1.76487 3.52113 0.0    1.76639 3.3216 0.0    1.89895 3.3216 0.0    1.89895 3.52113 0.0    1.96447 3.52113 0.0    2.06503 3.3216 0.0    2.16559 3.52113 0.0    2.36519 3.52113 0.0    2.23111 3.51961 0.0    2.23111 3.3216 0.0    2.36519 3.3216 0.0    
+X2   3  1.0 1.0 0.0
+X1  2    3  4    4  5    
+X5   1  0.0 0.0 1.0
+X6 7 8 9 -1
+X5   1  0.0 0.0 1.0
+X10 11 12 -1
+X5   1  0.0 0.0 1.0
+X13 14 15 16 -1
+X0   2  1.0 1.0 1.0
+X2.23111 3.42213 0.0    2.3012 3.42213 0.0    
+X2   1  1.0 1.0 0.0
+X1  2    
+X0   19  1.0 1.0 1.0
+X0.0 0.0 0.0    2.13347 2.64008 0.0    2.69611 2.63786 0.0    2.97551 2.14949 0.0    2.69227 1.66334 0.0    2.12963 1.66556 0.0    1.85023 2.15393 0.0    2.09756 2.03418 0.1    2.16169 1.96473 0.1    2.2472 1.92199 0.1    2.39683 1.9113 0.1    2.59457 1.92199 0.1    2.70145 1.96473 0.1    2.77093 2.03418 0.1    2.41821 2.27992 0.1    2.48769 2.11431 0.1    2.34874 2.11431 0.1    2.20979 2.39211 0.1    2.62663 2.39211 0.1    
+X3   1  0.0 1.0 1.0
+X1 2 3 4 5 6 -1
+X5   1  0.0 0.0 1.0
+X7 8 9 10 11 12 13 -1
+X4   1  0.0 1.0 1.0
+X14 15 16    
+X1   2  1.0 0.0 0.0
+X17 18 
+X0   56  1.0 1.0 1.0
+X0.0 0.0 0.0   1.36476 3.19093 0.0    1.26495 3.19093 0.0    1.23168 3.15592 0.0    1.23168 3.01938 0.0    1.2632 2.98788 0.0    1.36476 2.98788 0.0    1.36476 3.08765 0.0    1.33149 3.08765 0.0    1.4313 2.98613 0.0    1.4313 3.18918 0.0    1.53111 3.18918 0.0    1.56438 3.15592 0.0    1.56438 3.11916 0.0    1.53286 3.0894 0.0    1.4313 3.08765 0.0    1.46282 3.08765 0.0    1.56438 2.98788 0.0    1.63267 2.98963 0.0    1.63267 3.05614 0.0    1.70097 3.18918 0.0    1.76751 3.05614 0.0    1.76751 2.98788 0.0    1.63443 3.05614 0.0    1.76751 3.05789 0.0    1.83405 2.98963 0.0    1.83405 3.19093 0.0    1.93211 3.19093 0.0    1.96538 3.15417 0.0    1.96538 3.11916 0.0    1.93211 3.08765 0.0    1.8323 3.08765 0.0    2.03192 2.98963 0.0    2.03367 3.18743 0.0    2.165 3.18918 0.0    2.165 2.98788 0.0    2.165 3.08765 0.0    2.03192 3.08765 0.0    2.26481 3.18918 0.0    2.26481 2.98788 0.0    2.4977 3.02113 0.0    2.46618 2.98963 0.0    2.39789 2.98788 0.0    2.36462 3.02113 0.0    2.36462 3.15417 0.0    2.39789 3..18918 0.0    2.46443 3.18918 0.0    2.49945 3.15417 0.0    2.70083 3.15592 0.0    2.66756 3.19093 0.0    2.59926 3.19093 0.0    2.56599 3.15417 0.0    2.70083 3.02113 0.0    2.66756 2.98963 0.0    2.59926 2.98963 0.0    2.56599 3.02113 0.0    
+X5   1  0.0 0.0 1.0
+X1 2 3 4 5 6 7 8 -1
+X5   1  0.0 0.0 1.0
+X9 10 11 12 13 14 15 -1
+X2   1  1.0 1.0 0.0
+X16  17    
+X5   1  0.0 0.0 1.0
+X18 19 20 21 22 -1
+X2   1  1.0 1.0 0.0
+X23  24    
+X5   1  0.0 0.0 1.0
+X25 26 27 28 29 30 31 -1
+X2   3  1.0 1.0 0.0
+X32  33    34  35    36  37    
+X2   1  1.0 1.0 0.0
+X38  39    
+X5   1  0.0 0.0 1.0
+X40 41 42 43 44 45 46 47 -1
+X5   1  0.0 0.0 1.0
+X48 49 50 51 52 53 54 55 -1
+X-1 -1
+END_OF_FILE
+if test 4413 -ne `wc -c <'example.dat.orig.bad'`; then
+    echo shar: \"'example.dat.orig.bad'\" unpacked with wrong size!
+fi
+# end of 'example.dat.orig.bad'
+fi
+if test -f 'example.dat.simple' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'example.dat.simple'\"
+else
+echo shar: Extracting \"'example.dat.simple'\" \(266 characters\)
+sed "s/^X//" >'example.dat.simple' <<'END_OF_FILE'
+X0 9 1.0 1.0 1.0
+X0.0 0.0 0.0  1.0 0.0 0.0  1.0 1.0 0.0  0.0 1.0 0.0  0.0 0.0 1.0  1.0 0.0 1.0  1.0 1.0 1.0  0.0 1.0 1.0  0.5 0.5 0.5
+X
+X2 3 1.0 1.0 1.0
+X0 1  1 2  2 0
+X
+X3 1 1.0 1.0 1.0
+X0 1 8 0 -1
+X
+X2 4 1.0 1.0 1.0
+X4 5  5 6  6 7  7 4
+X
+X5 1 1.0 1.0 1.0
+X0 2 3 4 5 6 -1
+X
+X-1 -1
+END_OF_FILE
+if test 266 -ne `wc -c <'example.dat.simple'`; then
+    echo shar: \"'example.dat.simple'\" unpacked with wrong size!
+fi
+# end of 'example.dat.simple'
+fi
+if test -f 'hints.tom' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'hints.tom'\"
+else
+echo shar: Extracting \"'hints.tom'\" \(666 characters\)
+sed "s/^X//" >'hints.tom' <<'END_OF_FILE'
+X
+Couple of C++ hints... 
+X
+X--File naming conventions can also be .cc and .h for c++ (I hate upper case :)
+X
+X--In C++ classes, make the order 
+public:
+protected:
+private:
+X
+since anything not defined will automatically be public... so this
+hierarchy makes more sense.  Also the first time user wants to see the
+public section first... its the one he has access to.
+X
+X-- MORE COMMENTS IN HEADER FILES!!!
+XExplain why things are done the way they are... it makes it much
+easier for someone else to understand the intent and structure of the
+code and data structures.
+X
+X-- MORE COMMENTS IN COMPLEX CODE!!!
+Like the OGLRen.cc file... :)
+X
+X-- C++ compiler flags are in CXXFLAGS
+X
+END_OF_FILE
+if test 666 -ne `wc -c <'hints.tom'`; then
+    echo shar: \"'hints.tom'\" unpacked with wrong size!
+fi
+# end of 'hints.tom'
+fi
+if test -f 'objtest.cc' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'objtest.cc'\"
+else
+echo shar: Extracting \"'objtest.cc'\" \(5686 characters\)
+sed "s/^X//" >'objtest.cc' <<'END_OF_FILE'
+X//////////////////////////////////////////////////////////////////////////
+X//
+X//  This code is for instructional purposes only. It was generated for
+X//  use in a graduate level course to show certain aspects of data
+X//  storage algorithms. It has problems and should not be used 
+X//  outside the class environment.
+X//
+X//  Author:  Thomas D. Citriniti     citrit@rpi.edu
+X//  Class:   Advanced Computer Graphics and Data visualization
+X//           Rensselaer Polytechnic Institute
+X//  Date:    October 3, 1995
+X//
+X//////////////////////////////////////////////////////////////////////////
+X
+X#include "PtCell.h"
+X#include "LineCell.h"
+X#include "PolyLineCell.h"
+X#include "PlyCell.h"
+X#include "TriangleCell.h"
+X#include "DataSet.h"
+X#include "OGLRen.h"
+X#include <fstream.h>
+X#include <iostream.h>
+X
+enum DataType { COORD, POINT, LINE, POLYGON, TRIANGLE, POLYLINE };
+X
+main(int argc, char *argv[])
+X{
+X
+X  char fname[128];
+X  DataType type;
+X  int number, i, ttype;
+X  float red, green, blue, alpha;
+X
+X	// array for points
+X  float tmp[3];
+X  float fcoord[3];
+X  int icoord[3];
+X
+X
+X	// this is our renderer... we still need to initialize it etc.
+X  OGLRenderer *aren = new OGLRenderer;
+X
+X	// the entire collection
+X  DataSet *dSet = new DataSet;
+X
+X
+X   strcat(fname,"example.dat");
+X
+X        // open the file
+X   ifstream inFile(fname,ios::in);
+X  
+X        // if it did not exist/open successfully...
+X   if(!inFile)
+X    {
+X     cout << "\nError opening example.dat file..." << endl;
+X     return(-1);
+X    }
+X
+X        // read all the info needed
+X   while(!inFile.eof())
+X    {
+X     inFile >> ttype >> number >> red >> green >> blue;
+X     alpha = 1.0;
+X     cout << "Reading " << number << " type " << ttype << " object(s)." << endl;
+X
+X     type = (DataType)ttype;
+X
+X	// reading coordinates... always triplets
+X     switch (type) {
+X
+X     case COORD:
+X	// point set to accumulate points to make into lines
+X     PointSet *myPts = new PointSet;
+X
+X     for (i=0; i<number; i++)
+X       {
+X//       cout << "Reading COORD..." << endl;
+X	// read in three floats for one point
+X         inFile >> fcoord[0] >> fcoord[1] >> fcoord[2];
+X	// and add the set to the coordinate structure
+X         *myPts += new PointType(fcoord);
+X       };
+X     break;
+X
+X     case POINT:
+X	// a cell to hold all of our points
+X     PointCell *oCell = new PointCell;
+X     oCell->SetPoints(myPts);
+X     oCell->SetColor(red, green, blue, alpha);
+X
+X     for (i=0; i<number; i++)
+X       {
+X	// read in one coord for one point
+X         inFile >> icoord[0];
+X	// add it to the point structure
+X         *oCell += icoord[0];
+X       };
+X
+X	// add the points to the overall data set
+X     *dSet += oCell;
+X     break;
+X
+X     case LINE:
+X	// two line cells... they hold two point sets apiece ???
+X         LineCell *lCell = new LineCell;
+X     for (i=0; i<number; i++)
+X       {
+X         cout << "Reading LINE..." << endl;
+X	// read in one coord for one point
+X         inFile >> icoord[0] >> icoord[1];
+X	// add it to the point structure
+X         *lCell += icoord[0];
+X         *lCell += icoord[1];
+X       };
+X
+X	// add the points to the overall data set
+X     lCell->SetPoints(myPts);
+X     lCell->SetColor(red, green, blue, alpha);
+X     *dSet += lCell;
+X     break;
+X
+X     case POLYGON:
+X     for (i=0; i<number; i++)
+X       {
+X	// we need a new polygon...
+X        PolygonCell *pCell = new PolygonCell;
+X        pCell->SetPoints(myPts);
+X        pCell->SetColor(red, green, blue, alpha);
+X        cout << "Reading POLYGON..." << endl;
+X
+X        icoord[0] = 0;
+X	// keep on reading until we hit the end of the polygon data
+X        while(icoord[0] != -1)
+X          {
+X	// read in one coord for one point
+X            inFile >> icoord[0];
+X
+X	// add it to the polygon structure
+X            if(icoord[0] != -1) *pCell += icoord[0];
+X          }
+X
+X	// add the polygon to the overall data set
+X         *dSet += pCell;
+X       };
+X     break;
+X
+X     case TRIANGLE:
+X     for (i=0; i<number; i++)
+X       {
+X	// we need a new triangle...
+X        TriangleCell *tCell = new TriangleCell;
+X        tCell->SetPoints(myPts);
+X        tCell->SetColor(red, green, blue, alpha);
+X
+X        cout << "Reading TRIANGLE..." << endl;
+X
+X	// read in one triangle
+X         inFile >> icoord[0] >> icoord[1] >> icoord[2];
+X
+X	// add it to the polygon structure
+X         *tCell += icoord[0];
+X         *tCell += icoord[1];
+X         *tCell += icoord[2];
+X         *tCell += icoord[0];
+X
+X	// add the polygon to the overall data set
+X         *dSet += tCell;
+X       };
+X     break;
+X
+X
+X
+X     case POLYLINE:
+X     for (i=0; i<number; i++)
+X       {
+X	// we need a new polygon...
+X        PolyLineCell *plCell = new PolyLineCell;
+X        plCell->SetPoints(myPts);
+X        plCell->SetColor(red, green, blue, alpha);
+X        cout << "Reading POLYLINE..." << endl;
+X
+X        icoord[1] = 0;
+X        inFile >> icoord[0];
+X
+X	// keep on reading until we hit the end of the polygon data
+X        while(icoord[1] != -1)
+X          {
+X	// read in one coord for one point
+X            inFile >> icoord[1];
+X
+X	// add it to the polygon structure
+X            if(icoord[1] != -1)
+X              {
+X               *plCell += icoord[0];
+X               *plCell += icoord[1];
+X                icoord[0] = icoord[1];
+X              }
+X          }
+X
+X	// add the polyline set to the overall data set
+X         *dSet += plCell;
+X       }
+X     break;
+X
+X     default: 
+X     cout << "Invalid data... must be the end of the input file!" << endl;
+X     break;
+X    }	// the switch
+X
+X   }// the while!eof
+X
+X
+X  cout << endl << "Done reading data... Let's render!" << endl;
+X
+X
+X	// Add this DataSet to the Renderers collection.
+X  aren->AddDataSet(dSet);
+X
+X	// Initialize the Renderer, creates window and attaches OpenGL Visual
+X  aren->Initialize(argc, argv);
+X
+X	// Starts the Event loop.
+X  aren->MainLoop();
+X
+X  return(0);
+X}
+END_OF_FILE
+if test 5686 -ne `wc -c <'objtest.cc'`; then
+    echo shar: \"'objtest.cc'\" unpacked with wrong size!
+fi
+# end of 'objtest.cc'
+fi
+echo shar: End of shell archive.
+exit 0
+

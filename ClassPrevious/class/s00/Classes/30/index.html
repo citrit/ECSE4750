@@ -1,0 +1,285 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.0//EN">
+<!-- Time-stamp: </home/wrf/cg-f99/Classes/30/index.html, Wed, 17 Nov 1999, 18:44:55 EST, wrf@benvolio.ecse.rpi.edu> -->
+
+<HTML>
+<HEAD>
+
+<TITLE>ECSE-4750, RPI, Class 30</TITLE>
+
+   <STYLE TYPE="text/css">
+   <!--
+H1 { color: red; }
+
+H2 { color: blue; }
+
+   OL.outline {list-style-type: upper-roman;
+    font: bold italic 18pt sans-serif;}
+
+   OL.outline OL {list-style-type: upper-alpha;
+       font: bold 14pt sans-serif;}
+
+   OL.outline OL OL {list-style-type: decimal;
+	  font: 12pt serif;}
+
+   OL.outline OL OL OL {list-style-type: lower-alpha;
+	     font: 10pt serif;}
+
+   OL.outline OL OL OL OL {list-style-type: lower-roman;
+		font: 10pt sans-serif;}
+   -->
+   </STYLE>
+
+
+</head>
+
+<body bgcolor=white>
+
+<H1 ALIGN="CENTER">
+Rensselaer Polytechnic Institute
+<BR>
+ECSE-4750 Computer Graphics, Fall 1999<br>
+Class 30, Tues Nov 9 </H1>
+
+<h1><a name="01"></a>Computer Graphics and Being Blind (Enrichment)</h1>
+
+<p>Here's a real-world dilemma for Computer Graphics.  Seeing a static
+image is 2-D; you can appreciate how things are arranged, and relate
+to each other, on a screen.  A good arrangement helps you understand
+the screen better.  (I not even considering seeing a dynamic image.)
+Hearing is 1-D, including when a speech synthesizer interprets a
+screen for a blind person.  10% of the population is blind.  </p>
+
+<p>How does this apply to the WWW?  Frames are 2-D.  The proper use of
+frames makes web pages more understandable for people who can see, but
+less understandable for people who can't.  Is this a reason not to use
+them?  The folks at the WWW Consortium who standardize HTML feel so;
+they have refused to include a useful implementation of frames in
+Amaya, their demo browser.  </p>
+
+<p>Relatedly, AOL was recently sued since some of their screens aren't
+compatible with SW that interprets screens for the blind.  </p>
+
+<p>Dunno the correct answer here; but you live in the real world.
+This is a typical issue you have to face.  </p>
+
+<p>However, one observation is that computer technology has been the
+best thing ever for people who are handicapped.  E.g., Braille, which
+few blind people actually ever learned, and which was slow and
+tedious, has been obsoleted by speech synthesizer SW.  E.g., for about
+10 years now, RPI's library has had a Kurzweil machine to read books.
+</p>
+
+<h1><a name="02"></a>Bill Gates Interview</h1>
+
+<p>Bill Gates will be on TV, on CBS at 9 tonite (Nov 9).  Presumably
+he won't be singing "Twinkle twinkle little star".  </p>
+
+<h1><a name="03"></a>Quaternions (Enrichment)</h1>
+
+<p>This is an alternative way to do 3D rotations.  People who combine
+successive rotations, like with robotics and spacecraft, and people
+who interpolate rotations, like animators, like quaternions.
+</p>
+
+
+<!--
+<h1><a name="04"></a>So What's All This "Enrichment" Stuff?</h1>
+-->
+
+<h1><a name="05"></a>2D Rotating a Bitmap</h1>
+
+<ol>
+<li><p>Method 1: for each destination pixel, find the source pixel and copy.
+Maybe combine a group of neighbors.
+
+<li><p>Method 2: Do the rotation by 3 affine transformations (sliding), which
+are easy.
+</p></li>
+
+</ol>
+
+</p></li>
+
+<h1><a name="06"></a>Transformations in General</h1>
+
+<ol>
+
+<li><p>See the text for details.</p></li>
+
+<li><p>Some common transformations are translation, scaling, rotation,
+projection.</p></li>
+
+<li><p>Homogeneous coords make a translation into a matrix multiply, like the 
+others.
+</p></li>
+
+<li><p>Now, several successive transformations can be combined into one
+matrix, which is then applied to the points in the object.
+</p></li>
+
+</ol>
+
+<h1><a name="07"></a>Homogeneous Coordinates</h1>
+
+<ol>
+
+<li><p>In 3D, the homogeneous point (x<sub>h</sub>,y<sub>h</sub>,z<sub>h</sub>,h) corresponds to the Cartesian
+point (x<sub>h</sub>/h, y<sub>h</sub>/h, z<sub>h</sub>/h).  
+</p></li>
+
+<li><p>There are an infinite number of homogeneous ways to represent each
+Cartesian point.  E.g., (1,1,1,1), (2,2,2,2) and (3,3,3,3) all correspond to the Cartesian point (1,1,1).
+</p></li>
+
+<li><p>For finite points, h is not 0.</p></li>
+
+</ol>
+
+
+<p>Advantages:</p>
+
+<ol>
+
+<li><p>Translation is a matrix multiply.  To translate by (dx,dy,dz),
+multiply by this.
+</p>
+
+<center>
+<p><TABLE border compact>
+
+<TR><TD align=center> 1 </TD><TD align=center> 0 </TD><TD align=center> 0 </TD><TD align=center> dx </TD></TR>
+
+<TR><TD align=center> 0 </TD><TD align=center> 1 </TD><TD align=center> 0 </TD><TD align=center> dy </TD></TR>
+
+<TR><TD align=center> 0 </TD><TD align=center> 0 </TD><TD align=center> 1 </TD><TD align=center> dz </TD></TR>
+
+<TR><TD align=center> 0 </TD><TD align=center> 0 </TD><TD align=center> 0 </TD><TD align=center> 1 </TD></TR>
+
+</TABLE>
+</p>
+</center>
+<p>
+</p>
+
+
+<li><p>Projection is a matrix multiply.  To project onto the viewplane z=1
+with the center at (0,0,0), the equations are thus:
+</p>
+
+<center>
+x' = x/z<br>
+y' = y/z<br>
+z' = 1<br>
+</center>
+
+<p>This is the same as multiplying by this matrix:</p>
+
+<p><center>
+<TABLE border compact>
+
+<TR><TD align=center> 1 </TD><TD align=center> 0 </TD><TD align=center> 0 </TD><TD align=center> 0 </TD></TR>
+
+<TR><TD align=center> 0 </TD><TD align=center> 1 </TD><TD align=center> 0 </TD><TD align=center> 0 </TD></TR>
+
+<TR><TD align=center> 0 </TD><TD align=center> 0 </TD><TD align=center> 1 </TD><TD align=center> 0 </TD></TR>
+
+<TR><TD align=center> 0 </TD><TD align=center> 0 </TD><TD align=center> 1 </TD><TD align=center> 0 </TD></TR>
+
+</TABLE>
+</center>
+</p>
+<p>
+</p>
+
+
+<li><p>Points at infinity can be represented.  (1,2,3,0) is the infinite
+point at the end of the line from the origin thru Cartesian (1,2,3).  
+</p></li>
+
+<li><p>Therefore, a parallel projection has the same form as a perspective
+projection, with an infinite center of projection.
+</p></li>
+
+<li><p>In 2-D, every pair of lines intersects.  Two parallel lines intersect at
+infinity.  What is the intersection of  x=0 and x=1?  Write the
+equations homogeneously thus:
+</p>
+
+<center>
+1x + 0y + 0h = 0<br>
+1x + 0y - 1h = 0<br>
+</center>
+
+<p>(All homogeneous equations have 0 as the constant.)   The solution is
+x=0, h=0, y=anything.  The lines intersect at (0,1,0).    Note that
+(0,2,0), (0,3,0), etc, are the same point.
+</p>
+
+<li><p>Every two different points have one line thru them.  If both points
+are infinite, this is the line at infinity, which contains all
+infinite points.
+</p>
+
+<li><p>Computer aided design uses homogeneous points with 'h' being the
+weight that a point has when approximating a curve near it.   In homogeneous 2D,
+(1,1,1) and (2,2,2) are the same point, but using (2,2,2) will make
+the approximating curve come closer.
+</p></li>
+
+
+<li><p>Suppose we want to represent a circle parametrically.  Using Cartesian
+coordinates, there is no way to do this exactly with polynomials.
+However, here is an exact homogeneous rep:
+</p>
+
+<center>
+x<sub>h</sub> = t<sup>2</sup>-1<br>
+y<sub>h</sub> = 2t <br>
+h = t<sup>2</sup>+1<br>
+</center>
+
+</ol>
+
+
+
+<hr>
+<a href="../29/" target="_top">Previous Class</a>,
+<a href="../31/" target="_top">Next Class</a>,
+<a href="http://www.rpi.edu/dept/ecse/graphics/index.html"
+ target="_top">ECSE-4750 Fall 1999 Home Page</a>
+
+<hr>
+
+<p>Copyright &#169; 1998-9, Wm. Randolph Franklin.  You may use my
+material for non-profit education and research, provided that you
+acknowledge me and preserve this notice. </p>
+
+
+<p>
+<ADDRESS> 
+ <CENTER>
+   Wm. Randolph Franklin,
+   Associate Professor<br>
+   For email address, replace NOSPAM by RPI in the following:
+   wrf@ecse.NOSPAM.edu<br>
+   <A HREF="http://www.ecse.rpi.edu/Homepages/wrf/">
+     http://www.ecse.rpi.edu/Homepages/wrf/</a><br>
+   +1 (518) 276-6077;  Fax: -6261<br>
+   ECSE Dept., 6026 JEC, Rensselaer Polytechnic Inst, Troy NY, 12180 USA<br>
+   (PGP key available)<br>
+ </CENTER>
+</ADDRESS>
+</p>
+
+</font>
+
+<script>
+document.write("<i>Updated:</i> " + document.lastModified + "<br>")
+document.write("<i>URL:</i> " + document.URL + "<br>")
+</script>
+<font size="+1">
+</p>
+
+
+</BODY>
+</HTML>

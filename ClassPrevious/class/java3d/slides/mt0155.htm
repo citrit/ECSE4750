@@ -1,0 +1,84 @@
+
+<HTML>
+<HEAD>
+<!-- Created by mktalk.pl on 7/16/98 at 3:58:23 PM -->
+<TITLE>TransformGroup Example Code</TITLE>
+</HEAD>
+
+<BODY
+	
+	BGCOLOR=#000000
+	TEXT=#FFFFFF
+	LINK=#FFFFFF
+	ALINK=#00FF00
+	VLINK=#888888
+>
+<TABLE WIDTH=100%
+	BORDER=0
+	CELLSPACING=0
+	CELLPADDING=0
+>
+<TR >
+<TD ALIGN=CENTER WIDTH=24%>
+	<FONT
+		COLOR=#FFFFFF
+		SIZE=-1
+	>
+	<A HREF=mt0000.htm><B><IMG SRC="../images/arwtoc2.gif" BORDER=0 WIDTH=24 HEIGHT=24></B></A>
+</TD>
+<TD ALIGN=CENTER WIDTH=24%>
+	<FONT
+		COLOR=#FFFFFF
+		SIZE=-1
+	>
+	<A HREF=mt0139.htm><B><IMG SRC="../images/arwndx2.gif" BORDER=0 WIDTH=24 HEIGHT=24></B></A>
+</TD>
+<TD ALIGN=CENTER WIDTH=24%>
+	<FONT
+		COLOR=#FFFFFF
+		SIZE=-1
+	>
+	<A HREF=mt0154.htm><B><IMG SRC="../images/arwprev2.gif" BORDER=0 WIDTH=24 HEIGHT=24></B></A>
+</TD>
+<TD ALIGN=CENTER WIDTH=24%>
+	<FONT
+		COLOR=#FFFFFF
+		SIZE=-1
+	>
+	<A HREF=mt0156.htm><B><IMG SRC="../images/arwnext2.gif" BORDER=0 WIDTH=24 HEIGHT=24></B></A>
+</TD>
+<TD ALIGN=CENTER WIDTH=4%>
+	<FONT
+		COLOR=#FFFFFF
+		SIZE=-1
+	>
+	155
+</TD>
+</TR>
+</TABLE>
+<P>
+
+<FONT COLOR=#FFFF00 SIZE=+0>
+<CENTER>Transforming Shapes</CENTER>
+<FONT COLOR=#FFFF00 SIZE=+3>
+<CENTER><B><I>TransformGroup Example Code</I></B></CENTER>
+<CENTER><IMG SRC="../images/red.jpg" HEIGHT=2 WIDTH=70% BORDER=0></CENTER>
+<P>
+<FONT COLOR=#FFFFFF SIZE=+2>
+
+<PRE><B><TT><FONT COLOR=#006600 SIZE=+2>
+Shape3D shape = new Shape3D( geom, app );
+. . .</FONT></TT></B><B><TT><FONT COLOR=#00FF00 SIZE=+2>
+Transform3D transLeft = new Transform3D( );
+transLeft.set( new Vector3d( -1.0, 0.0, 0.0 ) );
+. . .
+TransformGroup group = new TransformGroup( );
+group.setTransform( transLeft );
+group.addChild( shape );
+</FONT></TT></B></PRE>
+
+
+<!------------------------------------------------------------------------>
+
+</BODY>
+</HTML>

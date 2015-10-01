@@ -1,0 +1,708 @@
+#!/bin/sh
+# This is a shell archive (produced by GNU sharutils 4.2).
+# To extract the files from this archive, save it to some FILE, remove
+# everything before the `!/bin/sh' line above, then type `sh FILE'.
+#
+# Made on 1997-02-06 22:11 EST by <anandk@magritte>.
+# Source directory was `/afs/rpi.edu/home/38/anandk/private/ACG/homework1'.
+#
+# Existing files will *not* be overwritten unless `-c' is specified.
+#
+# This shar contains:
+# length mode       name
+# ------ ---------- ------------------------------------------
+#  15443 -rw------- hw1.c
+#
+save_IFS="${IFS}"
+IFS="${IFS}:"
+gettext_dir=FAILED
+locale_dir=FAILED
+first_param="$1"
+for dir in $PATH
+do
+  if test "$gettext_dir" = FAILED && test -f $dir/gettext \
+     && ($dir/gettext --version >/dev/null 2>&1)
+  then
+    set `$dir/gettext --version 2>&1`
+    if test "$3" = GNU
+    then
+      gettext_dir=$dir
+    fi
+  fi
+  if test "$locale_dir" = FAILED && test -f $dir/shar \
+     && ($dir/shar --print-text-domain-dir >/dev/null 2>&1)
+  then
+    locale_dir=`$dir/shar --print-text-domain-dir`
+  fi
+done
+IFS="$save_IFS"
+if test "$locale_dir" = FAILED || test "$gettext_dir" = FAILED
+then
+  echo=echo
+else
+  TEXTDOMAINDIR=$locale_dir
+  export TEXTDOMAINDIR
+  TEXTDOMAIN=sharutils
+  export TEXTDOMAIN
+  echo="$gettext_dir/gettext -s"
+fi
+touch -am 1231235999 $$.touch >/dev/null 2>&1
+if test ! -f 1231235999 && test -f $$.touch; then
+  shar_touch=touch
+else
+  shar_touch=:
+  echo
+  $echo 'WARNING: not restoring timestamps.  Consider getting and'
+  $echo "installing GNU \`touch', distributed in GNU File Utilities..."
+  echo
+fi
+rm -f 1231235999 $$.touch
+#
+if mkdir _sh126106; then
+  $echo 'x -' 'creating lock directory'
+else
+  $echo 'failed to create lock directory'
+  exit 1
+fi
+# ============= hw1.c ==============
+if test -f 'hw1.c' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'hw1.c' '(file already exists)'
+else
+  $echo 'x -' extracting 'hw1.c' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'hw1.c' &&
+/* HW#1: Graphics and Visualization. Kanwaljit Anand */
+/* Was written, compiled and tested on the SGI system */
+X
+#include <stdio.h>
+#include <stdlib.h>
+X
+#include <GL/gl.h>
+#include <GL/glut.h>
+X
+X		int parent = 0;
+X		int new_win = 0;
+X		int parent_menu = 0;
+X		
+X		int MODE = 1;
+X
+X    	GLfloat RED[]    = {1.0, 0.0, 0.0, 1.0};
+X    	GLfloat YELLOW[] = {1.0, 1.0, 0.0, 1.0};
+X    	GLfloat BLUE[]   = {0.0, 0.0, 1.0, 1.0};
+X    
+X    	int TEAPOT = 1;
+X    	int CUBE   = 1;
+X    	int SPHERE = 1;
+X    
+X    	float TEAPOT_SCALING = 1.0;
+X    	float CUBE_SCALING = 1.0;
+X    	float SPHERE_SCALING = 1.0;
+X    
+X    	float TEAPOT_ROTATION = 0.0;
+X    	float CUBE_ROTATION = 30.0;
+X    	float SPHERE_ROTATION = 0.0;
+X
+X		float CUBE_RX = 1.0;
+X		float CUBE_RY = 0.0;
+X		float CUBE_RZ = 1.0;
+X
+X		float TEAPOT_RX = 1.0;
+X		float TEAPOT_RY = 1.0;
+X		float TEAPOT_RZ = 1.0;
+X
+X		float SPHERE_RX = 1.0;
+X		float SPHERE_RY = 1.0;
+X		float SPHERE_RZ = 1.0;
+X		
+X		float CUBE_TX = 0.0;
+X		float TEAPOT_TX = -1.0;
+X		float SPHERE_TX = 1.0;
+X
+X		float CUBE_TY = 0.0;
+X		float TEAPOT_TY = 0.0;
+X		float SPHERE_TY = 0.0;
+X				
+X		int W = 600;
+X		int H = 500;
+X		
+X		float XV = 0.0;
+X		float YV = 0.0;
+X		
+X		int TRANSPARENT = 0;
+X		
+X			
+void myInit(void)
+{
+X    GLfloat ambient[]  = { 0.1, 0.1, 0.1, 1.0 };     
+X    GLfloat diffuse[]  = { 0.8, 0.8, 0.8, 1.0 };     
+X    GLfloat specular[] = { 1.0, 1.0, 1.0, 1.0 };     
+X    GLfloat position[] = { 3.0, 3.0, 3.0, 0.0 }; 
+X    
+X    glEnable(GL_DEPTH_TEST);     
+X    glDepthFunc(GL_LEQUAL);
+X    
+X    glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+X 
+X    glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);     
+X    glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);     
+X    glLightfv(GL_LIGHT0, GL_POSITION, position);      
+X    
+X    glEnable(GL_LIGHTING);
+X    glEnable(GL_LIGHT0);
+}
+X
+X
+void Compute_Cube(float SCALE, float ROTATE, float RX, float RY, float RZ)
+{
+X 	float mat[4];
+X   glPushMatrix();
+X   glRotatef(ROTATE, RX, RY, RZ);
+X   glColor4fv(RED);
+X    
+X   glScalef(SCALE, SCALE, SCALE);
+X   glTranslatef(CUBE_TX, CUBE_TY, 0.0);
+X
+X   mat[0] = 0.8; mat[1] = 0.0; mat[2] = 0.0;  mat[3]=1.0;
+X   glMaterialfv (GL_FRONT, GL_AMBIENT, mat);
+X   mat[0] = 0.8; mat[1] = 0.0; mat[2] = 0.0;  mat[3]=1.0;
+X   glMaterialfv (GL_FRONT, GL_DIFFUSE, mat);
+X   mat[0] = 0.9; mat[1] = 0.9; mat[2] = 0.9; mat[3]=1.0;
+X   glMaterialfv (GL_FRONT, GL_SPECULAR, mat);
+X   glMaterialf (GL_FRONT, GL_SHININESS, 0.8*128.0);
+X        
+X   glutSolidCube(0.5);
+X   glPopMatrix();
+}
+X
+void Compute_Teapot(float SCALE, float ROTATE, float RX, float RY, float RZ)
+{
+X 	float mat[4];
+X
+X 	float transparent[] = {0.8, 0.8, 0.0, 0.25};
+X 	
+X   glPushMatrix();
+X       
+X   glRotatef(ROTATE, RX, RY, RZ);
+X   glColor4fv(YELLOW);
+X   glScalef(SCALE, SCALE, SCALE);
+X   glTranslatef(TEAPOT_TX, TEAPOT_TY, 0.0);
+X
+X   mat[0] = 0.8; mat[1] = 0.8; mat[2] = 0.0; mat[3]=1.0;
+X   glMaterialfv (GL_FRONT_AND_BACK, GL_AMBIENT, mat);
+X
+X   mat[0] = 0.8; mat[1] = 0.8; mat[2] = 0.0;  mat[3]=1.0;
+X   glMaterialfv (GL_FRONT_AND_BACK, GL_SPECULAR, mat); 
+X   glMaterialf (GL_FRONT_AND_BACK, GL_SHININESS, 0.5*128.0);
+X
+X   if(TRANSPARENT == 0)
+X   {
+X   	mat[0] = 0.8; mat[1] = 0.8; mat[2] = 0.0;  mat[3]=1.0;
+X   	glMaterialfv (GL_FRONT_AND_BACK, GL_DIFFUSE, mat);
+X   	glutSolidTeapot(0.25);
+X   }
+X   
+X   if(TRANSPARENT == 1)
+X   {
+X		glEnable(GL_BLEND);  
+X     	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, transparent);
+X   	glutSolidTeapot(0.25);
+X		glDisable(GL_BLEND);  
+X	}
+X   glPopMatrix();
+}
+X
+void Compute_Sphere(float SCALE, float ROTATE, float RX, float RY, float RZ)
+{
+X 	float mat[4];
+X
+X   glPushMatrix();
+X   	glRotatef(ROTATE, RX, RY, RZ);
+X   	glColor4fv(BLUE);
+X   	glScalef(SCALE, SCALE, SCALE);
+X   	glTranslatef(SPHERE_TX, SPHERE_TY, 0.0);
+X   		mat[0] = 0.0; mat[1] = 0.0; mat[2] = 0.8;  mat[3]=1.0;
+X   	glMaterialfv (GL_FRONT, GL_AMBIENT, mat);
+X   		mat[0] = 0.0; mat[1] = 0.0; mat[2] = 0.8;  mat[3]=1.0;
+X   	glMaterialfv (GL_FRONT, GL_DIFFUSE, mat);
+X   		mat[0] = 0.0; mat[1] = 0.0; mat[2] = 0.8;  mat[3]=1.0;
+X   	glMaterialfv (GL_FRONT, GL_SPECULAR, mat);
+X   	glMaterialf (GL_FRONT, GL_SHININESS, 0.1*128.0);
+X   	glutSolidSphere(0.25, 100, 100);
+X   glPopMatrix();    
+}
+X
+void myReshape(int w, int h)
+{
+X      glViewport (0, 0, w, h);
+X      glMatrixMode(GL_PROJECTION);
+X      glLoadIdentity();
+X      gluPerspective(45.0, 1.0*(GLfloat)w/(GLfloat)h, 1.0, 10.0);
+X      glTranslatef (0.0, 0.0, -5.0);
+X      glMatrixMode (GL_MODELVIEW);  
+}
+X
+void Key(unsigned char key, int x, int y)
+{
+X    switch (key) {
+X    case 'h':
+X    if(CUBE == 1)
+X    {
+X			glMatrixMode (GL_MODELVIEW);
+X			CUBE_ROTATION += 15.0;
+X			CUBE_RX += 0.0;
+X			CUBE_RY += 1.0;
+X			CUBE_RZ += 0.0;
+X    }    
+X    if(TEAPOT == 1)
+X    {
+X			glMatrixMode (GL_MODELVIEW);
+X			TEAPOT_ROTATION += 15.0;
+X			TEAPOT_RX += 0.0;
+X			TEAPOT_RY += 1.0;
+X			TEAPOT_RZ += 0.0;
+X    }
+X    if(SPHERE == 1)
+X    {
+X			glMatrixMode (GL_MODELVIEW);
+X			SPHERE_ROTATION += 15.0;
+X			SPHERE_RX += 0.0;
+X			SPHERE_RY += 1.0;
+X			SPHERE_RZ += 0.0;
+X    }
+X    break;
+X    case 'j':
+X    if(CUBE == 1)
+X    {
+X			glMatrixMode (GL_MODELVIEW);
+X			CUBE_ROTATION += 15.0;
+X			CUBE_RX += 1.0;
+X			CUBE_RY += 0.0;
+X			CUBE_RZ += 0.0;
+X    }    
+X    if(TEAPOT == 1)
+X    {
+X			glMatrixMode (GL_MODELVIEW);
+X			TEAPOT_ROTATION += 15.0;
+X			TEAPOT_RX += 1.0;
+X			TEAPOT_RY += 0.0;
+X			TEAPOT_RZ += 0.0;
+X    }
+X    if(SPHERE == 1)
+X    {
+X			glMatrixMode (GL_MODELVIEW);
+X			SPHERE_ROTATION += 15.0;
+X			SPHERE_RX += 1.0;
+X			SPHERE_RY += 0.0;
+X			SPHERE_RZ += 0.0;
+X    }
+X    break;
+X    case 'k':
+X    if(CUBE == 1)
+X    {
+X			glMatrixMode (GL_MODELVIEW);
+X			CUBE_ROTATION -= 15.0;
+X			CUBE_RX += 1.0;
+X			CUBE_RY += 0.0;
+X			CUBE_RZ += 0.0;
+X    }    
+X    if(TEAPOT == 1)
+X    {
+X			glMatrixMode (GL_MODELVIEW);
+X			TEAPOT_ROTATION -= 15.0;
+X			TEAPOT_RX += 1.0;
+X			TEAPOT_RY += 0.0;
+X			TEAPOT_RZ += 0.0;
+X    }
+X    if(SPHERE == 1)
+X    {
+X			glMatrixMode (GL_MODELVIEW);
+X			SPHERE_ROTATION -= 15.0;
+X			SPHERE_RX += 1.0;
+X			SPHERE_RY += 0.0;
+X			SPHERE_RZ += 0.0;
+X    }
+X    break;
+X    
+X    case 'u':	/* up */
+X    if(CUBE == 1)
+X    {
+X			glMatrixMode (GL_MODELVIEW);
+X			CUBE_ROTATION += 15.0;
+X			CUBE_RX += 0.0;
+X			CUBE_RY += 0.0;
+X			CUBE_RZ += 1.0;
+X    }    
+X    if(TEAPOT == 1)
+X    {
+X			glMatrixMode (GL_MODELVIEW);
+X			TEAPOT_ROTATION += 15.0;
+X			TEAPOT_RX += 0.0;
+X			TEAPOT_RY += 0.0;
+X			TEAPOT_RZ += 1.0;
+X    }
+X    if(SPHERE == 1)
+X    {
+X			glMatrixMode (GL_MODELVIEW);
+X			SPHERE_ROTATION += 15.0;
+X			SPHERE_RX += 0.0;
+X			SPHERE_RY += 0.0;
+X			SPHERE_RZ += 1.0;
+X    }
+X    break;
+X    case 'd': /* Down */
+X    if(CUBE == 1)
+X    {
+X			glMatrixMode (GL_MODELVIEW);
+X			CUBE_ROTATION -= 15.0;
+X			CUBE_RX += 0.0;
+X			CUBE_RY += 0.0;
+X			CUBE_RZ += 1.0;
+X    }    
+X    if(TEAPOT == 1)
+X    {
+X			glMatrixMode (GL_MODELVIEW);
+X			TEAPOT_ROTATION -= 15.0;
+X			TEAPOT_RX += 0.0;
+X			TEAPOT_RY += 0.0;
+X			TEAPOT_RZ += 1.0;
+X    }
+X    if(SPHERE == 1)
+X    {
+X			glMatrixMode (GL_MODELVIEW);
+X			SPHERE_ROTATION -= 15.0;
+X			SPHERE_RX += 0.0;
+X			SPHERE_RY += 0.0;
+X			SPHERE_RZ += 1.0;
+X    }
+X    break;
+X        
+X    case 'l':
+X    if(CUBE == 1)
+X    {
+X			glMatrixMode (GL_MODELVIEW);
+X			CUBE_ROTATION -= 15.0;
+X			CUBE_RX += 0.0;
+X			CUBE_RY += 1.0;
+X			CUBE_RZ += 0.0;
+X    }    
+X    if(TEAPOT == 1)
+X    {
+X			glMatrixMode (GL_MODELVIEW);
+X			TEAPOT_ROTATION -= 15.0;
+X			TEAPOT_RX += 0.0;
+X			TEAPOT_RY += 1.0;
+X			TEAPOT_RZ += 0.0;
+X    }
+X    if(SPHERE == 1)
+X    {
+X			glMatrixMode (GL_MODELVIEW);
+X			SPHERE_ROTATION -= 15.0;
+X			SPHERE_RX += 0.0;
+X			SPHERE_RY += 1.0;
+X			SPHERE_RZ += 0.0;
+X    }
+X    break;
+X  case 'b':
+X    if(CUBE == 1)
+X    {
+X			glMatrixMode (GL_MODELVIEW);
+X			CUBE_SCALING += 0.5;
+X    }
+X    if(TEAPOT == 1)
+X    {
+X			glMatrixMode (GL_MODELVIEW);
+X			TEAPOT_SCALING += 0.5;
+X    }
+X    if(SPHERE == 1)
+X    {
+X			glMatrixMode (GL_MODELVIEW);
+X			SPHERE_SCALING += 0.5;
+X    }
+X    break;   
+X  case 's':						    /* S for smaller */
+X    if(CUBE == 1)
+X    {
+X			glMatrixMode (GL_MODELVIEW);
+X			(CUBE_SCALING -= 0.5);
+X    }
+X    if(TEAPOT == 1)
+X    {
+X			glMatrixMode (GL_MODELVIEW);
+X			TEAPOT_SCALING -= 0.5;
+X    }
+X    if(SPHERE == 1)
+X    {
+X			glMatrixMode (GL_MODELVIEW);
+X			SPHERE_SCALING -= 0.5;
+X    }
+X    break;
+X  case 't':
+X    if(CUBE   == 1)    		  CUBE_TY += 0.25;
+X    if(TEAPOT == 1)    		TEAPOT_TY += 0.25;
+X    if(SPHERE == 1)			SPHERE_TY += 0.25;
+X	break;
+X  case 'v':
+X    if(CUBE   == 1)    		  CUBE_TY -= 0.25;
+X    if(TEAPOT == 1)    		TEAPOT_TY -= 0.25;
+X    if(SPHERE == 1)			SPHERE_TY -= 0.25;
+X 	break;
+X  case 'g':
+X    if(CUBE   == 1)    		  CUBE_TX += 0.25;
+X    if(TEAPOT == 1)    		TEAPOT_TX += 0.25;
+X    if(SPHERE == 1)			SPHERE_TX += 0.25;
+X	break;
+X  case 'f':
+X    if(CUBE   == 1)    		  CUBE_TX -= 0.25;
+X    if(TEAPOT == 1)    		TEAPOT_TX -= 0.25;
+X    if(SPHERE == 1)			SPHERE_TX -= 0.25;
+X 	 break;
+X  case '1':
+X  		W  -= 25.0;
+X  		H  -= 25.0;
+X  		XV -= 0.10;
+X  		YV -= 0.10;
+X  		
+X      glPushMatrix();
+X      glMatrixMode(GL_PROJECTION);
+X      glViewport(XV, YV, W, H);
+X      glMatrixMode (GL_MODELVIEW);
+X      glPopMatrix();
+X      
+X      break;		
+X
+X  case '2':   		
+X  		W  += 25.0;
+X  		H  += 25.0;
+X  		XV += 0.10;
+X  		YV += 0.10;
+X  		
+X      glPushMatrix();
+X      glMatrixMode(GL_PROJECTION);
+X      glViewport(XV, YV, W, H);
+X      glMatrixMode (GL_MODELVIEW);        /* back to modelview matrix  */ 
+X      glPopMatrix();
+X      
+X      break;		
+X  case 'q':           /* q for quit */
+X    exit(1);
+X    break;
+X  case 27:           /* Esc will quit */
+X    exit(1);
+X    break;
+X  default:
+X    break;
+X    }
+X    
+X	glutPostRedisplay();
+}
+X
+void new_main();
+void old_main();
+X
+void Select(int value)
+{
+X    switch (value) 
+X    {
+X	case 6:
+X	    exit(0);
+X	    break;
+X   case 5:
+X   	if(MODE == 1)
+X   	{
+X   		MODE = 0;
+X   		printf("Changing to Single Buffer Mode\n");
+X   		glutDestroyWindow(parent);   	
+X   		new_main();
+X   		glutChangeToMenuEntry(5, "Change to Double Buffer ", 5);
+X   	}
+X   	
+X   	else if(MODE == 0)
+X   	{
+X   		MODE = 1;
+X   		printf("Changing to Double Buffer Mode\n");
+X   		glutDestroyWindow(new_win);
+X   		old_main();
+X   		glutChangeToMenuEntry(5, "Change to Single Buffer", 5);
+X   	}
+X		break;   	
+X	case 4:		
+X	    if( TRANSPARENT == 0 )
+X	    {			
+X				TRANSPARENT = 1;
+X				glutPostRedisplay();
+X				printf("\tTeapot made transparent\n");
+X   			glutChangeToMenuEntry(4, "Make Teapot Opaque ", 4);
+X   	 }
+X	    else if( TRANSPARENT == 1 )
+X	    {		
+X				TRANSPARENT = 0;
+X				glutPostRedisplay();
+X				printf("\tTeapot made opaque\n");
+X   			glutChangeToMenuEntry(4, "Make Teapot Transparent ", 4);
+X   	 }
+X	break;
+X
+X	case 3:
+X	    if( TEAPOT == 0 )
+X	    {			
+X				TEAPOT = 1;
+X				printf("\tTeapot was re-selected\n");
+X   			glutChangeToMenuEntry(3, "De-Select TEAPOT ", 3);
+X   	 }
+X	    else if( TEAPOT == 1 )
+X	    {			
+X				printf("\tTeapot was de-selected\n");
+X				TEAPOT = 0;
+X   			glutChangeToMenuEntry(3, "Re-Select TEAPOT ", 3);
+X   	 }
+X	break;
+X
+X	case 2:
+X	    if( CUBE == 0 )
+X	    {			
+X				CUBE = 1;
+X				printf("\tCube was re-selected\n");
+X   			glutChangeToMenuEntry(2, "De-Select CUBE ", 2);
+X   	 }
+X	    else if( CUBE == 1 )
+X	    {			
+X				printf("\tCube was de-selected\n");
+X				CUBE = 0;
+X   			glutChangeToMenuEntry(2, "Re-Select CUBE ", 2);
+X   	 }
+X	break;
+X	
+X	case 1:
+X	    if( SPHERE == 0 )
+X	    {			
+X				SPHERE = 1;
+X				printf("\tSphere was re-selected\n");
+X   			glutChangeToMenuEntry(1, "De-Select SPHERE ", 1);
+X   	 }
+X	    else if( SPHERE == 1 )
+X	    {			
+X				printf("\tSphere was de-selected\n");
+X				SPHERE = 0;
+X   			glutChangeToMenuEntry(1, "Re-Select SPHERE ", 1);
+X   	 }
+X	break;
+X    }
+}
+X
+void display(void)
+{
+X    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+X   
+X    Compute_Cube(CUBE_SCALING, CUBE_ROTATION, CUBE_RX, CUBE_RY, CUBE_RZ);
+X    Compute_Sphere(SPHERE_SCALING, SPHERE_ROTATION, SPHERE_RX, SPHERE_RY, SPHERE_RZ);
+X    Compute_Teapot(TEAPOT_SCALING, TEAPOT_ROTATION, TEAPOT_RX, TEAPOT_RY, TEAPOT_RZ);
+X    
+X    if(MODE == 1)    glutSwapBuffers(); 
+}
+X
+void Usage()
+{
+X	printf("\n\n\t\t\tHome Work #1\n\n");
+X	printf("USAGE:\n\tUse the Right Mouse button to select/de-select objects\n");
+X	printf("\t1, 2, or all 3 objects can be [un-]selected at any given time\n");
+X	printf("\nScaling:\n\tUse \"b\" for bigger and \"s\" for making the object smaller\n");
+X	printf("\nTranslation:\n\tUse \"f\" for moving left, \"g\" for right; \"t\" for up & \"v\" for down\n");
+X	printf("\nRotations:\n\tUse \"k\", \"h\" & \"u\" for Counter CW motion about X, Y, & Z respectively\n"); 
+X	printf("\tUse \"j\", \"l\" & \"d\" for Clock-wise motion about X, Y, & Z respectively\n");
+X	printf("\nViewport:\n\tUse \"1\" and \"2\" to change camera viewpoint\n");
+X	printf("\n\tUsing \"q\" or \"Esc\" will terminate the program\n\n");
+X	printf("\nToggle between making the Teapot Opaque and Transparent using the Menu\n");
+X	printf("\nToggle between Single & Doubble Buffer using the Menu\n\n");
+X	
+}
+X
+int main(int argc, char** argv) 
+{
+X    	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);	/* Set Initial Display Mode to Double_Buffer */
+X    	glutInitWindowPosition(150, 250);					/* Set Window Position */
+X    	glutInitWindowSize(600, 500);							/* Set Window Size */
+X    	glutInit(&argc, argv);									/* Initialize the GLUT library */
+X		parent = glutCreateWindow("HomeWork #1: DOUBLE BUFFER MODE");			/* Create a Top-level window */
+X		myInit();													/* Initialize lights and glEnables' */
+X      Usage();														/* Print information to term about usage */
+X      glutKeyboardFunc(Key);									
+X      glutReshapeFunc (myReshape);
+X      glutDisplayFunc(display);
+X      parent_menu = glutCreateMenu(Select);
+X      glutAddMenuEntry("De-Select SPHERE", 1);
+X      glutAddMenuEntry("De-Select CUBE", 2);
+X      glutAddMenuEntry("De-Select TEAPOT", 3);
+X      glutAddMenuEntry("Make Teapot Transparent", 4);
+X      glutAddMenuEntry("Change to single buffer Mode", 5);
+X      glutAddMenuEntry("Quit", 6);
+X      glutAttachMenu(GLUT_RIGHT_BUTTON);
+X      glutMainLoop();
+}
+X
+void new_main()
+{
+X   	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA);
+X    	glutInitWindowPosition(150, 250);					/* Set Window Position */
+X    	glutInitWindowSize(600, 500);							/* Set Window Size */
+X		new_win = glutCreateWindow("HomeWork #1:Single Buffer Mode");			/* Create a Top-level window */
+X		myInit();		
+X		CUBE = 1; SPHERE = 1; TEAPOT = 1;
+X      glutKeyboardFunc(Key);									
+X      glutReshapeFunc (myReshape);
+X      
+X      glutDisplayFunc(display);
+X      glutDestroyMenu(parent_menu);
+X      parent_menu = glutCreateMenu(Select);
+X      glutAddMenuEntry("De-Select SPHERE", 1);
+X      glutAddMenuEntry("De-Select CUBE", 2);
+X      glutAddMenuEntry("De-Select TEAPOT", 3);
+X      glutAddMenuEntry("Make Teapot Transparent", 4);
+X      glutAddMenuEntry("Change to Double buffer Mode", 5);
+X      glutAddMenuEntry("Quit", 6);
+X      glutAttachMenu(GLUT_RIGHT_BUTTON);
+X      glutMainLoop();
+}
+X
+void old_main()
+{
+X   	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
+X    	glutInitWindowPosition(150, 250);					/* Set Window Position */
+X    	glutInitWindowSize(600, 500);							/* Set Window Size */
+X		parent = glutCreateWindow("HomeWork #1:Double Buffer Mode");			/* Create a Top-level window */
+X		myInit();													/* Initialize lights and glEnables' */
+X      
+X		CUBE = 1; SPHERE = 1; TEAPOT = 1;
+X      glutKeyboardFunc(Key);									
+X      glutReshapeFunc (myReshape);
+X      glutDisplayFunc(display);
+X 
+X      glutDestroyMenu(parent_menu);
+X      parent_menu = glutCreateMenu(Select);
+X      glutCreateMenu(Select);
+X      glutAddMenuEntry("De-Select SPHERE", 1);
+X      glutAddMenuEntry("De-Select CUBE", 2);
+X      glutAddMenuEntry("De-Select TEAPOT", 3);
+X      glutAddMenuEntry("Make Teapot Transparent", 4);
+X      glutAddMenuEntry("Change to single buffer Mode", 5);
+X      glutAddMenuEntry("Quit", 6);
+X      glutAttachMenu(GLUT_RIGHT_BUTTON);
+X      glutMainLoop();
+}
+SHAR_EOF
+  $shar_touch -am 0206221097 'hw1.c' &&
+  chmod 0600 'hw1.c' ||
+  $echo 'restore of' 'hw1.c' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'hw1.c:' 'MD5 check failed'
+9b39dd9f09674a9d04710f53cf7aa7e7  hw1.c
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'hw1.c'`"
+    test 15443 -eq "$shar_count" ||
+    $echo 'hw1.c:' 'original size' '15443,' 'current size' "$shar_count!"
+  fi
+fi
+rm -fr _sh126106
+exit 0
+# From: Kanwaljit Singh Anand <anandk>

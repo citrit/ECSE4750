@@ -1,0 +1,496 @@
+#!/bin/sh
+# This is a shell archive (produced by GNU sharutils 4.2).
+# To extract the files from this archive, save it to some FILE, remove
+# everything before the `!/bin/sh' line above, then type `sh FILE'.
+#
+# Made on 1997-02-06 13:49 EST by <kholma@rebecca.its.rpi.edu>.
+# Source directory was `/afs/rpi.edu/home/95/kholma/class/vis/hw1'.
+#
+# Existing files will *not* be overwritten unless `-c' is specified.
+#
+# This shar contains:
+# length mode       name
+# ------ ---------- ------------------------------------------
+#  10396 -rw-r--r-- hw1.c
+#
+save_IFS="${IFS}"
+IFS="${IFS}:"
+gettext_dir=FAILED
+locale_dir=FAILED
+first_param="$1"
+for dir in $PATH
+do
+  if test "$gettext_dir" = FAILED && test -f $dir/gettext \
+     && ($dir/gettext --version >/dev/null 2>&1)
+  then
+    set `$dir/gettext --version 2>&1`
+    if test "$3" = GNU
+    then
+      gettext_dir=$dir
+    fi
+  fi
+  if test "$locale_dir" = FAILED && test -f $dir/shar \
+     && ($dir/shar --print-text-domain-dir >/dev/null 2>&1)
+  then
+    locale_dir=`$dir/shar --print-text-domain-dir`
+  fi
+done
+IFS="$save_IFS"
+if test "$locale_dir" = FAILED || test "$gettext_dir" = FAILED
+then
+  echo=echo
+else
+  TEXTDOMAINDIR=$locale_dir
+  export TEXTDOMAINDIR
+  TEXTDOMAIN=sharutils
+  export TEXTDOMAIN
+  echo="$gettext_dir/gettext -s"
+fi
+touch -am 1231235999 $$.touch >/dev/null 2>&1
+if test ! -f 1231235999 && test -f $$.touch; then
+  shar_touch=touch
+else
+  shar_touch=:
+  echo
+  $echo 'WARNING: not restoring timestamps.  Consider getting and'
+  $echo "installing GNU \`touch', distributed in GNU File Utilities..."
+  echo
+fi
+rm -f 1231235999 $$.touch
+#
+if mkdir _sh12593; then
+  $echo 'x -' 'creating lock directory'
+else
+  $echo 'failed to create lock directory'
+  exit 1
+fi
+# ============= hw1.c ==============
+if test -f 'hw1.c' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'hw1.c' '(file already exists)'
+else
+  $echo 'x -' extracting 'hw1.c' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'hw1.c' &&
+/*
+X *
+X *  hw1.c 
+X *
+X *  Advanced Graphics & Visualization, Spring 1997
+X *	Homework 1.
+X *	
+X *	Alexander Holmansky
+X *
+X *	This program draws solid cube, sphere, and teapot.
+X *	It allows for camera point movement and independent rotation of the
+X *	objects.
+X *
+X *	Some parts of this program are taken from simple3.c provided in class.
+X */
+X
+/* Includes required */
+#include <GL/gl.h>
+#include <GL/glut.h>
+X
+/* Geometry objects and the camera (view) */
+#define	CUBE	1
+#define	SPHERE	2
+#define	TEAPOT	3
+#define VIEW	4
+X
+/* Rotation axis */
+#define	X	5
+#define	Y	6
+#define Z	7
+X
+/* Structure to hold object properties */
+typedef struct {
+X	float origin[3];		/* the center of a geometry object */
+X	float orientation[3];	/* angular displacement from all axis */
+X	float emmitted[4];		/* emmission material properties */
+X	float ambdif[4];		/* ambient & diffuse material properties */
+X	float specular[4];		/* specular material properties */
+X	float shininess;		/* shininess of the material */
+} objProp;
+X
+X
+objProp	cubeProp;	/* holds the properties of the cube */
+objProp sphereProp;	/* holds the properties of the sphere */
+objProp teapotProp;	/* holds the properties of the teapot */
+X
+/* Color Values */
+GLfloat pink[] = {0.3, 0.0, 0.0, 1.0};
+GLfloat pinkish_red[] = {0.6, 0.0, 0.0, 1.0};
+GLfloat red[] = {0.8, 0.0, 0.0, 1.0};
+GLfloat white[] = {0.8, 0.8, 0.8, 1.0};
+GLfloat yellow[] = {0.8, 0.5, 0.0, 1.0};
+GLfloat lblue[] = {0.0, 0.0, 0.5, 1.0};
+GLfloat blue[] = {0.0, 0.0, 0.8, 1.0};
+GLfloat none[] = {0.0, 0.0, 0.0, 0.0};
+X
+X
+int rotate = CUBE;	/* which object to rotate (initially cube) */
+int axis = X;	/* axis of rotation */
+X
+/* Functions to load object matricies */
+void loadCubeMatrix(int show) {
+X	glPushMatrix();
+X		glLoadIdentity();
+X		glTranslatef(cubeProp.origin[0], 
+X					 cubeProp.origin[1], cubeProp.origin[2]);
+X		glMatrixMode(GL_MODELVIEW);
+X		glRotatef(cubeProp.orientation[0], 1.0, 0.0, 0.0);
+X		glRotatef(cubeProp.orientation[1], 0.0, 1.0, 0.0);
+X		glRotatef(cubeProp.orientation[2], 0.0, 0.0, 1.0);
+X		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, pink);
+X		glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, pink);
+X		glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, red);
+X		glMaterialf(GL_FRONT, GL_SHININESS, cubeProp.shininess);
+X		if (show) glutSolidCube(1.0);   /*  draw the cube       */
+X	glPopMatrix();
+} 
+X
+void loadSphereMatrix(int show) {
+X	glPushMatrix();
+X		glLoadIdentity();
+X		glTranslatef(sphereProp.origin[0], 
+X					 sphereProp.origin[1], sphereProp.origin[2]);
+X		glMatrixMode(GL_MODELVIEW);
+X		glRotatef(sphereProp.orientation[0], 1.0, 0.0, 0.0);
+X		glRotatef(sphereProp.orientation[1], 0.0, 1.0, 0.0);
+X		glRotatef(sphereProp.orientation[2], 0.0, 0.0, 1.0);
+X		glMaterialfv(GL_FRONT, GL_AMBIENT, none);
+X		glMaterialfv(GL_FRONT, GL_DIFFUSE, blue);
+X		glMaterialfv(GL_FRONT, GL_SPECULAR, none);
+X		glMaterialfv(GL_FRONT, GL_EMISSION, lblue);
+X		glMaterialf(GL_FRONT, GL_SHININESS, sphereProp.shininess);
+X		if (show) glutSolidSphere(1.0, 20, 20);   /*  draw the sphere  */
+X	glPopMatrix();
+}
+X
+void loadTeapotMatrix(int show) {
+X	glPushMatrix();
+X		glLoadIdentity();
+X		glTranslatef(teapotProp.origin[0], 
+X					 teapotProp.origin[1], teapotProp.origin[2]);
+X		glMatrixMode(GL_MODELVIEW);
+X		glRotatef(teapotProp.orientation[0], 1.0, 0.0, 0.0);
+X		glRotatef(teapotProp.orientation[1], 0.0, 1.0, 0.0);
+X		glRotatef(teapotProp.orientation[2], 0.0, 0.0, 1.0);
+X		glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, yellow);
+X		glMaterialfv(GL_FRONT, GL_SPECULAR, white);
+X		glMaterialfv(GL_FRONT, GL_EMISSION, yellow);
+X		glMaterialf(GL_FRONT, GL_SHININESS, teapotProp.shininess);
+X		if (show) glutSolidTeapot(1.0);   /*  draw the teapot */
+X	glPopMatrix();
+}
+X
+X
+/*
+X *  Clear the screen.  
+X *  Draw cube, sphere and teapot.
+X */
+void display(void)
+{	
+X	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+X	
+X	loadCubeMatrix(1);
+X	
+X	loadSphereMatrix(1);
+X	
+X	loadTeapotMatrix(1);
+X		
+X	glutSwapBuffers();
+}
+X
+/* Initialize shading model */
+void myInit(void)
+{
+X      static float lightPos[4] = {2.0, 4.0, 2.0, 1.0};
+X      static float lightDir[4] = {-2.0, -4.0, -2.0, 1.0};
+X      static float lightAmb[4] = {0.2, 0.2, 0.2, 1.0};
+X      static float lightDiff[4] = {0.8, 0.8, 0.8, 1.0};
+X      static float lightSpec[4] = {0.0, 0.0, 0.0, 1.0};
+X
+X      glColor3f(1.0, 0.0, 0.0);
+X      glEnable(GL_LIGHTING);
+X      glEnable(GL_LIGHT0);
+X      glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
+X      glLightfv(GL_LIGHT0, GL_AMBIENT, lightAmb);
+X      glLightfv(GL_LIGHT0, GL_DIFFUSE, lightDiff);
+X      glLightfv(GL_LIGHT0, GL_SPECULAR, lightSpec);
+X      glEnable(GL_DEPTH_TEST);
+X      glShadeModel (GL_FLAT);
+X      glEnable(GL_DITHER);
+}
+X
+X
+/*
+X *  Called when the window is first opened and whenever 
+X *  the window is reconfigured (moved or resized).
+X */
+void myReshape(int w, int h)
+{
+X      glViewport (0, 0, w, h);            /*  define the viewport */
+X      glMatrixMode(GL_PROJECTION);
+X      glLoadIdentity();
+X      gluPerspective(45.0, 1.0*(GLfloat)w/(GLfloat)h, 1.0, 10.0);
+X      glTranslatef (0.0, 0.0, -8.0);     /*  viewing transformation      */
+X      glMatrixMode (GL_MODELVIEW);        /* back to modelview matrix  */
+}
+X
+X
+/*
+X * Keyboard handler
+X * 
+X * Increments/decrements displacement angle for a current object/camera
+X * from the current axis.
+X */
+void
+Key(unsigned char key, int x, int y)
+{
+X    switch (key) {
+X    case '+':
+X    	switch (rotate) {
+X    		case CUBE:
+X    			if (axis == X)
+X    				cubeProp.orientation[0] += 15.0;
+X    			else if (axis == Y) 
+X      				cubeProp.orientation[1] += 15.0;
+X      			else 
+X      				cubeProp.orientation[2] += 15.0;
+X      			break;
+X      			
+X      		case SPHERE:
+X      			if (axis == X)
+X      				sphereProp.orientation[0] += 15.0;
+X      			else if (axis == Y)
+X      				sphereProp.orientation[1] += 15.0;
+X      			else
+X      				sphereProp.orientation[2] += 15.0;
+X      			break;
+X      			
+X      		case TEAPOT:
+X      			if (axis == X)
+X      				teapotProp.orientation[0] += 15.0;
+X      			else if (axis == Y)
+X      				teapotProp.orientation[1] += 15.0;
+X      			else
+X      				teapotProp.orientation[2] += 15.0;
+X      			break;
+X      			
+X      		case VIEW:
+X      			glMatrixMode(GL_PROJECTION);
+X      			if (axis == X) 
+X      				glRotatef(15.0, 1.0, 0.0, 0.0);
+X      			else if (axis == Y)	
+X      				glRotatef(15.0, 0.0, 1.0, 0.0);
+X      			else
+X      				glRotatef(15.0, 0.0, 0.0, 1.0);
+X      			glMatrixMode (GL_MODELVIEW);
+X      			break;
+X      		
+X      		}
+X    break;
+X      
+X      
+X    case '-':
+X    	switch (rotate) {
+X    		case CUBE:
+X    			if (axis == X)
+X    				cubeProp.orientation[0] -= 15.0;
+X    			else if (axis == Y) 
+X      				cubeProp.orientation[1] -= 15.0;
+X      			else 
+X      				cubeProp.orientation[2] -= 15.0;
+X      			break;
+X      			
+X      		case SPHERE:
+X      			if (axis == X)
+X      				sphereProp.orientation[0] -= 15.0;
+X      			else if (axis == Y)
+X      				sphereProp.orientation[1] -= 15.0;
+X      			else
+X      				sphereProp.orientation[2] -= 15.0;
+X      			break;
+X      			
+X      		case TEAPOT:
+X      			if (axis == X)
+X      				teapotProp.orientation[0] -= 15.0;
+X      			else if (axis == Y)
+X      				teapotProp.orientation[1] -= 15.0;
+X      			else
+X      				teapotProp.orientation[2] -= 15.0;
+X      			break;
+X      			
+X      		case VIEW:
+X      			glMatrixMode(GL_PROJECTION);
+X      			if (axis == X) 
+X      				glRotatef(-15.0, 1.0, 0.0, 0.0);
+X      			else if (axis == Y)	
+X      				glRotatef(-15.0, 0.0, 1.0, 0.0);
+X      			else
+X      				glRotatef(-15.0, 0.0, 0.0, 1.0);
+X      			glMatrixMode (GL_MODELVIEW);
+X      			break;
+X      		
+X      		}
+X    break;
+X      
+X    case 27:           /* Esc will quit */
+X        exit(1);
+X        break;
+X    default:
+X      break;
+X    }
+X    glutPostRedisplay();
+}
+X
+X
+X
+X
+/*
+X *  Handle Menus
+X */
+void
+SelectAction(int value)
+{
+X    switch (value) {
+X    case 1:
+X        exit(0);
+X        break;
+X    }
+}
+X
+X
+void
+SelectObject(int value)
+{
+X    switch (value) {
+X    case 1:
+X        rotate = CUBE;
+X    	break;
+X    
+X    case 2:
+X        rotate = SPHERE;
+X    	break;
+X   	
+X   	case 3:
+X        rotate = TEAPOT;
+X    	break;
+X    	
+X    case 4:
+X    	rotate = VIEW;
+X    	break;
+X    }
+}
+X
+X
+void
+SelectAxis(int value)
+{
+X    switch (value) {
+X    case 1:
+X        axis = X;
+X    	break;
+X    
+X    case 2:
+X        axis = Y;
+X    	break;
+X   	
+X   	case 3:
+X        axis = Z;
+X    	break;
+X    }
+}
+X	
+X
+/*
+X *  Main Loop
+X *  Open window with initial window size, title bar, 
+X *  RGBA display mode, and handle input events.
+X */
+int main(int argc, char** argv) 
+{
+X	/* Print instructions */
+X	printf("Welcome!\n");
+X	printf("Use left mouse button to select rotation axis.\n");
+X	printf("Use middle mouse button to select an object or camera.\n");
+X	printf("Use right mouse button or \"ESC\" to quit.\n");
+X	printf("Use \"+\" and \"-\" keys to perform rotations.\n\n");
+X	
+X	/* Initialize properties of all 3 objects */
+X	cubeProp.origin[0] = 0.0;
+X	cubeProp.origin[1] =  0.0;
+X	cubeProp.origin[2] =  0.0;
+X	cubeProp.orientation[0] = 0.0;
+X	cubeProp.orientation[1] = 0.0;
+X	cubeProp.orientation[2] = 0.0;
+X	cubeProp.shininess = 100.0;
+X
+X	
+X	sphereProp.origin[0] = 2.0;
+X	sphereProp.origin[1] = 0.0;
+X	sphereProp.origin[2] = 0.0;
+X	sphereProp.orientation[0] = 0.0;
+X	sphereProp.orientation[1] = 0.0;
+X	sphereProp.orientation[2] = 0.0;
+X	sphereProp.shininess = 0.0;
+X
+X	teapotProp.origin[0] = -2.0;
+X	teapotProp.origin[1] = 0.0;
+X	teapotProp.origin[2] = 0.0;
+X	teapotProp.orientation[0] = 0.0;
+X	teapotProp.orientation[1] = 0.0;
+X	teapotProp.orientation[2] = 0.0;
+X	teapotProp.shininess = 10.0;
+X	
+X	/* Initialize GLUT & display window */
+X	glutInit(&argc, argv);
+X	glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGBA);
+X	glutCreateWindow (argv[0]);
+X	myInit ();
+X	glutKeyboardFunc(Key);
+X	glutReshapeFunc (myReshape);
+X	glutDisplayFunc(display);
+X	
+X	/* Create menu for major actions */
+X	glutCreateMenu(SelectAction);
+X	glutAddMenuEntry("Quit", 1);
+X	glutAttachMenu(GLUT_RIGHT_BUTTON);	/* called by the right mouse button */
+X	
+X	/* Create menu to select the current object */
+X	glutCreateMenu(SelectObject);
+X	glutAddMenuEntry("Cube", 1);
+X	glutAddMenuEntry("Sphere", 2);
+X	glutAddMenuEntry("Teapot", 3);
+X	glutAddMenuEntry("Camera", 4);
+X	glutAttachMenu(GLUT_MIDDLE_BUTTON);	/* called by the middle mouse button */
+X	
+X	/* Create menu to select the current rotation axis */
+X	glutCreateMenu(SelectAxis);
+X	glutAddMenuEntry("Rotate X", 1);
+X	glutAddMenuEntry("Rotate Y", 2);
+X	glutAddMenuEntry("Rotate Z", 3);
+X	glutAttachMenu(GLUT_LEFT_BUTTON);	/* called by the left mouse button */
+X	
+X	glutMainLoop();	/* enter main loop */
+}
+X
+SHAR_EOF
+  $shar_touch -am 0206134697 'hw1.c' &&
+  chmod 0644 'hw1.c' ||
+  $echo 'restore of' 'hw1.c' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'hw1.c:' 'MD5 check failed'
+e41e2237f4905c3992ca394aa2aa8d88  hw1.c
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'hw1.c'`"
+    test 10396 -eq "$shar_count" ||
+    $echo 'hw1.c:' 'original size' '10396,' 'current size' "$shar_count!"
+  fi
+fi
+rm -fr _sh12593
+exit 0
+# From: Alexander Holmansky <kholma>

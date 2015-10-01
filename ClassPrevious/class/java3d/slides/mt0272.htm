@@ -1,0 +1,94 @@
+
+<HTML>
+<HEAD>
+<!-- Created by mktalk.pl on 7/16/98 at 3:58:23 PM -->
+<TITLE>Scheduling Bounds Example Code</TITLE>
+</HEAD>
+
+<BODY
+	
+	BGCOLOR=#000000
+	TEXT=#FFFFFF
+	LINK=#FFFFFF
+	ALINK=#00FF00
+	VLINK=#888888
+>
+<TABLE WIDTH=100%
+	BORDER=0
+	CELLSPACING=0
+	CELLPADDING=0
+>
+<TR >
+<TD ALIGN=CENTER WIDTH=24%>
+	<FONT
+		COLOR=#FFFFFF
+		SIZE=-1
+	>
+	<A HREF=mt0000.htm><B><IMG SRC="../images/arwtoc2.gif" BORDER=0 WIDTH=24 HEIGHT=24></B></A>
+</TD>
+<TD ALIGN=CENTER WIDTH=24%>
+	<FONT
+		COLOR=#FFFFFF
+		SIZE=-1
+	>
+	<A HREF=mt0262.htm><B><IMG SRC="../images/arwndx2.gif" BORDER=0 WIDTH=24 HEIGHT=24></B></A>
+</TD>
+<TD ALIGN=CENTER WIDTH=24%>
+	<FONT
+		COLOR=#FFFFFF
+		SIZE=-1
+	>
+	<A HREF=mt0271.htm><B><IMG SRC="../images/arwprev2.gif" BORDER=0 WIDTH=24 HEIGHT=24></B></A>
+</TD>
+<TD ALIGN=CENTER WIDTH=24%>
+	<FONT
+		COLOR=#FFFFFF
+		SIZE=-1
+	>
+	<A HREF=mt0273.htm><B><IMG SRC="../images/arwnext2.gif" BORDER=0 WIDTH=24 HEIGHT=24></B></A>
+</TD>
+<TD ALIGN=CENTER WIDTH=4%>
+	<FONT
+		COLOR=#FFFFFF
+		SIZE=-1
+	>
+	272
+</TD>
+</TR>
+</TABLE>
+<P>
+
+<FONT COLOR=#FFFF00 SIZE=+0>
+<CENTER>Creating Behaviors</CENTER>
+<FONT COLOR=#FFFF00 SIZE=+3>
+<CENTER><B><I>Scheduling Bounds Example Code</I></B></CENTER>
+<CENTER><IMG SRC="../images/red.jpg" HEIGHT=2 WIDTH=70% BORDER=0></CENTER>
+<P>
+<FONT COLOR=#FFFFFF SIZE=+2>
+
+<DL>
+
+<DD><LI>Set bounds relative to the behavior's coordinate system
+<BR>
+<PRE><B><TT><FONT COLOR=#00FF00 SIZE=+2>Behavior behavior = new MyBehavior( );
+behavior.setSchedulingBounds( bounds );</FONT></TT></B></PRE>
+<P>
+
+<DD><LI>Or relative to a bounding leaf's coordinate system
+<BR>
+<PRE><B><TT><FONT COLOR=#006600 SIZE=+2>TransformGroup group = new TransformGroup( );
+BoundingLeaf leaf = new BoundingLeaf( bounds );
+group.addChild( leaf );
+. . .</FONT></TT></B><B><TT><FONT COLOR=#00FF00 SIZE=+2>
+Behavior behavior = new MyBehavior( );
+behavior.setSchedulingBoundingLeaf( leaf );</FONT></TT></B></PRE>
+
+</DL>
+
+
+
+
+<!------------------------------------------------------------------------>
+
+</BODY>
+</HTML>

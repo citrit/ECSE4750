@@ -1,0 +1,681 @@
+
+<!-- saved from url=(0100)https://web.archive.org/web/20030912090801/http://www.rpi.edu/dept/ecse/cg-s00/Classes/16/index.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+<script type="text/javascript" src="./BresenhamAlgorithm_files/analytics.js"></script>
+<script type="text/javascript">archive_analytics.values.server_name="wwwb-app17.us.archive.org";archive_analytics.values.server_ms=109;</script>
+<link type="text/css" rel="stylesheet" href="./BresenhamAlgorithm_files/banner-styles.css">
+
+
+
+<meta name="GENERATOR" content="Microsoft FrontPage Express 2.0">
+<title>ECSE-4750, RPI, Class 24</title>
+<style type="text/css">
+<!--
+H1 { color: red; }
+
+H2 { color: blue; }
+
+   OL.outline {list-style-type: upper-roman;
+    font: bold italic 18pt sans-serif;}
+
+   OL.outline OL {list-style-type: upper-alpha;
+       font: bold 14pt sans-serif;}
+
+   OL.outline OL OL {list-style-type: decimal;
+	  font: 12pt serif;}
+
+   OL.outline OL OL OL {list-style-type: lower-alpha;
+	     font: 10pt serif;}
+
+   OL.outline OL OL OL OL {list-style-type: lower-roman;
+		font: 10pt sans-serif;}
+   -->
+</style>
+</head>
+
+<body bgcolor="#FFFFFF"><div id="wm-ipp" lang="en" style="display: block;">
+
+<div style="position:fixed;left:0;top:0;width:100%!important">
+<div id="wm-ipp-inside">
+   <table style="width:100%;"><tbody><tr>
+   <td id="wm-logo">
+       <a href="https://web.archive.org/web/" title="Wayback Machine home page"><img src="./BresenhamAlgorithm_files/wayback-toolbar-logo.png" alt="Wayback Machine" width="110" height="39" border="0"></a>
+   </td>
+   <td class="c">
+       <table style="margin:0 auto;"><tbody><tr>
+       <td class="u" colspan="2">
+       <form target="_top" method="get" action="https://web.archive.org/web/form-submit.jsp" name="wmtb" id="wmtb"><input type="text" name="url" id="wmtbURL" value="http://www.rpi.edu/dept/ecse/cg-s00/Classes/16/index.html" style="width:400px;" onfocus="this.focus();this.select();"><input type="hidden" name="type" value="replay"><input type="hidden" name="date" value="20030912090801"><input type="submit" value="Go"><span id="wm_tb_options" style="display:block;"></span></form>
+       </td>
+       <td class="n" rowspan="2">
+           <table><tbody>
+           <!-- NEXT/PREV MONTH NAV AND MONTH INDICATOR -->
+           <tr class="m">
+           	<td class="b" nowrap="nowrap">
+		
+		    <a href="https://web.archive.org/web/20030626022643/http://www.rpi.edu/dept/ecse/cg-s00/Classes/16/index.html" title="26 Jun 2003">JUN</a>
+		
+		</td>
+		<td class="c" id="displayMonthEl" title="You are here: 9:08:01 Sep 12, 2003">SEP</td>
+		<td class="f" nowrap="nowrap">
+		
+		    <a href="https://web.archive.org/web/20040917132854/http://www.rpi.edu/dept/ecse/cg-s00/Classes/16/index.html" title="17 Sep 2004"><strong>SEP</strong></a>
+		
+                </td>
+	    </tr>
+           <!-- NEXT/PREV CAPTURE NAV AND DAY OF MONTH INDICATOR -->
+           <tr class="d">
+               <td class="b" nowrap="nowrap">
+               
+                   <a href="https://web.archive.org/web/20030626022643/http://www.rpi.edu/dept/ecse/cg-s00/Classes/16/index.html" title="2:26:43 Jun 26, 2003"><img src="./BresenhamAlgorithm_files/wm_tb_prv_on.png" alt="Previous capture" width="14" height="16" border="0"></a>
+               
+               </td>
+               <td class="c" id="displayDayEl" style="width:34px;font-size:24px;" title="You are here: 9:08:01 Sep 12, 2003">12</td>
+	       <td class="f" nowrap="nowrap">
+               
+		   <a href="https://web.archive.org/web/20040917132854/http://www.rpi.edu/dept/ecse/cg-s00/Classes/16/index.html" title="13:28:54 Sep 17, 2004"><img src="./BresenhamAlgorithm_files/wm_tb_nxt_on.png" alt="Next capture" width="14" height="16" border="0"></a>
+	       
+	       </td>
+           </tr>
+           <!-- NEXT/PREV YEAR NAV AND YEAR INDICATOR -->
+           <tr class="y">
+	       <td class="b" nowrap="nowrap">
+               
+                   <a href="https://web.archive.org/web/20020627151630/http://www.rpi.edu/dept/ecse/cg-s00/Classes/16/index.html" title="27 Jun 2002"><strong>2002</strong></a>
+               
+               </td>
+               <td class="c" id="displayYearEl" title="You are here: 9:08:01 Sep 12, 2003">2003</td>
+	       <td class="f" nowrap="nowrap">
+               
+	           <a href="https://web.archive.org/web/20040917132854/http://www.rpi.edu/dept/ecse/cg-s00/Classes/16/index.html" title="17 Sep 2004"><strong>2004</strong></a>
+	       
+	       </td>
+           </tr>
+           </tbody></table>
+       </td>
+       </tr>
+       <tr>
+       <td class="s">
+           <a class="t" href="https://web.archive.org/web/20030912090801*/http://www.rpi.edu/dept/ecse/cg-s00/Classes/16/index.html" title="See a list of every capture for this URL">9 captures</a>
+           <div class="r" title="Timespan for captures of this URL">8 May 01 - 22 Jan 05</div>
+       </td>
+       <td class="k">
+       <a href="" id="wm-graph-anchor">
+       <div id="wm-ipp-sparkline" title="Explore captures for this URL">
+	 <img id="sparklineImgId" alt="sparklines" onmouseover="__wm.st(1)" onmouseout="__wm.st(0)" onmousemove="__wm.mv(event,this)" width="500" height="27" border="0" src="./BresenhamAlgorithm_files/graph.jsp">
+       <div class="yt" style="display: none; width: 25px; height: 27px;"></div><div class="mt" style="display: none; width: 2px; height: 27px;"></div></div>
+       </a>
+       </td>
+       </tr></tbody></table>
+   </td>
+   <td class="r">
+       <a href="https://web.archive.org/web/20030912090801/http://www.rpi.edu/dept/ecse/cg-s00/Classes/16/index.html#close" onclick="__wm.h();return false;" style="background-image:url(/static/images/toolbar/wm_tb_close.png);top:5px;" title="Close the toolbar">Close</a>
+       <a href="http://faq.web.archive.org/" style="background-image:url(/static/images/toolbar/wm_tb_help.png);bottom:5px;" title="Get some help using the Wayback Machine">Help</a>
+   </td>
+   </tr></tbody></table>
+</div>
+</div>
+</div>
+
+
+<!-- BEGIN WAYBACK TOOLBAR INSERT -->
+<script type="text/javascript" src="./BresenhamAlgorithm_files/disclaim-element.js"></script>
+<script type="text/javascript" src="./BresenhamAlgorithm_files/graph-calc.js"></script>
+<script type="text/javascript" src="./BresenhamAlgorithm_files/jquery.min.js"></script>
+<script type="text/javascript">//<![CDATA[
+var __wm = (function(){
+var wbPrefix = "/web/";
+var wbCurrentUrl = "http://www.rpi.edu/dept/ecse/cg-s00/Classes/16/index.html";
+
+var firstYear = 1996;
+var imgWidth = 500,imgHeight = 27;
+var yearImgWidth = 25,monthImgWidth = 2;
+var displayDay = "12";
+var displayMonth = "Sep";
+var displayYear = "2003";
+var prettyMonths = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+var $D=document,$=function(n){return document.getElementById(n)};
+var trackerVal,curYear = -1,curMonth = -1;
+var yearTracker,monthTracker;
+function showTrackers(val) {
+  if (val===trackerVal) return;
+  var $ipp=$("wm-ipp");
+  var $y=$("displayYearEl"),$m=$("displayMonthEl"),$d=$("displayDayEl");
+  if (val) {
+    $ipp.className="hi";
+  } else {
+    $ipp.className="";
+    $y.innerHTML=displayYear;$m.innerHTML=displayMonth;$d.innerHTML=displayDay;
+  }
+  yearTracker.style.display=val?"inline":"none";
+  monthTracker.style.display=val?"inline":"none";
+  trackerVal = val;
+}
+function getElementX2(obj) {
+  var $e=jQuery(obj);
+  return (typeof $e=="undefined"||typeof $e.offset=="undefined")?
+    getElementX(obj):Math.round($e.offset().left);
+}
+function trackMouseMove(event,element) {
+  var eventX = getEventX(event);
+  var elementX = getElementX2(element);
+  var xOff = Math.min(Math.max(0, eventX - elementX),imgWidth);
+  var monthOff = xOff % yearImgWidth;
+
+  var year = Math.floor(xOff / yearImgWidth);
+  var monthOfYear = Math.min(11,Math.floor(monthOff / monthImgWidth));
+  // 1 extra border pixel at the left edge of the year:
+  var month = (year * 12) + monthOfYear;
+  var day = monthOff % 2==1?15:1;
+  var dateString = zeroPad(year + firstYear) + zeroPad(monthOfYear+1,2) +
+    zeroPad(day,2) + "000000";
+
+  $("displayYearEl").innerHTML=year+firstYear;
+  $("displayMonthEl").innerHTML=prettyMonths[monthOfYear];
+  // looks too jarring when it changes..
+  //$("displayDayEl").innerHTML=zeroPad(day,2);
+  var url = wbPrefix + dateString + '/' +  wbCurrentUrl;
+  $("wm-graph-anchor").href=url;
+
+  if(curYear != year) {
+    var yrOff = year * yearImgWidth;
+    yearTracker.style.left = yrOff + "px";
+    curYear = year;
+  }
+  if(curMonth != month) {
+    var mtOff = year + (month * monthImgWidth) + 1;
+    monthTracker.style.left = mtOff + "px";
+    curMonth = month;
+  }
+}
+function hideToolbar() {
+  $("wm-ipp").style.display="none";
+}
+function bootstrap() {
+  var $spk=$("wm-ipp-sparkline");
+  yearTracker=$D.createElement('div');
+  yearTracker.className='yt';
+  with(yearTracker.style){
+    display='none';width=yearImgWidth+"px";height=imgHeight+"px";
+  }
+  monthTracker=$D.createElement('div');
+  monthTracker.className='mt';
+  with(monthTracker.style){
+    display='none';width=monthImgWidth+"px";height=imgHeight+"px";
+  }
+  $spk.appendChild(yearTracker);
+  $spk.appendChild(monthTracker);
+
+  var $ipp=$("wm-ipp");
+  $ipp&&disclaimElement($ipp);
+}
+return{st:showTrackers,mv:trackMouseMove,h:hideToolbar,bt:bootstrap};
+})();//]]>
+</script>
+<style type="text/css">
+body {
+  margin-top:0 !important;
+  padding-top:0 !important;
+  min-width:800px !important;
+}
+</style>
+
+<script type="text/javascript">__wm.bt();</script>
+<!-- END WAYBACK TOOLBAR INSERT -->
+
+
+<h1 align="center">Rensselaer Polytechnic Institute <br>
+ECSE-4750 Computer Graphics, Fall 1999<br>
+Class 24, Tues Oct 26 </h1>
+
+<h1><a name="01"></a>Bresenham Algorithm - Optimized Line Drawing
+Code</h1>
+
+<p>We want to draw a line from (0,0) to (x1,y1), where 0&lt;=y1&lt;=x1,
+by setting one pixel per column. For example, if x=10, y=7, we
+get this: </p>
+
+<p align="center"><img src="./BresenhamAlgorithm_files/line.gif" width="151" height="135"></p>
+
+<p>Here are several versions, ending with Bresenham's algorithm.
+The point of this is to use the simplest possible operations. </p>
+
+<ol>
+    <li>Simple program: <pre>m=y1/x1;
+pixel(0,0);
+for(x=1;x&lt;=x1;x++) 
+{ y=round(m*x);
+  pixel(x,y);
+}	
+</pre>
+    </li>
+    <li>Track the deviation of the current y from the perfect
+        line. When the deviation gets too large, increment y, and
+        decrement the deviation. <pre>m=y1/x1;
+d=0;
+pixel(0,0);
+y=0;
+for(x=1;x&lt;=x1;x++)
+{  d+= m;
+   if (d&gt;= 1/2) 
+   {  d -= 1;
+      y++;  }
+   pixel(x,y);
+} 
+</pre>
+    </li>
+    <li>Scale up m and d by 2x to convert fractions to integers.
+        This is ok since they are used only in the <em>if</em>;
+        and it still branches at the same times as before. <pre>m=2*y1;
+d=0;
+pixel(0,0);
+y=0;
+for(x=1;x&lt;=x1;x++)
+{  d+= m;
+   if (d&gt;=x1)
+   {  d-= 2*x1;
+      y++;}
+   pixel(x,y);
+}
+</pre>
+    </li>
+    <li>Shift d by -x1 to remove a subtraction. <pre>m=2*y1;
+d= -x1;
+pixel(0,0);
+y=0;
+for(x=1;x&lt;=x1;x++)
+{  d+= m;
+   if (d&gt;=0)
+   {  d-= 2*x1;
+      y++;}
+   pixel(x,y);
+}
+</pre>
+    </li>
+    <li>Assume that the pixels are stored in a framebuffer, and
+        that pixel<sub>x y</sub> is stored at location fb+x*maxy+y
+        where fb is the address of the start of the framebuffer,
+        and maxy is the max value of y in the framebuffer, i.e.,
+        0&lt;= y&lt;= y1&lt;= maxy. Then we get: <pre>m=2*y1;
+d= -x1;
+*fb=1;
+y=0;
+for(x=1;x&lt;=x1;x++)
+{  d+= m;
+   if (d&gt;=0)
+   {  d-= 2*x1;
+      y++;}
+   *(fb+x*maxy+y)=1;
+}
+</pre>
+    </li>
+    <li>Letting p be the current address, we can optimize. <pre>m=2*y1;
+d= -x1;
+p=fb;
+*p=1;
+for(x=1;x&lt;=x1;x++)
+{  d+= m;
+   p+=maxy;
+   if (d&gt;=0)
+   {  d-= 2*x1;
+      p++;}
+   *p=1;
+}
+</pre>
+    </li>
+    <li>The next problem is that modern computers use a pipelined
+        architecture, where different stages of several
+        instructions are processed in parallel. However, when
+        there is a conditional, the computer can't tell what the
+        next instructions are, and so is forced to flush the
+        pipeline. Therefore we want to eliminate the conditional
+        in the inner loop. The following assumes that the right
+        shift is arithmetic, which it is on the Sun. <p>Mask is
+        all ones when d&gt;=0, all zeroes otherwise. </p>
+        <p>We also pulled 2*x1 out of the loop. </p>
+        <pre>m=2*y1;
+d= -x1;
+p=fb;
+*p=1;
+doublex1= x1&lt;1; for(x="1;x&lt;=x1;x++)" { d+="m;" p+="maxy;" mask="(~(d"&gt;&gt;31));  
+   d -=  (doublex1&amp;mask);
+   p += (1&amp;mask);
+   *p=1;
+}
+</pre>
+    </li>
+    <li>We can also offset x by x1 so that the termination
+        condition is a test against 0. <br>
+        <br>
+        </li>
+</ol>
+
+<p>This is all and well for lines originating at (0,0) but what
+about real lines. Here is an implementation of Bresenhams that
+works for slopes in the range 0 &lt; m &lt; 1: <br>
+&nbsp; </p>
+
+<blockquote>
+    <pre><font size="4">{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int xa = 10, ya = 7, xb = 200, yb = 150;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int dx = abs(xa - xb), dy = abs(ya - yb);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int p = 2 * dy - dx;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int twoDy = 2 * dy, twoDyDx = 2 * (dy - dx);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int x, y, xEnd;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (xa &gt; xb) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; x = xb;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; y = yb;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; xEnd = xa;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; x = xa;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; y = ya;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; xEnd = xb;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cgw-&gt;DrawPoint(x,y);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; while (x &lt; xEnd) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; x++;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (p &lt; 0)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; p += twoDy;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; y++;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; p += twoDyDx;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cgw-&gt;DrawPoint(x,y);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+}</font></pre>
+</blockquote>
+
+<h1><a name="02"></a>Bresenham Circle Algorithm</h1>
+
+<p>Here is a formula to calculate the points on a acircle. <br>
+&nbsp; </p>
+
+<blockquote>
+    <p>y = yc(+/-)sqrt(r^2 - (xc - x)^2)</p>
+</blockquote>
+
+<p align="left"><br>
+This is of course a very complex formula and not something we
+would use. </p>
+
+<p>. </p>
+
+<p align="center"><img src="./BresenhamAlgorithm_files/circle.gif" width="227" height="214"></p>
+
+<ol>
+    <li>Taylor series for sqrt(1-x<sup>2</sup>), in the 2nd
+        octant: 0&lt;= x&lt;= y, where the curve doesn't get too
+        vertical. The following is expanded about the origin. The
+        error at x=.71 is 0.0003. <p>y(x) = 1 - (1/2) x<sup>2</sup>
+        - (1/8) x<sup>4</sup> - (1/16) x<sup>6</sup> - (5/128) x<sup>8</sup>
+        - (7/256) x<sup>10</sup> - (21/1024) x <sup>12</sup>+ ...
+        </p>
+        <p>This is popular but usually the wrong way. </p>
+    </li>
+    <li>If you must use Taylor, at least expand about the center
+        of the interval: <p>z = x- 0.3536 <br>
+        </p>
+        <p>y(z) = ( 0.9353967287- 0.3780214203 z- 0.6109173568 z<sup>2</sup>
+        - 0.2468897312 z<sup>3</sup> - 0.2992736736 z<sup>4</sup>
+        - 0.2821915805 z<sup>5</sup> - 0.3420828869 z<sup>6</sup>
+        - 0.4015387039 z<sup>7</sup> - 0.5080487872 z<sup>8</sup>
+        - 0.6481416197 z<sup>9</sup> - 0.8517407025 z<sup>10</sup>
+        - 1.133286086 z<sup>11</sup> - 1.531581071 z<sup>12</sup>
+        - 2.091410948 z<sup>13</sup>+... </p>
+        <p>The error at x=.71 is 0.000 004. This is better, but
+        there are more nonzero coefficients, which means that it
+        is slower. </p>
+    </li>
+    <li>A Chebyshev series, which tries to minimize the maximum
+        error over an interval beats a Taylor series: <p>y(x) = +
+        1.000000093 - 0.00002511816061 x - 0.4988901592 x<sup>2</sup>
+        - 0.01882886918 x<sup>3</sup> + 0.03498610076 x<sup>4</sup>
+        - 0.7655182976 x<sup>5</sup> + 2.101697099 x<sup>6</sup>
+        - 3.603814683 x<sup>7</sup> + 3.259950635 x<sup>8</sup> -
+        1.315059748 x<sup>9</sup> </p>
+        <p>This has a max error of 1.5*10<sup>-7</sup>, which is
+        much better than above, expecially as there are only 8
+        coefficients. We could get as good as either Taylor with
+        many fewer terms than they. </p>
+    </li>
+    <li>Rotate the point (R,0) by Dt repeatedly (t is the angle).
+        What should Dt be? </li>
+    <li>Approx the rotation matrix: <div align="center"><center><table border="1" compact="">
+            <tbody><tr>
+                <td>cos t </td>
+                <td>sin t </td>
+            </tr>
+            <tr>
+                <td>- sin t </td>
+                <td>cos t </td>
+            </tr>
+        </tbody></table>
+        </center></div><p>approximately = </p>
+        <div align="center"><center><table border="1" compact="">
+            <tbody><tr>
+                <td>1 </td>
+                <td>t </td>
+            </tr>
+            <tr>
+                <td>t </td>
+                <td>1 </td>
+            </tr>
+        </tbody></table>
+        </center></div><p>with everything multiplied by R. But
+        this circle may grow since the determinant &gt;1. </p>
+    </li>
+    <li>Improve the approx matrix so the determinant =1: <div align="center"><center><table border="1" compact="">
+            <tbody><tr>
+                <td>1 </td>
+                <td>t </td>
+            </tr>
+            <tr>
+                <td>t </td>
+                <td>1-t<sup>2</sup> </td>
+            </tr>
+        </tbody></table>
+        </center></div></li>
+    <li>Binomial theorem on sqrt(1-x<sup>2</sup>). Does this do
+        the same as Taylor expanded about 0? </li>
+    <li>Here are two parametric ways to draw circles. <ol>
+            <li>x = R cos t<br>
+                y = R sin t <p>What should Dt be? </p>
+            </li>
+            <li>x = R (2t)/(t<sup>2</sup>+1} <br>
+                y = R (t<sup>2</sup>-1)/(t<sup>2</sup>+1) ; -infinity&lt;t&lt;infinity
+                <p>Unfortunately, the speed of the curve wrt t
+                varies with t, so the stepsize must also. </p>
+            </li>
+            <li>There is no parametric polynomial, of any degree,
+                that exactly represents a circle. However you can
+                get good approximations. </li>
+        </ol>
+    </li>
+    <li>???? (You suggest) </li>
+    <li>Now let's optimize C code. Do the second octant only. <pre>pixel(0,r);
+for(x=1;x&lt;r/sqrt(2);x++)
+{  y=sqrt(r<sup>2</sup>-x<sup>2</sup>);
+   pixel(x,y);
+}
+</pre>
+    </li>
+    <li>Assume that the last point was (x-1,y). Find whether (x,y-½)
+        is above or below the circle, and move SE to (x,y-1) or E
+        to (x,y), respectively. <pre>y=r;
+pixel(0,r);
+for(x=1;x&lt;r/sqrt(2);x++)
+{  d=x<sup>2</sup>+(y-1/2)<sup>2</sup>-r<sup>2</sup>;
+   if (d&gt;=0) y--;
+   pixel(x,y);
+}
+</pre>
+    </li>
+    <li>Optimize: d=x<sup>2</sup>+(y-1/2)<sup>2</sup>-r<sup>2</sup>
+        becomes d=x<sup>2</sup>+y<sup>2</sup>-y+1/4-r<sup>2</sup>.
+        How does the d for a given x differ from d for x-1? If y
+        is unchanged, then d<sub>x</sub> = d<sub>x-1</sub>+2x-1.
+        If y decreases, add -2y+2, where that is the old y. Also
+        the only time that 1/4 affects the test <tt>d&gt;0</tt>
+        is when d=1/4, so ignore it, but make the test d&gt;=0. <pre>y=r;
+d= -r;
+pixel(0,r);
+for(x=1;x&lt;r/sqrt(2);x++)
+{  d+= 2x-1;
+   if (d&gt;=0) 
+   {  y--;
+      d -= 2y; /* Must do this AFTER y-- */
+   }
+   pixel(x,y);
+}
+</pre>
+        <p>This is Bresenham's circle algorithm. Note that you
+        can store 2x-1 and -2y and update them by adding or
+        subtracting 2. </p>
+    </li>
+    <li>Lo-level optimizations can also be done thus: <pre>y=r;
+d= -r;
+x2m1= -1;
+pixel(0,r);
+for(x=1;x&lt;r/sqrt(2);x++)
+{  x2m1 += 2;
+   d+= x2m1;
+   if (d&gt;=0) 
+   {  y--;
+      d -= (y&lt;&lt;1); /* Must do this AFTER y-- */ } pixel(x,y); } </pre>
+
+
+    </li>
+    <li>You can also do the same pipelining techniques used for
+        the line algorithm. </li>
+    <li>Finally, on an Intel processor, there are ways to use the
+        available instructions efficiently. </li>
+    <li>Here is the MidPoint Circle drawing algorithm. <br>
+        &nbsp; <blockquote>
+            <pre><font size="4">void circlePlotPoints(CGWindow *cgw, int xCenter, int yCenter, int x, int y)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cgw-&gt;DrawPoint(xCenter + x, yCenter + y);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cgw-&gt;DrawPoint(xCenter - x, yCenter + y);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cgw-&gt;DrawPoint(xCenter + x, yCenter - y);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cgw-&gt;DrawPoint(xCenter - x, yCenter - y);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cgw-&gt;DrawPoint(xCenter + y, yCenter + x);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cgw-&gt;DrawPoint(xCenter - y, yCenter + x);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cgw-&gt;DrawPoint(xCenter + y, yCenter - x);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cgw-&gt;DrawPoint(xCenter - y, yCenter - x);
+}
+void circleMidPoint(CGWindow *cgw, void *arg)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int xCenter = 100, yCenter = 100, radius = 50;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int x = 0;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int y = radius;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int p = 1 - radius;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cgw-&gt;SetColor(0, RGB_RANGE, 0);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; circlePlotPoints(cgw, xCenter, yCenter, x, y);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; while (x &lt; y) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; x++;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (p &lt; 0)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; p += 2 * x + 1;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; y--;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; p += 2 * (x - y) + 1;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; circlePlotPoints(cgw, xCenter, yCenter, x, y);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+}</font></pre>
+        </blockquote>
+    </li>
+</ol>
+
+<h1><a name="03"></a>Two Filling Algorithms</h1>
+
+<p>Here are two filling algorithms, since each handles things the
+other doesn't. </p>
+
+<h2><a name="04"></a>Polygon Fill</h2>
+
+<p>The input is a polygon defined by a list of vertices and edges.
+<em>Hearn &amp; Baker</em> describe this in section 3.11 on page
+117, altho they goes into more detail than we need. </p>
+
+<p>If a scan line goes exactly thru a vertex, then pretend that
+it really goes slightly below. The effect is that the code to
+test whether a scan line crosses an edge is thus: </p>
+
+<p>if y<sub>scan</sub>&lt;= y<sub>hi</sub> and y<sub>lo</sub> <y><sub>scan<sup>
+then <em>We have an intersection</em> </sup></sub></y></p>
+
+<h2><a name="05"><sup></sup></a><sup>Seed (Boundary) Fill</sup></h2>
+
+<p><sup>The input is a region defined by setting the pixels
+around the border. You mark one inside pixel, then the color
+spreads like a fire. More general regions can be filled. <em>Hearn
+&amp; Baker</em> mention this on page 127. </sup></p>
+
+<p><sup>The inside must be connected, else only one component is
+filled. This is harder than you'd think. If the polygon is thin,
+then the inside may not be connected, so the color stops too soon.
+This figure shows a long thin triangle, zoomed, and filled with
+green by touching a point in the center and flooding. Note that
+two red regions are missed. </sup></p>
+<div align="center"><center>
+
+<pre><sup><img src="./BresenhamAlgorithm_files/alias.gif" width="374" height="29">
+
+Polygon Not Properly Filled
+
+
+
+</sup></pre>
+</center></div>
+
+<hr>
+
+<pre><a href="https://web.archive.org/web/20030912090801/http://www.rpi.edu/dept/ecse/cg-s00/Classes/23/" target="_top"><sup>Previous Class</sup></a><sup>,
+</sup><a href="https://web.archive.org/web/20030912090801/http://www.rpi.edu/dept/ecse/cg-s00/Classes/25/" target="_top"><sup>Next Class</sup></a><sup>,
+</sup><a href="https://web.archive.org/web/20030912090801/http://www.rpi.edu/dept/ecse/graphics/index.html" target="_top"><sup>ECSE-4750 Fall 1999 Home Page</sup></a><sup>
+
+</sup></pre>
+
+<hr>
+
+<p><sup>Copyright © 1998-9, Wm. Randolph Franklin. You may use
+my material for non-profit education and research, provided that
+you acknowledge me and preserve this notice. </sup></p>
+<div align="center"><center>
+
+<address>
+    <sup>Wm. Randolph Franklin, Associate Professor<br>
+    For email address, replace NOSPAM by RPI in the following:
+    wrf@ecse.NOSPAM.edu<br>
+    </sup><a href="https://web.archive.org/web/20030912090801/http://www.ecse.rpi.edu/Homepages/wrf/"><sup>http://www.ecse.rpi.edu/Homepages/wrf/</sup></a><sup><br>
+    +1 (518) 276-6077; Fax: -6261<br>
+    ECSE Dept., 6026 JEC, Rensselaer Polytechnic Inst, Troy NY,
+    12180 USA<br>
+    (PGP key available)<br>
+    </sup>
+</address>
+</center></div><sup><script>
+document.write("<i>Updated:</i> " + document.lastModified + "<br>")
+document.write("<i>URL:</i> " + document.URL + "<br>")
+</script><i>Updated:</i> 08/21/2015 08:55:36<br><i>URL:</i> https://web.archive.org/web/20030912090801/http://www.rpi.edu/dept/ecse/cg-s00/Classes/16/index.html<br></sup>
+
+
+
+
+
+
+
+<!--
+     FILE ARCHIVED ON 9:08:01 Sep 12, 2003 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 12:55:34 Aug 21, 2015.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+-->
+</body></html>

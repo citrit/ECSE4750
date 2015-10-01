@@ -1,0 +1,16 @@
+! ** JCreator Workspace File (C)2000
+! ********** DO NOT EDIT *********
+
+VERSION := "1.00"
+LABEL := "VtkJava"
+
+! Start Project Structure
+#[BeginProject]SOURCE := "vtkHw1\\vtkHw1.jcp" #[EndProject]
+#[BeginProject]SOURCE := "VtkJava.jcp" #[EndProject]
+
+! Start Last Document Structure
+#[BeginFile]SOURCE := "vtkHw1\\vtkHw1.java" #[EndFile]
+
+! Start Last Document Structure
+#[BeginBreakpoint]SOURCE := "vtkHw1\\vtkHw1.java" CLASS := "vtkHw1" VALUE := "60" CHECK := "1" #[EndBreakpoint]
+

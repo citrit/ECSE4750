@@ -1,0 +1,272 @@
+Advanced Computer Graphics and Data Visualization	
+35-6961   MidTerm Exam
+March 6, 1997
+
+Name _________________________________________
+
+You have the whole class to finish the exam, take your time and remember to answer the questions you know first. Each question is worth 5 points total with the points divided between the various parts. Please feel free to use the back of the page.
+
+1. Scientific Visualization
+	a)  (2 Pts) Discuss the differences and similarities between contours and iso-srufaces.
+
+
+
+
+
+
+
+
+
+
+
+
+
+	b) (3 Pts) We know that Color Maps represent the relationship between a continuous range of data values and color values. From an OO viewpoint, discuss how  iso-surface and data cut plane objects would need to interface with a color map object, or what would they need to ask for from the color map object.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2. OpenGL
+ 	a. (1 Pt) What is OpenGL?
+
+
+
+
+
+
+
+
+
+
+	b. (1 Pt) What is meant by immediate mode graphics?
+
+
+
+
+
+
+
+
+
+
+	c. (3 Pts) Name and describe each of the material color components.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+3. OpenGL
+	a. (2 Pts) Explain what is happening with this OpenGL code snippet, and any possible problems (Assume that there are enough values in x,y,z and pts to draw the graphic).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	b. (3 Pts) Describe Display Lists and discuss why they are important in terms of the visualization pipeline and specialized hardware.
+
+
+
+
+
+
+
+
+
+
+
+4. Data Storage
+	a. (3Pts)   The choice of data representation is important because it effects our ability to interface to external data and the performance of the overall visualization system. Name and describe 3 of the 5 design criterion for data representation described in class and in the text
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	b. (2 Pts) If we group our Actor classes and contained Cells as data sets, describe what is meant by the DataSets, and contained Cells, structure and attributes.
+
+
+glBegin(GL_POLYGON);
+  for (int i=0;i<3;i++) {
+    glVertex3f(x[i], y[i], z[i]);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE,
+	  (const GLfloat*)&pts[i]);
+  }
+glEnd();
+
+5. Data algorithms
+	a. (3 Pts) Describe the differences between Volume Rendering and Marching Cubes. Include in your discussion what the final image represents and what type of data is calculated by the underlying algorithms.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	b. (2 Pts) Based on our discussions of the Visualization Pipeline in class, describe the mode of network execution that best fits the visualization system we used in class for homework 2.
+
+
+
+
+
+
+
+6. Data algorithms
+	a. (2 Pts) Based on our discussion of OpenInventor and scene graphs, explain how properties (materials and geometry) are shared.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	b. (3 Pts) In the Visualization Pipeline section of class we discussed reasons for incorporating the Process methods into the Data Object and also extracting the process method into its own object. Give reasons for and against both of these paradigms. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+7. Data Extraction Algorithms
+	a) (2 Pts) Based on what Will Schroeder discussed, what is missing from our rendering systems storage classes that would be required to implement decimation.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	b) (3 Pts) Using the objects from homework 2, discuss how to include the decimation algorithm into the class hierarchy. Specifically, explain where the algorithm would exist (in its own object or attached to some other object) also would there be a need to change the class hierarchy.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Extra credit:
+(2 Pts) Describe Object Order and Image order Rendering.
+(2 Pts) What are some weaknesses of the Object Rendering system we used for hw2?
+(1 Pt) What is your quest? What is your favorite color? :-).

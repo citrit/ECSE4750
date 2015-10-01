@@ -1,0 +1,20 @@
+! Time-stamp: </dept/ecse/graphics/h03/XFarewell.ad, Wed, 20 Jan 1999, 03:47:59 IST, wrf@speed.ecse.rpi.edu>
+
+! First we override the default builtin translation for drag and drop.
+! If we do not do this the next one won't work.  Then we associate
+! events, either builtin (Disarm) or ours (confirm, quit) with some
+! keypress actions.
+
+! Specify the program's class name (XFarewell) just to show how 
+! to do it.
+
+XFarewell.farewell.translations: #override\n\
+		<Btn2Down>: \n\
+		<Btn2Down>,<Btn2Up>:  quit()\n\
+		<Btn1Down>,<Btn1Up>:    confirm() Disarm()\n\
+		<Key>Return:    confirm() Disarm()\n\
+		<Key>c:    confirm() Disarm()\n\
+		<Key>q:    quit()
+
+XFarewell.farewell.labelString:  Please click on me.
+*farewell.background:yellow

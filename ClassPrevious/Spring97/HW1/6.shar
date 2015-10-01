@@ -1,0 +1,355 @@
+#!/bin/sh
+# This is a shell archive (produced by GNU sharutils 4.2).
+# To extract the files from this archive, save it to some FILE, remove
+# everything before the `!/bin/sh' line above, then type `sh FILE'.
+#
+# Made on 1997-02-06 23:40 EST by <pedrih@vcmr-13.rcs.rpi.edu>.
+# Source directory was `/afs/rpi.edu/home/75/pedrih/RPI_courses.dir/DV.dir/assign1.dir'.
+#
+# Existing files will *not* be overwritten unless `-c' is specified.
+#
+# This shar contains:
+# length mode       name
+# ------ ---------- ------------------------------------------
+#   7229 -rw-r--r-- hw1.c
+#
+save_IFS="${IFS}"
+IFS="${IFS}:"
+gettext_dir=FAILED
+locale_dir=FAILED
+first_param="$1"
+for dir in $PATH
+do
+  if test "$gettext_dir" = FAILED && test -f $dir/gettext \
+     && ($dir/gettext --version >/dev/null 2>&1)
+  then
+    set `$dir/gettext --version 2>&1`
+    if test "$3" = GNU
+    then
+      gettext_dir=$dir
+    fi
+  fi
+  if test "$locale_dir" = FAILED && test -f $dir/shar \
+     && ($dir/shar --print-text-domain-dir >/dev/null 2>&1)
+  then
+    locale_dir=`$dir/shar --print-text-domain-dir`
+  fi
+done
+IFS="$save_IFS"
+if test "$locale_dir" = FAILED || test "$gettext_dir" = FAILED
+then
+  echo=echo
+else
+  TEXTDOMAINDIR=$locale_dir
+  export TEXTDOMAINDIR
+  TEXTDOMAIN=sharutils
+  export TEXTDOMAIN
+  echo="$gettext_dir/gettext -s"
+fi
+touch -am 1231235999 $$.touch >/dev/null 2>&1
+if test ! -f 1231235999 && test -f $$.touch; then
+  shar_touch=touch
+else
+  shar_touch=:
+  echo
+  $echo 'WARNING: not restoring timestamps.  Consider getting and'
+  $echo "installing GNU \`touch', distributed in GNU File Utilities..."
+  echo
+fi
+rm -f 1231235999 $$.touch
+#
+if mkdir _sh16973; then
+  $echo 'x -' 'creating lock directory'
+else
+  $echo 'failed to create lock directory'
+  exit 1
+fi
+# ============= hw1.c ==============
+if test -f 'hw1.c' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'hw1.c' '(file already exists)'
+else
+  $echo 'x -' extracting 'hw1.c' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'hw1.c' &&
+/*
+X * Advanced Computer Graphics and Data Visualization
+X *
+X * Homework 1
+X *
+X * Instructor: Thomas D. Citriniti
+X *
+X * Student: Helio Pedrini
+X *
+X * This program implements the following features:
+X * 
+X * - open a window with a double buffered visual;
+X * - draw three objects: a solid red cube with a shiny surface,
+X *   a solid blue sphere 2 units to the right of the cube with a rough surface,
+X *   and a yellow teapot 2 units to the left of the cube;
+X * - allow movement of the viewpoint of the observer (camera point);
+X * - scale, translate, and rotate each object independent of the others (extra credit).
+*/
+X
+/* Includes required */
+#include <GL/gl.h>
+#include <GL/glut.h>
+X
+#define   TEAPOT   1
+#define   CUBE     2
+#define   SPHERE   3
+X
+int OBJECT = TEAPOT            /* define an object (default is teapot) */;
+X
+float angle=0, rx, ry, rz,     /* rotation parameters    */
+X      sc=1,                    /* scaling parameter      */
+X      dx=0, dy=0, dz=0;        /* translation parameters */
+X
+/*
+X *  Define lights, materials, colors;
+X *  Draw objects;
+X */
+X void display(void)
+{
+X      GLfloat no_mat[] = { 0.0, 0.0, 0.0, 1.0 };
+X
+X      GLfloat mat_ambient[] = { 0.7, 0.7, 0.7, 1.0 }; 
+X      GLfloat mat_ambient_color[] = { 0.8, 0.8, 0.2, 1.0 }; 
+X      GLfloat mat_diffuse[] = { 0.5, 0.5, 0.5, 1.0 }; 
+X
+X      GLfloat mat_specular[] = { 0.0, 1.0, 1.0, 1.0 }; 
+X      
+X      GLfloat no_shininess[] = { 0.0 }; 
+X      GLfloat low_shininess[] = { 5.0 }; 
+X      GLfloat high_shininess[] = { 120.0 }; 
+X      
+X      GLfloat mat_emission[] = {0.3, 0.2, 0.2, 0.0};
+X
+X      glEnable(GL_LIGHTING);
+X      glEnable(GL_LIGHT0);
+X      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 
+X      
+X      glPushMatrix();
+X      glScalef(0.5, 0.5, 0.5);
+X       
+X      glEnable(GL_COLOR_MATERIAL);
+X      
+X      glPushMatrix();
+X        glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
+X        glColor3f(1.0, 0.0, 0.0);
+X        glMaterialfv(GL_FRONT, GL_SHININESS, high_shininess);
+X        if (OBJECT==CUBE) {
+X          glScalef(sc, sc, sc);
+X          glTranslatef(dx, dy, dz);
+X          glRotatef(angle, rx, ry, rz);
+X        }
+X        glutSolidCube(1.0);                                      /* draw the cube */
+X      glPopMatrix();
+X
+X      glPushMatrix();
+X        glTranslatef(-3.0, 0.0, 0.0);
+X        glColor3f(1.0, 1.0, 0.0);
+X        if (OBJECT==TEAPOT) {
+X          glScalef(sc, sc, sc);
+X          glTranslatef(dx, dy, dz);
+X          glRotatef(angle, rx, ry, rz);
+X        }
+X        glutSolidTeapot(1.0);                                    /* draw the teapot */
+X      glPopMatrix();
+X
+X      glPushMatrix();
+X        glTranslatef(2.5, 0.0, 0.0);
+X        glColor3f(0.0, 0.0, 1.0);
+X        glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
+X        glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+X        glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+X        glMaterialfv(GL_FRONT, GL_SHININESS, low_shininess);
+X        glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
+X        if (OBJECT==SPHERE) {
+X          glScalef(sc, sc, sc);
+X          glTranslatef(dx, dy, dz);
+X          glRotatef(angle, rx, ry, rz);
+X        }
+X        glutSolidSphere(1.0, 360, 360);                          /* draw the sphere */
+X      glPopMatrix();
+X       
+X      glDisable(GL_COLOR_MATERIAL);
+X      glPopMatrix();
+X      glutSwapBuffers();
+}
+X
+/* Initialize shading model */
+void myInit(void)
+{
+X      static float lightPos[4] = {2.0, 4.0, 2.0, 1.0};
+X      static float lightDir[4] = {-2.0, -4.0, -2.0, 1.0};
+X      static float lightAmb[4] = {0.7, 0.7, 0.7, 1.0};
+X      static float lightDiff[4] = {0.8, 0.8, 0.8, 1.0};
+X      static float lightSpec[4] = {0.4, 0.4, 0.4, 1.0};
+X
+X      glColor3f(1.0, 0.0, 0.0);
+X      glEnable(GL_LIGHTING);
+X      glEnable(GL_LIGHT0);
+X      glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
+X      glLightfv(GL_LIGHT0, GL_AMBIENT, lightAmb);
+X      glLightfv(GL_LIGHT0, GL_DIFFUSE, lightDiff);
+X      glLightfv(GL_LIGHT0, GL_SPECULAR, lightSpec);
+X      glEnable(GL_DEPTH_TEST);
+X      glShadeModel (GL_FLAT);
+X      glClearColor (0.0, 0.0, 0.0, 0.0);
+}
+X
+/*
+X *  Called when the window is first opened and whenever 
+X *  the window is reconfigured (moved or resized).
+X */
+void 
+myReshape(int w, int h)
+{
+X    glViewport(0, 0 , w, h);
+X    glMatrixMode(GL_PROJECTION);
+X    glLoadIdentity();
+X    if (w <= h)
+X        glOrtho(-2.5, 2.5, -2.5 * (GLfloat) h / (GLfloat) w,
+X            2.5 * (GLfloat) h / (GLfloat) w, -10.0, 10.0);
+X    else
+X        glOrtho(-2.5 * (GLfloat) w / (GLfloat) h,
+X            2.5 * (GLfloat) w / (GLfloat) h, -2.5, 2.5, -10.0, 10.0);
+X    glMatrixMode(GL_MODELVIEW);
+}
+X
+/*
+X * Keyboard handler
+X */
+void
+Key(unsigned char key, int x, int y)
+{
+X    switch (key) {
+X    case 'h':                    /* keys for rotation: 'h', 'j', 'k', 'l' */
+X      angle+=15.0;
+X      rx=0.0; ry=1.0; rz=0.0;
+X      sc=1.0;
+X      dx=0.0; dy=0.0; dz=0.0;
+X      break;
+X    case 'j':
+X      angle+=15.0;
+X      rx=1.0; ry=0.0; rz=0.0;
+X      sc=1.0;
+X      dx=0.0; dy=0.0; dz=0.0;
+X      break;
+X    case 'k':
+X      angle+=-15.0;
+X      rx=1.0; ry=0.0; rz=0.0;
+X      sc=1.0;
+X      dx=0.0; dy=0.0; dz=0.0;
+X      break;
+X    case 'l':
+X      angle+=-15.0;
+X      rx=0.0; ry=1.0; rz=0.0;
+X      sc=1.0;
+X      dx=0.0; dy=0.0; dz=0.0;
+X      break;
+X    case '-':                    /* keys for scaling: '-', '+' */
+X      angle+=0.0;
+X      sc/=1.2;
+X      dx=0.0; dy=0.0; dz=0.0;
+X      break;
+X    case '+':     
+X      angle+=0.0;
+X      sc*=1.2;
+X      dx=0.0; dy=0.0; dz=0.0;
+X      break;
+X    case '<':                    /* keys for translation: '<', '>'*/
+X      angle+=0.0;
+X      sc*=1.0;
+X      dx-=0.2; dy-=0.2; dz-=0.2;
+X      break;
+X    case '>':     
+X      angle+=0.0;
+X      sc*=1.0;
+X      dx+=0.2; dy+=0.2; dz+=0.2;
+X      break;
+X    case 27:                     /* Esc will quit */
+X      exit(1);
+X      break;
+X    default:
+X      break;
+X    }
+X    display();
+}
+X
+/*
+X *  Handle SubMenu (Transformation of the objects: scaling, translation, rotation)
+X */
+X void
+Transform_select(int value)
+{
+X    OBJECT=value;       /* select object (mouse) */
+}
+X
+/*
+X *  Handle Main Menu
+X */
+void
+Select(int value)
+{
+X    switch (value) {
+X    case 2:                                    /* move viewpoint of the observer */
+X        gluLookAt(1, 0, 0, 0, 1, 1, 0, 1, 0);
+X        display();
+X        break;
+X    case 3:                                    /* Quit */
+X        exit(0);
+X        break;
+X    }
+}
+X
+/*
+X *  Main Loop
+X *  Open window with initial window size, title bar, 
+X *  RGBA display mode, and handle input events.
+X */
+int main(int argc, char** argv) 
+{
+X  int transform_menu;
+X
+X      glutInit(&argc, argv);
+X      glutInitWindowPosition(500, 500);
+X      glutInitWindowSize(500, 500);
+X      glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGBA);
+X      glutCreateWindow (argv[0]);
+X      myInit();
+X      glutKeyboardFunc(Key);
+X      glutReshapeFunc (myReshape);
+X      glutDisplayFunc(display);
+X          
+X      transform_menu = glutCreateMenu(Transform_select);
+X      glutAddMenuEntry("Teapot", 1);
+X      glutAddMenuEntry("Cube", 2);
+X      glutAddMenuEntry("Sphere", 3);
+X 
+X      glutCreateMenu(Select);
+X      glutAddSubMenu("Transform Objects", transform_menu);
+X      glutAddMenuEntry("Move Viewpoint", 2);
+X      glutAddMenuEntry("Quit", 3);
+X      
+X      glutAttachMenu(GLUT_RIGHT_BUTTON);
+X      glutMainLoop();
+}
+SHAR_EOF
+  $shar_touch -am 0206233597 'hw1.c' &&
+  chmod 0644 'hw1.c' ||
+  $echo 'restore of' 'hw1.c' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'hw1.c:' 'MD5 check failed'
+8c7a1513d157af260606b98a7e8d834f  hw1.c
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'hw1.c'`"
+    test 7229 -eq "$shar_count" ||
+    $echo 'hw1.c:' 'original size' '7229,' 'current size' "$shar_count!"
+  fi
+fi
+rm -fr _sh16973
+exit 0
+# From: Helio Pedrini <pedrih>

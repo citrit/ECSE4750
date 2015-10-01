@@ -1,0 +1,369 @@
+#!/bin/sh
+# This is a shell archive (produced by GNU sharutils 4.2).
+# To extract the files from this archive, save it to some FILE, remove
+# everything before the `!/bin/sh' line above, then type `sh FILE'.
+#
+# Made on 1997-02-05 21:15 EST by <parkec3@cortez>.
+# Source directory was `/afs/rpi.edu/home/89/parkec3/private/datavis'.
+#
+# Existing files will *not* be overwritten unless `-c' is specified.
+#
+# This shar contains:
+# length mode       name
+# ------ ---------- ------------------------------------------
+#   6133 -rw-r----- hw1.c
+#    407 -rw------- makefile
+#
+save_IFS="${IFS}"
+IFS="${IFS}:"
+gettext_dir=FAILED
+locale_dir=FAILED
+first_param="$1"
+for dir in $PATH
+do
+  if test "$gettext_dir" = FAILED && test -f $dir/gettext \
+     && ($dir/gettext --version >/dev/null 2>&1)
+  then
+    set `$dir/gettext --version 2>&1`
+    if test "$3" = GNU
+    then
+      gettext_dir=$dir
+    fi
+  fi
+  if test "$locale_dir" = FAILED && test -f $dir/shar \
+     && ($dir/shar --print-text-domain-dir >/dev/null 2>&1)
+  then
+    locale_dir=`$dir/shar --print-text-domain-dir`
+  fi
+done
+IFS="$save_IFS"
+if test "$locale_dir" = FAILED || test "$gettext_dir" = FAILED
+then
+  echo=echo
+else
+  TEXTDOMAINDIR=$locale_dir
+  export TEXTDOMAINDIR
+  TEXTDOMAIN=sharutils
+  export TEXTDOMAIN
+  echo="$gettext_dir/gettext -s"
+fi
+touch -am 1231235999 $$.touch >/dev/null 2>&1
+if test ! -f 1231235999 && test -f $$.touch; then
+  shar_touch=touch
+else
+  shar_touch=:
+  echo
+  $echo 'WARNING: not restoring timestamps.  Consider getting and'
+  $echo "installing GNU \`touch', distributed in GNU File Utilities..."
+  echo
+fi
+rm -f 1231235999 $$.touch
+#
+if mkdir _sh68440; then
+  $echo 'x -' 'creating lock directory'
+else
+  $echo 'failed to create lock directory'
+  exit 1
+fi
+# ============= hw1.c ==============
+if test -f 'hw1.c' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'hw1.c' '(file already exists)'
+else
+  $echo 'x -' extracting 'hw1.c' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'hw1.c' &&
+//	hw1.c
+//	Chris Parker (041-88-3009)
+//	parkerc@cs.rpi.edu
+//
+//	Homework 1 - Advanced Computer Graphics and Data Visualization
+//
+//	Assignment: to do something that looks vaguely like the UPN logo
+//				and tweak it to do other cool things.
+X
+//	standard stuff I might need
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+X
+//	windows required stuff
+#ifdef _WIN32
+#include <windows.h>
+#endif
+X
+//	OpenGL required stuff
+#include <GL/gl.h>
+#include <GL/glut.h>
+X
+// defines for some useful constants
+#define kRotateTeapot 2
+#define kRotateCube 3
+#define kRotateSphere 4
+#define kRotateCamera 5
+X
+#define kIncrement 10
+X
+//	global stuff goes here
+//	NOTE: if I was *really* going to do this,
+//			I'd be making each of these a class, and just letting
+//			each of the things know how to draw themselves.
+//			For right now, though... that's overkill.
+X
+//	global state for cube
+static GLfloat cubeColor[4] = { 0.85, 0.0, 0.0, 1.0 };	// Red at 100% opacity
+GLfloat cubeUnits = 0;
+int cubeRotX = 0;		// Degrees cube rotated (X axis)
+int cubeRotY = 0;		// Degrees cube rotated (Y axis)
+X
+//	global state for sphere
+static GLfloat sphereColor[4] = { 0.0, 0.0, 0.85, 1.0 };	// Blue at 100% opacity
+GLfloat sphereUnits = 2.0;	// rel. to cube
+int sphereRotX = 0;	// Degrees sphere rotated (X axis)
+int sphereRotY = 0;	// Degrees sphere rotated (Y axis)
+X
+X
+static GLfloat teapotColor[4] = { 0.85, 0.85, 0.0, 1.0 };	// Yellow at 100% opacity
+GLfloat teapotUnits = -2.0;	// rel. to cube
+int teapotRotX = 0;	// Degrees teapot rotated (X axis)
+int teapotRotY = 0;	// Degrees teapot rotated (Y axis)
+X
+int whatToRotate = 5;
+X
+void myStuff( void ) {
+X	static float lightPos[4] = {2.0, 4.0, 2.0, 1.0};
+//	static float lightDir[4] = {-2.0, -4.0, -2.0, 1.0};
+X	static float lightAmb[4] = {0.6, 0.6, 0.6, 1.0};
+X	static float lightDiff[4] = {0.6, 0.6, 0.6, 1.0};
+X	static float lightSpec[4] = {0.3, 0.3, 0.3, 1.0};
+X
+X	glEnable(GL_LIGHTING);
+X	glEnable(GL_LIGHT0);
+X	glEnable(GL_COLOR_MATERIAL);
+X	glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
+X	glDepthFunc( GL_LESS );
+X	glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
+X	glLightfv(GL_LIGHT0, GL_AMBIENT, lightAmb);
+X	glLightfv(GL_LIGHT0, GL_DIFFUSE, lightDiff);
+X	glLightfv(GL_LIGHT0, GL_SPECULAR, lightSpec);
+X	glEnable(GL_DEPTH_TEST);
+}
+X
+void display( void ) {
+X	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+X
+X	glPushMatrix();
+X
+X	glPushMatrix();
+X	// First, draw the cube
+X	glMaterialf( GL_FRONT, GL_SHININESS, 1.0);
+X	glColor4fv( cubeColor );
+X	glRotatef( cubeRotX, 1.0, 0.0, 0.0 );
+X	glRotatef( cubeRotY, 0.0, 1.0, 0.0 );
+X	glutSolidCube( 0.75 );
+X	glPopMatrix();
+X
+X	// then draw the sphere 2 units to the right
+X	glPushMatrix();
+X	glTranslatef( 2.0, 0.0, 0.0 );
+X	glColor4fv( sphereColor );
+X	glRotatef( sphereRotX, 1.0, 0.0, 0.0 );
+X	glRotatef( sphereRotY, 0.0, 1.0, 0.0 );
+X	glutSolidSphere( 0.5, 10, 10 );
+X	glPopMatrix();
+X	// 
+X
+X	// then draw the teapot 2 units to the left
+X	glPushMatrix();
+X	glTranslatef( -2.0, 0.0, 0.0 );
+X	glMaterialf( GL_FRONT, GL_SHININESS, 1.0 );
+X	glColor4fv( teapotColor );
+X	glRotatef( teapotRotX, 1.0, 0.0, 0.0 );
+X	glRotatef( teapotRotY, 0.0, 1.0, 1.0 );
+X	glutSolidTeapot( 0.5 );
+X	glPopMatrix();
+X
+X	glPopMatrix();
+X	glutSwapBuffers();
+}
+X
+void reshape( int x, int y ) {
+X	glViewport( 0, 0, x, y );		// defines the viewport
+X	glMatrixMode( GL_PROJECTION );	// which matrix are we tinkering with
+X	glLoadIdentity();
+X	gluPerspective( 45.0, 1.0*x/y, 1.0, 10.0 );
+X	glTranslatef( 0.0, 0.0, -5.0 );	// back us up
+X	glMatrixMode( GL_MODELVIEW );	// back to modelview matrix
+}
+X
+// God, this got ugly in a hurry.  In a more ideal world, we'd
+// set things like this up as part of the class - a key would
+// generate an event to what was designated as the current object
+// in the system.
+void handleKey( unsigned char key, int x, int y ) {
+X	switch( whatToRotate ) {
+X	case kRotateTeapot:
+X		switch( key ) {
+X		case 'd':
+X			teapotRotY = ( teapotRotY + kIncrement ) % 360;
+X			break;
+X		case 's':
+X			teapotRotX = ( teapotRotX + kIncrement ) % 360;
+X			break;
+X		case 'a':
+X			teapotRotY = ( teapotRotY - kIncrement ) % 360;
+X			break;
+X		case 'w':
+X			teapotRotX = ( teapotRotX - kIncrement ) % 360;
+X			break;
+X		}
+X		break;
+X	case kRotateCube:
+X		switch( key ) {
+X		case 'd':
+X			cubeRotY = ( cubeRotY + kIncrement ) % 360;
+X			break;
+X		case 's':
+X			cubeRotX = ( cubeRotX + kIncrement ) % 360;
+X			break;
+X		case 'a':
+X			cubeRotY = ( cubeRotY - kIncrement ) % 360;
+X			break;
+X		case 'w':
+X			cubeRotX = ( cubeRotX - kIncrement ) % 360;
+X			break;
+X		}
+X		break;
+X	case kRotateSphere:
+X		switch( key ) {
+X		case 'd':
+X			sphereRotY = ( sphereRotY + kIncrement ) % 360;
+X			break;
+X		case 's':
+X			sphereRotX = ( sphereRotX + kIncrement ) % 360;
+X			break;
+X		case 'a':
+X			sphereRotY = ( sphereRotY - kIncrement ) % 360;
+X			break;
+X		case 'w':
+X			sphereRotX = ( sphereRotX - kIncrement ) % 360;
+X			break;
+X		}
+X		break;
+X	case kRotateCamera:
+X	// Rotate the viewport
+X	// w, a, s, d will rotate the model viewport
+X		switch( key ) {
+X		case 'w':
+X			glMatrixMode( GL_MODELVIEW );
+X			glRotatef( 15.0, 1.0, 0.0, 0.0 );
+X			break;
+X		case 'a':
+X			glMatrixMode( GL_MODELVIEW );
+X			glRotatef( 15.0, 0.0, 1.0, 0.0 );
+X			break;
+X		case 's':
+X			glMatrixMode( GL_MODELVIEW );
+X			glRotatef( -15.0, 1.0, 0.0, 0.0 );
+X			break;
+X		case 'd':
+X			glMatrixMode( GL_MODELVIEW );
+X			glRotatef( -15.0, 0.0, 1.0, 0.0 );
+X			break;
+X		default:
+X			break;
+X		}
+X	}
+X	glutPostRedisplay();
+}
+X
+void Select( int value ) {
+X	switch( value ) {
+X	case 1:
+X		exit( 0 );
+X		break;
+X	default:
+X		whatToRotate = value;	// set a flag as to what to be rotating
+X		break;
+X	}
+}
+X
+void main( int argc, char **argv ) {
+X	glutInit( &argc, argv );
+X	glutInitDisplayMode( GLUT_DOUBLE | GLUT_RGBA );
+X	glutInitWindowPosition( 200, 200 );
+X	glutInitWindowSize( 600, 200 );
+X	glutCreateWindow( argv[0] );
+X	myStuff();		// do stuff here
+X	glutKeyboardFunc( handleKey );
+X	glutDisplayFunc( display );
+X	glutReshapeFunc( reshape );
+X	glutCreateMenu( Select );
+X	glutAddMenuEntry( "Rotate teapot", 2 );
+X	glutAddMenuEntry( "Rotate cube", 3 );
+X	glutAddMenuEntry( "Rotate sphere", 4 );
+X	glutAddMenuEntry( "Rotate camera", 5 );
+X	glutAddMenuEntry( "Quit", 1 );
+X	glutAttachMenu( GLUT_RIGHT_BUTTON );
+X	glutMainLoop();
+}
+SHAR_EOF
+  $shar_touch -am 0205211397 'hw1.c' &&
+  chmod 0640 'hw1.c' ||
+  $echo 'restore of' 'hw1.c' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'hw1.c:' 'MD5 check failed'
+26a86cb333b86bf1f2fc467f5a0d27a3  hw1.c
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'hw1.c'`"
+    test 6133 -eq "$shar_count" ||
+    $echo 'hw1.c:' 'original size' '6133,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= makefile ==============
+if test -f 'makefile' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'makefile' '(file already exists)'
+else
+  $echo 'x -' extracting 'makefile' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'makefile' &&
+#
+# Sample Makefile for building OpenGL programs on RCS IBM systems
+#
+# Specify a target below.
+#
+CC=gcc
+LDFLAGS= -L/campus/visualization/mesa-ogl/1.2.7/@sys/lib \
+X	-lMesaaux -lglut -lMesaGLU -lMesaGL -lMesatk  \
+X	 -lXmu -lXt -lX11 -lm
+X
+CFLAGS= -Wall -g -I/campus/visualization/mesa-ogl/1.2.7/@sys/include
+X
+TARGET=somefile
+X
+$(TARGET): $(TARGET).o
+X	$(CC) -o $@ $? $(LIBS) $(LDFLAGS)
+X
+clean:
+X	/bin/rm -f *.o
+X
+SHAR_EOF
+  $shar_touch -am 0205160497 'makefile' &&
+  chmod 0600 'makefile' ||
+  $echo 'restore of' 'makefile' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'makefile:' 'MD5 check failed'
+e2f628e2cbe25f5b66793d9478160ce7  makefile
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'makefile'`"
+    test 407 -eq "$shar_count" ||
+    $echo 'makefile:' 'original size' '407,' 'current size' "$shar_count!"
+  fi
+fi
+rm -fr _sh68440
+exit 0
+# From: Chris Parker <parkec3>

@@ -1,0 +1,554 @@
+<!-- Time-stamp: </home/wrf/cg-f99/Classes/17/index.html, Wed,  3 Nov 1999, 19:14:59 EST, wrf@benvolio.ecse.rpi.edu> -->
+<html>
+
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage Express 2.0">
+<title>ECSE-4750, RPI, Class 10</title>
+<!-- Changed by: Wm. Randolph Franklin, 13-Jan-1999 -->
+<STYLE TYPE="text/css">
+<!--
+H1 { color: red; }
+
+H2 { color: blue; }
+
+   OL.outline {list-style-type: upper-roman;
+    font: bold italic 18pt sans-serif;}
+
+   OL.outline OL {list-style-type: upper-alpha;
+       font: bold 14pt sans-serif;}
+
+   OL.outline OL OL {list-style-type: decimal;
+	  font: 12pt serif;}
+
+   OL.outline OL OL OL {list-style-type: lower-alpha;
+	     font: 10pt serif;}
+
+   OL.outline OL OL OL OL {list-style-type: lower-roman;
+		font: 10pt sans-serif;}
+   -->
+</STYLE>
+</head>
+
+<body bgcolor="#FFFFFF">
+
+<h1 align="center">Rensselaer Polytechnic Institute <br>
+ECSE-4750 Computer Graphics, Fall 1999<br>
+Class 10 </h1>
+
+<h1><a name="01"></a>More Tcl</h1>
+
+<h2><a name="02"></a>Visual Tcl (vtcl) at RPI</h2>
+
+<p>The files are in /dept/ecse/graphics/Tcl/vtcl/. To run it, say</p>
+
+<p align="center">/dept/ecse/graphics/Tcl/vtcl/vtcl </p>
+
+<p>The <a href="http://www.neuron.com/stewart/vtcl/">vtcl
+homepage</a> points to a FAQ etc, as well as general Tcl info.
+This is a working version and does save things correctly. You can
+download it from here <a href="vtcl-1.2.0.tar.gz">vtcl-1.2.0.tar.gz</a>.</p>
+
+<h2><a name="03"></a>Tcl popup with entry</h2>
+
+<p>Try popdemo.tcl:</p>
+
+<pre>
+#! /bin/sh
+# the next line restarts using wish \
+exec wish &quot;$0&quot; &quot;$@&quot;
+
+proc popit {} {
+    toplevel .t
+    button .t.b -text { press to pop down } -command popdown
+    entry .t.e
+    pack .t.e
+    pack .t.b
+}
+
+proc popdown {} {
+    puts [ .t.e get ]
+    destroy .t
+}
+
+button .popup -text { press to pop up } -command popit
+pack .popup
+</pre>
+
+<p>It first displays a button. Clicking that causes a new
+toplevel window with an entry widget and another button. Cut and
+paste or type into the entry, then click the second button. That
+destroys the new toplevel, and prints the entry widget's contents
+to stdout. </p>
+
+<p>Note my coding style, which is to use lots of small
+procedures.</p>
+
+<h2><a name="04"></a>Tcl Program to Double a Number </h2>
+
+<p>double.tcl will let you type a number, then double it when the
+mouse leaves the entry field.</p>
+
+<pre>
+#! /bin/sh
+# the next line restarts using wish \
+exec wish &quot;$0&quot; &quot;$@&quot;
+
+label .l0 -text {This demos the double program!}
+
+label .l1 -background yellow -text {Type a number:}
+
+entry .e -background green -textvariable a
+
+label .l4 -text {When you leave the above entry field, the number will be
+ doubled:}
+
+label .l2 -background yellow -text {Twice that is:}
+
+label .l3 -text label -textvariable b
+
+pack .l0 .l1 .e .l4 .l2 .l3
+
+bind .e &lt; Leave &gt; doubleit
+
+proc doubleit {} {
+global a b
+set b [expr 2 * $a]
+}
+
+</pre>
+
+<h2><a name="05"></a>popupdemo3, Another popup demo</h2>
+
+<p>popupdemo3.tcl demos a hash table (associative array) and the
+concat, array, eval, and lindex commands.</p>
+
+<pre>
+#! /bin/sh
+# the next line restarts using wish \
+exec wish &quot;$0&quot; &quot;$@&quot;
+
+
+# Even fancier way to demo two buttons, each of which pops up a dialog
+# asking you to select a department, then printing the chair.
+
+# How to run:
+# 1. Ensure that this file is executable.
+# 2: Say:
+#           popupdemo3.tcl
+
+# The advantage of this method is that you can add a new dept and
+# chair together in one line.
+
+# It demonstrates a hash table (associative array) and the concat,
+# array, eval, and lindex commands.
+
+set chair(ecse) jennings
+set chair(meaem) smith
+set chair(biomed) jones
+set chair(hanggliding) kirk
+set chair(alchemy) bacon
+set chair(thaumaturgy)  mephistopheles
+set chair(astronomy) ptolomy
+
+set depts [array names chair]
+
+proc engpopup {} {
+    global depts
+    global chair
+    set i [eval [concat tk_dialog .dial deptpicker {{Pick a dept}} {{}} 0 $depts]]
+    puts &quot;Number $i chosen&quot;
+    set d [lindex $depts $i]
+    puts &quot;Chair of $d is $chair($d)&quot;
+}
+
+proc scipopup {} { puts &quot;Not implemented&quot; }
+
+button .a -text {Click for Science dialog} -command scipopup
+button .b -text { Click for Eng dialog } -command engpopup
+button .c -text Quit -command {destroy .}
+
+pack .a
+pack .b
+pack .c
+</pre>
+
+<h1><a name="08"></a>Sample Maze Game from IOCCC</h1>
+
+<p><tt>buzzard.c</tt> is a maze program from the IOCCC. This
+illustrates perfectly why it's hard for me to answer the question
+about how many lines a term project should be. This program is
+only 31 lines.</p>
+
+<pre>
+#include &lt;stdio.h&gt;
+#define X(s) (!(s&amp;3)-((s&amp;3)==2))
+#define W while
+char Z[82][82],A,B,f,g=26;z(q){return atoi(q);}m(d,l){return
+Z[   B       +    X      (   f     +
+3) * d+l *X(f+ 2 )][ A+X ( f ) * d +
+l* X           (     f     + 3 ) ] ;}int
+h= 0;D(p,s)char*s; {W(h&gt;&gt;3&lt;p&gt;&gt; 3 ) {putchar('\t'
+);           h =       (       h   +8
+)&amp;~7 ;}W(h &lt; p ){putchar(' ');++h; }(void)printf(
+p&quot;%s&quot;   ,   s                 )     ;h+=strlen(s);}main(x,a)char **a; {
+# define P(x) (x?(5-(x))*(6-(x ))/2:11)
+int b; { char b[256],i,  j=0;  FILE*F;F=fopen(x-1?a[1]:&quot;buzzard.c&quot;,&quot;r&quot;);W(
+fgets( b ,256 ,F)){for(i=0;b[ i];++ i)
+Z[j][i ] =( b [     i   ]     ==' '?1:2*(b[i]==(x&gt;2?*a[2]:'\\')));++j;}fclose
+(F);}A   =4 ; B = 3 ; f = 1;x &gt;3? A=z(a[3]),B=z(a[4]):0;b='\n';do{if(b=='\n'
+){int y ,     s , d , p   , q       ,i;for
+(y=-11; y&lt;= 11;++ y){ for(s = 1 ,d=0;s+3;s-=2){for
+(;d!=2    +       3   * s     ;     d+=s){
+if(m(d,0) !=1 ){p=P (d) ;if (abs( y )
+   &lt;p&amp;&amp;   !   m       (       d   , 0 )||abs(y)&gt;p)break;for
+(i  =-p;i&lt;p;++i)D(g+i*2,&quot;--&quot;);D(0,&quot;\-&quot;);break;}if(d==5)continue;
+p=P(d+1);q=P(d);if
+(abs(y)  &gt;q)continue;if 
+(abs(y)  &lt;p)D(g-s*(2*p+1),&quot;|&quot;);else if(m(d,s)){if
+(abs(y)  &lt;=p)for(i=(s==1?-q:p);i!=(s==1?-p:q);
+(abs(y)  ),++i)D(g+2*i+(s==-1),&quot;--&quot;);}else if
+(abs(y)  ==p)D(g-s*(2*p+1),&quot;|&quot;);else D(g-
+(abs(y)  *s*2),(s==1)^(y&gt;0)?&quot;\\&quot;:&quot;/&quot;);}d-=s;}puts(
+&quot;&quot;);h=0;}}f+=(b=='r')-(b=='l');f&amp;=3;if(b=='f'){if(!m(1,0))continue;
+A+=X(f);B+=X(f-1);}}W((b=getchar())!=-1&amp;&amp;m(0,0)==1);return 0;}
+</pre>
+
+<p>When the game starts, you are at the far end of the maze from
+the exit, looking down a corridor. To move forward, type 'f' and
+press return. To turn 90 degrees right, type 'r'; left, 'l'. You
+can put multiple commands on one line, and the new view will be
+drawn after all the moves. </p>
+
+<p>The game ends if you get out the exit (you'll know it when you
+see it) or when you type ^D. </p>
+
+<p><font size="2">Copyright (c) 1991, Landon Curt Noll and Larry
+Bassel. All Rights Reserved. Permission for personal, educational
+or non-profit use is granted provided this this copyright and
+notice are included in its entirety and remains unaltered. All
+other uses must receive prior permission in writing from both
+Landon Curt Noll and Larry Bassel. </font></p>
+
+<pre>
+<font size="1">
+    \                                           /
+     |\                                        |
+     |  \                                      |
+     |    \                                    |
+     |      \                                  |
+     |       |\                       /--------|
+     |       |  \                   /  |       |
+     |       |    \               /    |       |
+     |       |     |            /|     |       |
+     |       |     |          /  |     |       |
+     |       |     |---------|   |     |       |
+     |       |     |   |     |   |     |       |
+     |       |     |---------|   |     |       |
+     |       |     |          \  |     |       |
+     |       |     |            \|     |       |
+     |       |    /               \    |       |
+     |       |  /                   \  |       |
+     |       |/                       \--------|
+     |      /                                  |
+     |    /                                    |
+     |  /                                      |
+     |/                                        |
+    /                                           \
+f
+
+    \
+     |\                                       /--
+     |  \                                   /  |
+     |    \                               /    |
+     |      \                           /      |
+     |       |                        /|       |
+     |       |                      /  |       |
+     |       |                    /    |       |
+     |       |-------------------|     |       |
+     |       |     |             |     |       |
+     |       |     |             |     |       |
+     |       |     |             |     |       |
+     |       |     |             |     |       |
+     |       |     |             |     |       |
+     |       |-------------------|     |       |
+     |       |                    \    |       |
+     |       |                      \  |       |
+     |       |                        \|       |
+     |      /                           \      |
+     |    /                               \    |
+     |  /                                   \  |
+     |/                                       \--
+    /
+f
+    \                                           /
+     |                                        /|
+     |                                      /  |
+     |                                    /    |
+     |                                  /      |
+     |---------------------------------|       |
+     |       |                         |       |
+     |       |                         |       |
+     |       |                         |       |
+     |       |                         |       |
+     |       |                         |       |
+     |       |                         |       |
+     |       |                         |       |
+     |       |                         |       |
+     |       |                         |       |
+     |       |                         |       |
+     |       |                         |       |
+     |---------------------------------|       |
+     |                                  \      |
+     |                                    \    |
+     |                                      \  |
+     |                                        \|
+    /                                           \
+f
+                                                /
+    -------------------------------------------|
+     |                                         |
+     |                                         |
+     |                                         |
+     |                                         |
+     |                                         |
+     |                                         |
+     |                                         |
+     |                                         |
+     |                                         |
+     |                                         |
+     |                                         |
+     |                                         |
+     |                                         |
+     |                                         |
+     |                                         |
+     |                                         |
+     |                                         |
+     |                                         |
+     |                                         |
+    -------------------------------------------|
+
+
+</font></pre>
+
+<h1><font size="5">Now: Hearn &amp; Baker</font></h1>
+
+<p><font size="3">The class will now start using Hearn &amp;
+Baker, starting with chapter 2: hardware. I'll supplement, and
+partly supplant, it with some newer HW descriptions.</font></p>
+
+<h1><a name="10"></a><font size="5">New Scientist on Colors</font></h1>
+
+<p><font size="3">This was from a page at </font><a
+href="http://www.newscientist.com"><font size="3">www.newscientist.com</font></a><font
+size="3"> that appears not to be online anymore. <!--
+% <tt>http://www.newscientist.com/ps/strange/archive/answers/lwa048.html</tt>.
+% However you have to register for free first.
+--> </font></p>
+
+<p><font size="3">Q: I was taught at school that the three
+primary colours are red, blue and yellow and that by mixing
+these, all the other colours could be made. If you look closely
+at a television screen, you can see that the picture is made up
+of red, blue and green dots. Why and how do televisions use these
+colours and how, for instance, do they make yellow from them? </font></p>
+
+<p><font size="3">John Hawkins, <br>
+University of Canterbury,<br>
+Christchurch, New Zealand <br>
+</font></p>
+
+<p><font size="3">A: Televisions start with a black screen and
+add coloured light. Painters start with white paper and add paint
+which serves to remove colours from the reflected light. The
+television uses additive colours, so called because adding more
+makes the image brighter. Painting uses subtractive colours and
+works in the opposite way. </font></p>
+
+<p><font size="3">As you might expect, the two systems complement
+each other. Adding yellow and blue paints together gives green,
+which is an additive primary colour. Conversely, yellow light can
+be made out of red and green light. </font></p>
+
+<p><font size="3">Here's where the fun starts. The subtractive
+primaries are technically yellow, cyan (an intense light blue
+similar to sky blue) and magenta (a kind of purple). True red
+paint can be made from yellow and magenta paint. The problem is
+that it is difficult to get a really good magenta, and so artists
+end up using red instead of magenta. Although this precludes
+being able to mix a good, clean magenta, it is rare to find one
+in the environment anyway, so it's not missed. However, without
+magenta, it is difficult to make a good, deep blue from cyan and
+so ultramarine is used instead. The effect of this is that green
+is now difficult to create, and so bright green is used. So
+really, although artists claim to use yellow, blue and red, they
+in fact use a couple of reds, yellow, green, blue, a large tube
+of white, black, and often an assortment of tertiaries. Painting
+is an engineered solution. </font></p>
+
+<p><font size="3">Gavin Peacock,<br>
+Brighton, East Sussex <br>
+</font></p>
+
+<h2><a name="12"></a><font size="5">Video</font></h2>
+
+<p><font size="3">For info on the resolution and other specs of
+various formats, such as broadcast NTSC, VHS, etc, see </font><a
+href="http://www.cs.tut.fi/~leopold/Ld/VideoFormats.html"><font
+size="3">http://www.cs.tut.fi/~leopold/Ld/VideoFormats.html</font></a><font
+size="3"> Go one level up for other links, such as Video
+Recording Formats at </font><a
+href="http://www.hut.fi/~iisakkil/videoformats.html"><font
+size="3">http://www.hut.fi/~iisakkil/videoformats.html</font></a><font
+size="3"> </font></p>
+
+<h2><a name="13"></a><font size="4">More on LCD Displays</font></h2>
+
+<p><font size="3">Look here: </font><a
+href="http://www.ee.ualberta.ca/~charro/cookbook/faq/LCD2.doc"><font
+size="3">http://www.ee.ualberta.ca/~charro/cookbook/faq/LCD2.doc</font></a><font
+size="3">, and </font><a
+href="http://www.ee.ualberta.ca/~charro/cookbook/faq/lcd.doc"><font
+size="3">http://www.ee.ualberta.ca/~charro/cookbook/faq/lcd.doc</font></a><font
+size="3">. These are text files, not MS Word files (When MS
+started using the extension doc for Word files, doc had been used
+for some time to indicate text documentation.) </font></p>
+
+<h1><a name="14"></a><font size="4">Color NTSC Summary</font></h1>
+
+<p><font size="3">This is worth learning as an excellent example
+of electrical engineering. </font></p>
+
+<ol>
+    <li><font size="3">Specification requirement:</font><ol>
+            <li><font size="3">Add color to B and W NTSC. </font></li>
+            <li><font size="3">Upward compatible. </font></li>
+            <li><font size="3">Downward compatible. </font></li>
+        </ol>
+    </li>
+    <li><font size="3">Useful properties:</font><ol>
+            <li><font size="3">People see color info less
+                precisely than B and W info. </font></li>
+            <li><font size="3">People see blue-yellow color less
+                precisely than red-green. </font></li>
+            <li><font size="3">In typical images, a scan-line is
+                much the same as the previous one. </font></li>
+        </ol>
+    </li>
+    <li><font size="3">Engineering implications:</font><ol>
+            <li><font size="3">We can lo-pass filter the color. </font></li>
+            <li><font size="3">The fourier transform of the
+                intensity looks like a comb. </font></li>
+        </ol>
+    </li>
+    <li><font size="3">Solutions:</font><ol>
+            <li><font size="3">Rotate (R,G,B) to (Y,I,Q). </font></li>
+            <li><font size="3">Lo-pass filter I to 2/3 of normal
+                bandwidth. </font></li>
+            <li><font size="3">Lo-pass filter Q to 1/3. </font></li>
+            <li><font size="3">Combine: I cos omega t + Q sin
+                omega t, or something like that. </font></li>
+            <li><font size="3">Shift the combined color signal up
+                in frequency by 1/2 the frequency of one
+                scan-line and add to the Y. </font></li>
+        </ol>
+    </li>
+    <li><font size="3">Limitations:</font><ol>
+            <li><font size="3">Sudden intensity changes cause
+                false color aliases. </font></li>
+            <li><font size="3">Vice-versa. </font></li>
+            <li><font size="3">Color changes that are not
+                filtered properly are especially bad. </font></li>
+            <li><font size="3">Interference causes phase changes
+                causes color shift. </font></li>
+        </ol>
+    </li>
+    <li><font size="3">Solution: HDTV. </font></li>
+</ol>
+
+<p><font size="3">One good TV ref is </font><a
+href="http://www.howstuffworks.com/tv.htm"><font size="3">http://www.howstuffworks.com/tv.htm</font></a><font
+size="3"> </font></p>
+
+<h1><a name="15"></a><font size="3">Resolutions of Early Monitors</font></h1>
+
+<p><font size="3">This is an excellent example of engineering
+design. It's an edited post from johana!tsw@apple.com (Tom
+Watson) to alt.folklore.computers on 27 Apr 92 23:13:32 GMT. </font></p>
+
+<p><font size="3">The reason for the 16x64 character resolution
+for early personal computers was that you could use 512 bit shift
+registers (that were common in that day). Usually everyone used
+80 columns (look at an ADM-3) and the reason for 24 rows was that
+usually the character generators were 5x7 dots and with a few
+dots for inter-line spacing (total of 9 dots/line) one got 216
+scan lines for 24 rows. This fit just fine into NTSC monitors
+that used 265.5 (interlaced, remember) lines/field (the
+difference was used for blanking). The reason for 40 character
+displays was again a limiting function of TV's with 5 dots across
+(add a couple for nice spacing) we get 7 dots. </font></p>
+
+<p><font size="3">If one uses 80 characters we get 560 dots
+across the line. In normal TV scan lines the horozontal rate is
+63.5 (about) microseconds and taking the fact that the max
+frequency is with alternating white and black dots (total of 280
+transitions) and that gives a frequency of about 5Mhz (can't use
+all of the 63.3 usec due to blanking). Since TVs have a video
+bandwidth of only 4MHz (on a good day), that is too much, so
+everyone used 40 characters/line to get in proper bandwidth of a
+TV. If they added color, it really was necessary, since the color
+bandwidth was even less (1.25MHz for NTSC TV). </font></p>
+
+<p><font size="3">Now days color monitors with .31mm dot pitch
+high bandwidths (over 15 MHz) and high scan rates (31Khz
+horizontal, 70 Hz vertical) are very common, but then again they
+don't use NTSC composite video. The original displays were almost
+always TV's, or TV monitors since they were CHEAP!! </font></p>
+
+<p><font size="3">On the other hand, some early CRT display
+terminals used vector displays, and stroke character generators.
+BIG horizontal and BIG vertical yoke amplifiers. Video bandwidth
+wasn't a big problem then, but 300 watt 1MHz yoke amplifiers
+were!! </font></p>
+
+<p><font size="3"><br>
+</font></p>
+
+<hr>
+
+<p><a href="../16/" target="_top"><font size="1">Previous Class</font></a><font
+size="1">, </font><a href="../18/" target="_top"><font size="1">Next
+Class</font></a><font size="1">, </font><a
+href="http://www.rpi.edu/dept/ecse/graphics/index.html"
+target="_top"><font size="1">ECSE-4750 Fall 1999 Home Page</font></a><font
+size="1"> </font></p>
+
+<hr>
+
+<p><font size="2">Copyright © 1998-9, Wm. Randolph Franklin. You
+may use my material for non-profit education and research,
+provided that you acknowledge me and preserve this notice. </font></p>
+<div align="center"><center>
+
+<address>
+    <font size="2">Wm. Randolph Franklin, Associate Professor<br>
+    For email address, replace NOSPAM by RPI in the following:
+    wrf@ecse.NOSPAM.edu<br>
+    </font><a href="http://www.ecse.rpi.edu/Homepages/wrf/"><font
+    size="2">http://www.ecse.rpi.edu/Homepages/wrf/</font></a><font
+    size="2"><br>
+    +1 (518) 276-6077; Fax: -6261<br>
+    ECSE Dept., 6026 JEC, Rensselaer Polytechnic Inst, Troy NY,
+    12180 USA<br>
+    (PGP key available)<br>
+    </font>
+</address>
+</center></div>
+
+<p><font size="1"><i>Updated:</i> Mon Sep 27 19:26:10 1999<br>
+<i>URL:</i>
+http://www.rpi.edu/dept/ecse/graphics/Classes/13/index.html<br>
+</font></p>
+</body>
+</html>

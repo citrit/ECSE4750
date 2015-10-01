@@ -1,0 +1,502 @@
+<!-- Time-stamp: </home/wrf/cg-f99/Classes/08/index.html, Wed,  3 Nov 1999, 19:14:52 EST, wrf@benvolio.ecse.rpi.edu> -->
+<html>
+
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage Express 2.0">
+<title>ECSE-4750, RPI, Class 4</title>
+<!-- Changed by: Wm. Randolph Franklin, 13-Jan-1999 -->
+<STYLE TYPE="text/css">
+<!--
+H1 { color: red; }
+
+H2 { color: blue; }
+
+   OL.outline {list-style-type: upper-roman;
+    font: bold italic 18pt sans-serif;}
+
+   OL.outline OL {list-style-type: upper-alpha;
+       font: bold 14pt sans-serif;}
+
+   OL.outline OL OL {list-style-type: decimal;
+	  font: 12pt serif;}
+
+   OL.outline OL OL OL {list-style-type: lower-alpha;
+	     font: 10pt serif;}
+
+   OL.outline OL OL OL OL {list-style-type: lower-roman;
+		font: 10pt sans-serif;}
+   -->
+</STYLE>
+</head>
+
+<body bgcolor="#FFFFFF">
+
+<h1 align="center">Rensselaer Polytechnic Institute <br>
+ECSE-4750 Computer Graphics, Fall 1999<br>
+Class 4, Thurs Jan 20</h1>
+
+<h1><a name="01"></a>Online X Documentation</h1>
+
+<p>I found the following with <a href="www.google.com">google</a>,
+perhaps the most complete current search engine.</p>
+
+<p><a href="http://www.motifzone.com/resources/man/top.html">Documentation
+for X Window System</a> </p>
+
+<h1><a name="02"></a>Homework 3, Due Tues Feb. 1</h1>
+
+<p>This homework will build on <tt>xbox.c</tt>. </p>
+
+<ol>
+    <li>Copy xbox.c to your home directory.</li>
+    <li>Compile xbox.c and run it. Click the pressme button and
+        then type something in the popup window. When finished
+        typing, click on Ok and note that your input is echoed to
+        the xterm window. Try clicking on Cancel. When finished
+        playing with this, click on Quit.</li>
+    <li>Now modify xbox to make it more interesting. Add buttons
+        called Date, Ls, and Cat. Date will cause the current
+        date to be printed. Ls and Cat will cause a popup window
+        to appear and accept the name of a directory (or
+        switches) or file respectively. Then they will execute
+        those commands. <p>The main routine you need to do this
+        is <tt>system</tt>, which executes a command line, just
+        as if you typed it to the shell. To form the command line
+        for ls and cat, you'll need to concatenate two strings.
+        See <a href="testsystem.c">testsystem.c</a> for an
+        example of system. If all else fails, RTFM.</p>
+    </li>
+    <li>Get creative and add another function - you choose - to
+        the program.</li>
+    <li>Put your name somewhere on the screen and make a
+        hardcopy. Hand it and your source code in.</li>
+    <li>(Non programming questions) Name 3 places where resources
+        can be specified.</li>
+    <li>Give an advantage and a disadvantage of allowing the user
+        to set resources w/o having the source code available.</li>
+    <li>Check your books or the online doc, and name 4 things
+        that XtVaAppInitialize does.</li>
+    <li>Consider the program <tt>xexam.c</tt>. <ol>
+            <li>What does this program do?</li>
+            <li>Sketch the tree of widgets from the top level
+                widget to the leaves. </li>
+            <li>How many push button widgets are there? Which
+                routine is called when each is clicked on? </li>
+            <li>What are the labels that will print in the
+                command widgets by default? </li>
+            <li>What file where in your account will resources be
+                read from (assuming that things are configured as
+                I've described in class)? </li>
+            <li>Suppose you want to change the label printed
+                inside (only) the first leaf widget. Give a
+                possible line to add to the resources file. </li>
+            <li>Suppose you run the program thus: <tt>xexam -bg
+                red</tt>. Where, if anywhere, in your program is
+                the bg resource recognized? </li>
+        </ol>
+    </li>
+    <li>How can your X program tell the user ran it with
+        command-line arguments that are not X resources and
+        values? </li>
+    <li>In <tt>xgoodbye.c</tt>, why did I place the <tt>Quit</tt>
+        routine before <em>main</em>? </li>
+    <li>In <tt>xbox.c</tt>, how is the dialog widget created only
+        the first time thru? </li>
+    <li>What does it mean to <em>manage</em> a widget? </li>
+    <li>When you call <tt>XtMainLoop()</tt> your program loses
+        control to the X system. Name two ways for it to get back
+        control later (without terminating the X system)? </li>
+    <li>Why might you want to have the same callback routine for
+        more than one widget? </li>
+    <li>In the above case, name two ways for the routine to tell
+        which widget it is responding to? </li>
+    <li>Look at these web sites:</li>
+    <li><ol>
+            <li><a
+                href="http://www.pbs.org/cringely/pulpit/pulpit19990909.html">Terminal
+                Condition</a> Why Sun's Aggressive New
+                Workstations Are Really Just a Blast From the
+                Past, By Robert X. Cringely </li>
+            <li><a
+                href="http://dailynews.yahoo.com/h/nm/19990913/tc/ibm_unix_2.html">IBM
+                Unveils New UNIX Line</a></li>
+            <li><a
+                href="http://www.nintendo.com/corp/press/090199b.html">The
+                Future of Game Boy</a></li>
+        </ol>
+        <p>and answer this question: Who will have the best
+        graphics in a year?</p>
+    </li>
+</ol>
+
+<h1><a name="03"></a>Programming Hints</h1>
+
+<ol>
+    <li>When creating a large program, write a little at a time,
+        then compile and run it, before adding some more code.
+        This is how I modified xtext.</li>
+    <li>Compile from within Emacs; it will point you to the error
+        lines.</li>
+</ol>
+
+<h2><a name="04"></a>C Char Array Errors</h2>
+
+<p>What's wrong with this (don't hand it in; just think):</p>
+
+<pre>char *c;
+c=&quot;hello&quot;;
+c[2]='x';
+</pre>
+
+<p>and this:</p>
+
+<pre>
+char *c;
+c=&quot;hello&quot;;
+strcat(c, &quot; to you!&quot;);
+</pre>
+
+<p>and this:</p>
+
+<pre>
+char c[20];
+c=&quot;hello&quot;;
+strcat(c, &quot; to you!&quot;);
+</pre>
+
+<h1><a name="05"></a>Security Warning About <tt>system</tt></h1>
+
+<p>Letting people run your homework program above on your account
+and provide input, is equivalent to letting them type any command
+on your account. If someone types a string with a semicolon to
+the program, then system will take the following text as a new
+command and run it. That is,</p>
+
+<p><tt>system(&quot;ls foo;rm bar&quot;);</tt></p>
+
+<p>will cause two commands to be run: ls and bar! This trap also
+occurs other places, such as in poorly written WWW CGI-BIN
+programs. </p>
+
+<h1><a name="06"></a>X Notes</h1>
+
+<h2><a name="07"></a>Obtaining Info About Widgets</h2>
+
+<p>There are many routines and macros in X to give you info about
+your widgets. Here are some. </p>
+
+<ol>
+    <li><tt>XtName(w)</tt> returns the name of a widget (i.e.,
+        returns a char *) when given a variable of type Widget.
+        It can be used to determine which widget a certain
+        callback or action occurred on. </li>
+    <li><tt>XtParent(w)</tt> returns the parent widget of w. You
+        can walk the tree up to the top level widget with this. </li>
+</ol>
+
+<h2><a name="08"></a>Portable Programming</h2>
+
+<p>If you try to get an X-Windows program up on three different
+platforms (Sun, IBM, and SGI) you'll get a feel for some
+portability problems. If you wish to see <tt>config</tt>, a
+program that helps other programs to be portable, see my web page
+<em>Make, Makefile, and Config Summary</em> <a
+href="http://www.ecse.rpi.edu/Homepages/wrf/systems/make.html"
+<tt>http://www.ecse.rpi.edu/Homepages/wrf/systems/make.html</a>
+This is enrichment material. </p>
+
+<h2><a name="09"></a>Online Docs</h2>
+
+<p>On the SGIs, you can read a lot of online documentation on X
+by starting from the on-screen menu, in two forms: </p>
+
+<ol>
+    <li>All the manual pages, </li>
+    <li>User manuals and programming manuals, which organize
+        material by topic. </li>
+</ol>
+
+<h2><a name="10"></a>XmCreatePromptDialog Man Page</h2>
+
+<p>Here are more examples of the online docs. I extracted this
+from </p>
+
+<p><tt>/campus/osf/motif/2.0/distrib/src/doc/man/Output/draft/ascii/3X\_04</tt>
+</p>
+
+<p>and cleaned it up. Unfortunately, it does not mention that the
+widget returned is the dialog box instead of the containing
+shell. In fact, the only place where I found that mentioned is in
+the O'Reilly Motif Programming Manual. </p>
+
+<pre>
+     XmCreatePromptDialog(3X)       OSF       XmCreatePromptDialog(3X)
+
+     NAME
+          XmCreatePromptDialog-The SelectionBox PromptDialog
+          convenience creation function
+
+     SYNOPSIS
+          #include <Xm/SelectioB.h>
+
+          Widget XmCreatePromptDialog (parent, name, arglist, argcount)
+               Widget    parent;
+               String    name;
+               ArgList   arglist;
+               Cardinal  argcount;
+
+     DESCRIPTION
+          XmCreatePromptDialog is a convenience creation function that
+          creates a DialogShell and an unmanaged SelectionBox child of
+          the DialogShell.  A PromptDialog prompts the user for text
+          input.  It includes a message, a text input region, and
+          three managed buttons.  The default button labels are OK,
+          Cancel, and Help.  An additional button, with Apply as the
+          default label, is created unmanaged; it may be explicitly
+          managed if needed.  One additional WorkArea child may be
+          added to the SelectionBox after creation.
+
+          XmCreatePromptDialog forces the value of the SelectionBox
+          resource XmNdialogType to XmDIALOG_PROMPT.
+
+          Use XtManageChild to pop up the PromptDialog (passing the
+          SelectionBox as the widget parameter); use XtUnmanageChild
+          to pop it down.
+
+          XmCreatePromptDialog forces the value of the Shell resource
+          XmNallowShellResize to True.
+
+          parent    Specifies the parent widget ID
+
+          name      Specifies the name of the created widget
+
+          arglist   Specifies the argument list
+
+          argcount  Specifies the number of attribute/value pairs in
+                    the argument list (arglist)
+
+          For a complete definition of SelectionBox and its associated
+          resources, see XmSelectionBox(3X).
+
+     1-521                                            (printed 8/3/94)
+</pre>
+
+<h2><a name="11"></a>Shell Widgets</h2>
+
+<p>This is from the OSF/Motif Programmer's Guide, <tt>/campus/osf/motif/2.0/distrib/src/doc/programGuide/Output/draft/ascii/ch02</tt>
+</p>
+
+<pre>
+2.5  Shells
+
+   Users of X Window System applications normally employ a
+   window manager, a special application that may control
+   the positions, sizes, and border decorations of top-
+   level windows on the display.  Motif supplies its own
+   window manager, the Motif Window Manager (MWM), but
+   Motif applications can cooperate with other window
+   managers as well.
+
+   A window manager communicates with other applications
+   through a protocol defined in an X Window System
+   document, the Inter-Client Communication Conventions
+   Manual (ICCCM).  Xt and Motif define a group of widgets
+   whose main responsibility is to envelop other widgets
+   and communicate with the window manager.  These widgets
+   are called shells.
+
+   A shell is nearly invisible to the application.  Each
+   shell has a single managed child, and the shell's
+   window usually remains coincident with the child's
+   window.  The application must create shells when
+   needed, but many Motif convenience routines that create
+   widgets also create shells automatically.  Once it has
+   created a shell, the application may not need to handle
+   the shell again.  For example, an application can
+   position or resize a Motif shell by positioning or
+   resizing the child widget.
+
+   Each widget with a top-level window-that is, a window
+   whose parent is the root window of the screen-needs to
+   be enclosed in a shell.  This is true of the main
+   application widget, but it is also true of dialogs,
+   menus, and any top-level widgets other than the main
+   application widget.  Motif provides three classes of
+   shell: VendorShell, DialogShell, and MenuShell.
+
+2.5.1  VendorShell
+
+   VendorShell is the shell class that provides Motif-
+   specific behavior for shells other than those
+   surrounding menus.  It is responsible for communication
+   between the application and MWM.  VendorShell is a
+   superclass for other classes.  TopLevelShell is an Xt
+   subclass of VendorShell that surrounds a top-level
+   widget in an application.  ApplicationShell is another
+   Xt subclass of VendorShell that surrounds the main
+   widget in the application.
+
+   Many applications create only one ApplicationShell.  A
+   program can create this shell explicitly, or it can use
+   the Xt convenience routine XtAppInitialize to
+   initialize the application and automatically create the
+   ApplicationShell.
+
+2.5.2  DialogShell
+
+   A DialogShell is a VendorShell subclass that envelops
+   dialogs.  Although the window manager takes account of
+   dialogs, they are usually transient; they appear to
+   provide information to or solicit information from the
+   user, and then they disappear.  DialogShell is a
+   subclass of the Xt TransientShell class, which keeps
+   track of the application to which the dialog belongs.
+
+   Users cannot iconify a dialog separately from the main
+   application window.
+
+   DialogShell is designed to have a child that is a
+   subclass of BulletinBoard.  Most Motif convenience
+   routines that create dialogs create DialogShell parents
+   automatically.
+
+</pre>
+
+<h1><a name="12"></a>Program <tt>xtext.c</tt></h1>
+
+<p>This program illustrates several things:</p>
+
+<ol>
+    <li>a main window widget, which is a base on which to build
+        large apps, </li>
+    <li>a text widget for editing text, and getting and setting
+        that text from the program, </li>
+    <li>H and V scroll bars on a text area, </li>
+    <li>pull-down menus, from a menubar widget, </li>
+    <li>modifying an existing widget's resources, </li>
+    <li>placing one widget relative to another with a form widget
+        and attachments, </li>
+    <li>popping up an information dialog widget, </li>
+    <li>getting the cancel and help button widget addresses for a
+        convenience widget, </li>
+    <li>unmanaging some widgets to make them invisible, </li>
+    <li>popping down a widget by destroying it, </li>
+    <li>managing a widget as a separate call after creating it,
+        which is necessary for some convenience widgets, since
+        there is no single routine given to create and manage
+        them, </li>
+    <li>using the same callback routine for two widgets, with the
+        user data field in <tt>XtAddCallback</tt> distinguishing
+        them, </li>
+</ol>
+
+<p>A good reference is chapter 4 of O'Reilly volume 6A.</p>
+
+<p>Here is the <a href="xtext.c">xtext.c</a> source and a
+screendump.</p>
+
+<p><img src="xtext.gif" width="306" height="294"> </p>
+
+<p>Here is the resources file, <a href="XText.ad">XText.ad</a>. </p>
+
+<h1><a name="13"></a>Program <tt>editres</tt></h1>
+
+<p><tt>editres</tt> lets you display the tree of widgets, showing
+their names or classes. You can also change some resource values
+in a running program. Programs compiled on the SGIs will talk to <tt>editres</tt>.
+However, on some other platforms, you must make two additions to
+a program that is to talk to <tt>editres</tt>. </p>
+
+<ol>
+    <li>Add this declaration near the top.<p><tt>extern void
+        _XEditResCheckMessages();</tt></p>
+    </li>
+    <li>Add this sometime before the end.<p><tt>XtAddEventHandler(top_level_widget,
+        (EventMask)0, True, _XEditResCheckMessages, NULL); </tt></p>
+        <p><tt>top_level_widget</tt> should be the top level
+        widget. If want to be able to click on popups, do this
+        for each popup also.</p>
+    </li>
+    <li>Search another library, <tt>-lXmu</tt>, when linking,
+        after <tt>-lXm</tt>. I've done this to my makefiles. </li>
+    <li>Compile the program. </li>
+    <li>Read its man page and thatof <tt>editres</tt>. </li>
+</ol>
+
+<p>Here the tree of xbox widgets, after the popup widget was
+created. </p>
+
+<p><img src="xbox_editres.gif" width="506" height="480"> </p>
+
+<p>This is the same tree, but showing classes. </p>
+
+<p><img src="xbox_editres_class.gif" width="653" height="533"> </p>
+
+<p>You can also display a widget's resources, and change many of
+them.</p>
+
+<p>If you get the widget tree on <tt>xtext</tt> before and after
+hitting the help button the first time, you'll notice that a lot
+more widgets appear. </p>
+
+<h1><a name="14"></a>Filler -- Gelernter on the Beauty of
+Software</h1>
+
+<p><font size="2">``Most computer technologists don't like to
+discuss it, but the importance of beauty is a consistent (if
+sometimes inconspicuous) thread in the software literature.
+Beauty is more important in computing than anywhere else in
+technology... Beauty is important in engineering terms because
+software is so complicated... Beauty is our most reliable guide
+to achieving software's ultimate goal: to break free of the
+computer, to break free conceptually. Software is stuff unlike
+any other... Software's goal is to escape this gravity field, and
+every key step in software history has been a step away from the
+computer, toward forgetting about the machine and its physical
+structure and limitations -- forgetting that it can hold only so
+many bytes, that its memory is made of fixed size cells, that you
+refer to each cell by a numerical address. Software needn't
+accept those rules and limitations. But as we throw off the
+limits, what guides us? How do we know where to head? Beauty is
+the best guide we have.'' (Adapted from ``Machine Beauty:
+Elegance and the Heart of Computing,'' by David Gelernter,
+Discover Sep 97), reported in Edupage, 9 September 1997, </font><a
+href="http://www.educom.edu"><font size="2">http://www.educom.edu</font></a><font
+size="2">. </font><br>
+</p>
+
+<hr>
+
+<p><a href="../07/" target="_top">Previous Class</a>, <a
+href="../09/" target="_top">Next Class</a>, <a
+href="http://www.rpi.edu/dept/ecse/graphics/index.html"
+target="_top">ECSE-4750 Fall 1999 Home Page</a> </p>
+
+<hr>
+
+<p><font size="2">Copyright © 1998-9, Wm. Randolph Franklin. You
+may use my material for non-profit education and research,
+provided that you acknowledge me and preserve this notice. </font></p>
+<div align="center"><center>
+
+<address>
+    <font size="2">Wm. Randolph Franklin, Associate Professor<br>
+    For email address, replace NOSPAM by RPI in the following:
+    wrf@ecse.NOSPAM.edu<br>
+    </font><a href="http://www.ecse.rpi.edu/Homepages/wrf/"><font
+    size="2">http://www.ecse.rpi.edu/Homepages/wrf/</font></a><font
+    size="2"><br>
+    +1 (518) 276-6077; Fax: -6261<br>
+    ECSE Dept., 6026 JEC, Rensselaer Polytechnic Inst, Troy NY,
+    12180 USA<br>
+    (PGP key available)<br>
+    </font>
+</address>
+</center></div><script>
+document.write("<i>Updated:</i> " + document.lastModified + "<br>")
+document.write("<i>URL:</i> " + document.URL + "<br>")
+</script>
+</body>
+</html>

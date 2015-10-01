@@ -1,0 +1,4 @@
+!table
+!version 100
+FIELDS: 1
+  Field1 CHAR (10) INDEX 1

@@ -1,0 +1,352 @@
+Introduction to Visualization
+What is Scientific Visualization
+Definitions: 0
+
+In general terms, Scientific Visualization can be thought of as any method which presents scientific information in a manner to facilitate the conceptualization of scientific phenomenon or statistical information. With advances in computational speeds and display technology, sci-vis has experienced a revolution. Historical methods of sci-vis have not become obsolete however. Graph paper and oscilloscopes have been key sci-vis tools for years, and continue to be so. Scientific visualization may take advantage of any of the human senses. Sound has been used as a sci-vis tool for years and is still an area of active research. New techniques are being studied which employ the sense of feel, including force-feedback systems to help "feel" the strength of a bond between atoms, or feel the molecular surface of a tooth. 
+
+Here's some other explanations of visualization from the Visualization FAQ:
+
+Analytic graphics
+ 	-- Carol Hunter, LLNL
+
+Visualization:
+	The use of computer imagery to gain insight into complex phenomena.
+
+The purpose of visualization is insight, not virtual realities or pictures.
+ 	-- Eugene N. Miya, President, Bay Area ACM/SIGGRAPH,
+	Usenet post, November 1987, responding to the release
+	of the Report. "I like the Livermore perspective."
+
+
+0. Hughes, M., Scientific Visualization and Graphics, University of Minnesota, http://web.msi.umn.edu/WWW/SciVis/umnscivis.html
+         0         0
+    0.1000    0.0998
+    0.2000    0.1987
+    0.3000    0.2955
+    0.4000    0.3894
+    0.5000    0.4794
+    0.6000    0.5646
+    0.7000    0.6442
+    0.8000    0.7174
+    0.9000    0.7833
+    1.0000    0.8415
+    1.1000    0.8912
+    1.2000    0.9320
+    1.3000    0.9636
+    1.4000    0.9854
+      ...        ...
+    5.3000   -0.8323
+    5.4000   -0.7728
+    5.5000   -0.7055
+    5.6000   -0.6313
+    5.7000   -0.5507
+    5.8000   -0.4646
+    5.9000   -0.3739
+    6.0000   -0.2794
+    6.1000   -0.1822
+    6.2000   -0.0831
+Terminology
+
+Contours
+
+Given a set of samples taken over a presumably continuous region, it is meaningful to consider drawing smooth lines connecting together the locations on the grid containing the same data values. You are probably familiar with topographic maps that show contour lines connecting together the same values of altitude of the Earth's surface features, such as hills and valleys. These lines are called "contour lines" or "isolines" (iso means "same" or "equal"). In most cases, the places on the surface of the sample grid that have identical data values will not coincide with the grid sample points. While there is a direct correspondence between the actual appearance in nature of these hills and valleys and a contour map of the region, when we plot an abstract data value such as "number of species of grass" on a sample grid then connect with lines those data grid areas having the same number of grass species, we are performing visualization.
+
+
+
+
+
+
+
+
+
+
+
+
+
+Isosurfaces
+
+When we have collected data throughout a three-dimensional space, we can identify volumetric elements defined by connecting adjacent grid sample points in three dimensions using a "connections" component like cubes. It now becomes possible to draw "isosurfaces" rather than "isolines." An isosurface is that surface cutting through a volume on which all data values are equal to a specified value. Depending on the actual distribution of the data, isosurfaces may look more or less like flat sheets (the isosurface of "sea level" in a data set of altitudes would look like this), or an isosurface might enclose a portion of our space, or an isosurface may appear as a whole set of small disconnected surfaces or enclosed spaces. To create an isosurface, we pick a value of interest. Let's say that according to our knowledge of meteorology, we know that the dew point (at which water condenses from vapor to liquid) is at 12 degrees C in our sample. Although we measured temperatures at only a fixed number of grid points, we are interested in seeing where rain formation may begin throughout the atmosphere. We could show only the sample points highlighted by themselves, but once again, we make a reasonable assumption that we have taken discrete samples from a continuous natural volume. In other words, rain formation will not simply occur at the limited set of discrete points where we have sampled temperatures of 12 degrees C, but at all the points in between that are also at 12 degrees. How do we find all those in-between points? By interpolating through the volumetric elements between adjacent sample points.
+
+
+
+
+
+
+
+
+Color Mapping
+
+A colormap represents a relationship between a continuous range of floating point numeric data
+values and a set of color values. Frequently, you'll encounter colormaps with continuous ("spectral") color tones like a rainbow, but there is no requirement that colormaps appear continuous. Each colormap has associated with it a minimum and a maximum scalar value. The range over which these colors are mapped normally includes the whole range of measured values, you can also specify smaller ranges to highlight areas of interest.
+
+
+
+
+
+
+
+
+
+
+
+
+
+Rendering
+
+The process of converting geometric data into an image which involves organizing the data into a formatted style, extracting the necessary information, mapping the data to a visual. This is referred to as a visualization pipeline. Using OO technology we can separate these steps and replace any one link in the pipeline with other filters or data types.
+Volume Rendering
+
+Another way to examine data collected throughout a volume of space. Imagine a glass bowl full of lemon gelatin. Holding it up to a light, you can see through the gelatin because it is somewhat
+translucent. Now imagine that you've added strawberries to the bowl of gelatin before it set up. You can see the strawberries embedded in the gelatin. What is really happening, visually? Light shines through the mass of gelatin "accumulating" color. If you look through the top corner, it will appear somewhat less yellow than if you look through the thickest part. If the light strikes a strawberry as it passes through the gelatin, your eyes will detect an orange object with a distinct outline, which of course enables us to find the location of the strawberries in the volume of gelatin. The strawberry appears orange because its red color is partly occluded by the yellow gelatin: nevertheless, our brains convert the strawberry color back to red because it is a familiar object. If
+someone has added a fruit unfamiliar to you, you will have a hard time identifying the true color of the fruit, since our brains are not good at performing subtractive color calculations. Volume rendering a data space yields an image something like our bowl of gelatin. By default, a volume rendering appears somewhat transparent. As light passes through from behind the volume toward your eye, it is absorbed more in areas of densely concentrated values. These areas will appear to be more "opaque." If you colormap your volume according to the data component, you will see indistinct colored areas in their relation to each other.
+0.25175E-02  0.54965E-05  0.13041E+01  0.00000E+00
+0.25174E-02  0.28946E-04  0.13041E+01  0.00000E+00
+0.25165E-02  0.71067E-04  0.13041E+01  0.00000E+00
+0.25141E-02  0.13174E-03  0.13041E+01  0.00000E+00
+0.25087E-02  0.21071E-03  0.13041E+01  0.00000E+00
+0.24987E-02  0.30762E-03  0.13041E+01  0.00000E+00
+0.24820E-02  0.42184E-03  0.13041E+01  0.00000E+00
+     ...                     ...                   ...                   ...
+0.61144E-02  -.17655E-02  -.32967E+01  0.50643E-01
+0.62081E-02  -.13965E-02  -.32962E+01  0.50654E-01
+0.62727E-02  -.10661E-02  -.32958E+01  0.50661E-01
+0.63145E-02  -.77739E-03  -.32956E+01  0.50666E-01
+0.63396E-02  -.53248E-03  -.32955E+01  0.50669E-01
+0.63530E-02  -.33289E-03  -.32954E+01  0.50671E-01
+0.63591E-02  -.17958E-03  -.32954E+01  0.50672E-01
+0.63612E-02  -.73144E-04  -.32953E+01  0.50672E-01
+0.63616E-02  -.13889E-04  -.32953E+01  0.50672E-01
+0., 0., 0.,  1., 0., 0.,  0., 1., 0.,  1., 1., 0., 0., 2., 0.,  1., 2., 0.
+0., 0., 1.,  1., 0., 1.,  0., 1., 1.,  1., 1., 1., 0., 2., 1.,  1., 2., 1.
+0., 0., 2.,  1., 0., 2.,  0., 1., 2.,  1., 1., 2., 0., 2., 2.,  1., 2., 2.
+0., 0., 3.,  1., 0., 3.,  0., 1., 3.,  1., 1., 3., 0., 2., 3.,  1., 2., 3.
+Animation
+
+There are two basic types of animation used, frame by frame animation and key frame animation. The traditional method of frame by frame method of animation requires manipulation of single frames and sequencing them into a smooth animation. 
+
+Key framing allows the user to organize the "actors", "cameras", and "lights" and control them independently to create whole scenes. The key framing technique stores positions of all the objects and generates smooth positional changes throughout the scene.
+
+
+
+
+VLSC Equipment
+
+	2 SGI Onyx/Reality Engine2 high-end visualization systems 
+	4 SGI Indigo2/Extremes desktop workstations 
+	2 Printers 
+	a BetaCam Video Rack 
+	a Dunn Camera for generating prints and slides 
+	a Matrix Camera for generating prints and slides 
+
+
+The visual at right is generated from sampling data on a 50x50x50 grid using the equation:
+
+a0x2 + a1y2 + a2z2 + a3xy + a4yz + a5xz + a6x + a7y + a8z + a9 = F(x,y,z)
+Types of Data
+
+XY Data
+
+Data generated for simple XY plots. This type of data shows how two dependant results act over a given range. The simplest example is y = sin(x) for the range [0..(2*pi)].
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+XYZ Data
+
+
+Data sampled over a specific area with an X, Y, and Z component to the position. This data can be associated with many types of measurements, an example may be terrain mapping where measurements are taken at irregular intervals and show the topography of the land. Here is an example of positional information associated with molecular positions of a methanol molecule. The Scalar value would be used to color the individual points according to the current color mapping.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+3D Data
+
+Structured Grid
+
+Structured grids are made up of similar building blocks, such as cubes, forming hexahedral cells. This is the most commonly used form of volumetric data and is also the easiest to manipulate. A common example is taking air samples at a regular interval through a gaseous cloud and representing the readings on a regular grid. This would contain an n by m matrix of values which would be extended over several layers. Here is an example of a 2 x 3 x 4 regular grid:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Unstructured Grid
+
+Unstructured Grids represent geometry as points (or nodes) and elements. The points are defined by a positive, arbitrary integer id and a triplet of floats representing position. The elements can be any of a set of shapes such as a single point, a line element defined by two nodes, a triangle element defined by three nodes, a quadrilateral element defined by four element, a brick element defined by eight points, a wedge element defined by 6 elements, a pyramid defined by four points that form the base and a fifth point at the peak, and so on. Here is an example of an unstructured grid with irregular connections and irregular positions.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Vector Data
+
+ Vector data is generally associated with a geometry and provides a triplet of values for each point in the geometry. This would be to specify a direction and magnitude at each point. This is useful for air flow visualizations and Finite Element calculations showing force directions and magnitude. Here is a visualization of a thunder cloud showing an isosurface of a specific moisture value and glyphs (arrows) showing the direction and magnitude of the airflow inside the cloud.
+Visualization Tools
+
+SciAn ¿
+
+SciAn is a scientific visualization and animation program for Silicon Graphics and IBM RISC/Sytem 6000 workstations. It was developed at the Supercomputer Computations Research Institute at Florida State University.
+
+SciAn is primarily intended to do 3-D visualizations of data in an interactive environment with the ability to generate animations using frame-accurate video recording devices. A user manual, on-line help, and technical notes will help you use the program.
+
+Iris Explorer ¿
+
+Iris Explorer is a visualization package from SGI. Visualization "programs" are created interactively through a map editor, allowing rapid development and customization of visualizations, or through the Skm scripting language, for text based program creation or automated visual program creation. The "modules" in a map represent nodes in a dataflow network, realized by independent programs which communicate via pipes. 
+
+Visualization programs can be created using Iris Explorer's map editor. Here, visualization program are represented as data flow diagrams. Modules are the nodes in the network and perform various tasks such as: importing data, creating contours, converting the data to geometry, and displaying the data. A Module can have several inputs and outputs that are visually connected to the inputs and outputs of other tools. 
+
+
+IBM's DataExplorer
+
+Data Explorer is a visualization package from IBM. Visualization "programs" are created interactively through a network editor, or using a text editor and Data Explorer's scripting language. Data Explorer supports both hardware and software rendering: hardware rendering providing highly interactive visualizations, software rendering providing access to visualization techniques not available in hardware, but at a loss in interaction speed. 
+
+Data Explorer's strength is its generality and ease of use. The generality stems from a general internal data model. Ease of use stems from the network editor and predefined modules. Given a basic visual program, it is straightforward for a user to alter the appearance of a visualization, substituting different glyphs (arrows, tubes, etc.) at will. 
+
+DX supports a number of different classes of interesting scientific data, which can be described by its shape (size and number of dimensions), rank (e.g., scalar, vector, tensor), type (float, integer, byte, etc. or real, complex, quaternion), where the data are located in space (positions), how the locations are related to each other (connections), mesh dependency of data (i.e., node or cell center) or aggregation (e.g., hierarchies, series, composites, etc.). Regular and irregular, structured and unstructured data are supported as well as the notion of missing data (i.e., regions of invalidity).
+
+Data may be imported through public domain structures like Unidata's netCDF, user-created custom filters and a general array handler. The general array importer provides a mechanism for the format or layout of data stored on disk, and then converts the data directly to the data model representation internal to DX. Various image formats are supported for import and export.
+
+
+LYMB/Visage Object Oriented Visualization and Animation System
+
+
+LYMB is an object-oriented software development system. Object oriented programming is a technique for creating software that is more robust, modular, and extensible than software created using conventional programming techniques. The modules, called objects, are physical or conceptual things that exist in the problem domain. This manual is intended as a tutorial and familiarity with object-oriented methodology is not required.
+
+VISAGE (VISualization, Animation, and Graphics Environment) is a generic, three-dimensional system that graphically represents engineering and scientific data. VISAGE is an application written in the LYMB object-oriented system.
+
+The user interface allows you to easily create and modify graphic representations, while the graphics display shows you the results of your actions. Unlike many static display systems, VISAGE has been built as an animation system. Thus, as you change data in the user interface, the animated images immediately reflect your changes. VISAGE is designed to interface with a wide variety of 2D (surface) and 3D (volume) data. These data, referred to generically as geometry, include:
+
+display data-- 	arbitrary collections of points, lines, polygons, and triangle strips
+structured grid sets - 	topologically regular rectangular meshes such as finite difference grids
+unstructured grid sets - 	irregular collections of nodes and elements such as finite element meshes
+structured point sets - 	regular arrays of points in space such as voxel or imaging data
+unstructured point sets - 	random arrays of points in space such as measured or sensor data
+Examples of Visual Results
+
+
+This is Neuron from the hippocampus of a rat showing synaptic connectivity at a specified threshold value. The data was organized from multiple layers or "slices" of data into a regular grid and then passed through a visualization pipeline specifying how and what to extract from the data. In this case the pipeline generates a continuous surface from scalar values throughout the volume.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Here is a mechanical system animated to show movement of the separate parts based on standard mechanical equations. The system has a user interface attached to control the arm and shaft lengths and show plots of various aspects of the system.
+This visual is created by generating 3D surfaces corresponding to a constant function value F(x,y,z) = c. 1
+This is a volume rendering of measurements of a water molecule taken over a regular grid.
+Topics
+
+What is Scientific Visualization
+Terminology
+	Contours
+	Isosurfaces
+	Marching Cubes
+	Color Mapping
+	Rendering
+	Visualization Pipeline
+	Volume Rendering
+
+Types of Data
+	XY Data
+	XYZ Data
+	3D Data
+	Structured Grid
+	UnStructured Grid
+	Vector Data
+
+Visualization Tools
+	SciAn 
+	Iris Explorer
+	IBM's DataExplorer
+	LYMB/Visage Object Oriented Visualization and Animation System
+
+Animation
+VLSC Equipment
+Examples of Visual Results
+Visualization Pipeline1
+
+The visualization pipeline consists of objects to represent data (data objects) objects to operate on data (process objects), and an indicated direction of data flow (arrowed connections between objects). Data objects represent information and provide methods to create, access, and delete this information. Process objects operate on input data to generate output data. A process object either derives new data from its inputs, or transforms the input data into a new form.
+Sample Data
+OutLine
+Surface Contour
+Extract Plane
+Point Array
+Lines
+Polygons
+Mesh
+Line Contours
+Lines
+Display
+Marching Cubes
+
+Marching cubes creates surface models of constant density from 3-D data that has connectivity. The algorithm determines how the surface intersects one cube, created from eight pixels, and then moves (or marches) to the next cube. The cubes share edges which ensures that the surfaces created will always connect between adjacent cubes. This is the main algorithm used for IsoSurface generation.

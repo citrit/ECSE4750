@@ -1,0 +1,17 @@
+! Time-stamp: </dept/ecse/graphics/XText.ad, Wed, 16 Sep 1998, 03:43:06 IDT, wrf@speed.ecse.rpi.edu>
+!
+! The following line is needed for Motif 1.2.2, but must not be
+! included for Motif 2.0.
+*scrollingPolicy:  AUTOMATIC
+!
+*help*messageString:You think YOU need help:\n\n\
+This was seen in a job wanted ad:\n\n\
+Wanted: Expert Java programmers, 5+ years experience\n\
+\- r.h.f
+*help*okLabelString: Pop down the help!
+*help*background: lightcyan
+*help.labelString: Hellppp?
+*help.background: lightcyan
+*actions.labelString: Actions Menu!
+*actions.background: pink
+*fontList:  -*-times-*-r-*--24-*

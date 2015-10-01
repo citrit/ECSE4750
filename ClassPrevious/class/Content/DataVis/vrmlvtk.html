@@ -1,0 +1,263 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage Express 2.0">
+<title>Data Vis - VRML & VTK</title>
+</head>
+
+<body bgcolor="#FFFFFF">
+
+<h2><img src="Speckled_GradientA042.gif" width="500" height="4"></h2>
+
+<h3><img src="images/head.gif" align="absmiddle" width="73"
+height="90">Advanced Computer Graphics and Data Visualization</h3>
+
+<p><img src="Speckled_GradientA042.gif" width="500" height="4"></p>
+
+<p><strong>Section 5: VRML and VTK</strong></p>
+
+<ul>
+    <li>The Virtual Reality Modeling Language (VRML) is a file
+        format for describing interactive 3D objects and worlds. </li>
+    <li>VRML97 is designed to be used on the Internet, intranets,
+        and local client systems. </li>
+    <li>VRML is also intended to be a universal interchange
+        format for integrated 3D graphics and multimedia. </li>
+    <li>VRML may be used in a variety of application areas such
+        as engineering and scientific visualization, multimedia
+        presentations, entertainment and educational titles, web
+        pages, and shared virtual worlds.. </li>
+    <li>VRML is capable of representing static and animated
+        dynamic 3D and multimedia objects with hyperlinks to
+        other media such as text, sounds, movies, and images.</li>
+    <li>VRML browsers, as well as authoring tools for the
+        creation of VRML files, are widely available for many
+        different platforms.</li>
+    <li>VRML supports an extensibility model that allows new
+        dynamic 3D objects to be defined allowing application
+        communities to develop interoperable extensions to the
+        base standard. There are mappings between VRML objects
+        and commonly used 3D application programmer interface
+        (API) features.</li>
+    <li>At the highest level of abstraction, VRML is just a way
+        for objects to read and write themselves. Theoretically,
+        the objects can contain anything -- 3D geometry, MIDI
+        data, JPEG images, anything. VRML defines a set of
+        objects useful for doing 3D graphics. These objects are
+        called <strong>Nodes</strong>. </li>
+    <li>A node has the following characteristics: <ul>
+            <li><strong>What kind of object it is</strong>. A
+                node might be a cube, a sphere, a texture map, a
+                transformation, etc. </li>
+            <li><strong>The parameters that distinguish this node
+                from other nodes of the same type</strong>. For
+                example, each Sphere node might have a different
+                radius, and different texture maps nodes will
+                certainly contain different images to use as the
+                texture maps. These parameters are called Fields.
+                A node can have 0 or more fields. </li>
+            <li><strong>A name to identify this node</strong>.
+                Being able to name nodes and refer to them
+                elsewhere is very powerful; it allows a scene's
+                author to give hints to applications using the
+                scene about what is in the scene, and creates
+                possibilities for very powerful scripting
+                extensions. Nodes do not have to be named, but if
+                they are named, they can have only one name.
+                However, names do not have to be unique-- several
+                different nodes may be given the same name. </li>
+            <li><strong>Child nodes</strong>. Object hierarchy is
+                implemented by allowing some types of nodes to
+                contain other nodes. Parent nodes traverse their
+                children in order during rendering. Nodes that
+                may have children are referred to as group nodes.
+                Group nodes can have zero or more children. </li>
+        </ul>
+    </li>
+    <li>The syntax chosen to represent these pieces of
+        information is straightforward: <ul>
+            <li>DEF objectname objecttype { fields children } </li>
+        </ul>
+    </li>
+</ul>
+
+<ul>
+    <li>Only the object type and curly braces are required; nodes
+        may or may not have a name, fields, and children. </li>
+    <li>Node names must not begin with a digit, and must not
+        contain spaces or control characters, single or double
+        quote characters,backslashes, curly braces, the plus
+        character or the period character. </li>
+</ul>
+
+<ul>
+    <li>An Example: </li>
+</ul>
+
+<blockquote>
+    <pre><b>#VRML V2.0 utf8
+Transform {
+  children [
+    NavigationInfo { headlight FALSE } # We'll add our own light
+    DirectionalLight {        # First child
+        direction 0 0 -1      # Light illuminating the scene
+    }
+
+    Transform {               # Second child - a red sphere
+      translation 3 0 1
+      children [
+        Shape {
+          geometry Sphere { radius 2.3 }
+          appearance Appearance {
+            material Material { diffuseColor 1 0 0 }   # Red
+         }
+        }
+      ]
+    }
+
+    Transform {               # Third child - a blue box 
+      translation -2.4 .2 1
+      rotation     0 1 1  .9
+      children [
+        Shape {
+          geometry Box {}
+          appearance Appearance {
+            material Material { diffuseColor 0 0 1 }  # Blue
+         }
+        }
+      ]
+    }
+
+  ] # end of children for world</b></pre>
+</blockquote>
+
+<p>Creates this Image and the following Scene Graph:</p>
+
+<p>VRML Scene</p>
+
+<p><img src="images/vrmlscene.jpg" width="353" height="203"> </p>
+
+<p>Corresponding Scene Graph</p>
+
+<p><a name="73162"><img src="images/scene.gif" width="559"
+height="192"></a></p>
+
+<p>Places to start looking for VRML info:</p>
+
+<ul>
+    <li>http://vrml.vag.org/ - The VRML Forum </li>
+    <li>http://www.sdsc.edu/vrml/ - The VRML Repository </li>
+</ul>
+
+<p><strong>VRML Node mapping to VTK Objects</strong>:</p>
+
+<ul>
+    <li>The VRML Browser we will be looking at in class uses two
+        key components in order to read and display VRML files. </li>
+    <li>The current VRML 2.0 parser is based on a Yacc/Lex
+        grammar that parses the file and creates a Vtk scene
+        based on the traversal.</li>
+</ul>
+
+<p><strong>AsciiText</strong>:</p>
+
+<p><img src="images/atext.gif" width="437" height="151"> </p>
+
+<p><strong>Cone</strong></p>
+
+<p><img src="images/cone.gif" width="438" height="148"></p>
+
+<p><strong>Cube</strong></p>
+
+<p><img src="images/cube.gif" width="438" height="150"></p>
+
+<p><strong>Cylinder</strong></p>
+
+<p><img src="images/cylinder.gif" width="436" height="148"></p>
+
+<p><strong>IndexedFaceSet</strong></p>
+
+<p><img src="images/iface.gif" width="435" height="147"></p>
+
+<p><strong>IndexedLineSet</strong></p>
+
+<p><img src="images/iline.gif" width="437" height="149"></p>
+
+<p><strong>PointSet</strong></p>
+
+<p><img src="images/pointset.gif" width="438" height="149"></p>
+
+<p><strong>Sphere</strong></p>
+
+<p><img src="images/sphere.gif" width="436" height="149"></p>
+
+<p>Property Nodes:</p>
+
+<ul>
+    <li><strong>Coordinate3, FontStyle, Info, LOD, Material,
+        MaterialBinding, Normal, NormalBinding, ImageTexture,
+        Texture2Transform, TextureCoordinate2, ShapeHints</strong>
+    </li>
+    <li>These get applied/used as the scene graph is traversed
+        and actors, cameras, and lights are created. Things yet
+        to be done - Textures, LOD, and FontStyle. </li>
+</ul>
+
+<p>Transformation Nodes:</p>
+
+<ul>
+    <li><strong>Rotation, Scale, Transform, Translation</strong> </li>
+    <li>These get applied to each actor, actually as the scene
+        graph is traversed each of the above nodes applies itself
+        to the actor by manipulating the actors internal
+        transformation matrix. </li>
+</ul>
+
+<p>Camera and Light Nodes:</p>
+
+<ul>
+    <li><strong>Viewpoint, DirectionalLight, PointLight,
+        SpotLight</strong> </li>
+    <li>These nodes create cameras and lights as they are
+        traversed. VTK has only a single Camera and Light object
+        so these nodes manipulate the VTK camera and light's
+        methods to create the appropriate effect. </li>
+    <li>An import thing to remember about lights is they are in
+        the current state and are pushed and poped off the stack
+        at any givven time. Why do you think this happens. </li>
+</ul>
+
+<p>Group Nodes:</p>
+
+<ul>
+    <li><strong>Group, Switch, WWWAnchor</strong> </li>
+    <li>These nodes are used to create branches on the scene
+        graph. The <strong>Group</strong> node is the base class
+        for all other group nodes. It simply has a ordered list
+        of children and the state is simply pushed on to the
+        child nodes. The <strong>Switch</strong> node traverses
+        one, none, or all of its children. One can use this node
+        to switch on and off the effects of some properties or to
+        switch between different properties. The <strong>WWWAnchor</strong>
+        group node loads a new scene into a VRML browser when one
+        of its children is chosen. It behaves like a Separator
+        pushing and poping its state. </li>
+</ul>
+
+<p>Misc Node:</p>
+
+<ul>
+    <li><strong>WWWInline</strong> </li>
+    <li>The <strong>WWWInline</strong> node reads its children
+        from anywhere in the World Wide Web. Exactly when its
+        children are read is not defined; reading the children
+        may be delayed until the WWWInline is actually displayed.
+        A WWWInline with an empty name does nothing. The name is
+        an arbitrary URL </li>
+</ul>
+
+<p><img src="Speckled_GradientA042.gif" width="500" height="4"></p>
+</body>
+</html>

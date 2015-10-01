@@ -1,0 +1,296 @@
+% Remember to use the lgrind style
+
+\File{coloredit.c},{12:19},{Nov  4 1993}
+\L{\LB{\C{}\1\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*}}
+\L{\LB{__\* coloredit.c: A simple color editor.}}
+\L{\LB{__\*         From:}}
+\L{\LB{__\*                   The X Window System, }}
+\L{\LB{__\*            Programming and Applications with Xt}}
+\L{\LB{__\*                   OSF\1Motif Edition}}
+\L{\LB{__\*         by}}
+\L{\LB{__\*                Douglas Young}}
+\L{\LB{__\*              Prentice Hall, 1990}}
+\L{\LB{__\*}}
+\L{\LB{__\*                 Example described on pages:   178-188 }}
+\L{\LB{__\*}}
+\L{\LB{__\*}}
+\L{\LB{__\*  Copyright 1989 by Prentice Hall}}
+\L{\LB{__\*  All Rights Reserved}}
+\L{\LB{__\*}}
+\L{\LB{__\* This code is based on the OSF\1Motif widget set and the X Window System}}
+\L{\LB{__\*}}
+\L{\LB{__\* Permission to use, copy, modify, and distribute this software for }}
+\L{\LB{__\* any purpose and without fee is hereby granted, provided that the above}}
+\L{\LB{__\* copyright notice appear in all copies and that both the copyright notice}}
+\L{\LB{__\* and this permission notice appear in supporting documentation.}}
+\L{\LB{__\*}}
+\L{\LB{__\* Prentice Hall and the author disclaim all warranties with regard to }}
+\L{\LB{__\* this software, including all implied warranties of merchantability and fitness.}}
+\L{\LB{__\* In no event shall Prentice Hall or the author be liable for any special,}}
+\L{\LB{__\* indirect or cosequential damages or any damages whatsoever resulting from }}
+\L{\LB{__\* loss of use, data or profits, whether in an action of contract, negligence }}
+\L{\LB{__\* or other tortious action, arising out of or in connection with the use }}
+\L{\LB{__\* or performance of this software.}}
+\L{\LB{__\*}}
+\L{\LB{__\* Open Software Foundation is a trademark of The Open Software Foundation, Inc.}}
+\L{\LB{__\* OSF is a trademark of Open Software Foundation, Inc.}}
+\L{\LB{__\* OSF\1Motif is a trademark of Open Software Foundation, Inc.}}
+\L{\LB{__\* Motif is a trademark of Open Software Foundation, Inc.}}
+\L{\LB{__\* DEC is a registered trademark of Digital Equipment Corporation}}
+\L{\LB{__\* HP is a registered trademark of the Hewlett Packard Company}}
+\L{\LB{__\* DIGITAL is a registered trademark of Digital Equipment Corporation}}
+\L{\LB{__\* X Window System is a trademark of the Massachusetts Institute of Technology}}
+\L{\LB{__\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\1\CE{}}}
+\L{\LB{}}
+\L{\LB{}}
+\L{\LB{\K{\#include}_\S{}\"coloredit.h\"\SE{}}}
+\L{\LB{}}
+\L{\LB{\Proc{main}\V{main}(\V{argc},_\V{argv})}}
+\L{\LB{__\K{int}____\V{argc};}}
+\L{\LB{__\K{char}__\*\V{argv}[\,];}}
+\L{\LB{\{}}
+\L{\LB{__\V{Widget}____\V{toplevel},_\V{bb},_\V{sliders},_\V{rc};}}
+\L{\LB{__\V{Colormap}__\V{def\_colormap};}}
+\L{\LB{__\V{XColor}____\V{Colors}[\V{MAXCOLORS}];}}
+\L{\LB{__\K{int}_______\V{i};}}
+\L{\LB{_\C{}\1\*}}
+\L{\LB{__\* Initialize the Intrinsics and save pointer to the display.}}
+\L{\LB{__\*\1\CE{}}}
+\L{\LB{__\V{toplevel}_=_\V{XtInitialize}(\V{argv}[0],_\S{}\"Coloredit\"\SE{},_\V{NULL},_0,}}
+\L{\LB{__________________________\&\V{argc},_\V{argv});}}
+\L{\LB{__\V{dpy}_=_\V{XtDisplay}(\V{toplevel});}}
+\L{\LB{__\C{}\1\*}}
+\L{\LB{___\* Determine the number of colors to be edited.}}
+\L{\LB{___\*\1\CE{}}}
+\L{\LB{__\V{ncolors}_=_\V{DisplayCells}(\V{dpy},_\V{DefaultScreen}(\V{dpy}));}}
+\L{\LB{\K{if}(\V{ncolors}_\>_\V{MAXCOLORS})_\V{ncolors}_=_\V{MAXCOLORS};}}
+\L{\LB{__\C{}\1\* }}
+\L{\LB{___\* Create a base to hold everything.}}
+\L{\LB{___\*\1\CE{}}}
+\L{\LB{__\V{rc}_=_\V{XtCreateManagedWidget}(\S{}\"base\"\SE{},\V{xmRowColumnWidgetClass},_}}
+\L{\LB{_____________________________\V{toplevel},_\V{NULL},_0);}}
+\L{\LB{__\C{}\1\* }}
+\L{\LB{___\* Create a grid of buttons, one for each }}
+\L{\LB{___\* color to be edited.}}
+\L{\LB{___\*\1\CE{}}}
+\L{\LB{__\V{create\_color\_bar}(\V{rc});}}
+\L{\LB{__\C{}\1\*}}
+\L{\LB{___\* A separator widget looks nice, between the colors}}
+\L{\LB{___\* and the controls.}}
+\L{\LB{___\*\1\CE{}}}
+\L{\LB{__\V{XtCreateManagedWidget}(\S{}\"sep\"\SE{},_\V{xmSeparatorWidgetClass},}}
+\L{\LB{________________________\V{rc},_\V{NULL},_0);}}
+\L{\LB{__\C{}\1\*}}
+\L{\LB{___\* Put the controls inside an XmBulletinBoard widget}}
+\L{\LB{___\*\1\CE{}}}
+\L{\LB{__\V{bb}_=_\V{XtCreateManagedWidget}(\S{}\"controls\"\SE{},}}
+\L{\LB{_____________________________\V{xmBulletinBoardWidgetClass},}}
+\L{\LB{_____________________________\V{rc},_\V{NULL},_0);}}
+\L{\LB{__\C{}\1\*}}
+\L{\LB{___\* Use an XmLabel widget to display the current rgb values.}}
+\L{\LB{___\*\1\CE{}}}
+\L{\LB{_\V{color\_display\_panel}_=_}}
+\L{\LB{_________\V{XtCreateManagedWidget}(\S{}\"display\"\SE{},}}
+\L{\LB{_______________________________\V{xmLabelWidgetClass},_}}
+\L{\LB{_________________________}\Tab{64}{______\V{bb},_\V{NULL},0);}}
+\L{\LB{__\C{}\1\*}}
+\L{\LB{___\* Create a row column widget containing three sliders,}}
+\L{\LB{___\* one for each color component.}}
+\L{\LB{___\*\1\CE{}}}
+\L{\LB{__\V{sliders}_=_\V{XtCreateManagedWidget}(\S{}\"sliderpanel\"\SE{},}}
+\L{\LB{___________________________________\V{xmRowColumnWidgetClass},}}
+\L{\LB{___________________________________\V{bb},_\V{NULL},_0);}}
+\L{\LB{__\V{red\_slider}___=_\V{make\_slider}(\S{}\"red\"\SE{},_\V{sliders},}}
+\L{\LB{_____________________________\V{red\_slider\_moved});}}
+\L{\LB{__\V{green\_slider}_=_\V{make\_slider}(\S{}\"green\"\SE{},_\V{sliders},}}
+\L{\LB{_____________________________\V{green\_slider\_moved});}}
+\L{\LB{__\V{blue\_slider}__=_\V{make\_slider}(\S{}\"blue\"\SE{},__\V{sliders},}}
+\L{\LB{____________________________\V{blue\_slider\_moved});}}
+\L{\LB{__\C{}\1\* }}
+\L{\LB{___\* Add a quit button.}}
+\L{\LB{___\*\1\CE{}}}
+\L{\LB{__\V{xs\_create\_quit\_button}(\V{bb});}}
+\L{\LB{__\C{}\1\*}}
+\L{\LB{___\* Get the ID of the default colormap.}}
+\L{\LB{___\*\1\CE{}}}
+\L{\LB{__\V{def\_colormap}_=_\V{DefaultColormap}(\V{dpy},_\V{DefaultScreen}(\V{dpy}));}}
+\L{\LB{__\K{for}(_\V{i}_=_0;_\V{i}_\<_\V{ncolors};_\V{i}++_)_\{}}
+\L{\LB{____\V{Colors}[\V{i}].\V{pixel}_=_\V{i};}}
+\L{\LB{____\V{Colors}[\V{i}].\V{flags}_=_\V{DoRed}\|\V{DoGreen}\|\V{DoBlue};}}
+\L{\LB{__\}}}
+\L{\LB{__\V{XQueryColors}(\V{dpy},_\V{def\_colormap},_\V{Colors},_\V{ncolors});}}
+\L{\LB{__\V{my\_colormap}_=_}}
+\L{\LB{_______\V{XCreateColormap}(\V{dpy},_\V{DefaultRootWindow}(\V{dpy}),_}}
+\L{\LB{_______________________\V{DefaultVisual}(\V{dpy},_\V{DefaultScreen}(\V{dpy})),}}
+\L{\LB{_______________________\V{AllocAll});}}
+\L{\LB{__\V{XStoreColors}(\V{dpy},_\V{my\_colormap},_\V{Colors},_\V{ncolors});}}
+\L{\LB{__\C{}\1\*}}
+\L{\LB{___\* Initialize the pixel member of the global color struct}}
+\L{\LB{___\* To the first editable color cell.}}
+\L{\LB{___\*\1\CE{}}}
+\L{\LB{__\V{current\_color}.\V{pixel}_=_0;}}
+\L{\LB{}}
+\L{\LB{__\V{XtRealizeWidget}(\V{toplevel});}}
+\L{\LB{}}
+\L{\LB{__\V{XSetWindowColormap}(\V{dpy},_\V{XtWindow}(\V{toplevel}),_\V{my\_colormap});}}
+\L{\LB{}}
+\L{\LB{__\V{XtMainLoop}();}}
+\L{\LB{\}}}
+\L{\LB{}}
+\L{\LB{\V{Widget}_\V{make\_slider}(\V{name},_\V{parent},_\V{callback})_}}
+\L{\LB{__\K{char}__\*\V{name};}}
+\L{\LB{__\V{Widget}_\V{parent};}}
+\L{\LB{__\K{void}_(\*\V{callback})();}}
+\L{\LB{\{}}
+\L{\LB{___\V{Widget}__\V{w};}}
+\L{\LB{__\K{int}_____\V{n};}}
+\L{\LB{__\V{Arg}_____\V{wargs}[10];}}
+\L{\LB{__\C{}\1\*}}
+\L{\LB{___\* Create an XmScale widget.}}
+\L{\LB{___\*\1\CE{}}}
+\L{\LB{__\V{n}_=_0;}}
+\L{\LB{__\V{XtSetArg}(\V{wargs}[\V{n}],_\V{XmNminimum},_0);_\V{n}++;}}
+\L{\LB{__\V{XtSetArg}(\V{wargs}[\V{n}],_\V{XmNmaximum},_65535);_\V{n}++;}}
+\L{\LB{}}
+\L{\LB{__\V{w}_=_\V{XtCreateManagedWidget}(\V{name},_\V{xmScaleWidgetClass},_}}
+\L{\LB{____________________________\V{parent},_\V{wargs},_\V{n});}}
+\L{\LB{__\C{}\1\*}}
+\L{\LB{___\* Add callbacks to be invoked when the slider moves.}}
+\L{\LB{___\*\1\CE{}}}
+\L{\LB{__\V{XtAddCallback}(\V{w},_\V{XmNvalueChangedCallback},_\V{callback},\V{NULL});}}
+\L{\LB{__\V{XtAddCallback}(\V{w},_\V{XmNdragCallback},_\V{callback},_\V{NULL});}}
+\L{\LB{}}
+\L{\LB{__\K{return}_(\V{w});}}
+\L{\LB{\}}}
+\L{\LB{}}
+\L{\LB{\V{Widget}_\V{create\_color\_bar}(\V{parent})}}
+\L{\LB{__\V{Widget}_\V{parent};}}
+\L{\LB{\{}}
+\L{\LB{__\V{Widget}______\V{panel};}}
+\L{\LB{__\V{WidgetList}__\V{colors};}}
+\L{\LB{__\K{int}_________\V{i},_\V{n};}}
+\L{\LB{__\K{char}________\V{name}[10];}}
+\L{\LB{__\V{Arg}_________\V{wargs}[10];}}
+\L{\LB{_\V{colors}_=_(\V{WidgetList})_\V{XtMalloc}(_\V{ncolors}_\*_\K{sizeof}(\V{Widget}));}}
+\L{\LB{__}}
+\L{\LB{__\C{}\1\*}}
+\L{\LB{___\* Create the row column manager to hold all }}
+\L{\LB{___\* color buttons.}}
+\L{\LB{___\*\1\CE{}}}
+\L{\LB{__\V{n}_=_0;}}
+\L{\LB{__\V{panel}_=_\V{XtCreateManagedWidget}(\S{}\"colorpanel\"\SE{},}}
+\L{\LB{________________________________\V{xmRowColumnWidgetClass},}}
+\L{\LB{________________________________\V{parent},_\V{wargs},_\V{n});}}
+\L{\LB{__\C{}\1\* }}
+\L{\LB{___\* Create ncolors widgets. Use the relative color }}
+\L{\LB{___\* cell number as the name of each color. Add a }}
+\L{\LB{___\* XmNactivateCallback for each cell with the color }}
+\L{\LB{___\* index as client\_data.}}
+\L{\LB{___\*\1\CE{}}}
+\L{\LB{__\K{for}(\V{i}=0;\V{i}\<\V{ncolors};\V{i}++)\{}}
+\L{\LB{___\V{n}_=_0;}}
+\L{\LB{___\V{XtSetArg}(\V{wargs}[\V{n}],_\V{XtNbackground},_\V{i});_\V{n}++;_}}
+\L{\LB{___\V{sprintf}(\V{name},\S{}\"\%d\"\SE{},\V{i});}}
+\L{\LB{___\V{colors}[\V{i}]_=_\V{XtCreateWidget}(\V{name},_\V{xmLabelWidgetClass},_}}
+\L{\LB{______________________________\V{panel},_\V{wargs},_\V{n});}}
+\L{\LB{___\V{XtAddEventHandler}(\V{colors}[\V{i}],_\V{ButtonPressMask},_\V{False},}}
+\L{\LB{_____________________\V{set\_current\_color},_\V{i});}}
+\L{\LB{___\}}}
+\L{\LB{___\V{XtManageChildren}(\V{colors},_\V{ncolors});}}
+\L{\LB{__}}
+\L{\LB{___\K{return}_\V{panel};}}
+\L{\LB{\}}}
+\L{\LB{}}
+\L{\LB{\K{void}_\V{red\_slider\_moved}(\V{w},_\V{client\_data},_\V{call\_data})}}
+\L{\LB{_____\V{Widget}___\V{w};}}
+\L{\LB{_____\V{caddr\_t}__\V{client\_data};}}
+\L{\LB{_____\V{XmScaleCallbackStruct}_\*\V{call\_data};}}
+\L{\LB{\{}}
+\L{\LB{_\C{}\1\*}}
+\L{\LB{__\* Set the red color components of  the global }}
+\L{\LB{__\* current\_color structure.}}
+\L{\LB{__\*\1\CE{}}}
+\L{\LB{__\V{current\_color}.\V{red}_=__\V{call\_data}\-\!\>\V{value};}}
+\L{\LB{__\C{}\1\*}}
+\L{\LB{___\* Update the digital rgb display and the current }}
+\L{\LB{___\* color label.}}
+\L{\LB{___\*\1\CE{}}}
+\L{\LB{__\V{update\_color}();}}
+\L{\LB{\}}}
+\L{\LB{}}
+\L{\LB{\K{void}_\V{blue\_slider\_moved}(\V{w},_\V{client\_data},_\V{call\_data})}}
+\L{\LB{_____\V{Widget}___\V{w};}}
+\L{\LB{_____\V{caddr\_t}__\V{client\_data};}}
+\L{\LB{_____\V{XmScaleCallbackStruct}_\*\V{call\_data};}}
+\L{\LB{\{}}
+\L{\LB{_\C{}\1\*}}
+\L{\LB{__\* Set the blue color components of  the global }}
+\L{\LB{__\* current\_color structure.}}
+\L{\LB{__\*\1\CE{}}}
+\L{\LB{__\V{current\_color}.\V{blue}_=__\V{call\_data}\-\!\>\V{value};}}
+\L{\LB{__\C{}\1\*}}
+\L{\LB{___\* Update the digital rgb display and the current }}
+\L{\LB{___\* color label.}}
+\L{\LB{___\*\1\CE{}}}
+\L{\LB{__\V{update\_color}();}}
+\L{\LB{\}}}
+\L{\LB{}}
+\L{\LB{\K{void}_\V{green\_slider\_moved}(\V{w},_\V{client\_data},_\V{call\_data})}}
+\L{\LB{_____\V{Widget}___\V{w};}}
+\L{\LB{_____\V{caddr\_t}__\V{client\_data};}}
+\L{\LB{_____\V{XmScaleCallbackStruct}_\*\V{call\_data};}}
+\L{\LB{\{}}
+\L{\LB{_\C{}\1\*}}
+\L{\LB{__\* Set the green color components of  the global }}
+\L{\LB{__\* current\_color structure.}}
+\L{\LB{__\*\1\CE{}}}
+\L{\LB{__\V{current\_color}.\V{green}_=__\V{call\_data}\-\!\>\V{value};}}
+\L{\LB{__\C{}\1\*}}
+\L{\LB{___\* Update the digital rgb display and the current }}
+\L{\LB{___\* color label.}}
+\L{\LB{___\*\1\CE{}}}
+\L{\LB{__\V{update\_color}();}}
+\L{\LB{\}}}
+\L{\LB{}}
+\L{\LB{\Proc{update\_color}\V{update\_color}()}}
+\L{\LB{\{}}
+\L{\LB{__\V{Arg}__\V{wargs}[1];}}
+\L{\LB{__\K{char}_\V{str}[25];}}
+\L{\LB{}}
+\L{\LB{__\C{}\1\*}}
+\L{\LB{___\* Update the digital display.}}
+\L{\LB{___\*\1\CE{}}}
+\L{\LB{\V{xs\_wprintf}(\V{color\_display\_panel},_\S{}\"\%3d_\%3d_\%3d\"\SE{},_}}
+\L{\LB{___________\V{current\_color}.\V{red},_\V{current\_color}.\V{green},_}}
+\L{\LB{___________\V{current\_color}.\V{blue});}}
+\L{\LB{_\C{}\1\*}}
+\L{\LB{__\* Update the current color.}}
+\L{\LB{__\*\1\CE{}}}
+\L{\LB{__\V{XStoreColor}(\V{dpy},_\V{my\_colormap},_\&\V{current\_color});_}}
+\L{\LB{\}}}
+\L{\LB{}}
+\L{\LB{\K{void}_\V{set\_current\_color}(\V{w},_\V{number},_\V{event})}}
+\L{\LB{__\V{Widget}___\V{w};}}
+\L{\LB{__\K{int}______\V{number};}}
+\L{\LB{__\V{XEvent}__\*\V{event};}}
+\L{\LB{\{}}
+\L{\LB{__\V{Arg}_\V{wargs}[10];}}
+\L{\LB{__\V{current\_color}.\V{flags}_=_\V{DoRed}_\|_\V{DoGreen}_\|_\V{DoBlue};}}
+\L{\LB{__\C{}\1\*}}
+\L{\LB{___\* Get the current color components of the selected button.}}
+\L{\LB{___\*\1\CE{}}}
+\L{\LB{__\V{current\_color}.\V{pixel}_=_\V{number};}}
+\L{\LB{__\V{XQueryColor}(\V{dpy},_\V{my\_colormap},_\&\V{current\_color});}}
+\L{\LB{__\C{}\1\*}}
+\L{\LB{___\* Use each color component to as the new }}
+\L{\LB{___\* position of the corresponding slider.}}
+\L{\LB{___\*\1\CE{}}}
+\L{\LB{__\V{XtSetArg}(\V{wargs}[0],_\V{XmNvalue},_\V{current\_color}.\V{red});}}
+\L{\LB{__\V{XtSetValues}(\V{red\_slider},_\V{wargs},_1);}}
+\L{\LB{}}
+\L{\LB{__\V{XtSetArg}(\V{wargs}[0],_\V{XmNvalue},_\V{current\_color}.\V{green});}}
+\L{\LB{__\V{XtSetValues}(\V{green\_slider},_\V{wargs},_1);}}
+\L{\LB{}}
+\L{\LB{__\V{XtSetArg}(\V{wargs}[0],_\V{XmNvalue},_\V{current\_color}.\V{blue});}}
+\L{\LB{__\V{XtSetValues}(\V{blue\_slider},_\V{wargs},_1);}}
+\L{\LB{\}}}

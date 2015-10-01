@@ -1,0 +1,13 @@
+Microsoft Visual Studio Solution File, Format Version 1.00
+Project("{66355F20-A65B-11D0-BFB5-00A0C91EBFA0}") = "OGLR", "OGLR.vjp", "{9844B692-AD73-4EE5-8E3A-6F435BC8B36B}"
+EndProject
+Global
+	GlobalSection(LocalDeployment) = postSolution
+		StartupProject = {9844B692-AD73-4EE5-8E3A-6F435BC8B36B}
+	EndGlobalSection
+	GlobalSection(BuildOrder) = postSolution
+		0 = {9844B692-AD73-4EE5-8E3A-6F435BC8B36B}
+	EndGlobalSection
+	GlobalSection(DeploymentRoot) = postSolution
+	EndGlobalSection
+EndGlobal

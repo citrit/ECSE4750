@@ -1,0 +1,14 @@
+New in 0.6:
+
+- JoglRenderer - use jogl almost exactly like you'd glut.
+- better autoconf support.
+- some bug fixes in OpenGL_funcs.c
+- No more JoglFrame.  Now all we have is a JoglCanvas that can
+be used like any other GUI component.
+
+New in 0.5:
+
+- autoconf/automake/libtool are used to make building easier.
+- support for SGI's.
+- more bug fixes and lists are implemented.
+

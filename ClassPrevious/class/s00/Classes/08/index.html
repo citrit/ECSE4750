@@ -1,0 +1,815 @@
+<!-- Time-stamp: </home/wrf/cg-f99/Classes/08/index.html, Wed,  3 Nov 1999, 19:14:58 EST, wrf@benvolio.ecse.rpi.edu> -->
+<html>
+
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage Express 2.0">
+<title>ECSE-4750, RPI, Class 8</title>
+<STYLE TYPE="text/css">
+<!--
+H1 { color: red; }
+
+H2 { color: blue; }
+
+   OL.outline {list-style-type: upper-roman;
+    font: bold italic 18pt sans-serif;}
+
+   OL.outline OL {list-style-type: upper-alpha;
+       font: bold 14pt sans-serif;}
+
+   OL.outline OL OL {list-style-type: decimal;
+	  font: 12pt serif;}
+
+   OL.outline OL OL OL {list-style-type: lower-alpha;
+	     font: 10pt serif;}
+
+   OL.outline OL OL OL OL {list-style-type: lower-roman;
+		font: 10pt sans-serif;}
+   -->
+</STYLE>
+</head>
+
+<body bgcolor="#FFFFFF">
+
+<h1 align="center">Rensselaer Polytechnic Institute <br>
+ECSE-4750 Computer Graphics, Spring 2000<br>
+Class 8 </h1>
+
+<h1><a name="04"></a>Ousterhout on Scripting</h1>
+
+<p>Attached is Ousterhout's paper, <em>Scripting: Higher Level
+Programming for the 21st Century</em> from IEEE Computer, 3/98.
+It's online at <a
+href="http://www.scriptics.com/people/john.ousterhout/scripting.html">http://www.scriptics.com/people/john.ousterhout/scripting.html</a>.
+</p>
+
+<h1><a name="05"></a>Intro Slides on Tcl/Tk</h1>
+
+<p>Attached are PDF slides of 4 intro talks. </p>
+
+<ol>
+    <li>Overview: <a
+        href="http://www.rpi.edu/dept/ecse/graphics/Tcl/Tutorial/over.pdf">http://www.rpi.edu/dept/ecse/graphics/Tcl/Tutorial/over.pdf</a>
+    </li>
+    <li>Tcl: <a
+        href="http://www.rpi.edu/dept/ecse/graphics/Tcl/Tutorial/tcl.pdf">http://www.rpi.edu/dept/ecse/graphics/Tcl/Tutorial/tcl.pdf</a>
+    </li>
+    <li>Tk: <a
+        href="http://www.rpi.edu/dept/ecse/graphics/Tcl/Tutorial/tk.pdf">http://www.rpi.edu/dept/ecse/graphics/Tcl/Tutorial/tk.pdf</a>
+    </li>
+    <li>Interfacing Tcl to C <a
+        href="http://www.rpi.edu/dept/ecse/graphics/Tcl/Tutorial/tclc.pdf">http://www.rpi.edu/dept/ecse/graphics/Tcl/Tutorial/tclc.pdf</a>
+    </li>
+</ol>
+
+<h1><a name="06"></a>Tcl Notes</h1>
+
+<ol>
+    <li>My examples sometimes use version 4.2. However version
+        8.0 is available at RPI, in <tt>/campus/tcl/tcl/8.0/wish8.0</tt>.
+    </li>
+    <li>Some versions of wish, such as wishx, have an extra
+        command, <tt>help</tt>, containing man pages. </li>
+    <li>The command tclhelp popups up a manpage chooser. </li>
+    <li>There are man pages for everything online, locally in <tt>/campus/tcl/tcl/8.0/common/man</tt>,
+        and remotely at <a
+        href="http://www.tcltk.com/TclTkMan/TclTkManPages.html">http://www.tcltk.com/TclTkMan/TclTkManPages.html</a>
+    </li>
+    <li>To download Tcl for your own machine, provided that it's
+        one of these: Windows 95, Windows NT, Solaris and SunOS,
+        Linux, HP-UX, SGI IRIX, Digital Unix, AIX, SCO Unix, Most
+        other Unix-like operating systems, or Macintosh (68K and
+        Power Mac), go to <a
+        href="http://www.scriptics.com/software/8.0.html">http://www.scriptics.com/software/8.0.html</a>
+    </li>
+<!--
+
+<li><p>Maxtroids, a simple video game, in 500 lines of code, is at <a
+href="http://www.tcltk.com/training/plugin_max.html">http://www.tcltk.com/training/plugin_max.html</a>
+</p></li>
+
+-->    <li>The Tk version of Motif's convenience widgets are <em>Mega-Widgets</em>,
+        see <a href="http://www.tcltk.com/iwidgets/">http://www.tcltk.com/iwidgets/</a>.
+        E.g., the following file selection box is created with
+        this code: <p align="center"><tt>fileselectionbox .fsb<br>
+        pack .fsb -padx 10 -pady 10 </tt></p>
+        <p><img src="fsbox.gif" align="center" width="365"
+        height="318"> </p>
+        <p>Unfortunately, this is not installed at RPI, but you
+        can download it to your own computers. </p>
+    </li>
+</ol>
+
+<h1><a name="07"></a>More Tcl Demos</h1>
+
+<h2><a name="08"></a>Timer</h2>
+
+<p>This little program is a(n inaccurate) stopwatch. It's in <tt>/campus/tcl/tk/4.0/common/lib/tk4.0/demos/timer</tt>
+(<tt>/dept/ecse/graphics/Tcl/Demos</tt> is a link to <tt>/campus/tcl/tk/4.0/common/lib/tk4.0/demos</tt>.)
+</p>
+
+<p>It shows these features. </p>
+
+<ol>
+    <li>Several kids of the toplevel, w/o an intermediate
+        container widget. </li>
+    <li>Using <tt>pack</tt> to spec where widgets should go. </li>
+    <li>Binding events to actions. </li>
+    <li>Various Tcl syntactic elements, such as <tt>if</tt>, <tt>proc</tt>,
+        <tt>set</tt>ting a variable, <tt>expr</tt> to eval an
+        arithmetic expression. </li>
+    <li>Using <tt>$</tt> to get a variable's value. </li>
+    <li>Using <tt>[]</tt> to recursively exec a Tcl statement and
+        capture the result. </li>
+    <li>Using <tt>config</tt> to change a widget's resources
+        after creation. </li>
+    <li>Using <tt>format</tt>, similar to printf. </li>
+</ol>
+
+<p align="center"><img src="timer.gif" width="147" height="86"> </p>
+
+<pre>
+#!/bin/sh
+# the next line restarts using wish \
+exec wish4.0 &quot;$0&quot; &quot;$@&quot;
+
+# timer --
+# This script generates a counter with start and stop buttons.
+#
+# @(#) timer 1.4 95/07/18 16:21:44
+
+label .counter -text 0.00 -relief raised -width 10
+button .start -text Start -command {
+    if $stopped {
+	set stopped 0
+	tick
+    }
+}
+button .stop -text Stop -command {set stopped 1}
+pack .counter -side bottom -fill both
+pack .start -side left -fill both -expand yes
+pack .stop -side right -fill both -expand yes
+
+set seconds 0
+set hundredths 0
+set stopped 1
+
+proc tick {} {
+    global seconds hundredths stopped
+    if $stopped return
+    after 50 tick
+    set hundredths [expr $hundredths+5]
+    if {$hundredths &gt;= 100} {
+	set hundredths 0
+	set seconds [expr $seconds+1]
+    }
+    .counter config -text [format &quot;%d.%02d&quot; $seconds $hundredths]
+}
+
+bind . &lt;Control-c&gt; {destroy .}
+bind . &lt;Control-q&gt; {destroy .}
+focus .
+</pre>
+
+<h2><a name="09"></a>Drawing a Circle and Catching Enters</h2>
+
+<p>This program, <tt>/dept/ecse/graphics/circle.tcl</tt>, does
+the following. </p>
+
+<ol>
+    <li>Creating a <tt>canvas</tt> widget. </li>
+    <li>Adding an <tt>oval</tt> with specified resources to it. </li>
+    <li>Creating a <tt>tag</tt> with the oval. This sets things
+        so you can know when the mouse enters or leaves the oval.
+    </li>
+    <li>Attaching actions to those events. The particular object
+        that was just entered or left is:<br>
+        <tt>.c itemconfig current</tt> </li>
+</ol>
+
+<p align="center"><img src="circle.gif" width="312" height="330"></p>
+
+<pre> #! /bin/sh # the next line restarts using wish \ exec wish4.0
+&quot;$0&quot; &quot;$@&quot;
+
+# Time-stamp: &lt;/dept/ecse/graphics/Tcl/circle.tcl, Sun, 1 Mar 1998,
+# 16:20:55 PST, wrf@speed.ecse.rpi.edu&gt; #
+
+# This draws a filled circle.  It changes color when you enter and
+# leave it.
+
+
+canvas .c -width 300 -height 300 
+pack .c
+
+set item [.c create oval 50 50 210 210 -width 5 -outline black -fill
+green]
+.c addtag point withtag $item
+
+.c bind point &lt;Any-Enter&gt; &quot;.c itemconfig current -fill red&quot;
+.c bind point &lt;Any-Leave&gt; &quot;.c itemconfig current -fill green&quot;
+</pre>
+
+<h2><a name="10"></a>Drawing Several Lines and Ovals</h2>
+
+<p>This program, <tt>/dept/ecse/graphics/drawing.tcl</tt>,
+demonstrates drawing several lines and ovals. </p>
+
+<p>This, and most of the rest of the examples, were written by
+Sarah Jordan, who graduated from ECSE in S98. </p>
+
+<p align="center"><img src="drawing.gif" width="368" height="386"></p>
+
+<pre>
+#! /bin/sh
+# The following line restarts wish \
+exec wish4.0 -f &quot;$0&quot; &quot;$@&quot; -name &quot;Drawing Demonstration&quot;
+
+#---------------------------------------------------------
+# Sarah Jordan
+# Senior Design Project
+# Spring 1998
+#
+# The purpose of this program is to demonstrate how
+# to draw vertical lines, horizontal lines, diagonal
+# lines, and ovals.
+#---------------------------------------------------------
+
+# Create canvas for drawing
+canvas .canvas -bg white -highlightthickness 0 -width 360 -height 360
+pack .canvas
+
+# Draw two horizontal lines
+#   Top    line: Endpoints at (20,20) and (340,20)
+#   Bottom line: Endpoints at (20,340) and (340,340)
+
+# Line format: x1 y1 x2 y2
+set HL1 [ .canvas create line 20 20 340 20 -width 3 -fill black ]
+set HL2 [ .canvas create line 20 340 340 340 -width 3 -fill black ]
+
+# Draw two vertical lines
+#   Left  line: Endpoints at (20,20) and (20,340)
+#   Right line: Endpoints at (340,20) and (340,340)
+
+set VL1 [ .canvas create line 20 20 20 340 -width 3 -fill black ]
+set VL2 [ .canvas create line 340 20 340 340 -width 3 -fill black ]
+
+# Draw two diagonal lines
+#   Upper left to lower right: Endpoints at (20,20) and (340,340)
+#   Lower left to upper right: Endpoints at (20,340) and (340,20)
+
+set DL1 [ .canvas create line 20 20 340 340 -width 3 -fill black ]
+set DL2 [ .canvas create line 20 340 340 20 -width 3 -fill black ]
+
+# Draw four ovals
+#   Northern oval: Sides at (170,70,190,110)
+#   Western  oval: Sides at (70,170,110,190)
+#   Southern oval: Sides at (170,250,190,290)
+#   Eastern  oval: Sides at (250,170,290,190)
+
+# Oval format: left top right bottom
+set OVAL1 [ .canvas create oval 170 70 190 110 \
+    -width 3 -outline black -fill green ]
+set OVAL2 [ .canvas create oval 70 170 110 190 \
+    -width 3 -outline black -fill green ]
+set OVAL3 [ .canvas create oval 170 250 190 290 \
+    -width 3 -outline black -fill green ]
+set OVAL4 [ .canvas create oval 250 170 290 190 \
+    -width 3 -outline black -fill green ]
+
+
+</pre>
+
+<h2><a name="11"></a>Directory Browser</h2>
+
+<p>This program, from <tt>/campus/tcl/tk/4.0/common/lib/tk4.0/demos/browse</tt>,
+displays a scrolled list of the files in the specified directory
+(or the current directory by default). If you click on a name,
+then it calls your favorite editor, as listed in your envariable
+EDITOR (or xedit if EDITOR is unset), on that file. </p>
+
+<p>It shows the following features.</p>
+
+<ol>
+    <li>A <tt>listbox</tt> widget. </li>
+    <li>Inserting items into it, one by one. </li>
+    <li>Attaching a scrollbar to it. </li>
+    <li>Using <tt>exec</tt> to exec a Unix command </li>
+    <li>Using <tt>lindex</tt> to get a list element. </li>
+    <li>Testing whether an envar exists, and getting it. </li>
+    <li>Using <tt>[string compare A B]</tt> to compare two
+        strings. </li>
+    <li>Testing whether a file is a directory. </li>
+</ol>
+
+<p align="center"><img src="browse.gif" width="221" height="454">
+</p>
+
+<pre>
+#!/bin/sh
+# the next line restarts using wish \
+exec wish4.0 &quot;$0&quot; &quot;$@&quot;
+
+# browse --
+# This script generates a directory browser, which lists the working
+# directory and allows you to open files or subdirectories by
+# double-clicking.
+#
+# @(#) browse 1.6 95/07/18 16:21:36
+
+# Create a scrollbar on the right side of the main window and a listbox
+# on the left side.
+
+scrollbar .scroll -command &quot;.list yview&quot;
+pack .scroll -side right -fill y
+listbox .list -yscroll &quot;.scroll set&quot; -relief sunken -width 20 -height 20 \
+	-setgrid yes
+pack .list -side left -fill both -expand yes
+wm minsize . 1 1
+
+# The procedure below is invoked to open a browser on a given file;  if the
+# file is a directory then another instance of this program is invoked; if
+# the file is a regular file then the Mx editor is invoked to display
+# the file.
+
+proc browse {dir file} {
+    global env
+    if {[string compare $dir &quot;.&quot;] != 0} {set file $dir/$file}
+    if [file isdirectory $file] {
+	exec browse $file &amp;
+    } else {
+	if [file isfile $file] {
+	    if [info exists env(EDITOR)] {
+		eval exec $env(EDITOR) $file &amp;
+	    } else {
+		exec xedit $file &amp;
+	    }
+	} else {
+	    puts stdout &quot;\&quot;$file\&quot; isn't a directory or regular file&quot;
+	}
+    }
+}
+
+# Fill the listbox with a list of all the files in the directory (run
+# the &quot;ls&quot; command to get that information).
+
+if $argc&gt;0 {set dir [lindex $argv 0]} else {set dir &quot;.&quot;}
+foreach i [exec ls -a $dir] {
+    .list insert end $i
+}
+
+# Set up bindings for the browser.
+
+bind all &lt;Control-c&gt; {destroy .}
+bind .list &lt;Double-Button-1&gt; {foreach i [selection get] {browse $dir $i}}
+</pre>
+
+<h2><a name="12"></a>Pull Down Menus</h2>
+
+<p>This program, <tt>/dept/ecse/graphics/Tcl/menu.tcl</tt>, shows
+the following. </p>
+
+<ol>
+    <li>menubutton widget, </li>
+    <li>menu widget, </li>
+    <li>separator, </li>
+    <li>tear-off menus, </li>
+</ol>
+
+<p align="center"><img src="menu.gif" width="440" height="243"></p>
+
+<pre>
+#! /bin/sh
+# The following line restarts wish \
+exec wish4.0 &quot;$0&quot; &quot;$@&quot; -name &quot;Menubar Demonstration&quot;
+
+#---------------------------------------------------------
+# Sarah Jordan
+# Senior Design Project
+# Spring 1998
+#
+# This program is a revised version of the program
+# menu.tcl used in Graphics class last semester.
+#---------------------------------------------------------
+
+# Create container widget for menubar
+# Put menubar at top and stretch horizontally
+
+frame .menubar -bg white
+pack .menubar -side top -fill x
+
+# Create first button
+menubutton .menubar.file -relief raised -text File \
+   -fg black -activeforeground blue -bg white -activebackground white \
+   -menu .menubar.file.m
+
+# Define first pulldown menu and add buttons
+menu .menubar.file.m \
+   -fg black -activeforeground blue \
+   -bg white -activebackground white
+
+.menubar.file.m add command -label Load -command { puts {Pretending to load...} }
+.menubar.file.m add command -label Save -command { puts { Not really saving...}  }
+.menubar.file.m add separator
+.menubar.file.m add command -label Quit \
+	-command { puts {Really quitting}; &quot;exit&quot;}
+
+# Make first button visible on menubar
+pack .menubar.file -side left
+
+# Repeat for second button
+menubutton .menubar.edit -relief raised -text Edit \
+   -fg black -activeforeground blue -bg white -activebackground white \
+   -menu .menubar.edit.m
+
+menu .menubar.edit.m \
+   -fg black -activeforeground blue \
+   -bg white -activebackground white
+
+.menubar.edit.m add command -label Cut -command { puts {Cutting?...} }
+.menubar.edit.m add command -label Paste -command { puts {Pasting!...} }
+
+pack .menubar.edit -side left
+
+# Create third button at right of menubar
+menubutton .menubar.help -text Help \
+   -bg black -activebackground blue \
+   -fg white -activeforeground white \
+   -menu .menubar.help.m
+
+menu .menubar.help.m \
+   -fg black -activeforeground blue \
+   -bg white -activebackground white
+
+.menubar.help.m add command -label &quot;A Little&quot; \
+	-command { puts {You're beyond helping.}}
+.menubar.help.m add command -label &quot;A Lot&quot;   \
+	 -command { puts {Error IEH2034I-qwe  You are beyond helping.}}
+
+pack .menubar.help -side right
+
+# Create a text message below menubar
+label .message -bg white -height 3 \
+   -text { This demonstrates a menubar and pulldown menus. }
+pack .message
+</pre>
+
+<h2><a name="13"></a>Misc Widgets</h2>
+
+<p>This program, <tt>/dept/ecse/graphics/Tcl/widgets.tcl</tt>,
+shows the following. </p>
+
+<ol>
+    <li>frame widget, </li>
+    <li>checkbutton widget, </li>
+    <li>listbox widget, </li>
+    <li>specifying colors and options. </li>
+</ol>
+
+<p align="center"><img src="widgets.gif" width="228" height="648"></p>
+
+<pre>
+#! /bin/sh
+# The following line restarts wish \
+exec wish4.0 &quot;$0&quot; &quot;$@&quot; -name &quot;Widgets&quot;
+
+#---------------------------------------------------
+# Sarah Jordan
+# Senior Design Project
+# Spring 1998
+#
+# The purpose of this program is to learn about
+# various widget types and how to use them.
+#---------------------------------------------------
+
+# Learn to use frames
+label .framelabel -height 3 -text &quot;This is a very boring frame:&quot;
+pack .framelabel
+frame .frame -height 50 -width 50 -bg white
+pack .frame
+
+# Learn to use listboxes
+label .listlabel -height 3 -text &quot;This is a listbox:&quot;
+pack .listlabel
+listbox .list -height 4 -bg black -fg white \
+   -selectbackground blue -selectforeground white
+.list insert 4 Daddy Mommy Brother Sister
+pack .list
+
+# Learn to use checkbuttons
+label .checklabel -height 3 -text &quot;These are checkbuttons:&quot;
+pack .checklabel
+checkbutton .eng -fg purple -bg white \
+   -activeforeground black -activebackground white \
+   -selectcolor black -text &quot;Engineering&quot;
+checkbutton .arch -fg purple -bg white \
+   -activeforeground black -activebackground white \
+   -selectcolor black -text &quot;Architecture&quot;
+checkbutton .sci -fg purple -bg white \
+   -activeforeground black -activebackground white \
+   -selectcolor black -text &quot;Science&quot;
+pack .eng
+pack .arch
+pack .sci
+
+# Learn to use menubuttons
+label .menulabel -height 3 -text &quot;These are menubuttons:&quot;
+pack .menulabel
+menubutton .button1 -relief raised -fg red -bg white \
+   -activeforeground black -activebackground white -text &quot;B1&quot;
+menubutton .button2 -relief raised -fg red -bg white \
+   -activeforeground black -activebackground white -text &quot;B2&quot;
+pack .button1
+pack .button2
+
+label .quitlabel -height 3 -text &quot;Quit the program:&quot;
+pack .quitlabel
+button .quit -text &quot;Quit&quot; -fg white -bg black \
+   -activeforeground yellow -activebackground black -command { exit }
+pack .quit
+</pre>
+
+<h2><a name="14"></a>Othello Game</h2>
+
+<p>This program, <tt>/dept/ecse/graphics/Tcl/othello.tcl</tt>, is
+a start at an Othello game. It shows the following. </p>
+
+<ol>
+    <li>global variables, </li>
+    <li>loops, </li>
+    <li>if statements, </li>
+    <li>switch statements, and </li>
+    <li>disabling a board position as a button, once it is
+        colored in. </li>
+</ol>
+
+<p align="center"><img src="othello.gif" width="258" height="306"></p>
+
+<pre>
+#! /bin/sh
+# The following line restarts wish \
+exec wish4.0 &quot;$0&quot; &quot;$@&quot; -name &quot;Othello&quot;
+
+#-------------------------------------------------------------
+# Sarah Jordan
+# Senior Design Project
+# Spring 1998
+#
+# The purpose of this program is to demonstrate a Tcl
+# version of Othello (this game is NOT fully functional).
+# Concepts included here are global variables, menu bars
+# and buttons, switch statements, if statements, and loops.
+#-------------------------------------------------------------
+
+# Set global variables
+global boardwidth
+global boardsize
+global player1
+global player2
+global color
+
+set player1 1
+set player2 2
+set color $player1
+
+# Create container for menubar
+# Put menubar at top &amp; stretch horizontally
+frame .menubar -bg white
+pack .menubar -side top -fill x
+
+# Create first button
+menubutton .menubar.play -relief raised \
+   -fg black -activeforeground blue \
+   -bg white -activebackground white \
+   -text Play -menu .menubar.play.m
+
+# Define menu widget for first button
+menu .menubar.play.m \
+   -fg black -activeforeground blue \
+   -bg white -activebackground white
+
+# Add cascade menu to first button
+.menubar.play.m add command -label &quot;3 x 3 board&quot; -command { createboard 3 }
+.menubar.play.m add command -label &quot;4 x 4 board&quot; -command { createboard 4 }
+.menubar.play.m add command -label &quot;5 x 5 board&quot; -command { createboard 5 }
+.menubar.play.m add command -label &quot;6 x 6 board&quot; -command { createboard 6 }
+.menubar.play.m add command -label &quot;7 x 7 board&quot; -command { createboard 7 }
+.menubar.play.m add command -label &quot;8 x 8 board&quot; -command { createboard 8 }
+.menubar.play.m add separator
+.menubar.play.m add command -label &quot;Exit Game&quot;   -command { exit }
+pack .menubar.play -side left
+
+# Put welcome message at top of screen
+label .menubar.welcome -text &quot;Welcome to Othello!&quot; -padx 10 -bg white
+pack .menubar.welcome -side left
+
+#-------------------
+# Create game board
+#-------------------
+
+proc createboard { size } {
+
+   global boardwidth
+
+   # Set up frame for board
+   switch $size {
+      3 { set boardwidth 190 }
+      4 { set boardwidth 210 }
+      5 { set boardwidth 250 }
+      6 { set boardwidth 290 }
+      7 { set boardwidth 330 }
+      8 { set boardwidth 370 }
+   }
+
+   frame .frame -width $boardwidth -height $boardwidth -bg white
+   pack .frame -anchor nw
+
+   # Create board
+   global boardsize
+   set boardsize $size
+   set color 0
+   for { set i 0 } { $i &lt; $boardsize } { incr i } {
+      for { set j 0 } { $j &lt; $boardsize } { incr j } {
+         button .b$i$j -bg white -activebackground white \
+            -highlightbackground black -command [ list board $i $j ]
+      }
+   }
+
+   # Initialize position values
+   set yspace 40
+   set xspace 40
+   set xmin   30
+   set xpos   30
+   set ypos   50
+
+   # Draw board
+   for { set i 0 } { $i &lt; $boardsize } { incr i } {
+      for { set j 0 } { $j &lt; $boardsize } { incr j } {
+         place .b$i$j -x $xpos -y $ypos
+         set xpos [ expr $xpos+$xspace ]
+      }
+      set xpos $xmin
+      set ypos [ expr $ypos+$yspace ]
+   }
+
+   # Is board even or odd size?
+   set N [ expr { $size % 2 } ]
+   if { $N == 1 } {
+      set LR [ expr { ($size-1)/2 } ]
+   } else {
+      set LR [ expr { $size/2 } ]
+   }
+
+   # Set starting positions
+   .b[ expr ($LR-1) ][ expr ($LR-1) ] configure -bg red \
+      -activebackground red -state disabled
+   .b[ expr ($LR) ][ expr ($LR) ] configure -bg red \
+      -activebackground red -state disabled
+   .b[ expr ($LR-1) ][ expr ($LR) ] configure -bg black \
+      -activebackground black -state disabled
+   .b[ expr ($LR) ][ expr ($LR-1) ] configure -bg black \
+      -activebackground black -state disabled
+}
+
+#------------------------------------
+# Color board positions when clicked
+#------------------------------------
+
+proc board { row col } {
+
+   global color
+   global player1
+   global player2
+   global boardwidth
+
+   set oppcolor [ changecolor $color ]
+
+   if { $color == $player1 } {
+      .b$row$col configure -bg red -activebackground red -state disabled
+   } elseif { $color == $player2 } {
+      .b$row$col configure -bg black -activebackground black -state disabled
+   }
+
+   set color $oppcolor
+   set oppcolor [ changecolor $color ]
+
+   set adj [ adjacent $row $col ]
+
+   if { $adj == 0 } {
+      puts &quot;ERROR - Your move must be adjacent to a piece of the\
+         opposite color.&quot;
+      .b$row$col configure -bg white -activebackground white -state active
+      set color $oppcolor
+      set oppcolor [ changecolor $color ]
+   }
+
+   # Now that we have checked adjacency, we must determine
+   # if player is able to flip a piece of the opposite color.
+   # Functionality should be inserted here.
+}
+
+#---------------
+# Change colors
+#---------------
+
+proc changecolor { player } {
+   global color
+   global player1
+   global player2
+
+   if { $color == $player1 } {
+      set oppcolor $player2
+   } elseif { $color == $player2 } {
+      set oppcolor $player1
+   }
+
+   return $oppcolor
+}
+
+#---------------------------------
+# Check adjacency to other pieces
+#---------------------------------
+
+proc adjacent { row col } {
+
+   global boardsize
+   set empty white
+   set adj 0
+   set left 0
+   set right 0
+   set up 0
+   set down 0
+   set upleft 0
+   set downleft 0
+   set upright 0
+   set downright 0
+
+   set color [ .b$row$col cget -bg ]
+
+   set firstrow [ expr ($row-1) ]
+   set firstcol [ expr ($col-1) ]
+   set lastrow [expr ($row+1) ]
+   set lastcol [expr ($col+1) ]
+
+   if { $firstrow &lt; 0 } { set firstrow 0 }
+   if { $firstcol &lt; 0 } { set firstcol 0 }
+   if { $lastrow &gt;= $boardsize } { set lastrow [ expr ($boardsize-1) ] }
+   if { $lastcol &gt;= $boardsize } { set lastcol [ expr ($boardsize-1) ] }
+
+   for { set i $firstrow } { $i &lt;= $lastrow } { incr i } {
+      for { set j $firstcol } { $j &lt;= $lastcol } { incr j } {
+         set boardcolor [ .b$i$j cget -bg ]
+         if { ($boardcolor != $empty ) &amp;&amp; ($boardcolor != $color) } {
+            set adj 1
+         }
+      }
+   }
+
+   return $adj
+}
+</pre>
+
+<h1><a name="15"></a>Interesting Web Pages</h1>
+
+<ol>
+    <li>Turn Your 15&quot; Monitor Into 30&quot; Cheap <a
+        href="http://ourworld.compuserve.com/homepages/John_Reder/fresnel.htm">with
+        a Fresnel lens.</a> </li>
+</ol>
+
+<p>&nbsp;</p>
+
+<h1><a name="16"></a>Homework 5 - Due Thurs Feb 17</h1>
+
+<p>Use Tcl/Tk to implement as many as you can of the X/Motif
+programs that I've prsented in class. </p>
+
+<hr>
+
+<p><font size="2">Copyright © 1998-9, Wm. Randolph Franklin. You
+may use my material for non-profit education and research,
+provided that you acknowledge me and preserve this notice. </font></p>
+<div align="center"><center>
+
+<address>
+    <font size="2">Wm. Randolph Franklin, Associate Professor<br>
+    For email address, replace NOSPAM by RPI in the following:
+    wrf@ecse.NOSPAM.edu<br>
+    </font><a href="http://www.ecse.rpi.edu/Homepages/wrf/"><font
+    size="2">http://www.ecse.rpi.edu/Homepages/wrf/</font></a><font
+    size="2"><br>
+    +1 (518) 276-6077; Fax: -6261<br>
+    ECSE Dept., 6026 JEC, Rensselaer Polytechnic Inst, Troy NY,
+    12180 USA<br>
+    (PGP key available)<br>
+    </font>
+</address>
+</center></div>
+
+<p><i>Updated:</i> Mon Sep 27 19:26:10 1999<br>
+<i>URL:</i>
+http://www.rpi.edu/dept/ecse/graphics/Classes/13/index.html<br>
+</p>
+</body>
+</html>

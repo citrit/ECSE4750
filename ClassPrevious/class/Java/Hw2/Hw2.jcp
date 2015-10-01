@@ -1,0 +1,39 @@
+! ** JCreator Project File (C)2000
+! ********** DO NOT EDIT *********
+
+VERSION := "1.10"
+LABEL := "Hw2"
+JDKPROFILE := ""
+ACTIVE := "1"
+OUTPUTPATH := ".\\"
+COMPILER := ""
+
+! Start RunTime Configuration Structure
+#[BeginRunTime]LABEL := "<Default>" RUNAPPLIC := "" RUNAPPLET := "" PARAM := "" RUN := "" CHECK := "10" #[EndRunTime]
+! Start Required Libraries Structure
+
+! Start Project Folder Structure
+#[BeginFolder]
+LABEL := "Root"
+FILTER := ""
+
+#[BeginFile]SOURCE := "STLReader.java" #[EndFile]
+#[BeginFile]SOURCE := "Renderer.java" #[EndFile]
+#[BeginFile]SOURCE := "PolygonCell.java" #[EndFile]
+#[BeginFile]SOURCE := "PointType.java" #[EndFile]
+#[BeginFile]SOURCE := "PointSet.java" #[EndFile]
+#[BeginFile]SOURCE := "PointCell.java" #[EndFile]
+#[BeginFile]SOURCE := "ParentObject.java" #[EndFile]
+#[BeginFile]SOURCE := "OGLRenderer.java" #[EndFile]
+#[BeginFile]SOURCE := "OGLLight.java" #[EndFile]
+#[BeginFile]SOURCE := "OGLCamera.java" #[EndFile]
+#[BeginFile]SOURCE := "objectReader.java" #[EndFile]
+#[BeginFile]SOURCE := "MaterialSet.java" #[EndFile]
+#[BeginFile]SOURCE := "Material.java" #[EndFile]
+#[BeginFile]SOURCE := "LineCell.java" #[EndFile]
+#[BeginFile]SOURCE := "Actor.java" #[EndFile]
+#[BeginFile]SOURCE := "Hw2.java" #[EndFile]
+#[BeginFile]SOURCE := "Cell.java" #[EndFile]
+#[BeginFile]SOURCE := "Camera.java" #[EndFile]
+#[BeginFile]SOURCE := "Light.java" #[EndFile]
+#[EndFolder]

@@ -1,0 +1,85 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage Express 2.0">
+<title>Data Vis - Homework 2</title>
+</head>
+
+<body bgcolor="#FFFFFF">
+
+<p align="center"><img src="Speckled_Gradient1A5.gif" width="500"
+height="4"></p>
+
+<h3 align="center">Advanced Computer Graphics and Data
+Visualization</h3>
+
+<p align="center"><img src="Speckled_Gradient1A5.gif" width="500"
+height="4"></p>
+
+<h2 align="center">&nbsp;Home Work 2</h2>
+
+<p align="center"><b>Due: Midnight on Tues Jan 30th, 2001</b></p>
+
+<p>This assignment requires you understand the code in the class
+download directory (<a href="download/hw2.zip">hw2.zip</a>). The
+first part of the assignment requires you to add a few new nodes
+to the class hierarchy, a TriangleCell and PolylineCell. The next
+part is to read in the example.dat file in the above zip file,
+the file format is:</p>
+
+<pre><code>NodeType   Count   Red   Green   Blue</code>
+<code># # # # # # # # # # # # # # # #</code></pre>
+
+<p>Where NodeType can be one of:</p>
+
+<p>0: Coords 1: Points 2: Lines 3: Polygons 4: Triangles 5:
+PolyLines</p>
+
+<p>The coords section consists of x,y,z triplets. Points Sections
+consist of single values of indexes into the current point set.
+Lines consist of pairs of values of indexes into the current
+point set. Polygons consist of a series of single values which
+are vertices into the current point set with each Polygon series
+is terminated by a -1. Triangle sections consist of triplets of
+triangle vertices totaling the count. PolyLines consist of a
+series of single values which are vertices into the current point
+set with each Polygon series is terminated by a -1.</p>
+
+<p>An example file would be:</p>
+
+<blockquote>
+    <pre><code>0 5 1.0 0.0 0.0</code> 
+<code>1.0 2.0 3.0   4.0 5.0 6.0   7.0 8.0 9.0   6.0 5.0 4.0    3.0 2.0 1.0</code>
+<code>1	6    0.0  1.0  0.0</code>
+<code>4  0  2  1  3  4</code>
+<code>2	3    0.0  0.0  1.0</code>
+<code>1 2   2 3   4 0</code>
+<code>3	2    1.0  1.0  0.0</code>
+<code>2 3 2 4 0 -1   3 2 4 1 0 -1</code>
+<code>4	2    1.0  0.0  1.0</code>
+<code>2 4 3    1 0 4</code>
+<code>5	2    0.0  1.0  1.0</code>
+<code>0 1 2 3 3 -1   4 1 3 1 0 2 1 3 1 2 3 1  -1</code></pre>
+</blockquote>
+
+<p>Where the first line describes a series of points to be loaded
+including count and RGB value (this can be ignored for points).
+The second line specifies the actual x,y,z values for each point.
+The third line specifies the next object to be a set of 6 points
+and they are green. The fourth lines specifies the points
+topology, these numbers refer to coords in the geometry object.</p>
+
+<p>Your final code should be archived in a ZIP file and submitted
+through the WebCT dropbox page. Your program should read the file
+example.dat from standard in and will be called similar to &quot;java
+<tt>Hw2 &lt; example.dat</tt>&quot;</p>
+
+<p><b>Extra Credit</b>: Add better viewport handling, add a face
+shape object made up of other shape objects, create a reader for
+the included STL file.</p>
+
+<p><img src="Speckled_Gradient1A5.gif" width="500" height="4"></p>
+</body>
+</html>

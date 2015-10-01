@@ -1,0 +1,243 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage Express 2.0">
+<title>Data Vis - Vtk Java Examples</title>
+</head>
+
+<body bgcolor="#ffffff">
+
+<h2 align="center"><IMG height=4
+ src="Speckled_GradientA042.gif" width=500 ></h2>
+
+<h3 align="center">Advanced Computer Graphics and Data
+Visualization</h3>
+
+<p align="center"><IMG height=4
+ src="Speckled_GradientA042.gif" width=500 ></p>
+
+<p><strong>Vtk Java Examples</strong></p>
+
+<ul>
+    <li>This is the Cone example which simply creates a
+        vtkConeSource and maps it to a mapper and passes it
+        through the pipeline.</li>
+</ul>
+
+<blockquote>
+    <pre>//
+// ConeExample
+//
+
+import vtk.*;
+import java.awt.*;
+
+public class ConeExample extends Frame
+{
+
+	public static void main( String args[] ) 
+    	{
+		vtkConeSource cone = null;
+		vtkPanel panel = null;
+		vtkActor coneActor = null;
+		vtkPolyDataMapper coneMapper = null;
+
+		ConeExample f = new ConeExample();
+		String jvmVendor = java.lang.System.getProperty("java.vendor"); <BR>		String jvmVersion = java.lang.System.getProperty("java.version"); <BR>		System.out.println("jvm vendor: "+jvmVendor); <BR>		System.out.println("jvm version: "+jvmVersion); <BR>		if (jvmVendor.startsWith("Microsoft",0)) { <BR>			panel = new vtkMSPanel(); <BR>		} else { <
+ 
+
+
+ 
+ 
+
+    
+
+
+	       
+    	
+		 BR > 
+		 panel = 
+		new vtkPanel(); < 
+		 BR > 
+
+		 } <  
+		BR >  
+		panel.resize(400,400);
+
+		System.out.println("Here we go");
+
+		// Create teh source and pass it to the mapper
+		cone = new vtkConeSource();
+		cone.SetResolution(8);
+		coneMapper = new vtkPolyDataMapper();
+		coneMapper.SetInput(cone.GetOutput());
+
+		// Create an actor and pass it the mapper
+		coneActor = new vtkActor();
+		coneActor.SetMapper(coneMapper);
+		// Add the actor to the renderer
+		panel.GetRenderer().AddActor(coneActor);
+
+		// Standard Java stuff
+		f.add("Center", panel);
+		f.pack();
+
+		// Set up the menu
+		MenuBar mb = new MenuBar();
+		Menu file = new Menu( "File" );
+		file.add( new MenuItem( "Exit" ));
+		mb.add( file );
+		f.setMenuBar( mb );
+
+		f.show();
+    	}
+
+	/** Let capture menu events (and all others...) */
+	public boolean action(Event evt, Object what)
+	{
+		if (evt.target instanceof MenuItem) 
+		{
+		// Since we didn't save references to each of the menu objects,
+		// we check which one was pressed by comparing labels.
+			if (((String)evt.arg).equals("Exit")) {
+				System.exit(1);
+			}
+		}
+		System.out.println("Event: " + evt + " Object: " + what);
+		return super.action(evt, what);
+  	}
+}</pre>
+</blockquote>
+
+<ul>
+    <li>This second example is a bit more complicated. 
+    <li>It reads in a Vtk structured point set and passes it 
+  through a contour filter to create an isosurface. 
+    <li>The class also keeps a pointer to the Panel and
+        ContourFilter so it can manipulate it later in an
+        animation loop.</li>
+</ul>
+
+<blockquote>
+    <pre>//
+// MriIso example
+//
+
+import vtk.*;
+import java.awt.*;
+
+public class MriIso extends Frame
+{	// Save ponter for later use in the animation loop
+	vtkPanel vPanel = null;
+	vtkContourFilter cFilt = null;
+	// Do we write out the image
+	boolean savetofile = false;
+
+	public static void main( String args[] ) 
+	{
+		vtkStructuredPointsReader reader = null;
+		vtkActor isoActor = null;
+		vtkPolyDataMapper isoMapper = null;
+
+		MriIso f = new MriIso();
+		String jvmVendor = java.lang.System.getProperty("java.vendor"); <BR>		String jvmVersion = java.lang.System.getProperty("java.version"); <BR>		System.out.println("jvm vendor: "+jvmVendor); <BR>		System.out.println("jvm version: "+jvmVersion); <BR>		if (jvmVendor.startsWith("Microsoft",0)) { <BR>			f.vPanel = new vtkMSPanel(); <BR>
+  
+
+
+ 
+ 
+
+    
+	         
+	   }
+	else { < 
+	      
+	 BR > 
+
+	       
+	
+		 f.vPanel = 
+		new vtkPanel(); < 
+		 BR > 
+
+		 } <  
+		BR >  
+		f.vPanel.resize(400,400);
+		//f.savetofile = true;
+
+		System.out.println("Here we go");
+
+		// Setup the reader for input
+		reader = new vtkStructuredPointsReader();
+		  reader.SetFileName("MRIdata.vtk");
+
+		// Create the contour filter and set values
+		f.cFilt = new vtkContourFilter();
+		  f.cFilt.SetValue(0, 225);
+		  f.cFilt.SetInput(reader.GetOutput());
+
+		// Pass the filter to the mapper
+		isoMapper = new vtkPolyDataMapper();
+		  isoMapper.SetInput(f.cFilt.GetOutput());
+
+		// Create the actor and pass it the mapper
+		isoActor = new vtkActor();
+		  isoActor.SetMapper(isoMapper);
+
+		// Add the actor to the renderer
+		f.vPanel.GetRenderer().AddActor(isoActor);
+      
+		f.add("Center", f.vPanel);
+		f.pack();
+
+		// Set up the menu
+		MenuBar mb = new MenuBar();
+		Menu file =  new Menu( "File"
+		); file.add( new MenuItem( "Animate"
+		)); file.add( new MenuItem( "Exit"
+		)); mb.add( file
+		); f.setMenuBar( mb
+
+		);
+    		f.show();
+
+	} /** Let capture menu events (and all others...)
+	*/ public boolean action(Event evt, Object
+	what)
+		{ if (evt.target instanceof 
+		MenuItem)
+		{ // Since we didn't save references to each of the menu
+		objects, // we check which one was pressed by comparing
+			labels. if (((String)evt.arg).equals("Animate"))
+				{ for (floati=10;i&lt;1000;i+=200) { // Loop and animate
+					System.out.println("Contour value: " + i);
+					cFilt.SetValue(0,i);
+					vPanel.GetRenderWindow().Render();
+					if (savetofile) { // Save the animation frames?
+						vPanel.GetRenderWindow().SetFileName("image." + (int)i + ".ppm");
+						vPanel.GetRenderWindow().SaveImageAsPPM();
+					}
+				}
+			}
+			if (((String)evt.arg).equals("Exit")) {
+				System.exit(1);
+			}
+		}
+		System.out.println("Event: " + evt + " Object: " + what);
+		return super.action(evt, what);
+  	}
+
+}
+</pre>
+</blockquote>
+<UL>
+  <LI>
+  <DIV>To get these working you will need the <A 
+  href="download/vtk.jar">vtk.jar</A> file I have patched which includes the 
+  vtkMSPanel which will allow you to use the Microsoft VM and Visual 
+  J++.</DIV></LI></UL>
+<P><IMG height=4 src="Speckled_GradientA042.gif" width=500></P>
+</body>
+</html>

@@ -1,0 +1,20 @@
+
+README
+
+Homework #1
+Advanced Graphics
+
+
+1. I need to create an abstract class to hold all the common data between Sphere, Box, and Cone. Common data includes positions for rotations and translations, the material settings, etc.. 
+
+
+2. The lighting is still a little off; it's an "art" as the book says. I still want to play around with this...
+
+
+3. The way to rotate the objects was not specified in the homework, so I took the liberty of varying it:
+	BOX - rotates about the x,y,z axes
+	CONE - rotates "down" the cone on the x,y axes
+	SPHERE - rotates y,z axes
+The objects did some interesting things when, while I was diddling with the code, they intersected. @:) 
+
+ 

@@ -1,0 +1,12 @@
+
+
+copymissing() {
+   for n in `ls ../../C++/hw2/*`; do
+	if [ ! -f `basename $n` ]; then
+		echo cp $n .
+	fi
+   done
+}
+
+
+copymissing

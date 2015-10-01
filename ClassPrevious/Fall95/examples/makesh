@@ -1,0 +1,9 @@
+#!/bin/sh
+if [ $HOSTTYPE = sparc ]; \
+then STRNG="This is a sparc"; \
+else \
+STRNG="This is not a sparc"; \
+fi
+
+echo $STRNG
+

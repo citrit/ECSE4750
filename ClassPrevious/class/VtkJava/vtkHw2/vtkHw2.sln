@@ -1,0 +1,13 @@
+Microsoft Visual Studio Solution File, Format Version 1.00
+Project("{66355F20-A65B-11D0-BFB5-00A0C91EBFA0}") = "vtkHw2", "vtkHw2.vjp", "{54DD8F57-DCE8-4D79-A520-178C157B5D4B}"
+EndProject
+Global
+	GlobalSection(LocalDeployment) = postSolution
+		StartupProject = {54DD8F57-DCE8-4D79-A520-178C157B5D4B}
+	EndGlobalSection
+	GlobalSection(BuildOrder) = postSolution
+		0 = {54DD8F57-DCE8-4D79-A520-178C157B5D4B}
+	EndGlobalSection
+	GlobalSection(DeploymentRoot) = postSolution
+	EndGlobalSection
+EndGlobal

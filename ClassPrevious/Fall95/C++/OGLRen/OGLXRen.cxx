@@ -1,0 +1,454 @@
+//////////////////////////////////////////////////////////////////////////
+//
+//  This code is for instructional purposes only. It was generated for
+//  use in a graduate level course to show certain aspects of data
+//  storage algorithms. It has problems and should not be used
+//  outside the class environment.
+//
+//  Author:  Thomas D. Citriniti     citrit@rpi.edu
+//  Class:   Advanced Computer Graphics and Data visualization
+//           Rensselaer Polytechnic Institute
+//  Date:    October 3, 1995
+//
+//////////////////////////////////////////////////////////////////////////
+
+
+/* Includes required */
+#include "OGLXRen.h"
+
+void
+OGLRenderer::BeginDraw(RenderType mode)
+{
+  switch(mode) {
+  case POINT:
+    glBegin(GL_POINTS);
+    break;
+  case POLYGON:
+    glBegin(GL_POLYGON);
+    break;
+  case POLYLINE:
+    glBegin(GL_LINE_STRIP);
+    break;
+  case LINE:
+    glBegin(GL_LINES);
+    break;
+  case TRIANGLE:
+    glBegin(GL_TRIANGLES);
+    break;
+  case LINE_LOOP:
+    glBegin(GL_LINE_LOOP);
+    break;
+  default:
+    break;
+  }
+}
+
+void
+OGLRenderer::EndDraw()
+{
+  glEnd();
+  glFlush();
+}
+
+void
+OGLRenderer::Vertex(double x, double y, double z)
+{
+//  cout << x << " " << y << " " << z << endl;
+  glVertex3f(x, y, z);
+}
+
+void
+OGLRenderer::Render()
+{
+  glClear((GLbitfield)(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) );
+
+  this->CameraSet[0]->Render(this);
+  for (int i = 0;i < this->LightSet.Count();i++) {
+    this->LightSet[i]->Render(this);
+  }
+
+  glMatrixMode(GL_MODELVIEW);
+  for (i=0;i<this->ActorSet.Count();i++) {
+      this->ActorSet[i]->Render(this);
+  }
+  glXSwapBuffers(this->DisplayId, this->WindowId);
+}
+
+void
+OGLRenderer::Initialize(int argc, char *argv[])
+{
+  int           index;
+  static int	attributes[50];
+  XVisualInfo   *v;
+  XSetWindowAttributes swa;
+  int           ms, dummy;
+  static int dblbuf[] ={GLX_RGBA, GLX_DEPTH_SIZE, 8,
+			GLX_DOUBLEBUFFER, None};
+
+  this->DisplayId = XOpenDisplay(NULL);
+  if (!DisplayId) {
+    cerr << "Could not open Display" << endl;
+    exit(10);
+  }
+
+  v = glXChooseVisual(this->DisplayId, DefaultScreen(this->DisplayId),
+		      dblbuf);
+
+  this->ContextId = glXCreateContext(this->DisplayId, v, None, GL_TRUE);
+
+  this->ColorMap = XCreateColormap(this->DisplayId,
+				   RootWindow(this->DisplayId, v->screen),
+				   v->visual, AllocNone);
+  swa.colormap = this->ColorMap;
+  swa.border_pixel = 0;
+  swa.event_mask = ExposureMask | ButtonPressMask | KeyPressMask |
+                   StructureNotifyMask;
+
+  this->WindowId = XCreateWindow(this->DisplayId,
+				 RootWindow(this->DisplayId, v->screen),
+				 this->x, this->y, this->width, this->height,
+				 0, v->depth, InputOutput, v->visual,
+				 CWBorderPixel | CWColormap | CWEventMask,
+				 &swa);
+  XSetStandardProperties(this->DisplayId, this->WindowId,
+			 "OGLRen", "oglren", None, argv, argc, NULL);
+
+  glXMakeCurrent(this->DisplayId, this->WindowId, this->ContextId);
+  XMapWindow(this->DisplayId, this->WindowId);
+
+  /* Init OpenGL */
+
+  glClearColor (0.0, 0.0, 0.0, 1.0);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  glEnable(GL_DEPTH_TEST);
+  glShadeModel(GL_SMOOTH);
+
+}
+
+void
+OGLRenderer::MainLoop()
+{
+  XEvent event;
+  static char buffer[20];
+  KeySym key;
+  XComposeStatus compose;
+  int cnt;
+
+  while(1) {
+    do {
+      XNextEvent(this->DisplayId, &event);
+      switch (event.type) {
+      case KeyPress:
+	buffer[0] = NULL;
+	cnt = XLookupString((XKeyEvent *)&event, buffer, 20, &key, &compose);
+	this->Key(buffer[0], ((XKeyEvent *)&event)->x, ((XKeyEvent *)&event)->y);
+	break;
+      case ConfigureNotify:
+	this->height = ((XConfigureEvent *)&event)->height;
+	this->width = ((XConfigureEvent *)&event)->width;
+	this->Reshape(this->width, this->height);
+	this->Render();
+	break;
+      case Expose:
+	if (((XExposeEvent *)&event)->count == 1)
+	  this->Render();
+	break;
+      }
+    } while(XPending(this->DisplayId));
+  }
+}
+
+void
+OGLRenderer::Key(unsigned char key, int x, int y)
+{
+
+  switch (key) {
+  case 'h':
+    this->CameraSet[0]->Rotate(15.0, 0.0,1.0,0.0);
+    break;
+  case 'j':
+    this->CameraSet[0]->Rotate(15.0, 1.0,0.0,0.0);
+    break;
+  case 'k':
+    this->CameraSet[0]->Rotate(-15.0, 1.0,0.0,0.0);
+    break;
+  case 'l':
+    this->CameraSet[0]->Rotate(-15.0, 0.0,1.0,0.0);
+    break;
+  case '+':
+    this->CameraSet[0]->Translate(0.0, 0.0, 1.0);
+    break;
+  case '-':
+    this->CameraSet[0]->Translate(0.0, 0.0, -1.0);
+    break;
+  case 'r':
+    this->Reshape(this->width, this->height);
+    break;
+  case 27:           /* Esc will quit */
+    exit(1);
+    break;
+  default:
+    break;
+  }
+  Render();
+}
+
+void
+OGLRenderer::Reshape(int w, int h)
+{
+  this->width = w;
+  this->height = h;
+  glViewport (0, 0, w, h);            /*  define the viewport */
+  this->CameraSet[0]->Reshape(this);
+}
+
+void
+OGLRenderer::SetMaterial(Material *mat)
+{
+
+  glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT,
+	       (const GLfloat*)&(mat->Ambient.RGBA[0]));
+  glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE,
+	       (const GLfloat*)&(mat->Diffuse.RGBA[0]));
+  glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR,
+	       (const GLfloat*)&(mat->Specular.RGBA[0]));
+
+}
+
+
+void OGLRendererCB(Widget w,XtPointer client_data,
+		   XEvent *event, Boolean *ctd)
+{
+  OGLRenderer *aren = (OGLRenderer *)client_data;
+  KeySym ks;
+  static char buffer[24];
+
+  switch(event->type) {
+  case Expose :
+    aren->Render();
+    break;
+  case ConfigureNotify:
+    aren->width = ((XConfigureEvent *)event)->width;
+    aren->height = ((XConfigureEvent *)event)->height;
+    aren->Reshape(aren->width, aren->height);
+    aren->Render();
+    break;
+  case KeyPress:
+    buffer[0] = NULL;
+    XLookupString((XKeyEvent *)event,buffer,20,&ks,NULL);
+    aren->Key(buffer[0], 0, 0);
+    break;
+  }
+}
+
+
+/////////////////////////
+//
+// OpenGL Actor methods
+//
+/////////////////////////
+
+void
+Actor::Render(Renderer *aren) {
+
+  // Set the current orientation
+  glMatriMakxMode(GL_MODELVIEW);
+  glPushMatrix();
+  glLoadMatrixf(this->Matrix);
+  // Render all the included cells
+  for (int i=0;i<this->Count();i++) {
+    (*this)[i]->Render(aren);
+  }
+  glGetFloatv(GL_MODELVIEW_MATRIX, (float *)&(this->Matrix));
+  glPopMatrix();
+}
+
+/////////////////////////
+//
+// OpenGL Camera methods
+//
+/////////////////////////
+
+Camera::Camera() { 
+	Initialize();
+}
+
+void
+Camera::Initialize() {
+  glMatrixMode(GL_PROJECTION);
+  glLoadIdentity(); 
+}
+
+void
+Camera::PrintSelf(ostream &os) {
+
+  CameraBC::PrintSelf(os);
+  os << "Positioned at: " << From.x << ", "<<From.y<<", "<<From.z << endl
+    << "Looking at: " << To.x << ", " << To.y << ", " << To.z << endl
+    << "Up: " << UpVec[0] << ", " << UpVec[1] << ", " << UpVec[2] << endl
+    << "Clipping Range: " << ClipRange[0] << ", " << ClipRange[1] << endl
+    << "Eye ange: " << eyeAngle << endl;
+}
+  
+void
+Camera::Reshape(Renderer *aren) {
+
+  glMatrixMode(GL_PROJECTION);
+  glLoadIdentity(); 
+  gluLookAt(From.x, From.y, From.z,
+	    To.x, To.y, To.z,
+	    UpVec[0], UpVec[1], UpVec[2]);
+  gluPerspective(this->eyeAngle, 
+		 1.0*(GLfloat)aren->width/(GLfloat)aren->height, 
+		 ClipRange[0], ClipRange[1]);
+  glTranslatef(0.0,0.0,-50.0);
+
+}
+
+void
+Camera::Render(Renderer *aren) {
+
+	Reshape(aren);
+}
+
+void
+Camera::Rotate(float angle, float x, float y, float z) {
+
+  glMatrixMode (GL_PROJECTION);        /* manipulate viewport matrix  */
+  glRotatef(GLfloat(angle), GLfloat(x), GLfloat(y), GLfloat(z));
+
+}
+
+void
+Camera::Translate(float x, float y, float z) {
+
+  glMatrixMode (GL_PROJECTION);        /* manipulate viewport matrix  */
+  glTranslatef(GLfloat(x), GLfloat(y), GLfloat(z));
+}
+
+void
+Camera::SetPosition(float x, float y, float z,
+			     float cx, float cy, float cz,
+			     float ux, float uy, float uz) {
+
+  From.x = (double)x; From.y = (double)y; From.z = (double)z;
+  To.x = (double)cx; To.y = (double)cy; To.z = (double)cz;
+  UpVec[0] = ux; UpVec[1] = uy; UpVec[2] = uz;
+  glMatrixMode (GL_PROJECTION);        /* manipulate viewport matrix  */
+  glLoadIdentity();
+  gluLookAt(From.x, From.y, From.z,
+	    To.x, To.y, To.z,
+	    UpVec[0], UpVec[1], UpVec[2]);
+//  gluPerspective(this->eyeAngle, 
+//		 1.0*(GLfloat)aren->width/(GLfloat)aren->height, 
+//		 ClipRange[0], ClipRange[1]);
+
+}
+
+void
+Camera::SetROI(double *roi) {
+
+  for (int i=0;i<6;i++)
+    cout << roi[i] << " ";
+  cout << endl;
+  From.x = ((roi[3] - roi[0])/2) + roi[0];
+  From.y = ((roi[4] - roi[1])/2) + roi[1];
+  From.z = (roi[5] - roi[2]) + roi[2];
+  To.x = ((roi[3] - roi[0])/2) + roi[0];
+  To.y = ((roi[4] - roi[1])/2) + roi[1];
+  To.z = ((roi[5] - roi[2])/2) + roi[2];
+  glMatrixMode (GL_PROJECTION);        /* manipulate viewport matrix  */
+  glLoadIdentity();
+  gluLookAt(From.x, From.y, From.z,
+	    To.x, To.y, To.z,
+	    UpVec[0], UpVec[1], UpVec[2]);
+//  gluPerspective(this->eyeAngle, 
+//		 1.0*(GLfloat)aren->width/(GLfloat)aren->height, 
+//		 ClipRange[0], ClipRange[1]);
+
+
+}
+
+void 
+Camera::Zoom(float amount) {
+  float distance;
+
+  if (amount <= 0.0) return;
+
+//  this->SetPosition(this->FocalPoint[0] +distance * this->ViewPlaneNormal[0],
+//                    this->FocalPoint[1] +distance * this->ViewPlaneNormal[1],
+//                    this->FocalPoint[2] +distance * this->ViewPlaneNormal[2]);
+
+}
+
+/////////////////////////
+//
+// OpenGL Light methods
+//
+/////////////////////////
+
+Light::Light() { 
+
+  From.z = 1.0;
+  Num = 0;
+  On = Light::Yes; 
+
+}
+
+Light::Light(short num) { 
+
+  From.z = 1.0;
+  Num = num;
+  On = LightBC::Yes; 
+
+}
+
+void
+Light::Render(Renderer *aren) {
+  GLenum lightnum;
+
+  float lightPos[4] = {From.x, From.y, From.z, 0.0};
+  float lightDir[4] = {To.x, To.y, To.z, 0.0};
+
+  if (this->On == Light::Yes) {
+    glEnable(GL_LIGHTING);
+    switch (Num % 8) {
+    case 0: lightnum = GL_LIGHT0; break;
+    case 1: lightnum = GL_LIGHT1; break;
+    case 2: lightnum = GL_LIGHT2; break;
+    case 3: lightnum = GL_LIGHT3; break;
+    case 4: lightnum = GL_LIGHT4; break;
+    case 5: lightnum = GL_LIGHT5; break;
+    case 6: lightnum = GL_LIGHT6; break;
+    case 7: lightnum = GL_LIGHT7; break;
+    }
+    glEnable(lightnum);
+    glLightfv(lightnum, GL_POSITION, lightPos);
+    glLightfv(lightnum, GL_SPOT_DIRECTION, lightDir);
+    glLightfv(lightnum, GL_AMBIENT, Color.Ambient.RGBA);
+    glLightfv(lightnum, GL_DIFFUSE, Color.Diffuse.RGBA);
+    glLightfv(lightnum, GL_SPECULAR, Color.Specular.RGBA);
+  }
+}
+
+void 
+Light::SetMaterial(Material *mat) {
+
+  GLenum lightnum;
+
+  Color = *mat;
+  switch (Num % 8) {
+    case 0: lightnum = GL_LIGHT0; break;
+    case 1: lightnum = GL_LIGHT1; break;
+    case 2: lightnum = GL_LIGHT2; break;
+    case 3: lightnum = GL_LIGHT3; break;
+    case 4: lightnum = GL_LIGHT4; break;
+    case 5: lightnum = GL_LIGHT5; break;
+    case 6: lightnum = GL_LIGHT6; break;
+    case 7: lightnum = GL_LIGHT7; break;
+  }
+  glLightfv(lightnum, GL_DIFFUSE, Color.Diffuse.RGBA);
+  glLightfv(lightnum, GL_SPECULAR, Color.Specular.RGBA);
+
+}
+

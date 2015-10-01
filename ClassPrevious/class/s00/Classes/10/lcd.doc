@@ -1,0 +1,2062 @@
+LCD MODULE TECHNICAL REFERENCE (FAQ)  Version 40(text), May 1996
+
+1)  Introduction
+      About the author
+      Acknowledgements
+      Trademark & Copyright notice and disclaimer
+      References
+      Where to find this FAQ
+      History
+
+2)  LCD module basics
+      Description
+      Definitions
+      Sources for modules
+
+3)  Specs
+      Pin description
+      Character set
+      Instruction set
+        Write Operations
+        Read Operations
+      Timing
+      Memory map
+        Custom characters
+        Addressing display ram
+
+4)  Initialization
+      Initialize for 8-bit operation
+      Initialize for 4-bit operation
+
+5)  Interfacing
+      Manual test circuit
+      Interfacing to CPU bus
+      Interfacing to CPU port
+        4-Bit Port Interface
+        8-Bit Port Interface
+      Specific Interface Applications 
+	Interfacing to Parallax BASIC STAMP
+	Interfacing to Intel 8051 family
+	Interfacing to Motorola 68HC11 family
+	Interfacing to Microchip PIC family
+      Serial Interface
+      The Serial Backpack
+
+6)  NEC UPD44780 LCD Controller Chip pinout
+
+7)  FTP sites
+
+
+1)  Introduction
+
+1.1)  About the author
+
+The LCD MODULE TECHNICAL REFERENCE (FAQ) was compiled 
+and is maintained by Christopher J. Burian.  References and other
+contributors are listed below.
+
+E-mail: cburian@uiuc.edu    
+WWW Homepage: http://www.cen.uiuc.edu/~cburian/
+This FAQ: http://www.cen.uiuc.edu/~cburian/lcd.doc
+
+My account at the University of Illinois will be going away in
+the Fall of '96.  When I have a new email address, the FAQ will
+be updated at the primary sites (Filip's FAQ HQ and ualberta).
+
+Last change:  Version 40 released in May, 1996, in text format.
+At a later time, I will be releasing an HTML version (as opposed
+to HTMLized text).
+
+Errata, comments, and suggestions are most welcome.
+
+1.2)  Acknowledgements
+
+My gratitude to correspondents and contributors Chris
+Abbott, Richard N. Ames, Magnus Andersson, Ronald S. Chong, 
+Scott Dattalo, John Edwards, Doug Girling, Frank Hausmann, 
+John Payson, Robert Rolf, Philipp Schaeufele, J. R. Spidell,
+Frank Vorstenbosch, and Brian Wing.
+
+Special thanks and my apologies to any correspondents or
+contributors whom I might have failed to mention.
+
+1.3)  Trademark & Copyright notice and disclaimer
+
+Copyright 1996 by Christopher J. Burian.  All rights 
+reserved.  Permission is granted to electronically distribute 
+and reproduce this article in unaltered form provided that it
+is given free of charge (reasonable copying or download fees 
+excepted).  Written publication of this article in whole or 
+in part without the express permission of the author is 
+prohibited (printouts made for personal use excepted). 
+
+Trademarks and service marks appearing in this FAQ are the
+property of their respective owners.  
+
+Use this information at your own risk.  Contributors cannot be
+responsible for damage or losses resulting from errors or 
+omissions in this work.  Every effort has been made to verify
+its accuracy.
+
+1.4)  References
+    
+      References used to generate this version: 
+          AND Dot Matrix LCD Module databook 
+          Optrex Dot Matrix LCD Module datasheet 
+          Stanley Dot Matrix LCD Module databook 
+          June '94 issue of Nuts & Volts magazine
+          Intel Embedded Control Applications book-1988
+          Texas Instruments TTL Logic Data Book-1988
+          Microchip 1994/95 Embedded Control Handbook 
+          _The Miniboard 2.0 Technical Reference_ 
+               by Fred G. Martin   
+          _Mobile Robots: Inspiration to Implementation_ 
+               by Joseph Jones and Anita Flynn
+
+My favorite references are the Optrex databook for dot matrix
+modules, available from Digikey for $2, and the Amateur Robotics
+column in the June '94 issue of Nuts & Volts magazine, 430
+Princeland Court, Corona, CA  91719.
+
+1.5)  Where to find the LCD MODULE TECHNICAL REFERENCE (FAQ)
+
+The latest release is available from:
+http://www.paranoia.com/~filipg/HTML/LINK/F_LCD_tech.html
+ftp://ftp.ee.ualberta.ca/pub/cookbook/faq/lcd.doc
+
+This article can also be found at better ftp and WWW sites 
+worldwide.
+
+1.6)  History
+
+I originally wrote this frustrated by the terse and
+cryptic datasheets manufacturers supply.  I refer to it more
+often than I write to it.  I hope engineers, hobbyists, 
+students and experimenters find it helpful.  
+     
+     Version 0 released mid 1994
+     Version 35 released March 1995
+     Version 35A released March 1995
+     Version 35B released September 1995 
+     Version 40 released May 1996 in ASCII and HTML
+
+
+2)  LCD module basics
+
+2.1)  Description
+
+LCDs are manufactured by quite a few different companies. 
+Units typically seen in the surplus market come from Densitron,
+Epson, Hewlett Packard, Optrex, or Sharp.  Common configurations
+are 16, 20, 24, 32, or 40 characters by 1, 2, or 4 lines.  
+
+I've been loose with the term LCD here.  One can find LCDs
+at any level of integration from what looks like a glass slide
+and will need drivers and controller, to a PCB that includes the
+row and column drivers, to the modules I'm actually talking about
+which also include an on-board controller (usually a Hitachi
+HD44780).  I'd recommend staying away from modules that do not
+say they have a controller or otherwise indicate that it's
+included, such as by describing the character set or noting an
+ASCII interface.  The units to look for are usually called
+character-type dot matrix LCD modules.
+     
+This article applies only to character-based LCD modules with 
+Hitachi 44780 or equivalent controllers.  I have a compatible
+LCD module made by Epson.  The chips don't have any identifying
+marks, but they are probably made by Seiko or SMOS.  The protocol 
+and pinout are identical, but the non-ASCII characters (>127) are
+different.
+
+All of the modules I've seen use the Hitachi controller,
+or a functional equivalent or near equivalent.  Each of these 
+use the same interface and memory map.  The character set is
+almost always the same with a mixture of English and Japanese 
+characters, but models with different character sets turn up 
+in the surplus market, for instance, substituting Latin and 
+German characters for Japanese characters.
+
+Also found are modules with extra segments--fixed numbers or 
+words arranged around the dot matrix display area for extra 
+functions.  To the controller, these extra segments look just like 
+an additional 5x7 dot box (each segment (word, digit, etc.) 
+corresponds to one dot) and can be driven by defining custom 
+characters with appropriate bit patterns to energize these special 
+segments as desired.
+
+Experimenters interested in graphical LCD displays can find units
+with and without onboard controllers.  Those without controllers
+are more common and are often called "serial interface" graphical
+LCDs.  Units without controllers must be refreshed continually,
+consuming a great deal of processor time if an external controller
+isn't added.  Units with built-in controllers have onboard video
+RAM, automatic refresh, and character and graphics commands.  An
+introduction to making your own external controller based on an
+FPGA appears in the form of a class assignment at:
+http://www.ece.uiuc.edu:80/ece311/mp4.html  This article doesn't
+discuss graphical type modules. 
+
+If you're interested in the basic principles behind operation
+of Liquid Crystal Displays, take a look at Scott M. Bruck's LCD
+FAQ, which is available from ftp.ee.ualberta.ca as the file
+/pub/cookbook/faq/LCD2.doc  Since his FAQ came first, I've changed
+the name of this one to the LCD MODULE TECHNICAL REFERENCE
+(FAQ).
+
+2.2)  Definitions
+
+Backlit: uses lamp behind the display instead of reflected light.
+
+Cold cathode flourescent lamp (CFL): A special type of flourescent 
+lamp used for backlighting in modern LCD displays, particularly 
+large graphical arrays as used in laptops.  They provide excellent 
+illumination at low current.  Powered by high voltage and high-
+frequency AC (200-1000V at 25-75 kHz), their electrical  
+requirements are critical and must be exactly matched with the 
+appropriate inverter recommended by the manufacturer.  Example
+ratings for Stanley CFL backlights: 20 character x 2 line: 230 V,
+2.5 mA, 65 kHz; 40 character x 2 line: 340 V, 2.5 mA, 65 kHz;
+256 x 128 dot: 7 mA, 25 kHz, no voltage listed.  
+
+Controller: the on-board dedicated microcontroller, such as the
+Hitachi HD44780 or SMOS SED1130, which acts as an interface
+between your CPU and the row and column drivers.  It may have
+on-chip ram, or may need external ram.  The controller takes care
+of generating characters, refreshing the display, and so on.  The
+modules discussed in this article have on-board controllers with
+internal ram. 
+
+Driver: LCD modules of all sorts have column and row, or x and y,
+drivers.  To control a module with just drivers directly from a CPU
+would take a great deal of time and software overhead, because
+each bit (dot) has to be written separately, usually 4 bits at a
+time, in a non-stop cycle. 
+
+Electroluminescent lamp (EL): a kind of lamp used for backlighting
+that gives off a cool glow, powered by high voltage, mid-frequency 
+AC (about 100V at 400Hz) from a dc-ac inverter.  Listed ratings for 
+Stanley EL backlights: 50-250 V, 50-1000 Hz; typical: 82 V, 410 Hz.
+Ignore the 50 Hz lower rating for frequency, it might tempt you 
+to try to power it off house current.  Luminance at 50 Hz is only
+about 1/10 of luminance at 400 Hz.  I smoked an EL backlight 
+powering it with mains voltage with a series potentiometer, in
+other words at less than 120 V, despite a supposed 250 V rating. 
+
+Extended temperature: modules designed for use in temperatures 
+outside the standard range.  Standard range is 0 to 50 C, 
+extended range is -20 to 70 C.  Extended range units need -7VDC 
+as well as +5VDC.  Standard range units need only +5VDC.  See
+discussion of Vee.  Extended temperature range units are useful
+for outdoor use and for LED backlit units (these get rather warm).
+
+LCD: liquid crystal display
+
+LED: light emitting diode, the other popular backlight, requiring
+low voltage DC, but a real current hog compared to the other
+backlights.  Example ratings: 16 x 1, 16 x 2: 160 mA at 4.5 V;
+16 x 4: 240 mA at 4.5 V; 20 x 4: 300 mA at 4.5 V.  Max current
+is 150% of rated current.  These backlights are driven like any 
+other LED, the series resistor Rs = (Vbat - Vf) / If, for 
+example: Rs = (12 - 4.5) / .160 = 47 ohms.  In general, for one-
+or two-line displays, If = 10 x #chars/line milliamps, and for 
+four-line displays, If = 15 x #chars/line milliamps; all at 4.5
+volts. 
+
+Supertwist (STN): a design that improves contrast and viewing 
+angle.
+
+2.3)  Sources for modules
+
+These are the sources I've seen that are most accessible to the
+hobbyist.  If you know of more, please email me. 
+
+All Electronics, 818-904-0524
+B. G. Micro, 214-271-5546 (often has dirt-cheap (~$4 ea) modules) 
+Cronin Electronics, 617-449-5000
+Digikey Corporation, 800-DIGIKEY
+Herbach & Rademan, 215-788-5583
+Hosfelt Electronics, 800-524-6464
+Marlin P. Jones & Assoc., 407-848-8236 (huge selection) 
+Scott Edwards Electronics, 520-459-4802  
+Timeline, Inc., 310-784-5488  
+
+
+3)  Specifications
+
+3.1)  Pin Description
+
+These numbers are the same no matter the physical arrangement of
+the pins, (for instance, a row along the top on Optrex units, or
+a 2x7 .100" center array on the side of Sharp units) on 14-pin
+units.  A reader has noted modules with only 10 pins--designed to
+be used with 4-bit wide data only.
+
+Pin#  Symbol  Level  Function
+ 1     Vss     GND    Ground
+ 2     Vcc     +5V    Module power
+ 3     Vee    note1   Liquid crystal drive
+ 4     RS_     H/L    Register select, H=data, L=instruction
+ 5     R/W     H/L    Read/Write, H=read (LCD->CPU), L=write (CPU->LCD)
+ 6     E      note2   Edge-sensitive Enable   
+ 7     DB0    note3   Data bit 0  (least significant bit)
+ 8     DB1      "
+ 9     DB2      "
+10     DB3      "
+11     DB4      "
+12     DB5      "
+13     DB6      "
+14     DB7      "
+
+Backlight drive:  If the module has a back light, it will be
+driven by a pair of pads separate from the interface pads.  Check
+your datasheet for power requirements. 
+
+NOTE1:  On standard modules Vee is between GND and 5V; on
+temperature extended modules it is between GND and -7V.  A
+potentiometer, resistor arrangement, or resistor-diode
+arrangement is used for contrast adjustment.  Wiring examples
+for using a potentiometer are shown here.
+
+        Standard:
+
+          +5V ------------*----------- Vcc
+                          |
+                          /
+                  10k to  \<---------- Vee
+                  20k pot /
+                          \
+                          |
+          GND ------------*----------- Vss
+
+        
+Temperature extended model:
+
+          +5V ------------------------ Vcc
+
+          GND ------------*----------- Vss
+                          |
+                          /
+                  10k to  \<---------- Vee
+                  20k pot /
+                          \
+                          |
+          -7V ------------'
+
+        Extended temperature types may also employ temperature
+correction circuitry to provide automatic contrast adjustment.
+
+For operation over a narrow temperature range (such as always
+indoors), a pair of resistors can be substituted for the
+potentiometer.  At first, try a 10Kohm resistor between Vcc and
+Vee, and a 330ohm resistor between Vee and Vss (ground), and adjust
+from there for optimum contrast.  Also, a forward-biased diode is 
+sometimes used between Vee and Vss, instead of the low-ohm resistor. 
+
+For testing purposes, Vee can be tied to ground, but the digits will
+be invisible at the normal perpendicular viewing angle.  Tilt the
+display until your view is almost in the plane and the display will
+be faintly readable.
+
+NOTE2:  Enable latches RS and R/W on the rising edge and latches data
+on the trailing edge.  According to specs, RS and R/W must be stable
+before E goes high and must remain stable until E goes low (observing
+setup and hold times).  Data must be stable while E goes low (again, 
+observing setup and hold times). 
+
+NOTE3:  The data pins DB7-DB0 (or DB7-DB4 when using a 4-bit
+interface) need to be driven by the CPU for a write, but must be
+switched to hi-Z (or pulled up with pull-up resistors only) so
+the module can drive the lines on a read or BUSY FLAG check.
+
+When using a 4-bit wide interface, the most significant nybble is
+written first (bit7-bit4), then the least significant nybble is
+written (bit3-bit0) on the next Enable cycle.  DB3 to DB0 are
+left unconnected.  The pins have internal pullups, so unused
+pins can be left unconnected, but I don't know whether the pullups
+are sufficient to use open collector drivers.  The pullup resistors
+may be too high resistance to overcome line capacitance at high
+speeds.
+
+Power consumption:  Modules use between 10 and 25mW (2 to 5 mA),
+not counting the backlight, roughly proportional to the product of 
+rows and columns.  
+
+Be careful when hooking power to the module.  Reversing +5V and
+GND will destroy the unit.  Carefully examine your datasheet to
+correctly identify Pins 1 and 2.
+
+3.2)  Character Set
+
+A picture of the character set scanned from a datasheet can be
+found at http://www.cen.uiuc.edu/~cburian/chset2.gif
+
+None of the standard ASCII control codes [chr(1)-chr(31), 
+chr(127)] are implemented.  
+
+Standard ASCII is used for chr(32) <space> through chr(125) '}'
+(<00100000b..01111101b>), except that tilde (~) is replaced by a
+yen symbol.
+
+The lower case characters do not have decenders.  This is because
+some LCD's (those with 5x7 dots or 5x8 dots) would chop off the
+bottom.  Lower case characters with decenders appear near the top
+of the character table for use on modules which have 5x11 dot
+matrices.  You can access them readily by adding 128
+(<10000000b>, 80x) if you want decenders and have a 5x11 dot unit
+that will properly display them.  You can create squished "sort-of" 
+decenders of your own in character ram to eliminate the awkward-
+looking "tall" lowercase letters provided. 
+
+Eight user-defined characters are displayed by chr(0) through
+chr(7), and redundantly with chr(8) through chr(15).  These are
+sometimes used to implement a comma and lower case characters g,
+j, p, q, and y with a decender into the cursor row on 5x8 units.
+
+ 
+                               Font Table
+                               ---- -----
+LSN   x0  x1  x2  x3  x4  x5  x6  x7  x8  x9  xA  xB  xC  xD  xE  xF
+MSN +---------------------------------------------------------------
+0x  | cg0 cg1 cg2 cg3 cg4 cg5 cg6 cg7 cg0 cg1 cg2 cg3 cg4 cg5 cg6 cg7
+1x  | <------------------------- UNDEFINED ------------------------->
+2x  |      !   "   #   $   %   &   '   (   )   *   +   ,   -   .   /
+3x  |  0   1   2   3   4   5   6   7   8   9   :   ;   <   =   >   ?
+4x  |  @   A   B   C   D   E   F   G   H   I   J   K   L   M   N   O
+5x  |  P   Q   R   S   T   U   V   W   X   Y   Z   [  (*)  ]   ^   _
+6x  |  `   a   b   c   d   e   f   g   h   i   j   k   l   m   n   o
+7x  |  p   q   r   s   t   u   v   w   x   y   z   {   |   }  --> <--
+8x  | <------------------------- UNDEFINED ------------------------->
+9x  | <------------------------- UNDEFINED ------------------------->
+Ax  |     (*) (*) (*) (*) (*) (*) (*) (*) (*) (*) (*) (*) (*) (*) (*)
+Bx  |  -  (*) (*) (*) (*) (*) (*) (*) (*) (*) (*) (*) (*) (*) (*) (*)
+Cx  | (*) (*) (*) (*) (*) (*) (*) (*) (*) (*) (*) (*) (*) (*) (*) (*)
+Dx  | (*) (*) (*) (*) (*) (*) (*) (*) (*) (*) (*) (*) (*) (*) (*) (*)
+Ex  | (*) (*) (*) (*) (*) (*) (*) (g) (*) (*) (j) (*) (*) (*) (*) (*)
+Fx  | (p) (q) (*) (*) (*) (*) (*) (*) (*) (y) (*) (*) (*) (*) (*) (*)
+
+Notes:
+     cg0-cg7  user-definable characters
+     (chr)    lower-case character with descenders
+     (*)      see list below:
+
+        Hex     Decimal Meaning
+        ---     ---     -------
+        5C       92     Yen
+        A0      160     (blank)
+        A1      161     katakana
+        :        :         :
+        A5      165     katakana (looks like dot in center)
+        :        :         :
+        DF      223     katakana (looks like degree symbol)
+        E0      224     LC alpha
+        E1      225     "a" with umlaut ("a) (German)        
+	E2      226     LC beta (or German es-szet) with descender
+        E3      227     LC epsilon
+        E4      228     LC mu with descender
+        E5      229     LC sigma
+        E6      230     LC rho
+        E7      231     "g" with descender
+        E8      232     radical (square root sign)
+        E9      233     "- |" (Katakana?)
+        EA      234     "j" with descender
+        EB      235     tiny 3 by 3 'x' in upper left corner
+        EC      236     cent sign
+        ED      237     pounds sterling
+        EE      238     "n" with tilde (Spanish) or overbar
+        EF      239     "o" with umlaut ("o) (German)
+        F0      240     "p" with descender
+        F1      241     "q" with descender
+        F2      242     LC theta
+        F3      243     infinity (lazy-8)
+        F4      244     LC omega
+        F5      245     "u" with umlaut ("u) (German)
+        F6      246     UC sigma
+        F7      247     LC pi
+        F8      248     "x" with overbar
+        F9      249     "y" with descender
+        FA      250     katakana
+        FB      251     katakana        
+        FC      252     katakana
+        FD      253     division symbol (:-)
+        FE      254     (blank)
+        FF      255     solid black cursor
+
+(Font table by Doug Girling)
+
+3.3)  Instruction Set
+
+Binary data from bit7 to bit 0.  If using a 4-bit interface,
+bit7-bit4 of data are sent first, then bit3-bit0, on sucessive
+enable cycles.  No delay is required between these cycles (except
+that the minimum E time (450ns) and TcycE time (1us) must be
+met).  
+
+3.3.1)  Write Operations
+
+For all write procedures,
+                               _
+     RS=0 (except as noted), R/W=0, command/data from CPU to LCD on
+     bit7 to bit0.  
+
+Clear display                   00000001
+     Clears display and returns cursor to home position
+(address 0).  Execution time: 1.64ms
+
+Home cursor                     0000001x  
+     Returns cursor to home position, returns a shifted display
+to original position.  Display data RAM (DD RAM) is unaffected.
+Execution time: 40us to 1.64ms                
+
+        x=don't care
+
+Entry mode set                  000001is
+     Sets cursor move direction and specifies whether or not to
+shift display.  Execution time: 40us          
+
+        i=1: increment, i=0: decrement DD RAM address by 1 after  
+       each DD RAM write or read.
+
+        s=1: display scrolls in the direction specified by the    
+         "i" bit when the cursor is at the edge of the display    
+         window
+
+On/off control                  00001dcb
+     Turn display on or off, turn cursor on or off, blink
+character at cursor on or off.  The contents of Display Data
+RAM are not altered when the display is turned off.  If it
+is turned on again, the previously displayed text will reappear.
+When the cursor is on and blink is off, the cursor is an
+underscore in line 8 (or line 11 for 5x11 displays).  When
+blink is on, the cursor is a solid box alternating with the
+character in DD RAM at that position.  Execution time: 40us 
+        d=1: display on.
+        c=1: cursor on
+        b=1: blink character at cursor position 
+    The contents of Display Data RAM are not altered when the
+    display is turned off.  If the display is turned on again,
+    information displayed previously will reappear.
+    
+Cursor/shift                    0001srxx
+     Move cursor or scroll display without changing display data
+RAM.  Execution time: 40us 
+        s=1: scroll display, s=0: move cursor.
+        r=1: to the right, r=0: to the left.
+        x= don't care
+
+Function set                    001dnfxx
+     Set interface data length, mode, font.  Execution time: 40us
+        d=1: 8-bit interface, d=0: 4-bit interface.
+        n=1: 1/16 duty, n=0: 1/8 or 1/11 duty (multiplex ratio).
+             For 2-line displays, this can be thought of as
+               controlling the number of lines displayed 
+               (n=0: 1-line, n=1: 2 or more lines) except for 1x16
+               displays which are addressed as if they were
+               2x8 displays--two 8-character lines side by side.
+        f=1: 5x11 dots, f=0: 5x8 dots.
+
+Character RAM Address Set       01aaaaaa
+     To read or write custom characters.  Character generator
+(CG) RAM occupies a separate address space from the DD RAM.  Data
+written to, or read from the LCD after this command will be
+to/from the CG RAM.  The address pointer is incremented after each 
+write, so consecutive bytes (rows) can be sent.  Execution time: 40us 
+        aaaaaa: 6-bit CG RAM address to point to.
+
+Display RAM Address Set         1aaaaaaa
+     Reposition cursor.  Display Data (DD) RAM occupies a
+separate address space from the CG RAM.  Data written to, or read
+from the LCD after this command will be to/from the DD RAM.   The
+address pointer is incremented after each write, so consecutive
+bytes can be sent.  Execution time: 40us 
+        aaaaaaa: 7-bit DD RAM address to point to.
+     On two line models (and most 16x1), the command can be 
+     interpreted this way: 1laaaaaa: l=line #, a=6-bit column #
+
+Write Data to CG or DD RAM      dddddddd (RS=1)
+     Data is written to current cursor position and (DD/CG) RAM
+address (which RAM space depends on the most recent CG_RAM_
+Address_Set or DD_RAM_Address_Set command).  The (DD/CG) RAM
+address is incremented/decremented by 1 as determined by the
+"entry mode set" command.  Execution time: 40us for display 
+write, 120us for character generator ram write.  Note that 
+RS=1 for this command. 
+
+        dddddddd: 8-bit character code
+
+3.3.2)  Read Operations
+
+For all read procedures,
+                    _
+     RS as noted, R/W=1, bit7 to bit0 output from LCD to CPU. 
+
+Read Busy Flag                  baaaaaaa (RS=0)
+     Read the status of the busy flag, and the value of the RAM
+address currently being pointed at.  Execution time: 1 cycle
+        b=1: busy, b=0: OK to send
+        aaaaaaa: 7-bit current (DD/CG) RAM address counter (as in
+             "character RAM address set" or "display RAM address
+             set").  DB lines must be inputs (or pulled high with
+             pullup resistors) to be driven by the module.  
+
+Read Data from CG or DD RAM     dddddddd (RS=1)
+     Data is read from current (DD/CG) RAM address position, and
+the RAM address is automatically incremented/decremented by 1 as
+determined by the "entry mode set" command.  NOTE that the
+display/cursor is not shifted on data reads.  Execution time:
+40us for display reads, 120us for character generator ram reads 
+
+        dddddddd: DB lines must be inputs (or pulled high with
+                  pullup resistors) to be driven by the module.
+                  An 8-bit character code will be read back from 
+                  LCD RAM.
+
+3.4) Timing
+
+Execution times:  Clear display 1.64ms; home cursor 40 us to
+1.64ms depending on how far display is scrolled; all others 40us,
+except read busy flag which is complete in a single enable cycle
+(or two cycles in 4-bit mode), and character generator ram reads and
+writes which should be separated by 120us delays.  These execution 
+times mean that after an operation, the CPU must do Busy Flag checks 
+until the BF (bit 7) is 0, or, when the connection to the module 
+from the CPU is write-only, wait more than the execution time before 
+the next operation.  These times are usually strict, LCDs used in
+a write-only configuration should provide the specified delays.  Some
+speed improvement might be realized by utilizing busy flag reads 
+instead of delays. 
+
+WRITE:
+         ______ _____________________________ ___________
+     RS  ______X_________valid_RS_level______X__________
+               |                             |
+               |                             |
+               |<--tAS-->|        tAH-->|    |<-- 
+         ______|         |              |    |____________
+     R/W ______\_________|___R/W_low____|____/_____________
+                         |              |
+                         |<----PWEH---->| 
+                         |              |
+                         |<-------------|-------TcycE----->|     
+                         |______________|                  |_________
+     E   ________________/              \__________________/
+                    tR-->||<--       -->||<--tF
+                                        ||
+                             |<--tDSW-->||
+                             |        -->|   |<--tWH
+           __________________|_______________|________________
+     D0-D7 __________________X__valid_data___X____________
+     
+     
+READ:    
+         ______ _____________________________ ___________
+     RS  ______X_________valid_RS_level______X__________
+               |                             |
+               |                             |
+               |<--tAS-->|        tAH-->|    |<-- 
+         ______|_________|__   _    ____|____|____________
+     R/W ______/         |  R/W high    |    \_____________
+                         |              |
+                         |<----PWEH---->| 
+                         |              |
+                         |<-------------|-------TcycE----->|     
+                         |______________|                  |_________
+     E   ________________/              \__________________/
+                    tR-->||<--       -->||<--tF
+                         |              ||
+                  tDDr-->|   |<--       ||
+                             |        -->|   |<--tRH
+          ___________________|_______________|________________
+     data ___________________X__valid_data___X____________
+
+
+TcycE   Enable cycle time               1000ns min
+  Operation cycle time cannot be less than 1 microsecond 
+
+PWEH    Enable pulse width, high         450ns min
+  Enable pulse must be at least 450 nanoseconds long, no maximum  
+length
+
+tRE     Enable rise time                  25ns max
+  Enable line must change state (L->H) in less than 25ns
+
+tFE     Enable fall time                  25ns max
+  Enable line must change state (H->L) in less than 25ns
+
+tAS     Address setup time               140ns min
+  Register Select and R/W lines must be valid 140ns before
+  enable pulse arrives
+
+tAH     Address hold time                 10ns min
+  RS and R/W must be valid at least 10 ns after enable goes low
+
+tDDR    Data delay time                  320ns max
+  When doing a read, the return data will be valid within 320ns   
+  of enable going high
+
+tRH     Data hold time, read              20ns min
+  When doing a read, the return data will be valid at least 20ns  
+  after enable goes low
+
+tDSW    Data setup time                  195ns min
+  When doing a write, data on lines bit7-bit0 (or bit7-bit4 in    
+  4-bit mode) must be valid at least 195 ns before enable goes    
+  low
+
+tWH     Data hold time, write             10ns min
+  When doing a write, data on lines must be valid for at least    
+  10ns after enable goes low
+
+Generally, there are no max time requirements on the user except
+Enable rise and fall times.  An LCD module can be driven with
+just toggle switches for data, RS, and R/W, and a debounced
+pushbutton on the enable line.
+
+3.5) Memory map
+
+Character generator RAM appears to reside at locations 64-127 and
+display RAM seems to be at locations 128-255.  This is an
+artifact of the control scheme.  They are actually separate non-
+contiguous blocks of RAM.
+
+3.5.1) Custom Characters
+
+The display has 64 bytes of CG RAM, which supports 8
+user-definable characters, each defined as a 5X8 character in an
+8X8 block.  The 5X8 region is right-justified.  Note that in 5X10
+matrix mode, only 4 user-defined characters are supported, using
+11 bytes each.
+
+        CG Address      CG Data
+                        D7-----------D0
+        x+0             x x x 1 1 1 1 1         *****
+        x+1             x x x 1 0 0 0 0         *
+        x+2             x x x 1 0 0 0 1         *   *
+        x+3             x x x 1 1 1 1 1   =     *****
+        x+4             x x x 1 0 0 0 1         *   *
+        x+5             x x x 1 0 0 0 0         *
+        x+6             x x x 1 0 0 0 0         *
+        x+7             x x x 0 0 0 0 0         (cursor line)
+
+Where "x" is the base address for the character: CG0=0, CG1=8,
+CG2=16, CG3=24, CG4=32, CG5=40, CG6=48, CG7=56.
+
+As you can see in the above figure, each byte of CG data
+represents 1 row of pixels in the character, with D0 being the
+rightmost pixel, and D4 being the leftmost (the upper 3 bits are
+not displayed).  The first address for a character is the topmost
+row, while the 7th is the bottom.  (The 8th is ORed with the
+cursor underbar).  A '1' in any pixel position becomes a dark
+pixel on the display.
+
+CG RAM occupies a separate address space from the data display
+(DD) RAM.  One must set the (first) CG address before writing any
+CG data.  Each write automatically increments/decrements the CG
+address pointer to the next location.  Remember to set the
+display back to DD addressing mode before trying to write
+characters to be displayed.
+
+As an example, we'll define character #3 to be the above symbol
+by first reading the DD address, writing the CG address to the
+start of the character's RAM, writing the successive rows of
+pixel data, then restoring the addressing mode back to DD
+addressing (which requires the DD address we saved at the
+beginning.
+
+        RS R/W D7----D0
+        0  1  (baaaaaaa)        Read current DD address
+        0  0   01011000         Set CG RAM address to char #3
+                                             (3x8=24=11000b)
+        1  0   00011111         Write top row of pixels
+        1  0   00010000                 :
+        1  0   00010001                 :
+        1  0   00011111                 :
+        1  0   00010001                 :
+        1  0   00010000                 :
+        1  0   00010000         Write bottom row of pixels
+        1  0   00000000         Write cursor row (descender)
+        0  0   1aaaaaaa         Restore DD mode (& address)
+
+Note: There should be a 120 uSec delay between successive reads or
+writes.
+
+(Section 3.5.1 by Doug Girling)
+        
+
+3.5.2) Addressing Display RAM
+
+In the list below, "line 1" is the topmost line, and "line n" is
+the bottommost line.  On each line, the leftmost character has
+the lowest address, and addresses increase to the right.  Also,
+DD RAM addresses are shown without the 80h mode bit set.  Add
+80h to the character address to make the Display Data RAM
+Address Set command.
+
+16x1 module is arranged as two 8-character lines side by side.
+     "Line 1" (left)  addresses are 00h to 07h  (0 to 7)
+     "Line 2" (right) addresses are 40h to 47h (64 to 71)
+        As you write characters to the module, the cursor will
+        automatically increment until you get to the 9th
+        character--you have to move the cursor to address 40h
+        before writing the 9th character on the 1x16 module.
+
+|00|01|02|03|04|05|06|07|40|41|42|43|44|45|46|47|
+
+Some 16x1 modules are formatted as one line, 00h to 0Fh.
+
+16x2 module is two lines by 16 chars
+     Line 1 addresses are 00h to 0Fh  (0 to 15)
+     Line 2 addresses are 40h to 4Fh  (64 to 79)
+
+|00|01|02|03|04|05|06|07|08|09|0A|0B|0C|0D|0E|0F|
+
+|40|41|42|43|44|45|46|47|48|49|4A|4B|4C|4D|4E|4F|
+
+20x1 module
+     Line 1 addresses are 00h to 13h  (0 to 19)
+
+|00|01|02|03|04|05|06|07|08|09|0A|0B|0C|0D|0E|0F|10|11|12|13|
+
+20x2 module
+     Line 1 addresses are 00h to 13h  (0 to 19)
+     Line 2 addresses are 40h to 53h  (64 to 83)
+
+|00|01|02|03|04|05|06|07|08|09|0A|0B|0C|0D|0E|0F|10|11|12|13|
+
+|40|41|42|43|44|45|46|47|48|49|4A|4B|4C|4D|4E|4F|50|51|52|53|
+
+20x4 module
+     Line 1 addresses are 00h to 13h  (0 to 19)
+     Line 2 addresses are 40h to 53h  (64 to 83)
+     Line 3 addresses are 14h to 27h  (20 to 39)
+     Line 4 addresses are 54h to 67h  (84 to 103)
+
+|00|01|02|03|04|05|06|07|08|09|0A|0B|0C|0D|0E|0F|10|11|12|13|
+
+|40|41|42|43|44|45|46|47|48|49|4A|4B|4C|4D|4E|4F|50|51|52|53|
+
+|14|15|16|17|18|19|1A|1B|1C|1D|1E|1F|20|21|22|23|24|25|26|27|
+
+|54|55|56|57|58|59|5A|5B|5C|5D|5E|5F|60|61|62|63|64|65|66|67|
+
+40x2 module
+     Line 1 addresses are 00h to 27h  (0 to 39)
+     Line 2 addresses are 40h to 67h  (64 to 103)
+
+[table omitted]
+
+The full 80 bytes of display RAM exist no matter how many
+characters appear on the display.  These extra bytes can be typed
+on when display window scrolling is enabled, or they can be used
+to store other information--external data RAM for the CPU, if you
+like.  No RAM exists in the 28h-3Fh and 68h-7Fh blocks.  
+
+
+4) Initialization
+
+Modules with Hitachi controllers will properly self-initialize if
+Vcc rises from 0 to 4.5v in a period between .1mS and 10mS.  I
+suppose an RC circuit would be needed to keep powerup rise time
+as slow as .1ms, so the manual initialization will be required in
+most applications.  If you do use auto-initialization, it will
+come up in this mode: 8-bit interface, 1/8 duty cycle (1 line
+mode), 5x7 font, cursor increment right, no shift.  On most
+displays, you want to switch to 1/16 duty cycle (2 line mode)
+because for all but the 20x1, there are two logical lines as the
+controller sees it. If you have an 5x11-size character dot matrix
+module, you'll want to switch to the 5x10 font as well (the 11th
+line is the cursor).
+
+4.1) Initialization for 8-bit Operation
+
+<POWER ON>
+
+<Wait 15ms>
+
+RS R/W DB7 DB6 DB5 DB4 DB3 DB2 DB1 DB0
+0   0   0   0   1   1   x   x   x   x    x=don't care
+                                         Set 8-bit mode 
+<Wait 4.1ms>
+
+RS R/W DB7 DB6 DB5 DB4 DB3 DB2 DB1 DB0
+0   0   0   0   1   1   x   x   x   x    Set 8-bit mode 
+
+<Wait 100us>
+
+RS R/W DB7 DB6 DB5 DB4 DB3 DB2 DB1 DB0
+0   0   0   0   1   1   x   x   x   x    Set 8-bit mode 
+                                         
+<Wait 4.1ms>
+
+<Busy Flag cannot be checked before this point>  
+
+RS R/W DB7 DB6 DB5 DB4 DB3 DB2 DB1 DB0
+0   0   0   0   1   1   1   F   x   x    8-bit operation
+                                         1/16 duty cycle
+                                         F=font, 
+                                         1 for 5x11 dot matrix
+                                         0 for 5x8 dot matrix
+<Wait 40us>
+
+RS R/W DB7 DB6 DB5 DB4 DB3 DB2 DB1 DB0
+0   0   0   0   0   0   1   0   0   0    Display off, 
+                                         cursor off,
+                                         blink off
+<Wait 40us>
+
+RS R/W DB7 DB6 DB5 DB4 DB3 DB2 DB1 DB0
+0   0   0   0   0   0   1   1   C   B    Display on,
+                                         C=1 for cursor on 
+                                         B=1 for blinking cursor
+<Wait 1.64m>
+
+RS R/W DB7 DB6 DB5 DB4 DB3 DB2 DB1 DB0
+0   0   0   0   0   0   0   1   I   S    Set entry mode 
+                                         I=1 for cursor move to 
+                                           the right, I=0 for
+                                           cursor move to the left
+                                         S=1 for shift display,
+                                           S=0 for no shift 
+<Wait 40us>
+
+<INITIALIZATION COMPLETE>
+
+NOTE:  Remember to turn the display back on and set up the cursor
+as desired with an On/Off Control command.
+
+4.2) Initialization for 4-bit operation
+
+The module powers up in 8-bit mode.  The initial startup
+instructions are sent in 8-bit mode, with the lower four bits
+(which are not connected) of each instruction as don't cares.
+
+After the fourth instruction, which switches the module to 4-bit
+operation, the control bytes are sent on consecutive enable
+cycles (no delay is required between nybbles).  Most significant
+is sent first, followed immediately by least significant nybble.
+
+<POWER ON>
+
+<Wait 15ms>
+
+RS R/W DB7 DB6 DB5 DB4 DB3 DB2 DB1 DB0 
+0   0   0   0   1   1  n/c n/c n/c n/c   n/c=not connected
+                                         set 8-bit mode 
+<Wait 4.1ms>
+
+RS R/W DB7 DB6 DB5 DB4 DB3 DB2 DB1 DB0 
+0   0   0   0   1   1  n/c n/c n/c n/c   set 8-bit mode 
+
+<Wait 100us>
+
+RS R/W DB7 DB6 DB5 DB4 DB3 DB2 DB1 DB0 
+0   0   0   0   1   1  n/c n/c n/c n/c   set 8-bit mode 
+
+<Wait 4.1ms>
+
+RS R/W DB7 DB6 DB5 DB4 DB3 DB2 DB1 DB0 
+0   0   0   0   1   0  n/c n/c n/c n/c   set 4-bit operation
+
+<Wait 40us>
+
+<Busy Flag cannot be read before this point>
+
+RS R/W DB7 DB6 DB5 DB4 
+0   0   0   0   1   0
+                        
+0   0   1   F   x   x   4-bit operation
+                        1/16 duty cycle
+                        F=font, 1 for 5x11 dot matrix
+                                0 for 5x8 dot matrix
+                        x=don't care
+
+<Wait 40us>
+
+RS R/W DB7 DB6 DB5 DB4 
+0   0   0   0   0   0   
+
+0   0   1   0   0   0    Display off, cursor off, blink off
+
+<Wait 40us>
+
+RS R/W DB7 DB6 DB5 DB4
+0   0   0   0   0   0   
+
+0   0   1   1   C   B    Display on, C=1 for cursor on,
+                         B=1 for blinking cursor
+<Wait 1.64ms>
+
+RS R/W DB7 DB6 DB5 DB4 
+0   0   0   0   0   0   
+
+0   0   0   1   I   S    Set entry mode, I=1 for cursor moving
+                         right, I=0 for cursor moving left, 
+                         S=1 for shift display, S=0 for no shift
+<Wait 40us>
+
+<INITIALIZATION COMPLETE>
+
+
+5) Interfacing
+
+5.1) Manual test circuit                          
+
+                                             __________
+                                            |          |
+                            GND---*---------| 1        |
+                                  <         |          |
+                 contrast    10K   ><--.    |          |
+                                  <    |    |          |
+                            +5V---*---------| 2        |
+                                       |    |          |
+                                        `---| 3        |
+               RS                           |          |
+        ,-----switch------------------------| 4        |          
+                  
+        |                                   |          |
+        |      +5V-----.           GND------| 5        |
+        |              |                    |          |
+        |              # 3.3k pullup resis. |          |
+        |   Enable     |  |\                |          |
+        *--pushbutton--*--|  >o-------------| 6        |
+        |              |  |/ 74LS04 inverter|          |
+        |             ---                   |          |
+        |             --- 1uF cap           |          |
+        |              |                    |          |
+        |    DB0       GND                  |          |
+        *---switch--------------------------| 7        |
+        |                                   |          |
+        |    DB1                            |          |
+        *---switch--------------------------| 8        |
+        |                                   |          |
+       ~~~                                 ~~~        ~~~
+       ~~~                                 ~~~        ~~~
+        |    DB7                            |          |
+        *---switch--------------------------| 14       |
+        |                                   |__________|
+        |
+        GND
+
+
+NOTES:  Extended temperature range modules need the non-grounded
+end of the potentiometer tied to -7VDC instead of +5VDC.
+
+I've breadboarded the inverter debounce circuit and it seems to
+work.  However, some experimenters have problems with it.  Here 
+is a foolproof debounce circuit:
+
+                    +5V
+                     |
+                  .--*--.
+                  |     |
+                  #     # 3.3k pullup resistors
+                  |     |    .-------.
+         .--------------*----|   &   |
+         |        |          |74LS00 |O----*-------- out=1 when 
+         |        |      .---|       |     |         top NAND
+         |no      |      |   `-------'     |         input is 
+     com *        |   .--------------------'         grounded
+   .---* SPDT SW  |   |  |    
+   |     *        |   |  `-----------------.
+   |     |nc      |   |      .-------.     |
+   |     |        |   `------|   &   |     |
+   |     |        |          |74LS00 |O----'
+   GND   `--------*----------|       |
+                             `-------'
+
+
+5.2 Interfacing to a CPU Bus
+
+These modules use an interface like those in Motorola (68xx) and
+MOS Technology (65xx) systems.  R/W on the module can come from
+the R/W line on the CPU, which is set up about the same time as
+the address, while RS can be selected by the low order address
+line A0.  Select Enable by ANDing the output from your address
+decoding and the E clock.  Address decoding can be done with a
+magnitude comparator like the 74LS688, or if you have address
+space to spare, with partial address decode like running A13-A15
+into a 74LS138 3-to-8 demux, or just the inverse of the high order
+address line (hogging a big chunk of address space).
+
+    68xx
+    65xx                                   LCD
+    -----.                                .-----
+     D0  |--------------------------------| D0
+     :   |               :                |
+     D7  |--------------------------------| D7
+       _ |                                |   _
+     R/W |--------------------------------| R/W
+         |   .----------------------------| RS 
+         |   |                    .---.   |
+     E   |------------------------|   |   |
+         |   |  .----------.      | & |---| E
+     A0  |---*--|          |      |   |   |
+     :   |  :   | (Decode) |------|   |   `-----
+     A15 |------|          | CS(h)`---'
+    -----'      `----------'
+        Motorola bus interface
+
+
+Because Intel (e.g. 8080, 8085, 8048) and Zilog (e.g. Z80) CPUs
+use separate read and write lines, and they are not set up ahead
+of time, R/W as well as RS must be set via address lines. Then
+the Enable signal may be generated from NOT(/RD AND /WR):
+
+   Intel
+   -----.                                            
+        |                    .----------.
+    A15 |--------------------|          |
+    :   |                    |          |
+    A8  |--------------------|          |
+        |     .--------.     |          |---.          
+        |     |      A7|-----|          |   |          
+    ALE |-----| latch  | :   | (Decode) |   |           LCD
+        |     |      A1|---*-|          |   |         .-----
+        |     |      A0|-*---|          |   |         |               
+        |     `--------' | | `----------'   |         |  _
+        |       |    |   | `--------------------------|R/W   
+        |       | .. |   `----------------------------|RS
+        |       |    |                      |         |
+    AD7 |------------*--------------------------------|D7
+    :   |   :   |                           |         |
+    AD0 |-------*-------------------------------------|D0
+        |                                   |         |
+      _ |         .-----.                   |  .---.  |                  
+     RD |---------|  &  |                   `--| & |  |
+      _ |         |     |O---------------------|   |--| E
+     WR |---------|     |                      `---'  |
+        |         `-----'                             `-----
+   -----'
+
+
+Z80
+      _ |         .------.                                            _
+     RD |------*--| S  Q |----------------------------------------- R/W
+      _ |      |  |      |
+     WR |---*--+--| R    |
+        |   |  |  `------'
+            |  |  .---.                                   .---.
+            |  `--| & |O--*-------------------------------|   |--- E
+            `-----|   |   |  .---.     R         .---.    | & |
+                  `---'   `--|   |O--v^v^v^v--*--| & |O---|   |
+                             `---'            |  `---'    `---'
+                                           C ===
+                                            __|_
+                                           / / /
+
+    NB. R & C must be chosen to delay the rising edge of the
+     enable pulse at least 140ns.
+
+Using the data bus method limits CPU clock speed because of the
+tDDR read delay and the TcycE and PWEH requirements of the
+Hitachi controller.
+
+(Section 5.2 by Doug Girling and Chris Burian)
+
+5.3) Interfacing to a CPU Port
+
+In the case where a direct bus interface is not desired, or is
+impractical (e.g., many microcontrollers don't provide an
+external data/address bus, or do so at the expense of reassigning
+too many pins), the LCD module can be connected via an I/O port.
+
+Whether you use a 4-bit or an 8-bit interface, those port pins
+driving the LCD's data lines must be bidirectional if you wish to
+read from the LCD.  Remember too that you'll have to write your
+code to switch the port's data direction bits whenever you switch
+from reading to writing or visa versa.  If you don't expect to
+ever be reading back from the LCD, you can conserve resources by
+grounding R/W, saving a pin, and thus using digital outputs
+instead of bidirectional ports.
+
+You may be able to eliminate the need for a software-generated
+enable (E) signal if the particular port you are using
+automatically generates a handshake strobe.  In practical terms,
+most ports only generate a stobe on output, and expect a strobe
+on input, so this approach is most likely applicable to
+write-only configurations.
+
+5.3.1) 4-Bit Port Interface
+
+This interface is to drive the module in 4-bit mode using 7
+I/O bits from a port.
+
+           |     .--------
+           |     |
+       P.7 |<--->| DB7
+       P.6 |<--->| DB6
+       P.5 |<--->| DB5
+       P.4 |<--->| DB4
+       P.3 |---->| R/W
+       P.2 |---->| RS
+       P.1 |---->| E
+       P.0 |--nc |
+           |     `--------
+
+First, put the most significant nybble on P7-P4, and the
+appropriate R/W and RS signals on P3 and P2, and P1 low.  Then
+toggle P1 high.  Then toggle P1 low again.  Then put the least
+significant nybble on P7-P4, toggle P1 high, toggle P1 low. 
+Forty microseconds later, you can send the next character.  
+
+Sample in-line assembly code, by Jordan Nicol, for implementation
+under Dunfield's Micro-C for the Miniboard can be found on ftp
+cher.media.mit.edu.  It uses port pins PA7-PA3 for 4-bit data and
+PC6 and 7 for RS and E.
+
+5.3.2) 8-Bit Port Interface
+
+If you have port pins to spare, then an 8-bit interface can be
+done with 11 port pins (10 for write only).
+
+           |     .--------
+           |     |
+       PA0 |<--->| DB0
+       PA1 |<--->| DB1
+       PA2 |<--->| DB2
+       PA3 |<--->| DB3
+       PA4 |<--->| DB4
+       PA5 |<--->| DB5
+       PA6 |<--->| DB6
+       PA7 |<--->| DB7
+           |     |
+       PB0 |---->| R/W
+       PB1 |---->| RS
+       PB2 |---->| E
+       PB3 |--nc  `--------
+       PB4 |--nc
+       PB5 |--nc
+       PB6 |--nc
+       PB7 |--nc
+           |
+
+5.4) Specific Interface Applications
+
+5.4.1) Interfacing to the Parallax BASIC STAMP
+
+Sample program with physical hookup described in commented code
+can be found on the ftp site wpi.wpi.edu in the /stamp directory,
+or at Parallax' ftp site ftp.parallaxinc.com in /pub/basic.  The
+program is part of one of the Basic Stamp application notes.  It's
+a CPU port hookup as described above.  The application also involves 
+use of an R/C servo.
+
+Here is sample code, also from the Parallax site.  Hookup info is in
+the program comments.
+
+LCDTERM.BAS
+-----------
+'RS 232 RECEIVE ONLY TERMINAL PROGRAM FOR BASIC STAMP/HD44100 LCD DISPLAY
+
+'This simple program was developed for the 16x1 ascii LCD display from 
+'TIMELINE using the 4 bit interface option, stamp set currently for 2400
+'baud. Requires 1 resistor.
+'Written by Jim Remington 3/93.    Email: jim@uoxray.uoregon.edu
+
+'CONNECTIONS
+'lcd pin            14  13  12  11   6   4             5    3    2    1
+'port pin on stamp   7   6   5   4   3   2   1   0   gnd  gnd   +5  gnd
+'function          db7 db6 db5 db4   e  rs   ? rs232 r/w   vo  vcc  gnd
+'r/w on lcd is grounded, so no read functions (could use pin 1 for this).
+'Stamp supplies 2 mA power to display
+
+'variables used: b0=command byte, b1=data byte, b2 = temp
+
+dirs = %11111100   '6 output, 2 input bits
+
+gosub init 'initialize display - 4 bit mode with high nibble=data
+
+'send hello string to display
+
+for   b2 = 0 to 13
+      lookup b2,("  STAMP on it!"),b1
+      gosub cho
+      next
+
+b2=13  'simulate <cr> to clear at start of next line
+
+'main loop, no check for line length. Plenty space for such options!
+
+loop: serin 0,4,b1           '2400 baud inverted (27 K resistor interface)
+      b1 = b1 & 127          'clear high bit if necc.
+      if b1 = 13 then save   '<cr>, erase before next line 
+      if b1 = 8 then bs      'back space, backup
+      if b1 < 32 then loop   'control char
+      if b2 <> 13 then nc    'don't erase line first
+      b2 = 0                 'clear display and flag, last char was <cr>
+      b0=0: gosub send : b0=16 : gosub send  'then output last char
+nc:   gosub cho
+      goto loop
+
+'save <cr> for next char input (don't clear display immediately)
+save: b2 = b1
+       goto loop   
+
+'backspace, shift cursor left, blank, shift.
+bs:   b0=16 : gosub send : b0=0 : gosub send:
+      b1=32 : gosub cho  'a blank
+      b0=16 : gosub send : b0=0: gosub send:
+      goto loop
+
+
+'SUBROUTINES
+
+init:
+
+'set 4 bit interface and initialize, standard plus display on, cursor off
+
+for b2 = 0 to 13
+lookup b2,(48,48,48,32,32,0,0,128,0,16,0,96,0,192),b0
+gosub send
+next
+return
+
+send:
+'output command byte b0 to port, pulse e. Note: assumes bit 2 is clear
+pins = b0|8 : low 3
+return
+
+cho:
+'send character in b1 to display, first top nibble then bottom
+b0=b1&240+4    : gosub send  'bit 2 = 4 sets data mode
+b0=16*b1&240+4 : gosub send
+return                                            
+-----end-----
+
+5.4.2) Interfacing to the Intel 8051 family of microcontrollers
+
+Sample program and schematics appear in the application note 
+AB-39 in the Intel Embedded Control Applications book.  It is 
+bus-interfaced design.
+
+Here is code written for the Metalink ASM51 cross-assembler.
+It is for a 2-line LCD module attached to the 8751's Port 1 in
+four bit mode with a write-only interface.  D7-D4 are P1.7-P1.4, 
+RS is P1.3, and E is P1.2.  R/W is tied to ground.
+
+LCD51.ASM
+---------
+		$MOD51
+
+;	SIMPLE ROUTINES FOR DRIVING LCD DISPLAY WITH 8751 
+;	by CHRIS BURIAN
+
+LCD_PORT	EQU	P1
+E_PIN		EQU	P1.2
+
+CLS		EQU	00000001b
+
+D_SET		EQU	00001000b
+E_SET		EQU	00000100b
+F_SET		EQU	00100000b
+
+D_ON		EQU	00000100b
+D_OFF		EQU	00000000b
+C_ON		EQU	00000010b
+C_OFF		EQU	00000000b
+B_ON		EQU	00000001b
+B_OFF		EQU	00000000b
+
+S_NO		EQU	00000000b
+S_YES		EQU	00000001b
+C_INC		EQU	00000010b
+C_DEC		EQU	00000000b
+
+F_8BIT		EQU	00010000b
+F_4BIT		EQU	00000000b
+F_2LINE		EQU	00001000b
+F_1LINE		EQU	00000000b
+F_8FONT		EQU	00000000b
+F_11FONT	EQU	00000100b
+
+CG_ADDR		EQU	01000000b
+DD_ADDR		EQU	10000000b
+
+	ORG	0h      ;reset vector 
+	LJMP	MAIN
+
+	ORG	30h     ;code starts after vector table 
+
+;transmit character in ACC to LCD
+
+CHAR_OUT:
+	PUSH	ACC		;store the byte
+	ANL	A, #11110000b   ;mask out low nibble
+	ORL	A, #00001000b   ;set RS=1
+
+	MOV	LCD_PORT, A	;send high order nibble
+        SETB	E_PIN		;toggle Enable
+	CLR	E_PIN
+
+	POP	ACC		;get low order nibble
+	SWAP	A		;put in high nibble
+	ANL	A, #11110000b   ;mask out nibble
+	ORL	A, #00001000b   ;set RS=1
+
+	MOV	LCD_PORT, A	;send low order nibble
+        SETB	E_PIN		;toggle Enable
+	CLR	E_PIN
+
+	ACALL	WAIT_40U	;pause for 40us
+	RET
+
+;transmit command in ACC to LCD
+
+COMD_OUT:
+	PUSH	ACC		;store the byte
+	ANL	A, #11110000b   ;mask out low nibble
+	                        ;RS=0
+
+	MOV	LCD_PORT, A	;send high order nibble
+        SETB	E_PIN		;toggle Enable
+	CLR	E_PIN
+
+	POP	ACC		;get low order nibble
+	SWAP	A		;put in high nibble
+
+NIBBLE_OUT:
+	ANL	A, #11110000b   ;mask out nibble
+	ORL	A, #00001000b   ;set RS=1
+
+	MOV	LCD_PORT, A	;send low order nibble
+        SETB	E_PIN		;toggle Enable
+	CLR	E_PIN
+
+	ACALL	WAIT_40U	;pause for 40us
+	RET
+
+
+;initialize the LCD
+
+INIT_LCD:
+	ACALL	WAIT_15M	;pause for 15ms
+	MOV	A, #(F_SET OR F_8BIT)	;set 8-bit mode
+	ACALL	NIBBLE_OUT	;send to LCD
+	ACALL	WAIT_5M		;pause for 4.1ms
+
+	MOV	A, #(F_SET OR F_8BIT)	;set 8-bit mode
+	ACALL	NIBBLE_OUT	;send to LCD
+	ACALL	WAIT_60U	;pause for 60us extra
+
+	MOV	A, #(F_SET OR F_8BIT)	;set 8-bit mode
+	ACALL	NIBBLE_OUT	;send to LCD
+	ACALL	WAIT_5M	        ;pause for 4.1ms
+
+	MOV	A, #(F_SET OR F_4BIT)   ;set 4-bit mode
+	ACALL	NIBBLE_OUT	;send to LCD
+
+				;set 4-bit, 2-line, 5x8 font
+	MOV	A, #(F_SET OR F_4BIT OR F_2LINE OR F_8FONT)
+	ACALL	COMD_OUT	;send to LCD
+
+				;turn off display, cursor, blink
+	MOV	A, #(D_SET OR D_OFF OR C_OFF OR B_OFF)
+	ACALL	COMD_OUT	;send to LCD
+
+				;turn on display and cursor
+	MOV	A, #(D_SET OR D_ON OR C_ON OR B_OFF)
+	ACALL	COMD_OUT	;send to LCD
+
+				;cursor moves right, no shift
+	MOV	A, #(E_SET OR S_NO OR C_INC)
+	ACALL	COMD_OUT	;send to LCD
+
+	RET			;initialization complete
+
+; send a message string to the LCD
+
+PRINT_LCD:
+	MOV	A, #0		;clear ACC
+	MOVC	A, @A+DPTR	;fetch letter
+	INC	DPTR
+	CJNE	A,#16,PT_1	;strings end with 16,
+	SJMP	PT_DONE		; finished
+	
+PT_1:
+	ACALL	CHAR_OUT	;send letter to LCD
+	SJMP	PRINT_LCD	;repeat loop	
+
+PT_DONE:
+	RET
+
+; program character generator RAM
+
+PROG_LCD:
+	PUSH	1		;save register R1
+	MOV	R1,#8		;8 bytes in a character
+
+	MOV	B, #8
+	MUL	AB		;multiply char# by 8 to
+				; get CG RAM address
+	ORL	A, #CG_ADDR	;set addr command
+	ACALL	COMD_OUT	;send to LCD
+
+PG_1:
+	MOV	A, #0		;clear ACC
+	MOVC	A, @A+DPTR	;fetch row
+        INC	DPTR
+	ACALL	CHAR_OUT	;send row to LCD
+	ACALL	WAIT_80U	;pause extra 80us
+
+	DJNZ	R1, PG_1	;send 8 rows total
+	
+	POP	1		;restore register R1
+	MOV	A, #DD_ADDR	;go back to display RAM
+	ACALL	COMD_OUT	;send to LCD
+
+	RET
+
+;40 microsecond delay, assumes 12MHz or slower clock
+
+WAIT_40U:
+	PUSH	1
+	MOV	R1, #40
+	DJNZ	R1, $
+	POP	1
+	RET
+
+WAIT_60U:
+	PUSH	1
+	MOV	R1, #60
+	DJNZ	R1, $
+	POP	1
+	RET
+
+WAIT_80U:
+	PUSH	1
+	MOV	R1, #80
+	DJNZ	R1, $
+	POP	1
+	RET
+
+; 1 millisecond delay
+WAIT_1M:
+	PUSH	1
+	PUSH	2
+	MOV	R2, #4
+W1LP:	MOV	R1, #250
+	DJNZ	R1, $
+	DJNZ	R2, W1LP
+	POP	2
+	POP 	1
+	RET
+
+WAIT_2M:
+	PUSH	1
+	MOV	R1, #2
+W2LP:	ACALL	WAIT_1M
+	DJNZ	R1, W2LP
+	POP	1
+	RET
+WAIT_5M:
+	PUSH	1
+	MOV	R1, #5
+W5LP:	ACALL	WAIT_1M
+	DJNZ	R1, W5LP
+	POP	1
+	RET
+
+WAIT_15M:
+	PUSH	1
+	MOV	R1, #15
+W15LP:	ACALL	WAIT_1M
+	DJNZ	R1, W15LP
+	POP	1
+	RET
+
+;initialize the LCD, program a custom character, and print
+;out a message.
+
+MAIN:
+	ACALL	INIT_LCD
+
+	MOV	DPTR, #SMILEY	;load custom character addr
+	MOV	A, #1			;put into custom char #1
+	ACALL	PROG_LCD
+
+	MOV	A, #CLS		;clear display, home cursor
+	ACALL	COMD_OUT
+	ACALL	WAIT_2M		;pause 1.64ms
+
+	MOV	DPTR, #MSG1 	;load message address
+	ACALL	PRINT_LCD
+
+	MOV	A, #(DD_ADDR+40h) ;go to second line
+	ACALL	COMD_OUT
+
+	MOV	DPTR, #MSG2
+	ACALL	PRINT_LCD
+
+DONE:	SJMP	DONE
+
+;cheesy smiley face
+;  ###
+; # # #
+; #####
+; # # #
+; #   #
+; #####
+;  ###
+
+SMILEY:	
+	DB	00001110b
+	DB	00010101b
+	DB	00011111b
+	DB	00010101b
+	DB	00010001b
+	DB	00011111b
+	DB	00001110b
+	DB	00000000b
+
+MSG1:
+	DB	1,' Hello, World. ',1,16
+
+MSG2:
+	DB	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,16
+
+;16 was chosen as the message delimiter because it is
+;not a valid character number and won't ever be sent
+;to the LCD to be displayed. 		
+
+	END	
+----- end -----
+
+5.4.3) Interfacing to the Motorola 68HC11 microcontrollers
+
+Sample programs and circuit descriptions can be found at the 
+MIT cher.media.mit.edu ftp site.  There is the Miniboard hookup
+mentioned above, and the use of an LCD module on the 6.270 robot
+control boards.
+
+Here is a code fragment for using a 1x20 LCD interfaced serially to 
+a 68HC11 via the SPI port.  The LCD is operated in 4-bit write-only
+mode.  It is connected to the SPI bus with a serial-in, parallel-out 
+shift register (74LS164) and an 8-bit D-flipflop (74LS244).  MOSI 
+and SCK are connected to the SR's data in and clock pins, /SS is 
+connected to the clock of the FF.  Outputs 7-4 are D7-D4, out 3 is 
+Enable, out 2 is RS, R/W is tied to ground.  
+ 
+**************************************************************************
+* LCD display routines / Chris Burian & Raymond Yeung
+*
+* This set of routines is for writing to the LCD display system.
+**************************************************************************
+
+SPICFG    EQU  %01010000        ; SPI Config byte
+
+*       Enable and setup SPI
+
+        LDAA    #%00111000              ; Set up I/O port D correctly for
+        STAA    DDRD                    ; use with SPI.
+
+        LDAA    #SPICFG                 ; Configure SPI port.
+        STAA    SPCR
+
+**************************************************************************
+* SER_OUT
+*
+* Transmits byte in Acc A out the SPI port.
+**************************************************************************
+
+SER_OUT:
+        LDAB    SPSR
+        LDAB    SPDR
+
+        STAA    SPDR            ; Xmit byte in ACC A
+
+WT:     LDAB    SPSR            ; Check SPI status register
+        ANDB    #$80            ; Wait for SPI to finish operation
+        BEQ     WT              ;
+
+        LDAB    SPDR
+
+        RTS
+
+
+**************************************************************************
+* LCD_OUT
+*
+* Transmits byte in Acc A to LCD display.
+**************************************************************************
+
+LCD_OUT:
+        JSR     SER_OUT
+        ORAA    #%00001000      ; Set bit 3 (enable)
+        JSR     SER_OUT
+        ANDA    #%11110111      ; Clear bit 3 (enable)
+        JSR     SER_OUT
+        RTS
+
+**************************************************************************
+* HOME
+*
+* Homes cursor
+**************************************************************************
+
+HOME:   PSHA
+        PSHX
+        LDAA    #%10000000
+        JSR     COM_OUT
+        LDX     #!21            ; Need 40 us delay.
+        JSR     COM_WT
+        PULX
+        PULA
+
+        RTS
+
+**************************************************************************
+* CLR_SCR
+*
+* Clears screen
+**************************************************************************
+
+CLR_SCR:PSHA
+        PSHX
+        LDAA    #%00000001
+        JSR     COM_OUT
+        LDX     #!821           ; Need 1.64 ms delay.
+        JSR     COM_WT
+        PULX
+        PULA
+
+        RTS
+
+**************************************************************************
+* STR_OUT
+*
+* Transmits string (whose pointer is in X) to LCD display.
+**************************************************************************
+
+STR_OUT:PSHA
+
+STR_LP: LDAA    0,X
+        CMPA    #0              ; COMPARE IT TO ZERO BYTE
+        BEQ     STR_END         ; LOOP IF NOT AT THE END OF STRING
+        JSR     CHAR_OUT
+        INX
+        JMP     STR_LP
+
+STR_END:PULA
+        RTS
+
+**************************************************************************
+* CHAR_OUT
+*
+* Transmits byte to LCD display.
+**************************************************************************
+
+CHAR_OUT:
+        PSHA                    ; Save A
+        ANDA    #%11110000      ; Selects high nibble
+        ORAA    #%00000100      ; Sets data mode
+        JSR     LCD_OUT
+        PULA
+        LSLA                    ; Lower nibble -> higher nibble
+        LSLA
+        LSLA
+        LSLA
+        ANDA    #%11110000      ; Selects high nibble
+        ORAA    #%00000100      ; Sets data mode
+        JSR     LCD_OUT
+
+        LDAB    #!21
+LCD_WT:
+        DECB
+        BNE     LCD_WT
+
+        RTS
+
+**************************************************************************
+* COM_OUT
+*
+* Transmits command byte in Acc A to LCD display.
+**************************************************************************
+
+COM_OUT:
+        PSHA                    ; Save A
+        ANDA    #%11110000      ; Selects high nibble
+        ORAA    #%00000000      ; Sets command mode
+        JSR     LCD_OUT
+        PULA
+        LSLA                    ; Lower nibble -> higher nibble
+        LSLA
+        LSLA
+        LSLA
+        ANDA    #%11110000      ; Selects high nibble
+        ORAA    #%00000000      ; Sets command mode
+        JSR     LCD_OUT
+
+        RTS
+
+**************************************************************************
+* COM_WT
+*
+* Delay loop.  uS = 1.5 * X
+**************************************************************************
+
+COM_WT:
+        DEX
+        BNE     COM_WT
+
+        RTS
+
+**************************************************************************
+* INIT_LCD
+*
+* Initializes LCD display.
+**************************************************************************
+
+INIT_LCD:
+        LDX     #!7501          ; Need 15ms after power-up.
+        JSR     COM_WT
+
+        LDAA    #%00110000      ; Attention!
+        JSR     LCD_OUT
+        LDX     #!2051          ; Need 4.1 ms delay.
+        JSR     COM_WT
+
+        LDAA    #%00110000      ; Attention!
+        JSR     LCD_OUT
+        LDX     #!51            ; Need 100 us delay.
+        JSR     COM_WT
+
+        LDAA    #%00110000      ; Attention!
+        JSR     LCD_OUT
+        LDX     #!2051          ; Need 4.1 ms delay.
+        JSR     COM_WT
+
+        LDAA    #%00100000      ; Sets 4 bit mode
+        JSR     LCD_OUT
+        LDX     #!21            ; Need 40 us delay.
+        JSR     COM_WT
+
+        LDAA    #%00100000      ; 4 bit, 1 line, 5x8 font
+        JSR     COM_OUT
+        LDX     #!21            ; Need 40 us delay.
+        JSR     COM_WT
+
+        LDAA    #%00000001      ; Clear screen
+        JSR     COM_OUT
+        LDX     #!821           ; Need 1.64 ms delay.
+        JSR     COM_WT
+
+        LDAA    #%00000110      ; Inc cursor, no shift
+        JSR     COM_OUT
+        LDX     #!21            ; Need 40 us delay.
+        JSR     COM_WT
+
+        LDAA    #%00001100      ; Display on, cursor off, blink off
+        JSR     COM_OUT
+        LDX     #!21            ; Need 40 us delay.
+        JSR     COM_WT
+
+        RTS
+-----end-----
+
+
+5.4.4) Interfacing to the Microchip PIC microcontrollers
+
+Sample program and schematics appear in the application note
+AN587 in the Microchip Embedded Control Handbook for 1994/95.
+
+A program for driving an LCD with a PIC appears in the 
+/pub/picsrc directory of the Parallax FTP site
+ftp://ftp.parallaxinc.com  It is written for the Parallax
+8051-lookalike assembler.
+
+5.5) Serial Interface
+
+A way to save even more I/O space is to use a serial interface,
+requiring just 3 digital output port pins.  It uses a shift
+register with serial-in, parallel-out, and output latch.  This
+setup allows the convenient coding of a parallel interface (just
+writing the data to the USART transmit buffer) and low pin count
+of a serial interface.  
+
+               ________________         __________
+_____         |  74LS595       |       |          |
+     |        |              QA|-------|DB4       |
+     |--------|>ser. clock   QB|-------|DB5       |
+CPU  |        |              QC|-------|DB6       |
+OUT  |--------|>latch        QD|-------|DB7       |
+PORT |        |              QE|-------|RS        |
+     |--------|serial data   QF|-------|E         |
+_____|        |              QG|--nc   |          |
+       10Kohm |              QH|--nc   |          |
+       pullup |                |       |          |
+   +5V--^^^---|\Reset          |   .---|R/W       |
+        .-----|\OE             |   |   |__________|
+        |     |________________|   |
+        GND                        GND
+
+  Note:  74LS595 can be substituted by 74LS164 + 74LS244.
+
+The Amateur Robitics column in June '94 Nuts & Volts demonstrated
+how to use this technique with the 68hc11's SPI port, using MOSI,
+SCK, and /SS.  This would be especially handy with a non-
+networked 68HC11-based Miniboard single-board computer, which has
+MOSI, MISO, SCK, and /SS conveniently routed to the top left
+corner where resistor pack 2 goes.  The experimenter could put
+the contrast potentiometer and latch on a daughterboard mounted
+underneath the LCD module.  
+
+An alternative with a less expensive shift register has the low
+pincount advantage, but requires bit manipulation of port pins:
+_____                                   __________
+     |                                 |          |
+     |---------------------------------|E         | 
+     |         ________________        |          |   
+     |        |  74LS164       |       |          |
+     |        |              QA|-------|DB4       |
+     |--------|>ser. clock   QB|-------|DB5       |
+CPU  |        |              QC|-------|DB6       |
+OUT  |        |              QD|-------|DB7       |
+PORT |        |              QE|-------|RS        |
+     |--------|serial data   QF|--nc   |          |
+_____|        |              QG|--nc   |          |
+       10Kohm |              QH|--nc   |          |
+       pullup |                |       |          |
+   +5V--^^^---|\Clear          |   .---|R/W       |
+              |                |   |   |__________|
+              |________________|   |
+                                   GND
+
+Save another I/O line with this idea from Robert Rolf:
+
+"On your SPI example, you can free up the latch line by using the
+clock line with a diode, pullup, and capacitor.  I use the SPI in
+normally high mode, rising clock for data bits.  10K pullup, 10nF
+to GND, and the clock through diode pulls it low.  After all the
+bits are shifted in, the RC times-out, and clocks [latches] the
+'595."
+
+5.6) LCD Serial Backpack
+
+The LCD Serial Backpack from Scott Edwards Electronics lets you
+communicate with a one- or two-line LCD over an asynchronous serial
+port at 2400 or 9600 bps.  The Backpack is a tiny daughterboard
+with an onboard PIC processor, fitting neatly behind any LCD module,
+having solder pads for both 2x7 and 1x14 hookups.  Backpacks are
+available alone or with LCDs.  Call (520) 459-4802.
+
+
+6) LCD Controller chip pinout
+
+NEC UPD44780 LCD Display Controller Pinouts:
+ 
+PIN DEFINITION
+
+ 1  SEG 22
+ 2  SEG 21
+ 3  SEG 20
+ 4  SEG 19                    666665555555555444444444
+ 5  SEG 18                    432109876543210987654321
+ 6  SEG 17                  65                        40
+ 7  SEG 16                  66                        39
+ 8  SEG 15                  67                        38
+ 9  SEG 14                  68                        37
+10  SEG 13                  69                        36
+11  SEG 12                  70                        35
+12  SEG 11                  71                        34
+13  SEG 10                  72                        33
+14  SEG  9                  73      UPD44780 TOP      32
+15  SEG  8                  74                        31
+16  SEG  7                  75                        30
+17  SEG  6                  76                        29
+18  SEG  5                  77                        28
+19  SEG  4                  78   NOTCHED CORNER       27
+20  SEG  3                  79  /AND POSSIBLE DOT     26
+21  SEG  2                  80 o                      25
+22  SEG  1                   \         111111111122222
+23  GND                       123456789012345678901234
+24  OSC  1
+ 
+25  OSC  2
+26  V1
+27  V2
+28  V3
+29  V4
+30  V5
+31  CL   1
+32  CL   2
+33  VCC
+34  M         - 
+35  D         -
+36  RS        - Reset, assert once
+37  R/W*      - Hold low for write operation
+38  E         - Clock low to latch data.
+39  DB  0     - The data bus
+40  DB  1     -
+ 
+41  DB  2     -
+42  DB  3     -
+43  DB  4     -
+44  DB  5     -
+45  DB  6     -
+46  DB  7     -
+47  COM  1
+48  COM  2
+49  COM  3
+50  COM  4
+51  COM  5
+52  COM  6
+53  COM  7
+54  COM  8
+55  COM  9
+56  COM 10
+57  COM 11
+58  COM 12
+59  COM 13
+60  COM 14
+61  COM 15
+62  COM 16
+63  SEG 40
+64  SEG 39
+
+
+65  SEG 38
+66  SEG 37
+67  SEG 36
+68  SEG 35
+69  SEG 34
+70  SEG 33
+71  SEG 32
+72  SEG 31
+73  SEG 30
+74  SEG 29
+75  SEG 28
+76  SEG 27
+77  SEG 26
+78  SEG 25
+79  SEG 24
+80  SEG 23
+
+(Section 6 by Frank Hausman)
+
+7) FTP Sites
+
+* This FAQ.  
+
+ftp://ftp.ee.ualberta.ca      /pub/cookbook/faq/lcd.doc  
+http://www.paranoia.com       /~filipg/HTML/LINK/F_LCD_tech.html
+
+* LCDFAQ: Liquid Crystal Display physics & principles of operation
+by Scott M. Bruck, August 1993. 
+
+ftp://ftp.ee.ualberta.ca	/pub/cookbook/faq/LCD2.doc
+
+* 4-bit interface sample in-line assembly code, by Jordan Nicol,
+for implementation under Dunfield's Micro-C for the Miniboard. 
+It uses port pins PA7-PA3 for 4-bit data and PC6 and PC7 for RS
+and E.
+
+ftp://cher.media.mit.edu   
+
+* Parallax Basic Stamp applications.
+
+ftp://wpi.wpi.edu             /stamp  
+ftp://ftp.parallaxinc.com     /pub/stamp
+
+=================================================================
+Christopher Burian                                       05/10/96
+cburian@uiuc.edu
+

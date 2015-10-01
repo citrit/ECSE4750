@@ -1,0 +1,181 @@
+%!PS-Adobe-3.0
+%%Creator: enscript
+%%For: winston.its.rpi.edu:citrit (Thomas D Citriniti)
+%%Title: texture.c
+%%CreationDate: Tue Sep 12 12:45:10 1995
+%%DocumentNeededResources: font Courier-Bold Courier
+%%Pages: (atend)
+%%BeginProlog
+% Start of enscript.pro -- prolog for text file translator
+% Copyright (c) 1984,1985,1987 Adobe Systems Incorporated. All Rights Reserved. 
+% GOVERNMENT END USERS: See Notice file in TranScript library directory
+% -- probably /usr/lib/ps/Notice
+% RCSID: $Header: /disks/hobo/vp6/snichols/rel3.0/transcript/lib/RCS/enscript.pro,v 3.0 1991/06/17 17:08:31 snichols Exp $
+/$enscript 50 dict def $enscript begin
+/S/show load def
+/bd { bind def } bind def
+/X{exch 0 rmoveto S} bd
+/Y{exch 0 exch rmoveto S} bd
+/B{3 1 roll moveto S} bd
+/F{$fd exch get setfont} def
+/U{1440 mul}def
+/UP{U 72 div}def
+/StartPage{/svpg save def .05 dup scale} bd
+/EndPage{svpg restore showpage} bd
+/DoPreFeed{/statusdict where{pop
+ statusdict/prefeed known{statusdict exch/prefeed exch put 0}if}if pop} bd
+/SetUpFonts
+ {dup/$fd exch array def{findfont exch scalefont $fd 3 1 roll put}repeat}def
+/InitGaudy{/Columns exch def
+ /ftD /Times-Bold findfont 12 UP scalefont def
+ /ftF /Times-Roman findfont 14 UP scalefont def
+ /ftP /Helvetica-Bold findfont 30 UP scalefont def} bd
+/LB{/pts exch UP def /charcolor exch def /boxcolor exch def /font exch def
+ /label exch def /dy exch def /dx exch def /lly exch def /llx exch def
+ gsave boxcolor setgray
+ llx lly moveto dx 0 rlineto 0 dy rlineto dx neg 0 rlineto closepath fill
+ /lines label length def
+ /yp lly dy add dy lines pts mul sub 2 div sub pts .85 mul sub def
+ font setfont charcolor setgray
+ label {dup stringwidth pop 2 div llx dx 2 div add exch sub yp moveto show
+   /yp yp pts sub def}forall grestore} bd
+/Gaudy{/plength exch def /BarLength exch def /hy exch def /hx exch def
+ /Page exch def /Date exch def  /File exch def /Comment exch def
+ hx hy  BarLength 144 sub .25 U [File] ftF .97 0 14 LB
+ hx hy 360 add BarLength 144 sub .25 U [Comment] ftF 1 0 14 LB
+ hx hy 1 U .5 U Date ftD .7 0 12 LB
+ BarLength 1080 sub hy 1 U .5 U [Page] ftP .7 1 30 LB
+ 2 1 Columns {1 sub plength Columns div mul 172.80 sub hy moveto 0 0 hy sub rlineto
+ stroke}for } bd
+/Landscape { 90 rotate 0 exch translate } bd
+%%EndProlog
+%%BeginSetup
+%%IncludeResource: font Courier-Bold
+1    200.000 /Courier-Bold
+%%IncludeResource: font Courier
+0    200.000 /Courier
+2 SetUpFonts
+%%EndSetup
+%%Page: ? 1
+StartPage
+1 F
+900 15260 (texture.c        Tue Sep 12 12:41:35 1995        1)B
+0 F
+900 14820(#include <stdio.h>)B
+900 14600(#include <stdlib.h>)B
+900 14160(#include "aux.h")B
+900 13940(#include "GL/glut.h")B
+900 13500(AUX_RGBImageRec *image;)B
+900 13060(/* Display Func */)B
+900 12840(void display\(void\))B
+900 12620({)B
+1140 12400(glClear\(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT\);)B
+1140 12180(glBegin\(GL_POLYGON\);)B
+1500 11960(glTexCoord2f\(0.0, 0.0\); glVertex3f\(-1.0, -1.0, 0.0\);)B
+1500 11740(glTexCoord2f\(0.0, 2.0\); glVertex3f\(-1.0, 1.0, 0.0\);)B
+1500 11520(glTexCoord2f\(2.0, 2.0\); glVertex3f\(1.0, 1.0, 0.0\);)B
+1500 11300(glTexCoord2f\(2.0, 0.0\); glVertex3f\(1.0, -1.0, 0.0\);)B
+1140 11080(glEnd\(\);)B
+1140 10640(glutSwapBuffers\(\); )B
+900 10420(})B
+900 9980(/* Initialize texture model */)B
+900 9760(void myInit\(void\))B
+900 9540({)B
+1140 9100(glEnable\(GL_DEPTH_TEST\);)B
+1140 8880(glDepthFunc\(GL_LEQUAL\);)B
+1140 8660(glPixelStorei\(GL_UNPACK_ALIGNMENT, 1\);)B
+1140 8440(glTexImage2D\(GL_TEXTURE_2D, 0, 3, image->sizeX, image->sizeY, 0,)B
+3300 8220(GL_RGB, GL_UNSIGNED_BYTE, image->data\);)B
+1140 8000(glTexParameterf\(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT\);)B
+1140 7780(glTexParameterf\(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT\);)B
+1140 7560(glTexParameterf\(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST\);)B
+1140 7340(glTexParameterf\(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST\);)B
+1140 7120(glTexEnvfv\(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL\);)B
+1140 6900(glEnable\(GL_TEXTURE_2D\);)B
+1140 6680(glShadeModel\(GL_FLAT\);)B
+1140 6240(glClearColor\(0.0, 0.0, 0.0, 0.0\);)B
+900 5800(})B
+900 5360(/*)B
+1020 5140(*  Called when the window is first opened and whenever )B
+1020 4920(*  the window is reconfigured \(moved or resized\).)B
+1020 4700(*/)B
+900 4480(void myReshape\(int w, int h\))B
+900 4260({)B
+1140 4040(glViewport \(0, 0, w, h\);            /*  define the viewport */)B
+1140 3820(glMatrixMode\(GL_PROJECTION\);)B
+1140 3600(glLoadIdentity\(\);)B
+1140 3380(gluPerspective\(45.0, 1.0*\(GLfloat\)w/\(GLfloat\)h, 1.0, 10.0\);)B
+1140 3160(glTranslatef \(0.0, 0.0, -5.0\);     /*  viewing transformation      */)B
+1140 2940(glMatrixMode \(GL_MODELVIEW\);        /* back to modelview matrix  */)B
+900 2720(})B
+900 2280(/*)B
+1020 2060(* Keyboard handler)B
+1020 1840(*/)B
+900 1620(void)B
+900 1400(Key\(unsigned char key, int x, int y\))B
+900 1180({)B
+1140 960(switch \(key\) {)B
+1140 740(case 'h':)B
+EndPage
+%%Page: ? 2
+StartPage
+1 F
+900 15260 (texture.c        Tue Sep 12 12:41:35 1995        2)B
+0 F
+1380 14820(glMatrixMode \(GL_MODELVIEW\);        /* manipulate modelview matrix  */)B
+1380 14600(glRotatef\(15.0, 0.0,1.0,0.0\);)B
+1380 14380(break;)B
+1140 14160(case 'j':)B
+1380 13940(glMatrixMode \(GL_MODELVIEW\);        /* manipulate modelview matrix  */)B
+1380 13720(glRotatef\(15.0, 1.0,0.0,0.0\);)B
+1380 13500(break;)B
+1140 13280(case 'k':)B
+1380 13060(glMatrixMode \(GL_MODELVIEW\);        /* manipulate modelview matrix  */)B
+1380 12840(glRotatef\(-15.0, 1.0,0.0,0.0\);)B
+1380 12620(break;)B
+1140 12400(case 'l':)B
+1380 12180(glMatrixMode \(GL_MODELVIEW\);        /* manipulate modelview matrix  */)B
+1380 11960(glRotatef\(-15.0, 0.0,1.0,0.0\);)B
+1380 11740(break;)B
+1140 11520(case 27:           /* Esc will quit */)B
+1380 11300(exit\(1\);)B
+1380 11080(break;)B
+1140 10860(default:)B
+1380 10640(break;)B
+1140 10420(})B
+1140 10200(glutPostRedisplay\(\);)B
+900 9980(})B
+900 9540(/*  Handle Menus */)B
+900 9320(void)B
+900 9100(Select\(int value\))B
+900 8880({)B
+1140 8660(switch \(value\) {)B
+1140 8440(case 1:)B
+1380 8220(exit\(0\);)B
+1380 8000(break;)B
+1140 7780(})B
+900 7560(})B
+900 7120(/*  Main Loop */)B
+900 6900(void main\(int argc, char *argv[]\))B
+900 6680({)B
+1140 6240(if \(argc < 2\) {)B
+1380 6020(fprintf\(stdout, "usage: %s texturefilename\\n", argv[0]\);)B
+1380 5800(exit\(1\);)B
+1140 5580(})B
+1140 5140(image = auxRGBImageLoad\(argv[1]\);)B
+1140 4700(glutInit\(&argc, argv\);)B
+1140 4480(glutInitDisplayMode \(GLUT_DOUBLE | GLUT_RGBA\);)B
+1140 4260(glutCreateWindow \(argv[0]\);)B
+1140 4040(myInit \(\);)B
+1140 3820(glutKeyboardFunc\(Key\);)B
+1140 3600(glutReshapeFunc \(myReshape\);)B
+1140 3380(glutDisplayFunc\(display\);)B
+1140 3160(glutCreateMenu\(Select\);)B
+1140 2940(glutAddMenuEntry\("Quit", 1\);)B
+1140 2720(glutAttachMenu\(GLUT_RIGHT_BUTTON\);)B
+1140 2500(glutMainLoop\(\);)B
+900 2280(})B
+EndPage
+%%Trailer
+end
+%%Pages: 2

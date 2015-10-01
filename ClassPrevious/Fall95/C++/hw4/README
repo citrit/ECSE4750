@@ -1,0 +1,8 @@
+
+The data file MRIdata.bin is a file containing a subsampled version
+of an MRI scan of a human head. It is a 64 x 64 x 27 regularly spaced grid.
+The data values in the file are shorts and are in row major order.
+
+Use 225.0 as the initial isosurface value, this should render a 
+recognizable image.
+

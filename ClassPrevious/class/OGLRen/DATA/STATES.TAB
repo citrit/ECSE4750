@@ -1,0 +1,13 @@
+!table
+!version 100
+FIELDS: 10
+  State CHAR (2) INDEX 1
+  State_Name CHAR (20) INDEX 2
+  Pop_1980 DECIMAL (10, 0)
+  Pop_1990 DECIMAL (10, 0)
+  Num_Hh_80 DECIMAL (10, 0)
+  Num_Hh_90 DECIMAL (10, 0)
+  Med_Inc_80 DECIMAL (10, 0)
+  BPI_1990 DECIMAL (10, 4)
+  Sales_1990 DECIMAL (10, 0)
+  Total_Area DECIMAL (8, 1)

@@ -1,0 +1,483 @@
+#!/bin/sh
+# This is a shell archive (produced by GNU sharutils 4.2).
+# To extract the files from this archive, save it to some FILE, remove
+# everything before the `!/bin/sh' line above, then type `sh FILE'.
+#
+# Made on 1997-02-06 23:23 EST by <kozurj@magritte>.
+# Source directory was `/afs/rpi.edu/home/96/kozurj/private/visual/proj1'.
+#
+# Existing files will *not* be overwritten unless `-c' is specified.
+#
+# This shar contains:
+# length mode       name
+# ------ ---------- ------------------------------------------
+#    815 -rw-r----- README
+#   8621 -rw-r----- hw1.c
+#
+save_IFS="${IFS}"
+IFS="${IFS}:"
+gettext_dir=FAILED
+locale_dir=FAILED
+first_param="$1"
+for dir in $PATH
+do
+  if test "$gettext_dir" = FAILED && test -f $dir/gettext \
+     && ($dir/gettext --version >/dev/null 2>&1)
+  then
+    set `$dir/gettext --version 2>&1`
+    if test "$3" = GNU
+    then
+      gettext_dir=$dir
+    fi
+  fi
+  if test "$locale_dir" = FAILED && test -f $dir/shar \
+     && ($dir/shar --print-text-domain-dir >/dev/null 2>&1)
+  then
+    locale_dir=`$dir/shar --print-text-domain-dir`
+  fi
+done
+IFS="$save_IFS"
+if test "$locale_dir" = FAILED || test "$gettext_dir" = FAILED
+then
+  echo=echo
+else
+  TEXTDOMAINDIR=$locale_dir
+  export TEXTDOMAINDIR
+  TEXTDOMAIN=sharutils
+  export TEXTDOMAIN
+  echo="$gettext_dir/gettext -s"
+fi
+touch -am 1231235999 $$.touch >/dev/null 2>&1
+if test ! -f 1231235999 && test -f $$.touch; then
+  shar_touch=touch
+else
+  shar_touch=:
+  echo
+  $echo 'WARNING: not restoring timestamps.  Consider getting and'
+  $echo "installing GNU \`touch', distributed in GNU File Utilities..."
+  echo
+fi
+rm -f 1231235999 $$.touch
+#
+if mkdir _sh35436; then
+  $echo 'x -' 'creating lock directory'
+else
+  $echo 'failed to create lock directory'
+  exit 1
+fi
+# ============= README ==============
+if test -f 'README' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'README' '(file already exists)'
+else
+  $echo 'x -' extracting 'README' '(binary)'
+  sed 's/^X//' << 'SHAR_EOF' | uudecode &&
+begin 600 README
+M5&AE(&9I;&4@<')O:C$N8R!W87,@9&5V96QO<&5D(&%N9"!T97-T960@=&\@
+M=V]R:R!O;B!A(%=I;F1O=W,Y-2!P;&%T9F]R;2X@(`I)="!R97%U:7)E<R!T
+M:&4@9VQU="P@9VPL(&%N9"!G;'4@;&EB<F%R:65S(&-O;7!I;&5D('1O('=O
+M<FL@*&]F(&-O=7)S92DN("`*16%C:"!O9B!T:&4@;V)J96-T<R!A;F0@=&AE
+M(&-A;65R82!I<R!I;F1E<&5N9&%N=&QY(&UO=F%B;&4L(')O=&%T86)L92P@
+M86YD(`IS8V%L86)L92!T:')O=6=H(&ME>7,@9&ES<&QA>65D(&]N('!R;V=R
+M86T@<W1A<G1U<"X@($%D9&ET:6]N86QL>2P@<F]T871I;VX@"F%N9"!T<F%N
+M<VQA=&EO;B!C86X@8F4@86-H:65V960@8GD@:&]L9&EN9R!D;W=N('1H92!L
+M969T(&]R(')I9VAT(&UO=7-E(`IB=71T;VXL(')E<W!E8W1I=F5L>2P@=&AE
+M;B!M;W9I;F<@=&AE(&UO=7-E(&%R;W5N9"!T:&4@<V-R965N+B`@5&\@8VAO
+M;W-E(`IW:&EC:"!O8FIE8W0@:7,@8F5I;F<@8VAA;F=E9"P@<')E<W,@,2P@
+M,BP@;W(@,R!F;W(@=&AE('1E87!O="P@8W5B92P@;W(@"G-P:&5R92P@;W(@
+M<')E<W,@,"!T;R!C:&%N9V4@=&AE(&-A;65R82!P;W-I=&EO;BX@(%1H92!M
+M;W1I;VX@=V%S('!R971T>2`*<VUO;W1H(&%N9"!F87-T(&]N(&$@4&5N=&EU
+M;3(P,"!P;&%T9F]R;2!W:71H(&$@9G5L;"!W:6YD;W<@=FEE=SL@=&AE(&UO
+M=7-E(`IA8W1I;VX@8V]U;&0@8F4@:F5R:WD@;VX@<VQO=V5R('!L871F;W)M
+M<RX@($9I;F%L;'DL(&%N(&]B:F5C="!C86X@8F4@;6%D92`*<V5M:2UT<F%N
+M<W!A<F5N="!B>2!T;V=G;&EN9R!W:71H('1H92`G="<@:V5Y+@H*2F]H;B!+
+%;WIU<F%N
+`
+end
+SHAR_EOF
+  $shar_touch -am 0206232297 'README' &&
+  chmod 0640 'README' ||
+  $echo 'restore of' 'README' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'README:' 'MD5 check failed'
+9d59d20faee066b9c5c1796ba49bd919  README
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'README'`"
+    test 815 -eq "$shar_count" ||
+    $echo 'README:' 'original size' '815,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= hw1.c ==============
+if test -f 'hw1.c' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'hw1.c' '(file already exists)'
+else
+  $echo 'x -' extracting 'hw1.c' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'hw1.c' &&
+/*  John Kozura
+X	Graphics and Visualization Project 1
+X    This program cretes 3 shapes and allows independant rotation
+X	and translation of the objects and the camera.  Use either the
+X	keys given or the mouse.
+*/
+X
+/* Includes required */
+#include <windows.h>
+#include <GL/gl.h>
+#include <GL/glu.h>
+#include <GL/glut.h>
+X
+X
+#define OBJNUM 3		/* number of objects total */
+X
+typedef struct {
+X	GLdouble x;
+X	GLdouble y;
+X	GLdouble z;
+} Vector;
+X
+/* Structure for each object */
+typedef struct {
+X	char name[10];
+X	Vector pos;
+X	Vector rot;
+X	GLdouble size;
+X	float color[3];
+X	int shine;
+X	int transparent;
+} Object;
+X
+/* array of all objects in here */
+Object objlist[OBJNUM+1];
+int Currobj;
+X
+/* mouse motion initial variables */
+int xstart, ystart, mbutton, Strt = 1;
+Object mobject;
+X
+X
+/* Just reset an object */
+void initObject(Object *obj) {
+X	strcpy(obj->name, "Nothing");
+X	obj->pos.x = 0.0;
+X	obj->pos.y = 0.0;
+X	obj->pos.z = 0.0;
+X	obj->rot.x = 0.0;
+X	obj->rot.y = 0.0;
+X	obj->rot.z = 0.0;
+X	obj->size = 1.0;
+X	obj->color[0] = 0.0;
+X	obj->color[1] = 0.0;
+X	obj->color[2] = 0.0;
+X	obj->shine = 128;
+X	obj->transparent = 0;
+}
+X
+/* copy one vector to another */
+void vectorCopy(Vector *dest, Vector *source) {
+X	dest->x = source->x;
+X	dest->y = source->y;
+X	dest->z = source->z;
+}
+X
+X
+/* function called to display all the objects, performs transforms etc */
+void display(void)
+{
+X	int i;
+X    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+X	glMatrixMode (GL_MODELVIEW);
+X    for (i = 1; i <= OBJNUM; i++) {
+X		glLoadIdentity();
+X		glTranslatef(objlist[i].pos.x, objlist[i].pos.y, objlist[i].pos.z);
+X		glRotatef(objlist[i].rot.x, 1.0, 0.0, 0.0);
+X		glRotatef(objlist[i].rot.y, 0.0, 1.0, 0.0);
+X		glRotatef(objlist[i].rot.z, 0.0, 0.0, 1.0);
+X		glColor3fv(objlist[i].color);
+X		glMateriali(GL_FRONT, GL_SHININESS, objlist[i].shine);
+X		if (objlist[i].transparent)
+X			glDisable(GL_DEPTH_TEST);
+X		else
+X			glEnable(GL_DEPTH_TEST);
+X
+X		switch(i) {
+X			case(1):
+X				glutSolidTeapot(objlist[i].size);
+X				break;
+X			case(2):
+X				glutSolidCube(objlist[i].size);
+X				break;
+X			case(3):
+X				glutSolidSphere(objlist[i].size, 30, 20);
+X				break;
+X		}
+X	}
+X    glutSwapBuffers(); 
+}
+X
+/* Initialize lighting, variables, and all sorts of other stuff */
+void myInit(void)
+{
+X      int i;
+X	  static float lightPos[4] = {-2.0, 4.0, 2.0, 1.0};
+X      static float lightDir[4] = {-2.0, -4.0, -2.0, 1.0};
+X      static float lightAmb[4] = {0.4, 0.4, 0.4, 1.0};
+X      static float lightDiff[4] = {0.7, 0.7, 0.7, 1.0};
+X      static float lightSpec[4] = {1.0, 1.0, 1.0, 1.0};
+X
+X	  glColorMaterial(GL_FRONT, GL_SPECULAR);
+X	  glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
+X	  glEnable(GL_COLOR_MATERIAL);
+X      glEnable(GL_DEPTH_TEST);
+X
+X      glColor3f(1.0, 1.0, 1.0);
+X      glEnable(GL_LIGHTING);
+X      glEnable(GL_LIGHT0);
+X      glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
+X      glLightfv(GL_LIGHT0, GL_AMBIENT, lightAmb);
+X      glLightfv(GL_LIGHT0, GL_DIFFUSE, lightDiff);
+X      glLightfv(GL_LIGHT0, GL_SPECULAR, lightSpec);
+X
+X
+X	  for (i = 0; i <= OBJNUM; i++)
+X		  initObject(&objlist[i]);
+X
+X	  objlist[0].pos.z = -5;
+X
+X	  strcpy(objlist[1].name, "Teapot");
+X	  objlist[1].pos.x = 2.5;
+X	  objlist[1].color[0] = 1.0;
+X	  objlist[1].color[1] = 1.0;
+X	  objlist[1].shine = 50;
+X
+X	  strcpy(objlist[2].name, "Cube");
+X	  objlist[2].color[0] = 0.8;
+X	  objlist[2].shine = 20;
+X
+X	  strcpy(objlist[3].name, "Sphere");
+X	  objlist[3].pos.x = -2.5;
+X	  objlist[3].color[2] = 1.0;
+X	  objlist[3].shine = 128;
+X
+X	  printf("Choose an object with 1, 2, 3, or choose 0 for camera change\n\n");
+X	  printf("Rotation: (about given axis) \n\n");
+X	  printf("    L  K\n");
+X	  printf("    | / \n");
+X	  printf(" U--*--M\n");
+X	  printf("  / |   \n");
+X	  printf(" J  H   \n");
+X	  printf("\nPostition (in original planes):\n\n");
+X	  printf("    E  W\n");
+X	  printf("    | / \n");
+X	  printf(" A--*--F\n");
+X	  printf("  / |   \n");
+X	  printf(" S  D   \n");
+X	  printf("\nScaling or Zoom + or -\n");
+X	  printf("More or less shiny: * or /\n");
+X	  printf("Transparent toggle: t\n");
+X	  printf("Reset the scene with the = key\n\n");
+X	  printf("Or you can do it the easy way, leftmouse for rotate and rightmouse for moving\n");
+}
+X
+/*
+X *  Called when the window is first opened and whenever 
+X *  the window is reconfigured (moved or resized).
+X */
+void myReshape(int w, int h)
+{
+X    glViewport (0, 0, w, h);            /*  define the viewport */
+X    glMatrixMode(GL_PROJECTION);
+X    glLoadIdentity();
+X
+X	glFrustum(1.0, -1.0, -0.5, 0.5, 1.0, 10.0);
+X
+X    glTranslatef (0.0, 0.0, -5.0);     /*  viewing transformation      */		
+X    glMatrixMode (GL_MODELVIEW);        /* back to modelview matrix  */
+}
+X
+/* called to refresh perspective on camera angle changes */
+void changeCamera() {
+X    glMatrixMode(GL_PROJECTION);
+X    glLoadIdentity();
+X	glFrustum(1.0, -1.0, -0.5, 0.5, 1.0, 10.0);
+X    glTranslatef (objlist[0].pos.x, objlist[0].pos.y, objlist[0].pos.z);
+X	glRotatef(objlist[0].rot.x, 1.0, 0.0, 0.0);
+X	glRotatef(objlist[0].rot.y, 0.0, 1.0, 0.0);
+X	glRotatef(objlist[0].rot.z, 0.0, 0.0, 1.0);
+X	glScalef(objlist[0].size, objlist[0].size, objlist[0].size);
+X		
+X    glMatrixMode (GL_MODELVIEW);        /* back to modelview matrix  */
+}
+X
+/* Keyboard handler */
+void
+Key(unsigned char key, int x, int y)
+{
+X    switch (key) {
+/* All the rotations */
+X    case 'm':
+X		objlist[Currobj].rot.x = objlist[Currobj].rot.x + 10.0;
+X	  break;
+X    case 'u':
+X		objlist[Currobj].rot.x = objlist[Currobj].rot.x - 10.0;
+X      break;
+X    case 'h':
+X		objlist[Currobj].rot.y = objlist[Currobj].rot.y + 10.0;
+X	  break;
+X    case 'l':
+X		objlist[Currobj].rot.y = objlist[Currobj].rot.y - 10.0;
+X      break;
+X    case 'k':
+X		objlist[Currobj].rot.z = objlist[Currobj].rot.z + 10.0;
+X      break;
+X    case 'j':
+X		objlist[Currobj].rot.z = objlist[Currobj].rot.z - 10.0;
+X      break;
+X
+/* all the translations */
+X	case 'a':
+X		objlist[Currobj].pos.x = objlist[Currobj].pos.x + 0.2;
+X		break;
+X	case 'f':
+X		objlist[Currobj].pos.x = objlist[Currobj].pos.x - 0.2;
+X		break;
+X	case 'w':
+X		objlist[Currobj].pos.z = objlist[Currobj].pos.z - 0.2;
+X		break;
+X	case 's':
+X		objlist[Currobj].pos.z = objlist[Currobj].pos.z + 0.2;
+X		break;
+X	case 'e':
+X		objlist[Currobj].pos.y = objlist[Currobj].pos.y + 0.2;
+X		break;
+X	case 'd':
+X		objlist[Currobj].pos.y = objlist[Currobj].pos.y - 0.2;
+X		break;
+X
+/* zoom in and out */
+X	case '+':
+X		objlist[Currobj].size = objlist[Currobj].size * 1.2;
+X		break;
+X	case '-':
+X		objlist[Currobj].size = objlist[Currobj].size / 1.2;
+X		break;
+X
+/* change shininess somewhat */
+X    case '/':
+X		objlist[Currobj].shine = objlist[Currobj].shine + 8;
+X		if (objlist[Currobj].shine > 128)
+X			objlist[Currobj].shine = 128;
+X		break;
+X	case '*':
+X		objlist[Currobj].shine = objlist[Currobj].shine - 8;
+X		if (objlist[Currobj].shine < 4)
+X			objlist[Currobj].shine = 4;
+X		break;
+X
+/* reset */
+X	case '=':
+X		myInit();
+X		break;
+X 
+/* transparent */
+X	case 't':
+X		objlist[Currobj].transparent = 1 - objlist[Currobj].transparent;
+X		break;
+X
+X	case 27:           /* Esc will quit */
+X        exit(1);
+X        break;
+X    default:
+X		if ((key >= '0') && (key <= '3'))
+X			Currobj = key - '0';
+X      break;
+X    }
+X	if (Currobj == 0)
+X		changeCamera();
+X
+X	glutPostRedisplay();
+X	if (Strt) {
+X		myInit();
+X		Strt = 0;
+X	}
+}
+X
+/* mouse interrupt for button press..stor current mouse position */
+void MouseButton(int button, int state, int x, int y) {
+X	
+X	if (state == GLUT_DOWN) {
+X		xstart = x;
+X		ystart = y;
+X		mbutton = button;
+X		vectorCopy(&mobject.pos, &objlist[Currobj].pos);
+X		vectorCopy(&mobject.rot, &objlist[Currobj].rot);
+X		glutKeyboardFunc(NULL);
+X	} else 
+X		glutKeyboardFunc(Key);
+}
+X
+/* Mouse motion function when button pressed, rotate or translate objects */
+void MouseMove(int x, int y) {
+X	int change = 0;
+X
+/* rotation if left button held */
+X	if (mbutton == GLUT_LEFT_BUTTON) {
+X		objlist[Currobj].rot.y = mobject.rot.y - (x - xstart);
+X		objlist[Currobj].rot.x = mobject.rot.x + (y - ystart);
+X		change = 1;
+X	}
+/* position if right button held */
+X	if (mbutton == GLUT_RIGHT_BUTTON) {
+X		objlist[Currobj].pos.x = mobject.pos.x - ((float)(x - xstart))/100;
+X		objlist[Currobj].pos.y = mobject.pos.y - ((float)(y - ystart))/100;
+X		change = 1;
+X	}
+X	if (change) {
+X		if (Currobj == 0)
+X			changeCamera();
+X		
+X		glutPostRedisplay();
+X
+X	}
+}
+X
+X
+/*
+X    Main Loop
+X    Open window with initial window size, title bar, 
+X    RGBA display mode, and handle input events.
+X */
+int main(int argc, char** argv) 
+{
+X      glutInit(&argc, argv);
+X      glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGBA);
+X      glutCreateWindow ("Awwwww Yeah");
+X      myInit ();
+X      glutKeyboardFunc(Key);
+X      glutReshapeFunc (myReshape);
+X      glutDisplayFunc(display);
+X	  glutMouseFunc(MouseButton);
+X	  glutMotionFunc(MouseMove);
+X      glutMainLoop();
+}
+X
+SHAR_EOF
+  $shar_touch -am 0206231897 'hw1.c' &&
+  chmod 0640 'hw1.c' ||
+  $echo 'restore of' 'hw1.c' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'hw1.c:' 'MD5 check failed'
+1a6a3e8eedb67c12dd8a5edd9a7d0098  hw1.c
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'hw1.c'`"
+    test 8621 -eq "$shar_count" ||
+    $echo 'hw1.c:' 'original size' '8621,' 'current size' "$shar_count!"
+  fi
+fi
+rm -fr _sh35436
+exit 0
+# From: Johan <kozurj>

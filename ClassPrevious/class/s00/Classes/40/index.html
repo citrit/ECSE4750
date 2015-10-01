@@ -1,0 +1,398 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.0//EN">
+<!-- Time-stamp: </home/wrf/cg-f99/Classes/40/index.html, Tue,  7 Dec 1999, 19:19:08 EST, wrf@benvolio.ecse.rpi.edu> -->
+
+<HTML>
+<HEAD>
+
+<TITLE>ECSE-4750, RPI, Class 40</TITLE>
+
+<link rel="stylesheet" href="../style.css" type="text/css" >
+
+</head>
+
+<body>
+
+
+<h1 class=title>
+Rensselaer Polytechnic Institute
+<BR>
+ECSE-4750 Computer Graphics, Fall 1999<br>
+Class 40, Tues, Dec 7 </H1>
+
+<h1><a name="01"></a>Grades etc</h1>
+
+<h2><a name="02"></a>Term Projects</h2>
+
+<p>Term projects are due today.  After they are graded, you are welcome
+to pick them up.
+</p>
+
+<h2><a name="03"></a>Homework Grading</h2>
+
+<p>If you didn't receive Giampiero's email, please email him, at
+lomong@rpi.edu.  Questions about grading will be accepted only before
+the final exam.
+</p>
+
+
+<h2><a name="04"></a>Final Exam</h2>
+
+<p>The Computer Graphics final exam is in class on Thursday.  It is 25%
+of the final grade.  You may bring two 2-sided, 8.5 by 11 inch, crib
+sheets, calculators, food, etc.  After the exams are graded, you may
+examine your exam, but not keep it.
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2><a name="05"></a>Old Final Exams</h2>
+
+<p>Directory <a href="../final/">../final/</a> (RCS: /dept/ecse/graphics/Classes/final/) contains:</p>
+
+<ol>
+<li><p>The Spring 99 final,</p></li>
+<li><p>The Fall 98 final, and</p></li>
+<li><p>The big list of all questions asked for several years up thru Fall 98.</p></li>
+</ol>
+
+<p>They are each in several formats:</p>
+
+<ol>
+<li><p>LaTeX source, with included files,</p></li>
+<li><p>dvi output, readable with xdvi,</p></li>
+<li><p>PostScript output, perhaps gzipped.  Readable with gv, and printable directly to any public printer at RPI.</p></li>
+</ol>
+
+<p>Enjoy.</p>
+
+
+<h2><a name="06"></a>Course Grades</h2>
+
+<p>We will put your final grades on RCS as usual.  You may also
+telephone me. </p>
+
+<h1><a name="07"></a>After the Course</h1>
+
+<p>After the course, feel free to ask me questions on graphics, or other
+topics.  Sometimes, I may have a correct answer.
+</p>
+
+
+
+<h1><a name="08"></a>Rendering, Ctd</h1>
+
+<h2><a name="09"></a>Rendering Pipeline -  More Detail</h2>
+
+<p>This updates class 37.</p>
+
+
+<ol>
+
+<li><p>Your object's surface is probably a curved patch, such as a bicubic
+parametric patch.  u and v are 2 parameters, and range from 0 to 1.
+a, b, and c are 48 coefficients defining the patch.
+</p></li>
+
+<p><center>
+x = sum for both i,j from 0 to 3 of a<sub>ij</sub> u<sup>i</sup>v<sup>j</sup><br>
+y = sum for both i,j from 0 to 3 of b<sub>ij</sub> u<sup>i</sup>v<sup>j</sup><br>
+z = sum for both i,j from 0 to 3 of c<sub>ij</sub> u<sup>i</sup>v<sup>j</sup><br>
+</center>
+</p>
+
+
+<li><p>Why cubic?  It's the lowest degree that allows adjacent patches
+to be created whose second derivatives match at the join.  That means
+that the join is generally invisible.  I.e., you don't want to look at
+a new car and see where the body was divided into patches by the
+designer.  </p></li>
+
+<li><p>Alternatively, a conic section (aka quadric surface) is
+sometimes used.</p></li>
+
+<li><p>A torus (donut) might also be used; it's a quartic curve.</p></li>
+
+<li><p>You need a lighting equation that takes:
+</p>
+
+<ol>
+<li><p>the direction to the light source,</p></li>
+
+<li><p>the normal to the surface, and</p></li>
+
+<li><p>the direction to the viewer,</p></li>
+</ol>
+
+<p>and gives the intensity at a point.</p>
+
+<li><p>Different surfaces have different lighting equations.  A <em>flat
+(Lambertian)</em> surface, like a carpet, reflects light out equally
+in all directions.</p></li>
+
+<li><p>A <em>specular (mirror)</em> surface reflects light out only in
+one direction, at the angle of reflection.</p></li>
+
+<li><p>Most surfaces reflect more light, but not all, at the angle of
+reflection.</p></li>
+
+<li><p>Since the lighting equation, and its inputs, especially the surface normal, are expensive to calculate, approximations are common.</p></li>
+
+
+<li><p>You can calculate the normal to the bicubic patch at any point.  Take
+the partial derivatives in two directions, find their cross-product,
+and normalize the result.  However, that's probably too slow, so we
+approximate.
+</p></li>
+
+<li><p>Often we divide the surface into flat patches or facets, and
+shade each patch separately.  </p></li>
+
+<li><p>The fastest way is flat shading, where the whole patch is the same
+intensity.   However, the boundaries between the patches will be
+obnoxious, because the Mach band effect amplifies sudden intensity
+changes.
+</p></li>
+
+<li><p>Gouraud shading is the next better, and slower method.  Calculate the
+normal to the surface at each corner of the patch.  Use that to
+calculate the intensities at the corners.  Linearly interpolate the
+intensity at each interior point.
+</p>
+
+<p>One problem is that Gouraud shading will never generate a highlight
+inside a patch.
+</p>
+
+<li><p>The next better, and slower, method is Phong shading.  Here, we take
+the normals at the 4 corners, and interpolate an approximate normal at
+each interior point.  We have to normalize each interpolated normal
+(make its length to be one.)  Then we input that into the lighting
+equation to find each point's intensity.
+</p></li>
+
+<li><p>It's not enough that each separate image we shade look good.  If we're
+generating a video sequence, then the shading has to be consistent
+from frame to frame.
+</p></li>
+
+</ol>
+
+
+
+<h2><a name="10"></a>Ray Tracing Notes</h2>
+
+
+<ol>
+
+<li><p>Fire a ray from the center of projection (aka viewpoint) thru
+each pixel until it hits some object.</p></li>
+
+<li><p>If that object is shiny, continue tracing the reflected
+ray.</p></li>
+
+
+<li><p>If that object is partly transparant, continue tracing two
+rays: the transmitted (refracted) and the reflected, and combine the
+results.</p></li>
+
+<li><p>Snell's law gives the angle of the refracted ray.</p></li>
+
+
+<li><p>Fresnell's law gives the proportion of the input ray that is
+reflected.</p></li>
+
+<li><p>These laws may be derived from Maxwell's equations.</p></li>
+
+<li><p>A separate problem is to determine the objects' brightness.
+Perhaps raytrace from the light sources to do this.</p></li>
+
+
+<li><p>Strengths: Shiny, transparent, glassy, objects.</p></li>
+
+
+<li><p>Weaknesses: Diffuse shadows, Antialiasing.</p></li>
+
+
+<li><p>If an object's projection is as small as a pixel, then whether
+one ray or no rays hit it is random.</p></li>
+
+
+<li><p>This causes a speckling in the image.</p></li>
+
+
+<li><p>This is worse in a video since each frame is speckled
+independently.  The result might look like a noisy TV
+channel.</p></li>
+
+
+<li><p>Reflection from convex mirrors may cause even large objects to
+appear small, and to suffer from this problem.</p></li>
+
+
+<li><p>One solution is to use more, smaller, pixels.</p></li>
+
+
+<li><p>A more sophisticated solution is to subdivide only critical
+pixels into about 16 subpixels, and combine the result.</p></li>
+
+
+<li><p>A critical pixel might be one whose color is quite different
+from its neighbors.</p></li>
+
+
+<li><p>Another method is stochastic ray tracing.</p></li>
+
+
+<li><p>Instead of firing a ray thru the center of each pixel, fire it
+thru a random point in the pixel (considering the pixel as a square).
+This is not as good as subpixel averaging, but is faster.  It also has
+problems with a video sequence.</p></li>
+
+</ol>
+
+
+<h2><a name="11"></a>Radiosity</h2>
+
+
+<ol>
+
+<li><p>Radiosity calculates diffuse shadows well.</p></li>
+
+
+<li><p>Divide the scene into patches.</p></li>
+
+
+<li><p>Compute how much of the light emitted from any particular patch
+hits each other patch (the form factors).</p></li>
+
+
+<li><p>The light arriving at particular patch is the sum of the light
+leaving each other patch times the form factor for the pair of that
+patch and this patch.</p></li>
+
+
+<li><p>The light leaving this patch is any light it emits (if it's a
+light source) plus its reflectivity times the light arriving.</p></li>
+
+
+<li><p>This assumes perfect diffuse reflection.</p></li>
+
+
+<li><p>Knowing the form factors and emitted light, solve for each
+patch's brightness.</p></li>
+
+
+<li><p>Having the patches' sizes quadruples the number of patches,
+increases the number of form factors by 16, and increases the solution
+time by 64.</p></li>
+
+
+<li><p>Hierarchical patches, like quadtrees, can speed this
+up.</p></li>
+
+
+<li><p>None of this uses the observer's location. </p></li>
+
+
+<li><p>You can preprocess a scene with radiosity, then walk thru it in
+real time.</p></li>
+
+
+</ol>
+
+<h2><a name="12"></a>Final Touches</h2>
+
+<ol>
+
+<li><p>Combine ray tracing, radiosity, bump mapping, texture mapping, etc,
+etc.</p></li>
+
+<li><p>Bump mapping perturbs surface normals to simulate
+micro-texture.  The perturbed normals cause lighting
+perturbations.</p></li>
+
+<li><p>Texture mapping paints a 2-D image onto the surface.  The image must
+be appropriately transformed.</p></li>
+
+<li><p>3-D texture mapping models solids like wood and marble.</p></li>
+
+<li><p>For an example of a current PC graphics board, the Creative 3D
+Blaster Annihilator using the GeForce 256 chipset, which paints 480M
+pixels/sec, see <a
+href="http://www.cnn.com/1999/TECH/computing/12/06/annihilator.review/index.html">CNN</a>.</p></li>
+
+<li><p>Finally, read the proposed SIGGRAPH programs released on 1
+April 91 and 1 April 92, <a href="siggraph9192">here</a>.  If you can
+understand the references, then you know some graphics.</p></li>
+
+</ol>
+
+<h1><a name="13"></a>News on the Web</h1>
+
+<h2><a name="14"></a>IBM supercomputer</h2>
+
+<p>IBM plans to build a 1M processor petaflops (10<sup>15</sup> flops)
+machine for $100M, during the next few years.  An SGI spokesman said
+that that was impossible.  See <a
+href="http://www.cnn.com/1999/TECH/computing/12/07/big.blue.gene/index.html">CNN</a>.
+The organization is 64 racks of 8 boards each of 64 chips each with 32
+processors each.  </p>
+
+<h2><a name="15"></a>IBM Fast Chips</h2>
+
+<p>IBM says they can build a 90GHz chip, up at Burlington VT.  See
+<a href="http://www.eetimes.com/story/OEG19991202S0029">EE Times</a>.
+</p>
+
+
+<hr>
+<a href="../39/" target="_top">Previous Class</a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="../41/" target="_top">Next Class</a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="http://www.rpi.edu/dept/ecse/graphics/index.html"
+ target="_top">ECSE-4750 Fall 1999 Home Page</a>
+
+<br><br>
+<div class=footer>
+
+<p>Copyright &#169; 1998-9, Wm. Randolph Franklin.  You may use my
+material for non-profit education and research, provided that you
+acknowledge me and preserve this notice. </p>
+
+
+ <CENTER>
+   Wm. Randolph Franklin,
+   Associate Professor<br>
+   For email address, replace NOSPAM by RPI in the following:
+   wrf@ecse.NOSPAM.edu<br>
+   <A HREF="http://www.ecse.rpi.edu/Homepages/wrf/">
+     http://www.ecse.rpi.edu/Homepages/wrf/</a><br>
+   +1 (518) 276-6077;  Fax: -6261<br>
+   ECSE Dept., 6026 JEC, Rensselaer Polytechnic Inst, Troy NY, 12180 USA<br>
+   (PGP key available)<br>
+ </CENTER>
+
+<script>
+document.write("<i>Updated:</i> " + document.lastModified + "<br>")
+document.write("<i>URL:</i> " + document.URL + "<br>")
+</script>
+
+</div>
+
+</BODY>
+</HTML>

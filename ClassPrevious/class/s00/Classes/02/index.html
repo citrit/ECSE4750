@@ -1,0 +1,272 @@
+<!-- Time-stamp: </home/wrf/cg-f99/Classes/02/index.html, Wed,  3 Nov 1999, 19:14:49 EST, wrf@benvolio.ecse.rpi.edu> -->
+<html>
+
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage Express 2.0">
+<title>ECSE-4750, RPI, Class 2</title>
+<!-- Changed by: Wm. Randolph Franklin, 13-Jan-1999 -->
+<STYLE TYPE="text/css">
+<!--
+H1 { color: red; }
+
+H2 { color: blue; }
+
+   OL.outline {list-style-type: upper-roman;
+    font: bold italic 18pt sans-serif;}
+
+   OL.outline OL {list-style-type: upper-alpha;
+       font: bold 14pt sans-serif;}
+
+   OL.outline OL OL {list-style-type: decimal;
+	  font: 12pt serif;}
+
+   OL.outline OL OL OL {list-style-type: lower-alpha;
+	     font: 10pt serif;}
+
+   OL.outline OL OL OL OL {list-style-type: lower-roman;
+		font: 10pt sans-serif;}
+   -->
+</STYLE>
+</head>
+
+<body bgcolor="#FFFFFF">
+
+<h1 align="center">Rensselaer Polytechnic Institute <br>
+ECSE-4750 Computer Graphics, Fall 1999<br>
+Class 2, Thu Jan 13</h1>
+
+<h1><a name="01"></a>Final Exam</h1>
+
+<p>By unanimous vote, the final exam will be in the last class.
+It is required; don't leave town before it.</p>
+
+<h1><a name="02"></a>X on PCs</h1>
+
+<p>X runs well on Linux. The only problem is that Motif is a
+commercial package that costs money. There is a free clone called
+LessTif, which appears to do my class programs well. In fact, I'm
+gradually switching to LessTif from X/Motif of the SGIs. </p>
+
+<p>I don't know of any versions of X that run on top of Windows,
+other than tools for remote logins like Exceed. One difficulty
+with implementing X on top of Windows is that X is more powerful
+in areas such as the color map. Anyone with info about this
+please tell me. </p>
+
+<h1><a name="03"></a>Compiling X Programs</h1>
+
+<h2><a name="04"></a>Working Platforms</h2>
+
+<p>X/Motif works on the RCS SGIs, Suns, and IBM RS6000s. I
+recommend the SGIs. They are faster. X is better integrated into
+them; you need fewer stitches when compiling. </p>
+
+<h2><a name="05"></a>Things To Do Once Per RCS Account</h2>
+
+<dl compact>
+    <dt>1. </dt>
+    <dd>Put the following line in your <code>.bashrc</code> file.
+        (<tt>.bash_profile</tt> is not read if you use the
+        session manager, which is used when you login locally,
+        but not remotely.) <pre>
+export XUSERFILESEARCHPATH=%N.ad:$XUSERFILESEARCHPATH
+</pre>
+        <p>Note that, in <tt>bash</tt>, the shell that you're
+        probably running, the standard way to set an envar is </p>
+        <p align="center"><tt>export VAR=value</tt> </p>
+        <p><code>setenv</code> is a function, which you can see
+        with <em>type setenv</em>, designed to provide
+        compatibility for csh users. setenv does <code>export
+        VAR=value</code>. </p>
+    </dd>
+    <dt>2. </dt>
+    <dd>Since the above affects only windows started after the
+        change, start a new Unix window, and use it when running
+        the program. </dd>
+    <dt>3. </dt>
+    <dd>Get the Makefile, which defines the switches needed to
+        compile and link programs. <p align="center"><tt>cp
+        /dept/ecse/graphics/Classes/02/Makefile .</tt> </p>
+        <p>I have Makefiles, which sort-of work, for the Sun and
+        IBM platforms. </p>
+        <p><tt>Makefile</tt> is <a href="Makefile">here</a>. </p>
+    </dd>
+</dl>
+
+<h2><a name="06"></a>Things To Do Once Per Program </h2>
+
+<dl compact>
+    <dt>1. </dt>
+    <dd>Copy or create the source file in your account; say <pre>
+cp /dept/ecse/graphics/Classes/02/xhello.c .
+</pre>
+        <p><tt>xhello.c</tt> is <a href="xhello.c">here</a>. </p>
+    </dd>
+    <dt>2. </dt>
+    <dd>Create an application default resources file if you like,
+        in this directory, called <em>Classname</em><code>.ad</code>
+        . <tt>xhello</tt> doesn't have one; but if it did, the
+        classname is <code>XHello</code>, so the file would be <code>XHello.ad</code>
+        . </dd>
+</dl>
+
+<h2><a name="07"></a>Things To Do Each Time</h2>
+
+<dl compact>
+    <dt>1. </dt>
+    <dd>Compile it thus: <pre>
+make xhello
+</pre>
+    </dd>
+    <dt>2. </dt>
+    <dd>Run the program thus: <code>xhello</code> . </dd>
+</dl>
+
+<h2><a name="08"></a>Imakefile</h2>
+
+<p>I recommend that you ignore this section, but since some
+people ask...</p>
+
+<p>This method is used for distributing large portable X
+programs, such as the X system itself. It is so complicated, and
+requires a separate directory and <tt>Imakefile</tt> for each
+program, that I don't recommend this method. However, if you wish
+to use it, see how it works for <tt>xhello</tt> in <code>/dept/ecse/graphics/Classes/02/xhello.dir/</code>
+. </p>
+
+<h1><a name="09"></a>Xhello -- Simplest X Program</h1>
+
+<h2><a name="10"></a>xhello.c</h2>
+
+<p>This is about the simplest possible X program. It just does
+this: <img src="xhello.jpg" width="42" height="43" ? <p> The
+source is <a href="xhello.c">here</a>.</p>
+
+<h1><a name="11"></a>Xgoodbye -- Pushbutton Widget</h1>
+
+<h2><a name="12"></a>xgoodbye.c</h2>
+
+<p>This puts a message in a pushbutton widget, like this.</p>
+
+<p><img src="xgoodbye.jpg" width="302" height="51"></p>
+
+<p>Pushing it kills the program. It also reads the text and
+colors of the widget from a separate, <i>resource</i>, file. <tt>xgoodbye</tt>
+is <a href="xgoodbye.c">here.</a> </p>
+
+<h2><a name="13"></a>XGoodbye.ad</h2>
+
+<p>The resource file is <a href="XGoodbye.ad">here</a>. <br>
+</p>
+
+<h1><a name="14"></a>Typical X Errors</h1>
+
+<dl compact>
+    <dt>1. </dt>
+    <dd>Check for correct upper/lower case. It's <tt>labelString</tt>,
+        not <tt>labelstring</tt> or <tt>Labelstring</tt> or <tt>LabelString</tt>.
+    </dd>
+    <dt>2. </dt>
+    <dd>Check speling. It's <tt>XtVaAppInitialize</tt>, not <tt>XtVaApInitialize</tt>
+        or <tt>XtVaAppInitialise</tt>. It's XUSERFILESEARCHPATH,
+        not XUSERFILESSEARCHPATH. </dd>
+    <dt>3. </dt>
+    <dd>Is <tt>XUSERFILESEARCHPATH</tt> exported? </dd>
+    <dt>4. </dt>
+    <dd>Does the program class match the value of <tt>XUSERFILESEARCHPATH</tt>
+        (less the <tt>.ad</tt>) ? </dd>
+    <dt>5. </dt>
+    <dd>It is easy to make a label display some complicated
+        string by making the widget's name to be that string.
+        That works, sometimes, somewhat, but is disparaged. Use a
+        simple name and set the displayed string as a resource. </dd>
+    <dt>6. </dt>
+    <dd>Does the widget name, i.e., the char string not the C
+        variable name, in the program match the resource file? </dd>
+    <dt>7. </dt>
+    <dd>Run <tt>xprop</tt> and click on the problem program
+        window to check the actual name and class of a running
+        program. </dd>
+    <dt>8. </dt>
+    <dd>Run <tt>appres</tt> <i>classname</i> [<i>program name</i>]
+        to see what resources this class and program are using. </dd>
+    <dt>9. </dt>
+    <dd>Explicitly delete the program object and executable files
+        before remaking it. </dd>
+</dl>
+
+<h1><a name="15"></a>Programming Notes</h1>
+
+<h2><a name="16"></a>Make</h2>
+
+<p>For more info on <tt>make</tt>, see <a
+href="http://www.ecse.rpi.edu/Homepages/wrf/systems/make.html">Prof
+Franklin's page</a> on the subject. </p>
+
+<p>This is enrichment material, which will not be examined. </p>
+
+<h2><a name="17"></a>X Man Page</h2>
+
+<p>The intro man page for X, which contains a good summary is <a
+href="xman.ps">here</a>. I formatted it thus on a Sun. Your
+milage may vary, e.g., the SGIs don't seem to have ptroff. </p>
+
+<pre>
+ ptroff -t -man /campus/X11/R6/core/1.0/sun4c_41/man/man3/X.3 &gt; X.ps
+ lpr X.ps
+</pre>
+
+<p>A fallback mode is to say <tt>nroff</tt> instead of <tt>ptroff
+-t</tt>. That uses a fixed-width font, suitable for a terminal.
+Altho the man page has more detail than you need now, much of it,
+like the resources section, might be interesting. </p>
+
+<p><i>Enrichment:</i> ptroff and nroff are versions of troff,
+which used to be the standard text formatting package before L<font
+size="2"><sup>A</sup></font>T<font size="2">E</font>X2<sub>e</sub>
+was invented. That's why the Unix man pages use it. Troff is the
+worst programming language that I've ever seen; raw T<font
+size="2">E</font>X is the second worst. </p>
+
+<h1><a name="18"></a>Homework Policy</h1>
+
+<p>As stated in the syllabus, it is ok to do them homework in
+teams and then to submit one homework for the whole team. </p>
+
+<hr>
+
+<p><a href="../01/" target="_top"><font size="2">Previous Class</font></a><font
+size="2">, </font><a href="../03/" target="_top"><font size="2">Next
+Class</font></a><font size="2">, </font><a
+href="http://www.rpi.edu/~frankwr/ECSE-4750/" target="_top"><font
+size="2">ECSE-4750 Computer Graphics Homepage</font></a><font
+size="2"> </font></p>
+
+<p><font size="2">(2 Sept 99)</font></p>
+
+<p><font size="2">Copyright © 1998-9, Wm. Randolph Franklin. You
+may use my material for non-profit education and research,
+provided that you acknowledge me and preserve this notice. </font></p>
+<div align="center"><center>
+
+<address>
+    <font size="2">Wm. Randolph Franklin, Associate Professor<br>
+    For email address, replace NOSPAM by RPI in the following:
+    wrf@ecse.NOSPAM.edu<br>
+    </font><a href="http://www.ecse.rpi.edu/Homepages/wrf/"><font
+    size="2">http://www.ecse.rpi.edu/Homepages/wrf/</font></a><font
+    size="2"><br>
+    +1 (518) 276-6077; Fax: -6261<br>
+    ECSE Dept., 6026 JEC, Rensselaer Polytechnic Inst, Troy NY,
+    12180 USA<br>
+    (PGP key available)<br>
+    </font>
+</address>
+</center></div><script>
+document.write("<i>Updated:</i> " + document.lastModified + "<br>")
+document.write("<i>URL:</i> " + document.URL + "<br>")
+</script>
+</body>
+</html>

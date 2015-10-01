@@ -1,0 +1,4 @@
+!table
+!version 100
+FIELDS: 1
+  County CHAR (35) INDEX 1

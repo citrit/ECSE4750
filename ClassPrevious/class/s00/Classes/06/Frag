@@ -1,0 +1,388 @@
+<h1>Summary of Motif Widget Classes</h1>
+
+<p>Now that we've seen several examples of Motif programs, here is
+some summary info, to give you an idea of Motif's richness.
+This is enrichment material.
+</p>
+
+<p>First, here is a summary of all Motif widget classes, from the
+<em>Motif Programming Guide</em>, chapter 1.  I copied from
+</p>
+
+<p><tt>/campus/osf/motif/2.0/distrib/src/doc/programGuide/Output/draft/ascii/ch01</tt>.
+</p>
+
+<pre>
+1.3  Widget Classes and Hierarchy
+
+This section gives a brief overview of the hierarchy of widget
+classes in Xt and Motif.  Chapter 2 discusses this hierarchy in
+more detail.
+
+
+1.3.1  Xt Classes
+
+Xt defines the base classes for all widgets.  Core is the
+fundamental class for all widgets that can have windows. This class
+has basic resources for a widget's geometry, background color,
+translations, and sensitivity to input.  Widgetlike objects that do
+not have windows-called gadgets in Motif-are subclasses of
+RectObj. This class has geometry resources but no colors or
+translations.
+
+Composite is the base class for all widgets that can have children.
+This class maintains a list of its children and is responsible for
+managing their geometry.  Constraint is a subclass of Composite
+that maintains additional data for each child, represented by
+constraint resources for the child.
+
+Shell is the base class for shell widgets.  Shells envelop other
+widgets whose windows are children of the root window.  Shells are
+responsible for interaction with the window manager.  Shell is a
+subclass of Composite.  Xt has the following subclasses of Shell:
+
+OverrideShell
+	  Envelops widgets that the window manager should ignore,
+	  such as menus
+
+WMShell   Superclass for shells that need to interact
+	  specifically with the window manager
+
+VendorShell Subclass of WMShell that implements
+	  toolkit-specific behavior
+
+TransientShell
+	  Subclass of VendorShell for widgets such as
+	  dialogs that appear briefly on behalf of
+	  other widgets
+
+TopLevelShell
+	  Subclass of VendorShell for top-level widgets
+	  for components of the application
+
+ApplicationShell
+	  Subclass of TopLevelShell for the top-level widget that
+	  represents the application as a whole
+
+
+1.3.2  Motif Classes
+
+Motif has three broad groups of widgets: primitives and gadgets,
+managers, and shells.
+
+
+1.3.2.1  Primitives and Gadgets
+
+Primitives are widgets that have no children.  They are commonly
+the fundamental units of input and output, and they are usually
+building blocks for composite widgets.  XmPrimitive, a subclass of
+Core, is the base class for all primitives.  XmPrimitive has basic
+color resources and provides keyboard traversal behavior.
+
+XmPrimitive is used only as a superclass for classes with more
+specific behavior.  Following are the subclasses of Motif
+primitives:
+
+XmSeparator
+	  Used to separate other widgets; usually appears as a
+	  line.
+
+XmLabel   Displays text or a pixmap.  As a superclass
+	  for buttons, provides specialized behavior,
+	  such as keyboard traversal, inside menus.
+
+	  XmLabel subclasses XmCascadeButton, XmDrawnButton,
+	  XmPushButton, and XmToggleButton perform some action when
+	  activated or "pressed" by the user.  Subclasses have
+	  roles as menu activators, toggles, pushbuttons, and small
+	  graphics areas.
+
+XmScrollBar
+	  Control that moves a scroll widget horizontally or
+	  vertically with respect to a fixed viewport on the
+	  scroll.
+
+XmList    Array of textual items from which the user
+	  can select one or more entries.
+
+XmText and XmCSText
+	  Widgets for display and possible editing of text.  XmText
+	  may be multiline or constrained to a single line.
+	  XmTextField is a variant optimized for single-line text.
+	  XmCSText uses compound strings, and is optimized to take
+	  advantage of the enhanced display capabilities of that
+	  data type.
+
+Gadgets are variants of primitives that have no windows.  Gadgets
+have geometry, but they inherit colors from their parents and
+depend on their parents to dispatch input events to them.
+XmGadget, a subclass of RectObj, is the base class for gadgets.
+Gadget variants exist for separators, labels, and most button
+classes.  XmIconGadget, which displays both text and a pixmap in
+various combinations, can be manipulated by an XmContainer widget.
+
+See Chapter 10 for more information on the CSText, Text, and
+TextField widgets.  See Chapter 5 for more information on other
+primitives.
+
+
+1.3.2.2  Managers
+
+A manager is a widget that generally has children and manages their
+geometry.  XmManager, a subclass of Constraint, is the base class
+for managers. This class has special responsibilities when it has
+gadget children. It provides color resources that its gadget
+children inherit, and it dispatches input events to appropriate
+gadgets.  Following are the subclasses of Motif managers:
+
+XmFrame   Surrounds a child with a shadow and a margin.
+
+XmScale   Displays a value within a range and
+	  optionally allows the user to supply a new
+	  value.
+
+XmPanedWindow
+	  Arranges children, called panes, vertically from top to
+	  bottom.  May also insert a control called a sash that
+	  lets the user adjust the size of a pane.
+
+XmScrolledWindow
+	  Provides a viewport onto a child widget that behaves as a
+	  virtual scroll.  Manages ScrollBars to move the scroll
+	  with respect to the viewport.
+
+XmMainWindow
+	  Subclass of ScrolledWindow that provides support for a
+	  MenuBar and other specialized areas.
+
+XmRowColumn
+	  Implements menus, RadioBoxes, and CheckBoxes, usually
+	  consisting of button children. Can be used to lay out
+	  arbitrary widgets in rows, columns, or two-dimensional
+	  formations.
+
+XmBulletinBoard
+	  Superclass for dialogs, widgets that present information
+	  to the user or seek information from the user.  The
+	  dialog widget may be a BulletinBoard, which provides
+	  general behavior, or a specialized subclass.  Common
+	  subclasses present a list from which the user makes a
+	  selection, display filenames and allow the user to choose
+	  one, ask the user to enter a command, and display a
+	  message.  One subclass, XmForm, performs general
+	  constraint-based geometry management for its children.
+
+XmDrawingArea
+	  General-purpose manager suitable for use as a canvas for
+	  graphics operations.
+
+XmContainer
+	  Manages a collection of certain kinds of child widgets
+	  (typically, IconGadgets).  These child widgets can be
+	  viewed in several different layout formats, selected
+	  using different selection types and techniques, and
+	  directly manipulated by the user.  One possible use for a
+	  Container widget would be to build a graphical user
+	  interface to a file system.
+
+XmComboBox
+	  Manages a TextField widget and a List widget.  A user can
+	  select an item from a ComboBox by clicking on it in the
+	  List widget or by typing it directly into the TextField
+	  widget.
+
+XmSpinBox
+	  Allows the user to select a value from a ring of related
+	  but mutually exclusive choices which are displayed in
+	  sequence.  For example, a user might use a SpinBox to
+	  select a month by clicking through the months on one ring
+	  and to select the day of the month by clicking through
+	  the days on another ring.
+
+XmNotebook 
+	  Organizes its children into pages, tabs, status areas,
+	  and page scrollers to simulate a real notebook.  Each
+	  page of the Notebook can hold different kinds of items.
+	  For example, the first page could contain text in a
+	  CSText widget, the second page might be a graphic
+	  displayed in a Label widget, and the third page might be
+	  a questionnaire managed by a Form widget.
+
+
+1.3.2.3  Shells
+
+Motif has three shell classes:
+
+VendorShell
+	  Motif-specific implementation of the Xt class.  Among
+	  other responsibilities, manages communication with MWM.
+
+XmDialogShell
+	  Subclass of TransientShell that envelops dialogs.
+	  Cooperates with BulletinBoard in popping up and
+	  positioning transient dialogs.
+
+XmMenuShell
+	  Subclass of OverrideShell that envelops menus.
+
+
+1.3.2.4  Other Motif Classes
+
+Motif uses a number of specialized objects that are not intended to
+be used in creating widgets.  These objects exist primarily to hold
+resources and other information that would be difficult to make
+available in another way.  XmDisplay holds resources specific to a
+given display....
+</pre>
+
+<h1>List of Resources</h1>
+
+<p>This gives you an idea of what all the possible resources are for
+a label widget.   I copied it from its man page,</p>
+
+<tt>/campus/osf/motif/2.0/distrib/src/doc/man/Output/draft/ascii/3X_07</tt>
+
+<p>page 834.   I inserted the core widget resources, which
+label inherits, from</p>
+
+<tt>/campus/osf/motif/2.0/distrib/src/doc/man/Output/draft/ascii/3X_01</tt>,
+
+<p>page 74, and the primitive widget resources, which label
+also inherits, from </p>
+
+<p><tt>/campus/osf/motif/2.0/distrib/src/doc/man/Output/draft/ascii/3X_09</tt>,
+</p>
+
+<p>page 1044 into this.</p>
+
+<p>You can see how Motif likes to group related
+resources into classes, as I mentioned before, and how it likes to
+create its own data types.</p>
+
+<p>Each resource is defined in more detail later in that file.
+</p>
+
+<small><pre>
+The following table defines a set of widget resources used
+by the programmer to specify data.  The programmer can also
+set the resource values for the inherited classes to set
+attributes for this widget.  To reference a resource by name
+or by class in a .Xdefaults file, remove the XmN or XmC
+prefix and use the remaining letters.  To specify one of the
+defined values for a resource in a .Xdefaults file, remove
+the Xm prefix and use the remaining letters (in either
+lowercase or uppercase, but include any underscores between
+words).  The codes in the access column indicate if the
+given resource can be set at creation time (C), set by using
+XtSetValues (S), retrieved by using XtGetValues (G), or is
+not applicable (N/A).
+
+                                                XmLabel Resource Set
+	Name                        Class                 Type           Default             Access
+_________________________________________________________________________________________
+(core widget resources:   		       					    
+		          		       					    
+XmNaccelerators           XmCAccelerators         XtAccelerators   dynamic            CSG
+XmNancestorSensitive      XmCSensitive            Boolean          dynamic            G
+XmNbackground             XmCBackground           Pixel            dynamic            CSG
+XmNbackgroundPixmap       XmCPixmap               Pixmap           XmUNSPECIFIED_PIX  CSG
+XmNborderColor            XmCBorderColor          Pixel            XtDefaultForegrou  CSG
+XmNborderPixmap           XmCPixmap               Pixmap           XmUNSPECIFIED_PIX  CSG
+XmNborderWidth            XmCBorderWidth          Dimension        1                  CSG
+XmNcolormap               XmCColormap             Colormap         dynamic            CG
+XmNdepth                  XmCDepth                int              dynamic            CG
+XmNdestroyCallback        XmCCallback             XtCallbackList   NULL               C
+XmNheight                 XmCHeight               Dimension        dynamic            CSG
+XmNinitialResourcesPers   XmCInitialResourcesPe   Boolean          True               C
+XmNmappedWhenManaged      XmCMappedWhenManaged    Boolean          True               CSG
+XmNscreen                 XmCScreen               Screen *         dynamic            CG
+XmNsensitive              XmCSensitive            Boolean          True               CSG
+XmNtranslations           XmCTranslations         XtTranslations   dynamic            CSG
+XmNwidth                  XmCWidth                Dimension        dynamic            CSG
+XmNx                      XmCPosition             Position         0                  CSG
+XmNy                      XmCPosition             Position         0                  CSG
+										    
+(primitive widget resources:)							    
+										    
+XmNbottomShadowColor      XmCBottomShadowColor    Pixel             dynamic            CSG
+XmNbottomShadowPixmap     XmCBottomShadowPixmap   Pixmap            XmUNSPECIFIED_PI   CSG
+XmNconvertCallback        XmCCallback             XtCallbackList    NULL               C
+XmNforeground             XmCForeground           Pixel             dynamic            CSG
+XmNhelpCallback           XmCCallback             XtCallbackList    NULL               C
+XmNhighlightColor         XmCHighlightColor       Pixel             dynamic            CSG
+XmNhighlightOnEnter       XmCHighlightOnEnter     Boolean           False              CSG
+XmNhighlightPixmap        XmCHighlightPixmap      Pixmap            dynamic            CSG
+XmNhighlightThickness     XmCHighlightThickness   Dimension         2                  CSG
+XmNlayoutDirection        XmCLayoutDirection      XmDirection       dynamic            CG
+XmNnavigationType         XmCNavigationType       XmNavigationType  XmNONE             CSG
+XmNpopupHandlerCallback   XmCCallback             XtCallbackList    NULL               C
+XmNshadowThickness        XmCShadowThickness      Dimension         2                  CSG
+XmNtopShadowColor         XmCTopShadowColor       Pixel             dynamic            CSG
+XmNtopShadowPixmap        XmCTopShadowPixmap      Pixmap            dynamic            CSG
+XmNtraversalOn            XmCTraversalOn          Boolean           True               CSG
+XmNunitType               XmCUnitType             unsigned char     dynamic            CSG
+XmNuserData               XmCUserData             XtPointer         NULL               CSG
+										    
+(specifically for label:)							    
+										    
+XmNaccelerator            XmCAccelerator          String            NULL              CSG
+XmNacceleratorText        XmCAcceleratorText      XmString          NULL              CSG
+XmNalignment              XmCAlignment            unsigned char     dynamic           CSG
+XmNfontList               XmCFontList             XmFontList        dynamic           CSG
+XmNlabelInsensitivePixma  XmCLabelInsensitivePp   Pixmap            XmUNSPECIFIED_PI  CSG
+XmNlabelPixmap            XmCLabelPixmap          Pixmap            XmUNSPECIFIED_PI  CSG
+XmNlabelString            XmCXmString             XmString          dynamic           CSG
+XmNlabelType              XmCLabelType            unsigned char     XmSTRING          CSG
+XmNmarginBottom           XmCMarginBottom         Dimension         0                 CSG
+XmNmarginHeight           XmCMarginHeight         Dimension         2                 CSG
+XmNmarginLeft             XmCMarginLeft           Dimension         0                 CSG
+XmNmarginRight            XmCMarginRight          Dimension         0                 CSG
+XmNmarginTop              XmCMarginTop            Dimension         0                 CSG
+XmNmarginWidth            XmCMarginWidth          Dimension         2                 CSG
+XmNmnemonic               XmCMnemonic             KeySym            NULL              CSG
+XmNmnemonicCharSet        XmCMnemonicCharSet      String            XmFONTLIST_DEFAUA CSG
+XmNrecomputeSize          XmCRecomputeSize        Boolean           True              CSG
+XmNrenderTable            XmCRenderTable          XmRenderTable     dynamic           CSG
+XmNstringDirection        XmCStringDirection      XmStringDirection dynamic           CSG
+</pre>
+</small>
+
+
+<h1>X and Motif on PCs</h1>
+
+<p>Kengo Hashimoto, <tt>hashik@rpi.edu</tt>, wrote in Spring 98; I've
+edited it slightly.
+</p>
+
+<p>Professor Franklin, this information may be of interest to the students 
+(like myself) taking Computer Graphics. Please get this information out 
+to them, thank you.
+</p>
+
+<p>Both Red Hat and Metro-X have Motif implimentations for linux available 
+for a (relatively) reasonable fee. The Red Hat version costs $149.
+</p>
+
+<p>The Metro Link version includes the Motif 2.0.1 and XRT Professional 
+Development Suite, and costs $199. More information is available from 
+<a href="http://www.metrolink.com/products/motif/index.html"> http://www.metrolink.com/products/motif/index.html</a>
+</p>
+
+<p>In addition, lesstif is available from
+
+<a href="http://www.lesstif.org">http://www.lesstif.org</a>.
+ However, I do not know how much of the
+Motif functionalities lesstif has cloned.  This product is free, and
+will run on systems other than Linux.  </p>
+
+<p>My recommendation would be to grab a copy of the Metro Link Motif and run 
+Slackware Linux underneath it (I hate RPM - red hat package manager - with 
+a passion). However, please keep in mind that I have not used any of the 
+Motif ports/look-alikes personally, nor do I know anyone else who has. 
+However, I may be taking my own advice, and be installing Metro Link's 
+version of Motif (as well as their X server, because of my framebuffer 
+issues).
+</p>
+
+<p>Anyhow, thank you for your time.</p>
+

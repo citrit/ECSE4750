@@ -1,0 +1,991 @@
+<!-- Time-stamp: </home/wrf/cg-f99/Classes/01/index.html, Wed,  3 Nov 1999, 19:15:01 EST, wrf@benvolio.ecse.rpi.edu> -->
+<html>
+
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage Express 2.0">
+<title>ECSE-4750, Class 1</title>
+<!-- Changed by: Wm. Randolph Franklin, 13-Jan-1999 -->
+<STYLE TYPE="text/css">
+<!--
+H1 { color: red; }
+
+H2 { color: blue; }
+
+   OL.outline {list-style-type: upper-roman;
+    font: bold italic 18pt sans-serif;}
+
+   OL.outline OL {list-style-type: upper-alpha;
+       font: bold 14pt sans-serif;}
+
+   OL.outline OL OL {list-style-type: decimal;
+	  font: 12pt serif;}
+
+   OL.outline OL OL OL {list-style-type: lower-alpha;
+	     font: 10pt serif;}
+
+   OL.outline OL OL OL OL {list-style-type: lower-roman;
+		font: 10pt sans-serif;}
+   -->
+</STYLE>
+<!-- Changed by: Wm. Randolph Franklin, 11-Jan-1999 -->
+</head>
+
+<body bgcolor="#FFFFFF">
+
+<h1 align="center">Rensselaer Polytechnic Institute <br>
+ECSE-4750 Computer Graphics, Fall 1999<br>
+Class 1, Jan 11</h1>
+
+<h2><a name="01"></a>Updated Catalog Description</h2>
+
+<p><i>ECSE-4750 Computer Graphics:</i> Mathematics, data
+structures, algorithms, and programming for the pictorial
+synthesis of real or imaginary objects. The X window system with
+Motif widgets, callbacks, events, popups, and convenience
+widgets. Tcl/Tk. Raster graphics. Abstract and real I/O devices.
+Scan conversion. Filling and clipping. Graphics hardware. Color.
+Homogeneous coordinates. Geometric transformations in 2-D and
+3-D. Projections and viewing. Visible surface determination. Ray
+tracing and radiosity. Programming assignments in C.
+Prerequisite: Reasonable computer maturity; some hardware.. Fall
+and spring terms annually. 3 credit hours. </p>
+
+<h2><a name="02"></a>Objectives</h2>
+
+<dl compact>
+    <dt>1. </dt>
+    <dd>To teach graphics programming using X-Motif, a
+        widely-used Graphics GUI tool, and Tcl/Tk, on the
+        workstations. This will also give us a platform to
+        develope applications to experiment with the algorithms
+        section.</dd>
+    <dt>2. </dt>
+    <dd>To teach some of the algorithms and data structures of
+        computer graphics, which will give you the tools to
+        design your own graphics programs and systems. </dd>
+</dl>
+
+<p>There are two parts to this course, practice and theory. We
+will cover many of the following subjects, depending on class
+interest and how fast things go. If an earlier topic proves more
+difficult than I thought, then I spend the extra time to get it
+across, and drop a later topic. If anyone feels that I am going
+too slowly, then see me for enrichment material.</p>
+
+<p>The later topics in this list are less likely to be covered.
+If there are particular topics that you like or dislike, please
+say so.</p>
+
+<ol>
+    <li>Intro to the X window system and Motif widgets. <ul>
+            <li>Label, command, box, transient, text widgets. </li>
+            <li>Programming assignments in C on the RCS
+                workstations. </li>
+        </ul>
+    </li>
+    <li>Tcl/Tk. </li>
+    <li>Mathematics, data structures, and algorithms for the
+        pictorial synthesis of real or imaginary objects from
+        their computer-based models. </li>
+    <li>Abstract and real input and output devices. </li>
+    <li>Fast raster line and circle drawing. </li>
+    <li>Drawing bitmapped and outlined text. </li>
+    <li>Polygon filling. </li>
+    <li>Clipping lines and polygons. </li>
+    <li>Example of a graphics patent of a clipping algorithm. </li>
+    <li>Graphics hardware and hardcopy. </li>
+    <li>Display lists and the video controller. </li>
+    <li>NTSC. </li>
+    <li>Antialiasing. </li>
+    <li>Geometric transformations in 2D and 3D with homogeneous
+        coordinates. </li>
+    <li>Projections and viewing. </li>
+    <li>Object hierarchy </li>
+    <li>Color. </li>
+    <li>Visible Surface Determination. </li>
+    <li>Ray tracing. </li>
+    <li>Radiosity. </li>
+    <li>OpenGL</li>
+    <li>Possibly an invited speaker or two. </li>
+</ol>
+
+<h2><a name="03"></a>Why Take This Course?</h2>
+
+<dl compact>
+    <dt>1. </dt>
+    <dd>Graphics is fun. It's got a history, since it is a
+        takeoff from geometry, which is at least 2500 years old.
+        There are pretty pictures involved. It's based on
+        state-of-the-art hardware. </dd>
+    <dt>2. </dt>
+    <dd>It has applications, and is tied into the real world, and
+        is not just theoretical. </dd>
+    <dt>3. </dt>
+    <dd>Nevertheless, it's not just practical stuff with no
+        depth, but has some theory and math also. </dd>
+    <dt>4. </dt>
+    <dd>It teaches practical knowledge, e.g., X/Motif and Tcl/Tk,
+        that can lead directly to a job. (Assuming that you pass
+        this course) put X-windows on your resume. You see job
+        ads that mention <i>X</i> and <i>Motif</i>. </dd>
+    <dt>5. </dt>
+    <dd>In the research word a picture is worth a thousand words.</dd>
+</dl>
+
+<h2><a name="04"></a>Why Not To Take This Course</h2>
+
+<dl compact>
+    <dt>1. </dt>
+    <dd>You don't like programming. </dd>
+    <dt>2. </dt>
+    <dd>You don't like documenting your programs. </dd>
+    <dt>3. </dt>
+    <dd>You don't like math. </dd>
+    <dt>4. </dt>
+    <dd>You don't like writing exams at the official scheduled
+        times. </dd>
+</dl>
+
+<h2><a name="05"></a>Why Not Just Read Books?</h2>
+
+<dl compact>
+    <dt>1. </dt>
+    <dd>You wouldn't really read the books on your own, now would
+        you?? </dd>
+    <dt>2. </dt>
+    <dd>RPI needs the tuition money. </dd>
+    <dt>3. </dt>
+    <dd>I supplement the book by teaching things that are too
+        recent to appear in textbooks yet. There is a certain lag
+        in the writing and printing of any text. </dd>
+    <dt>4. </dt>
+    <dd>I present some things better than the books. For example,
+        There is no one book that teaches both general graphics
+        at a deep level, and also X. </dd>
+    <dt>5. </dt>
+    <dd>I combine the book with exercises designed specifically
+        for the Rensselaer Computing System. </dd>
+    <dt>6. </dt>
+    <dd>I bring in current events when relevant. </dd>
+    <dt>7. </dt>
+    <dd>There might be a guest lecture or two. </dd>
+</dl>
+
+<h2><a name="06"></a>Prerequisites</h2>
+
+<p>This is a senior CSYS course, and assumes a moderate computer
+maturity, represented in the catalog by ECSE-2610 (Computer
+Components &amp; Operations). You should know some HW, but if you
+don't have that specific course, don't despair. </p>
+
+<p>Since there is programming in C on the workstations, you also
+must know some high level language, which you can translate into
+a knowledge of some C. If you don't know what a pointer is, then
+drop this course and take Computing Languages first. A good
+review book on C is Kelley &amp; Pohl, <em>A Book on C</em>. </p>
+
+<p>Computer Graphics also assumes that you know, or be able to
+learn, some basic linear algebra, up to the level of what an
+eigenvalue is. </p>
+
+<p>If you're uncertain about taking this course, then, by all
+means, talk to me, or to previous people in it. If there is one
+specific fact that is unfamiliar, such as <i>eigenvalue</i>, then
+there's no problem at all. </p>
+
+<h1><a name="07"></a>Staff</h1>
+
+<h2><a name="08"></a>Thomas Citriniti</h2>
+
+<dl>
+    <dt><strong>Affiliation</strong> </dt>
+    <dd>ECSE Dept. </dd>
+    <dt><strong>Office</strong> </dt>
+    <dd>Off Campus</dd>
+    <dt><strong>Phone</strong> </dt>
+    <dd>285-7230 </dd>
+    <dt><strong>WWW Home Page</strong> </dt>
+    <dd><a href="http://www.rpi.edu/~citrit" target="_top"><tt>http://www.rpi.edu/~citrit</tt></a>
+    </dd>
+    <dt><strong>Email</strong> </dt>
+    <dd><tt>citrit@rpi.edu</tt> <p>I will be answering this email
+        on a regular basis, if I don't get back to you in a
+        reasonable amount of time please feel free to call me.</p>
+    </dd>
+    <dt><strong>Secretary:</strong> </dt>
+    <dd>Audrey Hayner, JEC 6012 <br>
+        <tt>ahayner@ecse.NOSPAM.edu</tt> (replacing NOSPAM with
+        RPI), (518) 276-6019 </dd>
+    <dt><strong>Office Hours</strong> </dt>
+    <dd>I will available at the phone number above during normal
+        working hours, please feel free to call me there. But
+        please try and solve the problem yourself first or
+        contact the TA. Most likely you will be able to contact
+        the TA easier than me. Also I stay after class to answer
+        any questions. </dd>
+    <dt><strong>Background</strong> </dt>
+    <dd>I have been programming computers since 1981. My first
+        program was a fortran project in which we submitted punch
+        cards with our code. I am very happy that technology has
+        advanced enough so that instead of dropping my program
+        and scrambling it, the software I am using crashes while
+        I am typing and I loose all my changes (usually 2-3 hours
+        worth).<br>
+        <br>
+        Since 1990 I have been heavily involved with OO 3D
+        computer graphics systems usd to model and simulate real
+        world phenomina. This includes several CAD packages and
+        programming environments.<br>
+        <br>
+        I also teach the ECSE course Advanced 3D Computer
+        Graphics and Data Visualization in which we learn 3D
+        computer graphics libraries and how to create a software
+        system to store and animate a scene.</dd>
+    <dt><strong>Other services that I provide for you</strong> </dt>
+    <dd><ol>
+            <li>I work with computers and graphics applications
+                on a daily basis and at one point or another had
+                to look up the most archane things. If you have a
+                graphics questions most likely I have looked it
+                up somewhere, so please ask<br>
+                </li>
+            <li>If someone sends me notice of a job opening, I
+                publicize it. </li>
+        </ol>
+    </dd>
+</dl>
+
+<h2><a name="09"></a>Teaching Assistant - Giampiero Lo Monaco</h2>
+
+<p>Email: <tt>lomong@NOSPAM.edu</tt> (replacing NOSPAM with RPI).</p>
+
+<p>Office hours TBD.</p>
+
+<h1><a name="10"></a>Calendar</h1>
+
+<h2><a name="11"></a>Meeting Times and Places</h2>
+
+<blockquote>
+    <p>Tues and Thurs 12:30-1:50 pm., DCC 330</p>
+</blockquote>
+
+<h2><a name="12"></a>Lectures</h2>
+
+<h3><a name="13"></a>Attendance Policy</h3>
+
+<p>Please make every attempt to make class. I usually explain
+things much more in class. If there is a topic you are not
+comfortable with please make that class. I also make questions on
+exams reflect what was discussed in class so if you choose not to
+attend please make sure you contact someone with good notes. </p>
+
+<h3><a name="14"></a>Lecture Notes</h3>
+
+<ol>
+    <li>I plan to prepare and lecture from web pages. </li>
+    <li>I may even update them in class in response to your
+        questions.</li>
+    <li>After class, I'll post the updated pages on the public
+        webserver for you to read and copy. </li>
+</ol>
+
+<h2><a name="16"></a>Important Dates</h2>
+
+<p>Here is a summary of important dates so far. </p>
+
+<ul>
+    <li>Midterm exam on Thurs February 24. We will try to get you
+        your grades before the drop date, March 6. </li>
+    <li>Final exam either in the final exam period, or during the
+        last class, if the class wishes. Whats the vote.</li>
+</ul>
+
+<h1><a name="17"></a>Materials and Tools</h1>
+
+<h2><a name="18"></a>Handouts</h2>
+
+<p>There will be few handouts since most things will be on the
+web. </p>
+
+<h2><a name="19"></a>Textbooks</h2>
+
+<ol>
+    <li>For the first half of the course, I'll prepare web pages
+        and sample programs. There is a lot of online info.
+        Various books on X and Tcl also exist, but are not
+        required.<br>
+        <br>
+        A good book on X is:</li>
+    <li>The last half of the course, and some homeworks are based
+        on Hearn and Baker, <i>Computer graphics, C version</i>.
+        This book is recommended, but not required, if you are
+        short of money. I haven't asked the bookstore to order it
+        since we won't need it until October, and so many people
+        prefer to mailorder books. If the class wishes, I'll have
+        the bookstore order it. </li>
+</ol>
+
+<h2><a name="20"></a>Computers</h2>
+
+<p>The course computing environment will be the RCS Unix
+workstations, which there are several platforms, such as the
+SGIs. Many things will also work on the Sun or IBM workstations.
+In fact I use a Sun in my office. The main differences between
+the various platforms are as follows. </p>
+
+<dl compact>
+    <dt>1. </dt>
+    <dd>Different screen resolutions (number of pixels). </dd>
+    <dt>2. </dt>
+    <dd>Speed. </dd>
+    <dt>3. </dt>
+    <dd>Hardware (such as the video camera) and software
+        available only on the SGIs. </dd>
+</dl>
+
+<p>You may also use other workstations available to you, if they
+have a compatible environment. For example, ECSE and CS students
+each have some public workstations in their respective
+departments. </p>
+
+<p>If you are new here at Rensselaer, then see the Academic
+Computing Service page at <a
+href="http://www.rpi.edu/Computing/ACShome.html">http://www.rpi.edu/Computing/ACMhome.html</a>.
+</p>
+
+<p>For info on using the SGI workstations in JEC 3207, see <a
+href="http://www.rpi.edu/Computing/New/RCS_news/SGIhandout.html">http://www.rpi.edu/Computing/New/RCS_news/SGIhandout.html</a>.
+You may also use LessTif, a Motif clone. See their <a
+href="http://www.lesstif.org/" target="_top">Home page</a> </p>
+
+<h2><a name="21"></a>Course Computer Files</h2>
+
+<ol>
+    <li>The course homepage may be accessed various ways: from my
+        home page, and soon from the ECSE and the RPI course
+        lists. </li>
+    <li>From the RCS workstations, public files relating to this
+        course, such as these web pages, are in <code>/dept/ecse/graphics/</code>.
+    </li>
+    <li>The files from last semester are in <code>/dept/ecse/graphics/graphics-s00/</code>,
+        in case you'd like a preview of possible future
+        homeworks. However, some things will change this year. </li>
+</ol>
+
+<h2><a name="22"></a>X Info</h2>
+
+<h3><a name="23"></a>X Books</h3>
+
+<p>There are now many books on X, but many of them concentrate on
+the lower-level Xlib stuff, not the higher-level widgets, which I
+concentrate on. Perhaps the best were a series of X books
+published by O'Reilly. Unfortunately they are now out of print. I
+take some examples from them; however the info is distributed
+over so many volumes that I can't require that you buy any of
+them, even if they were in print. In any case, these are some of
+the relevant volumes. </p>
+
+<dl compact>
+    <dt>1. </dt>
+    <dd><i>O'Reilly volume 6A: Motif Programming Manual</i>.
+        We'll use bits and pieces of this ref. </dd>
+    <dt>2. </dt>
+    <dd>Other optional X books by O'Reilly: Volume 3 (Window
+        System Users Guide) and 4 (Toolkit Intrinsics Programming
+        Manual) of their 7 volume X window series are most
+        interesting.</dd>
+    <dt>3. </dt>
+    <dd>X Window System, The: Programming and Applications with
+        Xt, OSF/Motif, 2/e, Douglas A. Young, <font size="3"
+        face="optima, optim, arial, geneva">Copyright 1994, 656
+        pp., ISBN &nbsp;&nbsp; 0-13-123803-5</font>,
+        Prentice-Hall</dd>
+</dl>
+
+<p>You can try to order O'Reilly books direct by calling O'Reilly
+at 800-338-6887, or by visiting their Web site. </p>
+
+<h3><a name="24"></a>X Files</h3>
+
+<p>There is also extensive online documentation on X. As for as
+we're concerned, X is divided into two categories: <i>Xlib</i>
+and <i>Motif</i>, which are documented separately. </p>
+
+<dl>
+    <dt><strong>Motif</strong> </dt>
+    <dd>See <tt>/campus/osf/motif/2.0/distrib/src/doc/</tt>,
+        subdirs <tt>usersGuide/</tt>, <tt>programGuide/</tt> and <tt>man/</tt>.
+        Each of those has subdirs Output/draft/ascii/ and
+        Output/draft/ps/, which contain the same documentation in
+        different forms. Use the ascii files for reading at the
+        workstation, and the ps files for printing on any
+        PostScript printer. </dd>
+    <dt><strong>Xlib</strong> </dt>
+    <dd><dl compact>
+            <dt>1. </dt>
+            <dd>For PostScript versions of all the documentation,
+                see <tt>/campus/X11/R6/core/1.0/distrib/xc/doc/hardcopy/*/*.PS.gz</tt>
+                . </dd>
+            <dt>2. </dt>
+            <dd>For individual man pages, see <tt>/campus/X11/R6/core/1.0/@sys/man/*/*</tt>
+                and <tt>/campus/X11/R5/core/1.0/common/man/*/*</tt>
+                . They can probably be viewed thus: <pre>
+nroff -man /campus/X11/R6/core/1.0/@sys/man/mann/appres.n | more
+</pre>
+                <p>or printed thus: </p>
+                <pre>
+ptroff -man /campus/X11/R6/core/1.0/@sys/man/mann/appres.n
+</pre>
+                <p>depending on whether nroff and ptroff are
+                installed on your system. </p>
+            </dd>
+            <dt>3. </dt>
+            <dd>There is some other documentation in <tt>/campus/X11/R6/core/1.0/distrib/contrib/doc/papers/tutorials/</tt>
+                . </dd>
+        </dl>
+    </dd>
+</dl>
+
+<p>X is a living system, and there are many user-contributed
+programs. You can browse on the RCS system under <code>/campus/</code>.
+</p>
+
+<h2><a name="25"></a>RPI Library</h2>
+
+<p>There are over 600 books and journals on graphics in RPI's
+library. </p>
+
+<h2><a name="26"></a>Course Usenet Newsgroup</h2>
+
+<p>If the class wishes, there can be a course newsgroup, called</p>
+
+<p align="center"><tt>rpi.courses.Spring00.Computer-Graphics</tt>
+</p>
+
+<p>for students to discuss relevant issues with each other.
+Nevertheless, I will distribute official announcements by web
+page or email. </p>
+
+<p>I'll store copies of some interesting files from the net, such
+as the <i>comp.graphics Frequently Asked Questions</i> in the
+class directory. </p>
+
+<h1><a name="27"></a>Grading</h1>
+
+<p>There will be about ten homeworks, about half programming on
+the Unix workstations. The programming homework will be in the C
+language. You, and all computer engineers, don't need to know
+every detail, such as tentative declarations and enums; just the
+basics. </p>
+
+<p>Homework grades tend to be bimodally distributed -- often 9 or
+10/10 for work handed in, but 0/10 for work not handed in. The
+homework tends to be not too difficult. I see the homeworks like
+warmup exercises for a team, or finger exercises on the piano;
+everyone should be able to do them with a little work, and in
+doing them will learn something. </p>
+
+<p>You are free to form study groups, cooperate on the homework
+and share answers. You may also hand in group homeworks if you
+wish. That is, two people may do the homeworks together and hand
+in one solution with both names on it. It is not acceptable
+retroactively to declare a partnership, as in the following (only
+slightly) fictional message: </p>
+
+<blockquote>
+    <p>``Hi, this is John Doe on Dec 10. The reason that you're
+    missing ten homework grades for me is that I did them all as
+    a team with Jane Roe. Unfortunately I forgot to put my name
+    on any of them, and yes, they're all in her handwriting, but,
+    really, I did contribute.'' </p>
+</blockquote>
+
+<p>You are responsible for seeing that the TA has recorded your
+homework grades; it is not allowed to claim at the end of the
+semester, after you see your grade, that we lost a homework. If
+you hand a homework in late, please give it to him. We will help
+your checking by making your interim grades available from time
+to time. </p>
+
+<h2><a name="28"></a>Midterm Exam on Thurs Feb 24</h2>
+
+<p>This will be in class. It is required, so <em>plan your plant
+trips around it</em>. We will give you the grades exams, and an
+estimated course letter grade several days before the drop date.
+The exam will be closed book; however you may bring one
+8.5&quot;x11&quot; crib sheet covered with as much as you can
+write, print, or xerox-reduce on. Mechanical reproduction is ok. </p>
+
+<p>How did I pick the date? It's the latest date that lets us get
+the graded exams back to you before the drop date. </p>
+
+<h2><a name="29"></a>Term Project due Tues Apr 25.</h2>
+
+<p>You will think of, implement, and document a program relating
+to graphics. It must demonstrate both graphics input and output;
+other than that it must only be legal and ethical. </p>
+
+<p>This may be done by a team, and may be combined with another
+course's project if you get the approval of everyone involved. </p>
+
+<p>It may build on previous work, either by you or someone else,
+with their permission, provided that you mention this. For
+example, you may build on software, such as <tt>xfig</tt>, posted
+on the net. Since in the real world, much more money is spent
+modifying existing software than writing new software, extending
+an existing program is quite ok with me. </p>
+
+<p>Unlike the homework, you may do the term project on any
+computer you have access to, even a home computer, if it is a
+powerful one.</p>
+
+<p>The penalty for handing the project in late will be 10% per
+day. Plan to have it actually ready earlier in case your disk
+crashes or account expires. You may pick up your projects after
+they are graded. </p>
+
+<p>Up to half the grade may be on the documentation and examples.
+</p>
+
+<p>I may make some old projects available as examples. </p>
+
+<p>The term project will be unrealistic in that I will not be as
+picky about formats as in the real world. Here, for example, are
+some of the National Science Foundation's proposal submission
+rules, which I am subject to. </p>
+
+<blockquote>
+    <p><font size="2">Proposals received on or before the target
+    date or postmarked on or before the deadline date will be
+    accepted for review. </font></p>
+</blockquote>
+
+<blockquote>
+    <p><font size="2">Proposals must be addressed EXACTLY as
+    follows: ... </font></p>
+</blockquote>
+
+<blockquote>
+    <p><font size="2">CONFORMANCE WITH INSTRUCTIONS FOR PROPOSAL
+    PREPARATION: </font></p>
+</blockquote>
+
+<blockquote>
+    <p><font size="2">It is important that all proposals conform
+    to the instructions provided in this Section and the Proposal
+    Forms Kit. Conformance is required and will be strictly
+    enforced unless a deviation has been approved. Proposals that
+    are not consistent with these instructions may be returned
+    without further consideration by NSF. Particular attention
+    will be given to proposal length, content and formatting,
+    including the page limit on the Project Description, page
+    limitations on other proposal sections, and the use of
+    Appendices. </font></p>
+</blockquote>
+
+<blockquote>
+    <p><font size="2">Each section of the proposal must be
+    separately paginated and include both the section and page
+    number on the bottom center of each page (e.g., C-1, C-2).
+    The proposal must be assembled in the following sequence: </font></p>
+</blockquote>
+
+<blockquote>
+    <p><font size="2">Proposals must be stapled in the upper
+    left-hand corner, but otherwise unbound, and with 2.5-cm
+    margins at the top, bottom and on each side. The type size
+    must be clear and readily legible, in standard size which is
+    10 to 12 points. (No smaller than 10 point font size may be
+    used.) If constant spacing is used, there should be no more
+    than 12 characters per 2.5-cm, whereas proportional spacing
+    should provide no more than an average of 15 characters per
+    2.5-cm. </font></p>
+</blockquote>
+
+<blockquote>
+    <p><font size="2">Project Summary: The required format,
+    Project Summary, NSF Form 1358, is shown in Section IX,
+    Proposal Forms Kit... </font></p>
+</blockquote>
+
+<blockquote>
+    <p><font size="2">Table of Contents: The required format,
+    Table of Contents, NSF Form 1359, is shown in Section IX,
+    Proposal Forms Kit. </font></p>
+</blockquote>
+
+<h2><a name="30"></a>Final Exam</h2>
+
+<p>I will hold a vote in the first class to decide between the
+following two choices. </p>
+
+<dl compact>
+    <dt>1. </dt>
+    <dd>There will be a 80-minute final exam in class during the
+        last class, Thurs Apr 27, or </dd>
+    <dt>2. </dt>
+    <dd>There will be a 3-hour final exam during the final exam
+        period, at the time set by the registrar. It will be like
+        the midterm, but will allow two cribsheets. It will be
+        required, so <em>don't make plane reservations</em>
+        before you know its exact date, which could be as late as
+        the afternoon of May 5. </dd>
+</dl>
+
+<p>The first choice means that there is one less class for
+learning new things. However, you get finished sooner. </p>
+
+<p>Whichever choice the class makes, that date will be compulsory
+for the whole class. </p>
+
+<h2><a name="31"></a>Source of Exam Questions</h2>
+
+<p>The exam questions tend to be short answer, and to ask for
+reasons and advantages and disadvantages of something. I try not
+to ask about picky little details, but then, I might think that
+the fact that the first word on page 283 of <i>Hearn</i> is
+``determine'' is of global importance, while you might think it
+is incredibly picky. </p>
+
+<p>Where do I get exam questions? </p>
+
+<dl compact>
+    <dt>1. </dt>
+    <dd>From old exams; this recycles and saves electrons. I'll
+        hand out a big list of previous exam questions. </dd>
+    <dt>2. </dt>
+    <dd>From homework questions. </dd>
+    <dt>3. </dt>
+    <dd>From questions asked in the review sessions before the
+        exams. </dd>
+    <dt>4. </dt>
+    <dd>etc etc </dd>
+</dl>
+
+<h2><a name="32"></a>Individual vs Team Work</h2>
+
+<p>You are encouraged, but not required, to work in teams on the
+homeworks and term project. In the real world teams are often
+required. </p>
+
+<p>Feel free to incorporate someone else's ideas and code, <i>but</i>
+you must acknowledge that, and in the case of code, obtain their
+permission if appropriate. Failure to do this is academic
+dishonesty (cheating) and will cause an F grade in the work
+involved, and a report in your file. There is a lot of free code
+on the Internet that I encourage you to browse, and use in your
+projects. Civil engineers look at real bridges; computer
+engineers should look at real programs. </p>
+
+<p>You must do the exams individually and not communicate with
+anyone other than the TA or me. </p>
+
+<h2><a name="33"></a>General</h2>
+
+<dl compact>
+    <dt>1. </dt>
+    <dd>Each component of the grade will be worth 25%. E.g. doing
+        the homework is required to get an A. You may telephone
+        me, or my secretary, or leave a postcard, or visit, to
+        get your final grade. </dd>
+    <dt>2. </dt>
+    <dd>We will periodically make our record of your grades so
+        far available. If you see an error, please tell us
+        immediately. </dd>
+    <dt>3. </dt>
+    <dd>The grading is somewhat on a curve, modulated by how I
+        feel the class, as a whole did. </dd>
+</dl>
+
+<h1><a name="34"></a>Background Info</h1>
+
+<p>Rensselaer Polytechnic Institute has a long history of
+computer graphics. </p>
+
+<dl compact>
+    <dt>1. </dt>
+    <dd>We were the first university to require every engineering
+        undergrad to take some computer graphics. That was about
+        1978. This was in the Interactive Computer Graphics
+        Center, founded by Mike Wozny. (IIRC, the ICGC renamed
+        itself to the Center for Interactive Computer Graphics,
+        then morphed into the Rensselaer Design Research Center,
+        spun off the SCOREC, and finally combined into the New
+        York State Center for Advanced Technology in Automation,
+        Robotics, and Manufacturing in Rensselaer.) </dd>
+    <dt>2. </dt>
+    <dd>While many universities use PCs and Macs, we use the more
+        powerful Unix workstations for much of the curriculum.
+        Win9x and the PCs are catching up, but the Unix
+        workstations are still ahead, at least this year. </dd>
+    <dt>3. </dt>
+    <dd>The first editor of the journal <em>IEEE Computer
+        Graphics and Applications</em> was Mike Wozny, who also
+        founded the Center for Interactive Computer Graphics in
+        1978 (which later became the Rensselaer Design Research
+        Center and then folded into the Design &amp;
+        Manufacturing Institute.) </dd>
+    <dt>4. </dt>
+    <dd>The text lists several former RPI PhD students. </dd>
+</dl>
+
+<h2><a name="35"></a>Other Graphics-Related Courses at RPI</h2>
+
+<p>The course will have little overlap with the other
+graphics-related courses at RPI, such as the following. You can
+easily take them all. </p>
+
+<dl compact>
+    <dt>1. </dt>
+    <dd><i>Graphics &amp; Visualization:</i> This graduate course
+        is taught by Tom Citriniti of Mapinfo. It covers advanced
+        graphics topics such as OpenGL, VRML, Data Explorer. </dd>
+    <dt>2. </dt>
+    <dd><i>ECSE-6790 Computational Geometry:</i> This grad course
+        is taught by me when there is sufficient demand. It
+        covers research issues in efficient computer geometry, as
+        well as intro to parametric curves and surfaces. </dd>
+</dl>
+
+<h1><a name="36"></a>Your Name &amp; Communicating with Us</h1>
+
+<dl compact>
+    <dt>1. </dt>
+    <dd>Please write your name on homeworks and exams <dl compact>
+            <dt>(a) </dt>
+            <dd>in the same way each time, and </dd>
+            <dt>(b) </dt>
+            <dd>in a form recognizably similar to your name as
+                RPI knows it. </dd>
+        </dl>
+        <p>Otherwise, we might record half your grades under one
+        name, and half under another, leading us to assign you 2
+        D-grades instead of one A-grade. </p>
+    </dd>
+    <dt>2. </dt>
+    <dd>When emailing us, always use <i>your real name</i> and
+        use a relevant subject, such as <i>Graphics HW Question</i>.
+        We get spammed by a lot of junk. A message from <tt>d00d</tt>
+        might not be read. </dd>
+    <dt>3. </dt>
+    <dd>Otherwise, if we don't reply in two days, please send it
+        again. </dd>
+</dl>
+
+<h1><a name="37"></a>Homework 1 - Due Jan 18</h1>
+
+<dl compact>
+    <dt>1. </dt>
+    <dd>This is a test of your linear algebra knowledge. Feel
+        free to refer to books to find the correct formulae. <p>Suppose
+        that we have a plane in 3-D thru the points A(1,0,1),
+        B(0,1,0), and C(0,0,1). </p>
+        <dl compact>
+            <dt>(a) </dt>
+            <dd>What is its equation, in the form <i>ax</i>+<i>by</i>+<i>cz</i>+<i>d</i>=0?
+            </dd>
+            <dt>(b) </dt>
+            <dd>Consider the line L thru the points O(0,0,0) and
+                P(1,1,1). Where does this line intersect the
+                plane? </dd>
+        </dl>
+    </dd>
+    <dt>2. </dt>
+    <dd>This is a test of whether you know enough C for this
+        course. (Last time, a few people had major problems
+        because of this.) The following code will copy string <code>s</code>
+        to array <code>t</code>, provided that a few erroneous
+        lines are corrected. What are the corrections and proper
+        initializations? <pre>
+char *s=&quot;Hello!&quot;;
+char t[6];
+char p, q;
+p=s;
+q=t;
+for (;*q++ = *p++;);
+</pre>
+    </dd>
+    <dt>3. </dt>
+    <dd>(This is a test of using <code>ftp</code> to find a file
+        on another system, and <code>xv</code> to display it.) <p>The
+        site <a href="http://www.viewpoint.com/">http://www.viewpoint.com/</a>
+        has many graphics files, including some texture files
+        like <a
+        href="ftp://avalon1.viewpoint.com/avalon/textures/tif/vege/clover01.tif">ftp://avalon1.viewpoint.com/avalon/textures/tif/vege/clover01.tif
+        </a>. </p>
+        <p>shown here.</p>
+        <p><img src="clover01.jpg" width="256" height="256">. </p>
+        <p>Use, e.g., <code>ftp</code> to get some other texture
+        file, then use <code>xv</code> (or another program if you
+        prefer) to display it, then save it in a PostScript file,
+        then print that file, as in <code>lpr clover01.ps</code>
+        to any LaserWriter or other printer that takes
+        PostScript. Do not spend money on a color printout;
+        B&amp;W is ok. Write your name and the filename on the
+        printout and hand it in. </p>
+    </dd>
+    <dt>4. </dt>
+    <dd>If we're going to be learning complicated graphics in
+        this course, it behooves us still to be able to do the
+        simple things. So, this exercise is to plot the ship
+        NCC1701. <p><code>/dept/ecse/graphics/ncc1701.data.gz</code>
+        is a compressed file of 3,958 triangles defining the USS
+        Enterprise. It looks like this when uncompressed with <tt>gunzip</tt>:
+        </p>
+        <pre>
+1.431000 0.505000 0.843000
+1.572000 0.505000 0.801000
+1.287000 0.505000 0.802000
+1.431000 0.505000 0.843000
+
+
+1.572000 0.505000 0.801000
+1.595000 0.542000 0.794000
+1.263000 0.542000 0.795000
+1.572000 0.505000 0.801000
+
+
+1.572000 0.505000 0.801000
+1.263000 0.542000 0.795000
+1.287000 0.505000 0.802000
+1.572000 0.505000 0.801000
+
+
+... and similarly for 23730 more lines
+</pre>
+        <p>Each line of the file represents one vertex in the
+        form: (<i>x</i>, <i>y</i>, <i>z</i>). Four lines make one
+        triangle; the first vertex is repeated. Two blank lines
+        separate each triangle. </p>
+        <p>You may use any graphics program you please to plot
+        the ship. I used <code>gnuplot</code>. Uncompress the
+        file into <tt>/tmp</tt>, thus:</p>
+        <p>gunzip <code>&lt;</code>
+        /dept/ecse/graphics/ncc1701.data.gz <code>&gt;</code>
+        /tmp/ncc </p>
+        <p>You may want to cut off a piece of the file for
+        testing: </p>
+        <p>head -1000 /tmp/ncc <code>&gt;</code> /tmp/piece </p>
+        <p>Then, in gnuplot, you should set parametric mode thus:
+        </p>
+        <pre>
+set parametric
+</pre>
+        <p>then surface plot the data file thus: </p>
+        <pre>
+splot &quot;/tmp/piece&quot; with lines
+</pre>
+        <p>When you see how to use (this part of) gnuplot, plot
+        the file. Then get a screendump, and hand that in.
+        Alternatively, Section s:gnu gives another way to print
+        plots. </p>
+        <p>Gnuplot shows something like this. <img
+        src="ncc1701.jpg" width="359" height="252"> </p>
+        <p>Do not copy the whole file into your account, but read
+        it from the class account every time. </p>
+    </dd>
+    <dt>5. </dt>
+    <dd>(This is a test of your C knowledge.) Write a C program
+        to rotate the <code>ncc1701.data</code> to some other
+        angle and then plot it again (and hand in a copy of the
+        program and that plot). How do you plan to handle the
+        blank lines? </dd>
+</dl>
+
+<h2><a name="38"></a>Printing <tt>Gnuplot</tt> Plots</h2>
+
+<dl compact>
+    <dt>1. </dt>
+    <dd><a>&nbsp;</a> Make future plots be PostScript instead of
+        to the screen: <pre>
+set terminal postscript
+</pre>
+    </dd>
+    <dt>2. </dt>
+    <dd><a>&nbsp;</a>Set the file name for the next single plot: <pre>
+set output &quot;plot.ps&quot;
+</pre>
+        <p>(or whatever filename you want) </p>
+    </dd>
+    <dt>3. </dt>
+    <dd>Do one plot: <pre>
+plot sin(x)
+</pre>
+        <p>(or whatever). </p>
+    </dd>
+    <dt>4. </dt>
+    <dd>For another plot, go back to step 2&gt;. </dd>
+    <dt>5. </dt>
+    <dd>Print your file(s) to any Postscript printer. I think
+        that all the printers that you use are Postscript, but
+        there's probably an exception somewhere. <pre>
+lpr plot.ps
+</pre>
+    </dd>
+    <dt>6. </dt>
+    <dd>If you wish to include the PS file in a L<font size="2"><sup>A</sup></font>T<font
+        size="2">E</font>X2<sub>e</sub> document, then in point 1
+        above, say <pre>
+set terminal postscript eps
+</pre>
+        <p>This creates an <i>Encapsulated</i> PostScript file.
+        You can still print this directly, however, it won't fill
+        the whole page. </p>
+    </dd>
+</dl>
+
+<h2><a name="39"></a>Reading</h2>
+
+<p>Scan the preface and chapters 1 and 2 of the Motif Program
+Guide for Wed. The idea is to get a feel for things, not to
+memorize the details. It's here: </p>
+
+<p><font size="2"><tt>/campus/osf/motif/2.0/distrib/src/doc/programGuide/Output/draft/ascii/preface,
+ch01, ch02</tt></font> </p>
+
+<p>or here: </p>
+
+<p><font size="2"><tt>/campus/osf/motif/2.0/distrib/src/doc/programGuide/Output/draft/ps/preface.ps.Z,
+ch01.ps.Z, ch02.ps.Z</tt></font> </p>
+
+<p>The ascii format can be read in an xterm window, but the ps
+format looks, and prints, better. You'll have to uncompress those
+files, with <tt>uncompress</tt>, and then use <tt>ghostview</tt>.
+</p>
+
+<hr>
+
+<p><a href="../02/" target="_top"><font size="2">Next Class</font></a><font
+size="2">, </font><a
+href="http://www.rpi.edu/dept/ecse/graphics/" target="_top"><font
+size="2">ECSE-4750 Computer Graphics Homepage</font></a><font
+size="2"> </font></p>
+
+<p><font size="2">(31 Aug 99)</font></p>
+
+<p><font size="2">Copyright © 1998-9, Wm. Randolph Franklin. You
+may use my material for non-profit education and research,
+provided that you acknowledge me and preserve this notice. </font></p>
+<div align="center"><center>
+
+<address>
+    <font size="2">Wm. Randolph Franklin, Associate Professor<br>
+    For email address, replace NOSPAM by RPI in the following:
+    wrf@ecse.NOSPAM.edu<br>
+    </font><a href="http://www.ecse.rpi.edu/Homepages/wrf/"><font
+    size="2">http://www.ecse.rpi.edu/Homepages/wrf/</font></a><font
+    size="2"><br>
+    +1 (518) 276-6077; Fax: -6261<br>
+    ECSE Dept., 6026 JEC, Rensselaer Polytechnic Inst, Troy NY,
+    12180 USA<br>
+    (PGP key available)<br>
+    </font>
+</address>
+</center></div><script>
+document.write("<i>Updated:</i> " + document.lastModified + "<br>")
+document.write("<i>URL:</i> " + document.URL + "<br>")
+</script>
+</body>
+</html>

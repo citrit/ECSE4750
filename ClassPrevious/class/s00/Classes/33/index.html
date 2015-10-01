@@ -1,0 +1,333 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.0//EN">
+<!-- Time-stamp: </home/wrf/cg-f99/Classes/33/index.html, Wed, 17 Nov 1999, 19:27:38 EST, wrf@benvolio.ecse.rpi.edu> -->
+
+<HTML>
+<HEAD>
+
+<TITLE>ECSE-4750, RPI, Class 33</TITLE>
+
+<link rel="stylesheet" href="../style.css" type="text/css" >
+
+</head>
+
+<body bgcolor=white>
+
+<H1 class=title>
+Rensselaer Polytechnic Institute
+<BR>
+ECSE-4750 Computer Graphics, Fall 1999<br>
+Class 33, Tues Nov 16 </H1>
+
+<h1><a name="01"></a>Midterm Exam Statistics</h1>
+
+<p>Here is a histogram of the grades.</p>
+
+<img src="CGHistogram.gif">
+
+<p>The following plot shows that there was little relation between
+speed and grade.</p>
+
+<img src="CGTime.gif">
+
+
+<h1><a name="02"></a>Sutherland-Hodgman Clipping Patent</h1>
+
+<p>Look at <a
+href="http://www.patents.ibm.com/details?&pn=US03816726__">http://www.patents.ibm.com/details?&pn=US03816726__</a>.
+The abstract and claims are in html, and so are easier to read.  The
+complete patent is a bitmap.  Note that 56 other patents reference it,
+up from 49 last spring.  </p>
+
+
+
+<h1><a name="03"></a>Perspective Projection</h1>
+
+<p>Continuing my quest to relate everything to Computer Graphics,
+here're examples of the famous artist Albrecht Durer engraving himself
+doing perspective projections in 1525.  They are from Hitachi's
+Viewseum at <a
+href="http://www.viewseum.com/">http://www.viewseum.com/</a>.
+These are pictures 195, 196, and 197.  </p>
+
+
+<CENTER>
+<p><img src="Du195_full.gif" alt="Durer's Pictures for Geometry
+2"</img>
+</p>
+<p>Pictures for Geometry 2.</p>
+</CENTER>
+
+<CENTER>
+<p><img src="Du196_full.gif" alt="Durer's Pictures for Geometry
+3"</img>
+</p>
+<p>Pictures for Geometry 3.</p>
+</CENTER>
+
+<CENTER>
+<p><img src="Du197_full.gif" alt="Durer's Pictures for Geometry
+4"</img>
+</p>
+<p>Pictures for Geometry 4.</p>
+</CENTER>
+
+
+<h1><a name="04"></a>More Projection Matrices</h1>
+
+
+<p>Here are two more examples of how simple homogeneous coordinates make
+projections.
+</p>
+
+<p>First, assume that the view plane is z=0, and the center of projection
+is at (0,0,-d).    d&gt;0.   Using similar triangles, things scale
+down by d/(z+d).  In Cartesian terms,
+</p>
+
+<center>
+x' = xd/(z+d)<br>
+y' = yd/(z+d)<br>
+z' = 0<br>
+</center>
+
+In homogeneous terms, this would be
+
+<center>
+x' = x<br>
+y' = y<br>
+z' = 0<br>
+w' = z/d + w<br>
+</center>
+
+
+<p>This is the same as multiplying by this matrix:</p>
+
+<p><center>
+<TABLE border compact>
+
+<TR><TD align=center> 1 </TD><TD align=center> 0 </TD><TD align=center> 0 </TD><TD align=center> 0 </TD></TR>
+
+<TR><TD align=center> 0 </TD><TD align=center> 1 </TD><TD align=center> 0 </TD><TD align=center> 0 </TD></TR>
+
+<TR><TD align=center> 0 </TD><TD align=center> 0 </TD><TD align=center> 0 </TD><TD align=center> 0 </TD></TR>
+
+<TR><TD align=center> 0 </TD><TD align=center> 0 </TD><TD align=center> 1/d </TD><TD align=center> 1 </TD></TR>
+
+</TABLE>
+</center>
+</p>
+<p>
+</p>
+
+<p>In the limit as d goes to infinity, and this becomes a parallel
+projection, we get in Cartesian terms,
+</p>
+
+<center>
+x' = x<br>
+y' = y<br>
+z' = 0<br>
+</center>
+
+In homogeneous terms, this would be
+
+<center>
+x' = x<br>
+y' = y<br>
+z' = 0<br>
+w' = w<br>
+</center>
+
+
+<p>This is the same as multiplying by this matrix:</p>
+
+<p><center>
+<TABLE border compact>
+
+<TR><TD align=center> 1 </TD><TD align=center> 0 </TD><TD align=center> 0 </TD><TD align=center> 0 </TD></TR>
+
+<TR><TD align=center> 0 </TD><TD align=center> 1 </TD><TD align=center> 0 </TD><TD align=center> 0 </TD></TR>
+
+<TR><TD align=center> 0 </TD><TD align=center> 0 </TD><TD align=center> 0 </TD><TD align=center> 0 </TD></TR>
+
+<TR><TD align=center> 0 </TD><TD align=center> 0 </TD><TD align=center> 0 </TD><TD align=center> 1 </TD></TR>
+
+</TABLE>
+</center>
+</p>
+<p>
+</p>
+
+
+
+<p>Finally, here is a perspective projection onto an arbitrary view
+plane, with the center of projection at (0,0,0).   Let the equation of 
+the plane be ax+by+cz=1.    The point (x,y,z) will project to
+(x',y',z') with ax'+by'+cz'=1, so its 3 components will be scaled down 
+by 1/(ax+by+cz).   
+</p>
+
+<p>We get in Cartesian terms,
+</p>
+
+<center>
+x' = x/(ax+by+cz)<br>
+y' = y/(ax+by+cz)<br>
+z' = z/(ax+by+cz)<br>
+</center>
+
+In homogeneous terms, this would be
+
+<center>
+x' = x<br>
+y' = y<br>
+z' = z<br>
+w' = ax+by+cz<br>
+</center>
+
+
+<p>This is the same as multiplying by this matrix:</p>
+
+<p><center>
+<TABLE border compact>
+
+<TR><TD align=center> 1 </TD><TD align=center> 0 </TD><TD align=center> 0 </TD><TD align=center> 0 </TD></TR>
+
+<TR><TD align=center> 0 </TD><TD align=center> 1 </TD><TD align=center> 0 </TD><TD align=center> 0 </TD></TR>
+
+<TR><TD align=center> 0 </TD><TD align=center> 0 </TD><TD align=center> 1 </TD><TD align=center> 0 </TD></TR>
+
+<TR><TD align=center> a </TD><TD align=center> b </TD><TD align=center> c </TD><TD align=center> 0 </TD></TR>
+
+</TABLE>
+</center>
+</p>
+<p>
+</p>
+
+
+
+<h1><a name="05"></a>Rendering Pipeline Summary</h1>
+
+<p>Now that we've seen several parts of the rendering pipeline (change
+of coordinates, clipping, projection), let's see a summary of how
+other parts of the process might look.  We see more details later.
+</p>
+
+<ol>
+
+
+<li><p>Your object's surface is probably a curved patch, such as a bicubic
+parametric patch.  u and v are 2 parameters, and range from 0 to 1.
+a, b, and c are 48 coefficients defining the patch.
+</p></li>
+
+<p><center>
+x = sum for both i,j from 0 to 3 of a<sub>ij</sub> u<sup>i</sup>v<sup>j</sup><br>
+y = sum for both i,j from 0 to 3 of b<sub>ij</sub> u<sup>i</sup>v<sup>j</sup><br>
+z = sum for both i,j from 0 to 3 of c<sub>ij</sub> u<sup>i</sup>v<sup>j</sup><br>
+</center>
+</p>
+
+
+<li><p>Why cubic?  It's the lowest degree that allows adjacent patches to
+be created whose second derivates match at the join.
+</p></li>
+
+<li><p>You need a lighting equation that takes:
+</p>
+
+<ol>
+<li><p>the direction to the light source,</p></li>
+
+<li><p>the normal to the surface, and</p></li>
+
+<li><p>the direction to the viewer,</p></li>
+</ol>
+
+<p>and gives the intensity at a point.</p>
+
+
+<li><p>You can calculate the normal to the bicubic patch at any point.  Take
+the partial derivatives in two directions, find their cross-product,
+and normalize the result.  However, that's probably too slow, so we
+approximate.
+</p></li>
+
+<li><p>Split the surface into flat patches, and shade each patch separately.
+</p></li>
+
+<li><p>The fastest way is flat shading, where the whole patch is the same
+intensity.   However, the boundaries between the patches will be
+obnoxious, because the Mach band effect amplifies sudden intensity
+changes.
+</p></li>
+
+<li><p>Gouraud shading is the next better, and slower method.  Calculate the
+normal to the surface at each corner of the patch.  Use that to
+calculate the intensities at the corners.  Linearly interpolate the
+intensity at each interior point.
+</p>
+
+<p>One problem is that Gouraud shading will never generate a highlight
+inside a patch.
+</p>
+
+<li><p>The next better, and slower, method is Phong shading.  Here, we take
+the normals at the 4 corners, and interpolate an approximate normal at
+each interior point.  We have to normalize each interpolated normal
+(make its length to be one.)  Then we input that into the lighting
+equation to find each point's intensity.
+</p></li>
+
+<li><p>It's not enough that each separate image we shade look good.  If we're
+generating a video sequence, then the shading has to be consistent
+from frame to frame.
+</p></li>
+
+</ol>
+
+
+
+
+<hr>
+<a href="../32/" target="_top">Previous Class</a>,
+<a href="../34/" target="_top">Next Class</a>,
+<a href="http://www.rpi.edu/dept/ecse/graphics/index.html"
+ target="_top">ECSE-4750 Fall 1999 Home Page</a>
+
+<hr>
+
+<p>Copyright &#169; 1998-9, Wm. Randolph Franklin.  You may use my
+material for non-profit education and research, provided that you
+acknowledge me and preserve this notice. </p>
+
+
+<p>
+<ADDRESS> 
+ <CENTER>
+   Wm. Randolph Franklin,
+   Associate Professor<br>
+   For email address, replace NOSPAM by RPI in the following:
+   wrf@ecse.NOSPAM.edu<br>
+   <A HREF="http://www.ecse.rpi.edu/Homepages/wrf/">
+     http://www.ecse.rpi.edu/Homepages/wrf/</a><br>
+   +1 (518) 276-6077;  Fax: -6261<br>
+   ECSE Dept., 6026 JEC, Rensselaer Polytechnic Inst, Troy NY, 12180 USA<br>
+   (PGP key available)<br>
+ </CENTER>
+</ADDRESS>
+</p>
+
+</font>
+
+<script>
+document.write("<i>Updated:</i> " + document.lastModified + "<br>")
+document.write("<i>URL:</i> " + document.URL + "<br>")
+</script>
+<font size="+1">
+</p>
+
+
+</BODY>
+</HTML>

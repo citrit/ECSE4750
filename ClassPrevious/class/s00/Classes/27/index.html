@@ -1,0 +1,925 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.0//EN">
+<!-- Time-stamp: </home/wrf/cg-f99/Classes/27/index.html, Wed,  3 Nov 1999, 19:14:48 EST, wrf@benvolio.ecse.rpi.edu> -->
+
+<HTML>
+<HEAD>
+
+<TITLE>ECSE-4750, RPI, Class 27</TITLE>
+
+   <STYLE TYPE="text/css">
+   <!--
+H1 { color: red; }
+
+H2 { color: blue; }
+
+   OL.outline {list-style-type: upper-roman;
+    font: bold italic 18pt sans-serif;}
+
+   OL.outline OL {list-style-type: upper-alpha;
+       font: bold 14pt sans-serif;}
+
+   OL.outline OL OL {list-style-type: decimal;
+	  font: 12pt serif;}
+
+   OL.outline OL OL OL {list-style-type: lower-alpha;
+	     font: 10pt serif;}
+
+   OL.outline OL OL OL OL {list-style-type: lower-roman;
+		font: 10pt sans-serif;}
+   -->
+   </STYLE>
+
+
+</head>
+
+<body bgcolor=white>
+
+<H1 ALIGN="CENTER">
+Rensselaer Polytechnic Institute
+<BR>
+ECSE-4750 Computer Graphics, Fall 1999<br>
+Class 27, Tues Nov 2 </H1>
+
+<h1><a name="01"></a>Using Seed Fill to Colorize a Black and White Movie</h1>
+
+<p>Consider this clip from T2.  I show only every 4th frame, else
+there'd be almost no change at all.</p>
+
+<p><center>
+<img src="terminator.gif">
+</center>
+</p>
+
+
+
+<h1><a name="02"></a>Text, Type, and Fonts</h1>
+
+<p>Here is some extra info.</p>
+
+
+<h2><a name="03"></a>Xkeycaps</h2>
+
+<p><tt>xkeycaps</tt>, written by Jamie Zawinski, who also wrote much
+of xemacs and some of Netscape's browser, lets you display the
+keycodes and keysyms for the keyboard, and change the keysyms.  See
+the man page.  These figures show what it looks like.  </p>
+
+<center>
+<p><img src="xkeycaps.gif" alt="Xkeycaps Window">
+</p>
+<p>Xkeycaps Window
+</p>
+
+<p><img src="xkeycaps2.gif" alt="Xkeycaps Popup Window to Change a
+Key">
+</p>
+<p>Xkeycaps Popup Window to Change a Key
+</p>
+</center>
+
+
+
+<h2><a name="04"></a>Accented and non-ASCII chars</h2>
+
+<p>Since ASCII is 8 bits, the extra 128 chars, with the meta bit set,
+by typing them with the diamond modifier key on the Sun,
+can be used for extra chars, such as accented chars.  Some fonts
+do this, such as
+</p>
+
+<center>
+<tt>-bitstream-courier-*-r-*-*-*-200-*-*-*-*-*-*</tt>.
+</center>
+
+This figure  shows that complete font.
+
+<center>
+<p><img src="xfd.gif">
+</p>
+<p>ISO-8859-1 Bitstream Courier Font
+</p>
+</center>
+
+<p>These codes for the ASCII chars are standardized, as ISO-8859-1.
+If you use them in email, your recipient will see the same chars,
+if s/he sees anything, since many fonts don't have these chars at
+all.
+</p>
+
+<p>On the Sun, the Alt-graph modifier key calls up a completely
+different set of chars for the keyboard.  By default, it's the
+same as w/o the Alt-graph key, but you can change this for any key
+by setting KeySyms 3 and 4 for the non-shifted and shifted chars.
+</p>
+
+<p>Of course, if you define the KeySym to be a char that's not in
+your current font, you won't see anything.
+</p>
+
+<p>The <em>Compose</em> key is another method of typing accented chars
+on some computers.  You would type <em>&eacute;</em>, the letter
+<em>e</em> with an acute accent, by typing <em>Compose</em>, then
+<em>e</em>, then <em>'</em>.  This is not totally compatible with X,
+and does not work on the Suns.  </p>
+
+<p>8859-1, or Latin-1, covers most West European languages such as
+Albanian, Catalan, Danish, Dutch, English, Faeroese, Finnish, French,
+German, Galician, Irish, Icelandic, Italian, Norwegian, Portuguese,
+Spanish, and Swedish, according to <a
+href="http://user.cs.tu-berlin.de/~czyborra/charsets">http://user.cs.tu-berlin.de/~czyborra/charsets</a>,
+which also has pointers on using them in email.  </p>
+
+<p>There are several other related charsets, all of which have the
+usual Latin chars, but which supplement them with different sets
+of 128 extra chars.  ISO 8859-2, -3, -4 and -9 have different sets
+of accented chars.  ISO-8859-2, Latin 2, works for most
+Latin-written Slavic and Central European languages: Czech,
+German, Hungarian, Polish, Rumanian, Croatian, Slovak, Slovene.
+ISO-8859-3, Latin 3, is popular with authors of Esperanto,
+Galician, Maltese, and Turkish.  ISO-8859-4, Latin 4, is an
+incomplete Estonian, Latvian, and Lithuanian.
+</p>
+
+<p>ISO-8859-5 (which is not Latin 5) has Cyrillic chars, for
+Bulgarian, Byelorussian, Macedonian, Russian, Serbian and
+Ukrainian (except for the upstroke ghe).  ISO-8859-6 has Arabic,
+ISO-8859-7 has modern Greek, and ISO-8859-8 has Hebrew.
+ISO-8859-9, implements Latin 5, which is Turkish.  ISO-8859-10,
+Latin 6, adds Inuit (Greenlandic) and Sami (Lappish) chars to
+Latin 4.
+</p>
+
+<p>There are also some non-printing chars, such as soft hyphen and
+non-breakable space.  </p>
+
+
+
+<h2><a name="05"></a>Unicode</h2>
+
+<p>Unicode is a standardization effort to include all the European
+charsets mentioned above, along with all the world's other major
+fonts.  This requires that each char be 16 bits.  The organization's
+homepage is <a href="http://www.unicode.org/">www.unicode.org</a> which says,
+</p>
+
+<BLOCKQUOTE>
+<p>The Unicode Worldwide Character Standard is a character coding
+system designed to support the interchange, processing, and
+display of the written texts of the diverse languages of the
+modern world. In addition, it supports classical and historical
+texts of many written languages.
+</p>
+
+<p>In its current version (2.0), the Unicode standard contains 38,885
+distinct coded characters derived from 25 supported scripts. These
+characters cover the principal written languages of the Americas,
+Europe, the Middle East, Africa, India, Asia, and Pacifica....
+</p>
+
+<p>The Unicode Character Standard primarily encodes scripts rather
+than languages. That is, where more than one language shares a set
+of symbols that have a historically related derivation, the union
+of the set of symbols of each such language is unified into a
+single collection identified as a single script. These collections
+of symbols (i.e., scripts) then serve as inventories of symbols
+which are drawn upon to write particular languages. In many cases,
+a single single script may serve to write tens or even hundreds of
+languages (e.g., the Latin script). In other cases only one
+language employs a particular script (e.g., Hangul).
+</p>
+</blockquote>
+
+<p>The primary scripts currently supported by Unicode 2.0 are: Arabic,
+Armenian, Bengali, Bopomofo, Cyrillic, Devanagari, Georgian, Greek,
+Gujarati, Gurmkhi, Han, Hangul, Hebrew, Hiragana, Kannada, Katakana,
+Latin, Lao, Malayalam, Oriya, Phonetic, Tamil, Telugu, Thai and
+Tibetan.
+</p>
+
+<p>Unicode doesn't include all current charsets, and also omits dead
+languages.  Therefore, if you want to write the Rosetta Stone in
+Unicode, you're out of luck.  Also, Unicode does not officially
+include <em>Klingon</em>, on the flimsy pretext that Klingon is
+fictional.  Finally, Unicode actually encodes <em>glyphs</em>, not
+<em>characters</em>.  Loosely, a glyph is the visual representation of
+a char.  The ligature, <img src="fi.gif">, used to typeset the chars
+<em>f</em> and <em>i</em> is one glyph representing the two chars.
+</p>
+
+
+<p>Unicode is an active area; in fact, the Fourteenth International
+Unicode Conference (IUC14), is occurring now, March 22-25, 1999 in
+Boston; see <a
+href="http://www.unicode.org/unicode/iuc14/">http://www.unicode.org/unicode/iuc14/</a>
+</p>
+
+
+
+<h2><a name="06"></a>Multilingual Computing</h2> 
+
+<p>For info on using various languages, e.g., Arabic, Armenian,
+Burmese, Chinese, Ethiopic, French, Gaelic, Georgian, Greek,
+Indian (Devanagari, Tamil, Bengali, Bengali, Telugu, and Tamil),
+Italian, Japanese, Khmer, Korean, Lao, Mongolian, Russian,
+Tibetan, and Vietnamese, in LaTeX and other places, see
+<a href="ftp://crl.nmsu.edu/CLR/multiling/">ftp://crl.nmsu.edu/CLR/multiling/</a>
+</p>
+
+
+
+<h2><a name="07"></a>Some Type Font Choices</h2>
+
+<ol>
+<li> <em>Data structure:</em>
+<ul>
+<li> bitmapped
+<li> outline, e.g., Postscript.
+ For problems of conversion to outline, see  Foley heavy, page 976.
+</ul>
+<li> <em>Foundry:</em>
+<ul>
+<li> Adobe,
+<li> Bitstream etc
+</ul>
+<li> <em>Family:</em>
+<ul>
+<li> Courier, <li>Times, <li>Lucida, <li>Charter, <li>Clean, etc
+</ul>
+<li> <em>Weight:</em>
+<ul><li> medium,  <li>bold, etc
+</ul>
+<li> <em>Slant:</em>
+<ul><li> roman,  <li>italic
+</ul>
+
+<li> <em>Width:</em>
+<ul><li> condensed,  <li>normal,  <li>expanded</ul>
+
+<li> <em>Spacing:</em>
+<ul><li> proportional, <li>monospaced</ul>
+
+<li> <em>Size:</em><ul> <li>pixels or <li>points.</ul>
+
+</ol>
+
+
+<h2><a name="08"></a>Kerning</h2>
+
+<p>This is an offset to the spacing between certain pairs of chars.
+This makes the letter spacing appear more natural.  E.g., <em>A</em>
+and <em>V</em> should be moved closer together.  A good font has more
+of this than you'd think.  Adobe Postscript Times Roman has 113 cases
+of pairs of chars with special spacing between them.  Here are a few,
+from file </p>
+
+<pre>
+/campus/print/transcript/2.1/common/lib/ps/Times-Roman.afm
+</pre>
+
+<pre>
+KPX A y -92
+KPX A w -92
+KPX A v -74
+KPX A space -55
+KPX A quoteright -111
+KPX A Y -92
+KPX A W -80
+KPX A V -129
+KPX A T -111
+</pre>
+
+
+
+
+
+<h1><a name="09"></a>Displaying Math in HTML</h1>
+
+<p>The state of displaying math over the Web is miserable, which is
+surprising since computer scientists like to do math.  You can't even
+display a Greek char easily, altho subscripts and superscripts are
+possible.  However, the situation starting to change.</p>
+
+<h2><a name="10"></a>Representation</h2>
+
+<p>The first issue is how to represent the math on the Web page.  Here
+are, IMO, the leading contenders.  </p>
+
+<h3><a name="11"></a>HTML Tables</h3>
+
+<p>This does arrays.   The above array was formatted thus (by hand!).
+</p>
+
+<pre>
+&lt;TABLE border compact&gt;
+
+  &lt;TR&gt;&lt;TD&gt; a&lt;sub&gt;1&lt;/sub&gt;&lt;sup&gt;2&lt;/sup&gt; &lt;/TD&gt;
+      &lt;TD&gt; a&lt;sub&gt;1&lt;/sub&gt;a&lt;sub&gt;2&lt;/sub&gt; &lt;/TD&gt;
+      &lt;TD&gt;  a&lt;sub&gt;1&lt;/sub&gt;a&lt;sub&gt;&lt;b&gt;3&lt;/b&gt;&lt;/sub&gt; &lt;/TD&gt;&lt;/TR&gt;
+
+  &lt;TR&gt;&lt;TD&gt; a&lt;sub&gt;1&lt;/sub&gt;a&lt;sub&gt;2&lt;/sub&gt;  &lt;/TD&gt;
+      &lt;TD&gt; a&lt;sub&gt;2&lt;/sub&gt;&lt;sup&gt;2&lt;/sup&gt;  &lt;/TD&gt;
+      &lt;TD&gt;   a&lt;sub&gt;2&lt;/sub&gt;a&lt;sub&gt;3&lt;/sub&gt; &lt;/TD&gt;&lt;/TR&gt;
+
+  &lt;TR&gt;&lt;TD&gt; a&lt;sub&gt;1&lt;/sub&gt;a&lt;sub&gt;3&lt;/sub&gt;  &lt;/TD&gt;
+      &lt;TD&gt;  a&lt;sub&gt;2&lt;/sub&gt;a&lt;sub&gt;3&lt;/sub&gt; &lt;/TD&gt;
+      &lt;TD&gt;  a&lt;sub&gt;3&lt;/sub&gt;&lt;sup&gt;2&lt;/sup&gt;  &lt;/TD&gt;&lt;/TR&gt;
+
+&lt;/TABLE&gt;
+</pre>
+
+<p>However, this doesn't do more complicated expression nesting.
+</p>
+
+<h3><a name="12"></a>LaTeX</h3>
+
+<p>LaTeX has the world's best math package.  The above array looks like this.
+</p>
+
+<pre>
+\[
+\left( \begin{array}{ccc}
+a_1^2 &amp; a_1 a_2 &amp; a_1 a_3 \\
+a_1 a_2 &amp; a_2^2 &amp; a_2 a_3 \\
+a_1 a_3 &amp; a_2 a_3 &amp; a_3^2 
+\end{array} \right)
+\]
+</pre>
+
+<h3><a name="13"></a>MathML</h3>
+
+</p> XML is a generalization of HTML that allows more tags, in
+addition to H1, P, TABLE, etc.  MathML, the Mathematical Markup
+Language, is a rec of the W3C Math working group, "to encode both the
+presentation of mathematical notation for high-quality visual display,
+and mathematical content".  In other words, the syntactic meaning of
+the expression is stored; this is not just intended to make a pretty
+picture.  See <p>
+
+<center>
+<a href="http://www.w3.org/Math/">http://www.w3.org/Math/</a>.
+</center>
+
+<p>It says that <b>x<sup>2</sup>+4x+4=0</b> is encoded thus.
+</p>
+
+
+<PRE>
+&lt;mrow&gt;
+  &lt;mrow&gt;
+        &lt;msup&gt; &lt;mi&gt;x&lt;/mi&gt; &lt;mn&gt;2&lt;/mn&gt; &lt;/msup&gt; &lt;mo&gt;+&lt;/mo&gt;
+            &lt;mrow&gt;
+              &lt;mn&gt;4&lt;/mn&gt;
+              &lt;mo&gt;&amp;invisibletimes;&lt;/mo&gt;
+              &lt;mi&gt;x&lt;/mi&gt;
+            &lt;/mrow&gt;
+    &lt;mo&gt;+&lt;/mo&gt;
+    &lt;mn&gt;4&lt;/mn&gt;
+  &lt;/mrow&gt;
+    &lt;mo&gt;=&lt;/mo&gt;
+    &lt;mn&gt;0&lt;/mn&gt;
+&lt;/mrow&gt;
+</PRE>
+
+<p>It is intended that a program be used to generate this.
+</p>
+
+<h2><a name="14"></a>Displaying the Math</h2>
+
+<p>The next problem is how to display the math.
+</p>
+
+<h3><a name="15"></a>latex2html</h3>
+
+<p>This package does a pretty good job of translating a complete LaTeX
+file to HTML.  It represents each separate piece of math, even one
+special char, as an inline GIF.  If it knows the Web browser's type
+font and size, then you can't tell the difference.  This package is a
+valiant effort, but the result is somewhat clumsy, and really
+complicated LaTeX is not (and cannot be) translated exactly.  A more
+fundamental objection is that you don't want an exact translation,
+since a paper should look different from a web page.  See.
+</p>
+
+<center>
+<a href="http://cbl.leeds.ac.uk/nikos/tex2html/doc/latex2html/latex2html.html">http://cbl.leeds.ac.uk/nikos/tex2html/doc/latex2html/latex2html.html</a>
+</center>
+
+<h3><a name="16"></a>IBM Techexplorer</h3>
+
+<p>This is a new IBM product that attempts to display much of LaTeX as
+part of an HTML page, together with the rest of the page.  It's a
+plugin available for Netscape and IE, on Windows and Linux.  It can't
+do really complicated LaTeX; however, the idea is that you are
+designing an HTML page, not a LaTeX document, and don't use the LaTeX
+features that Techexplorer doesn't do.  </p>
+
+<p>Techexplorer's main problem is that the plugin costs $29, altho a
+brain-damaged version that won't print is free.  A work-around for the
+content provider is to pre-convert all his pages to PS, and allow
+people who want hard-copies to download and print that.  This is
+similar to what I've done with some of my handouts, altho I do it to
+make smaller, faster printing, PS files.
+</p>
+
+<center>
+<a href="http://www.software.ibm.com/enetwork/techexplorer/">http://www.software.ibm.com/enetwork/techexplorer/</a>
+</center>
+
+<h3><a name="17"></a>Amaya</h3>
+
+<p>This is a W3C (World Wide Web Consortium) test-bed browser, WYSIWYG
+page creator, and MathML editor.  It creates and displays MathML.  It
+is quite a nice browser, and is free with source, but doesn't have all
+the bells and whistles of the NS and IE, tho it has most of HTML 4.0.
+Its goal is to demo what's possible and to motivate the others.  Of
+course, you can get it as an RPM. See </p>
+
+<center>
+<a href="http://www.w3.org/Amaya/">http://www.w3.org/Amaya/</a>
+</center>
+
+
+
+<h1><a name="18"></a>3-D Rotations</h1>
+
+<h2><a name="19"></a>Rotating a Point About a Given Axis</h2>
+
+<p>To rotate a point <em>p</em> by an angle <em>t</em> about an axis
+<em>a</em>, where <em>|a|=1</em>,
+</p>
+
+<center>
+<p> p' = a &middot; p   a + (p- a &middot; p   a)  cos  t + a &times; p  sin  t<br>
+ = p  cos  t + a &middot; p   a (1- cos  t) + a &times; p  sin  t
+</p>
+</center>
+
+<h2><a name="20"></a>Converting the Vector Form To a Matrix Form</h2>
+
+<p>To convert this to a matrix form, <em>p'=M p</em>, where <em>M</em> is a
+function of <em>a</em> and <em>t</em>, use these.  The problem they solve
+is as follows.  Suppose we want to rotate an object by <em>45&deg;</em>
+about the axis (1,2,3).  We want some matrix M, which depends only
+on <em>45&deg;</em> and (1,2,3).  Then we will rotate the object by
+multiplying its points by M.  In fact, M would be this matrix:
+</p>
+
+<center>
+<TABLE border compact>
+  <TR><TD>  0.07142857142 </TD><TD> - 0.6589265829 </TD><TD>  0.7488081981 </TD></TR>
+  <TR><TD> 0.9446408685 </TD><TD> 0.2857142857 </TD><TD>  0.1613101866 </TD></TR>
+  <TR><TD>- 0.3202367695  </TD><TD> 0.6958326704 </TD><TD>  0.6428571428 </TD></TR>
+</TABLE>
+</center>
+
+
+<p>Now, instead of <em>45&deg;</em> and (1,2,3), think of a general angle,
+<em>t</em>, and axis, <em>a</em>.
+</p>
+
+<p>We will work up to M in stages.  First, is to find a matrix that
+depends only on <em>a</em> such that multiplying it by point <em>p</em> is the
+same as calculating <em>a &middot; p   a</em>.  Here it is.
+</p>
+
+<center>
+<TABLE border compact>
+  <TR><TD> a<sub>1</sub><sup>2</sup> </TD><TD> a<sub>1</sub>a<sub>2</sub> </TD><TD>  a<sub>1</sub>a<sub>2</sub> 
+</TD></TR>
+  <TR><TD> a<sub>1</sub>a<sub>2</sub>  </TD><TD> a<sub>2</sub><sup>2</sup>  </TD><TD>   a<sub>2</sub>a<sub>3</sub> </TD></TR>
+  <TR><TD> a<sub>1</sub>a<sub>3</sub>  </TD><TD>  a<sub>2</sub>a<sub>3</sub> </TD><TD>  a<sub>3</sub><sup>2</sup>  </TD></TR>
+</TABLE>
+</center>
+
+
+
+<p>This matrix has the following property:
+</p>
+
+<center>
+<table border=0>
+<tr>
+<td>
+a &middot; p   a = 
+</td>
+<td>
+<TABLE border >
+  <TR><TD> a<sub>1</sub><sup>2</sup> </TD><TD> a<sub>1</sub>a<sub>2</sub> </TD><TD>  a<sub>1</sub>a<sub>3</sub> 
+</TD></TR>
+  <TR><TD> a<sub>1</sub>a<sub>2</sub>  </TD><TD> a<sub>2</sub><sup>2</sup>  </TD><TD>   a<sub>2</sub>a<sub>3</sub> </TD></TR>
+  <TR><TD> a<sub>1</sub>a<sub>3</sub>  </TD><TD>  a<sub>2</sub>a<sub>3</sub> </TD><TD>  a<sub>3</sub><sup>2</sup>  </TD></TR>
+</TABLE>
+</td><td>
+<TABLE border>
+  <TR><TD> p<sub>1</sub></TD></TR>
+  <TR><TD> p<sub>2</sub></TD></TR>
+  <TR><TD> p<sub>3</sub></TD></TR>
+</TABLE>
+</td></tr></table>
+</center>
+
+<p> Next, this matrix:
+</p>
+
+<center>
+<TABLE border compact>
+  <TR><TD> 0 </TD><TD> - a<sub>3</sub> </TD><TD>  a<sub>2</sub> </TD></TR>
+  <TR><TD> a<sub>3</sub>  </TD><TD> 0  </TD><TD> -  a<sub>1</sub> </TD></TR>
+  <TR><TD>- a<sub>2</sub>  </TD><TD>  a<sub>1</sub> </TD><TD> 0  </TD></TR>
+</TABLE>
+</center>
+
+
+<p>has this useful property: </p>
+
+
+<center>
+<table border=0>
+<tr><td>
+a &times; p =
+<td>
+<TABLE border compact>
+  <TR><TD> 0 </TD><TD> - a<sub>3</sub> </TD><TD>  a<sub>2</sub> </TD></TR>
+  <TR><TD> a<sub>3</sub>  </TD><TD> 0  </TD><TD> -  a<sub>1</sub> </TD></TR>
+  <TR><TD>- a<sub>2</sub>  </TD><TD>  a<sub>1</sub> </TD><TD> 0  </TD></TR>
+</TABLE>
+<td>
+<TABLE border compact>
+  <TR><TD> p<sub>1</sub></TD></TR>
+  <TR><TD> p<sub>2</sub></TD></TR>
+  <TR><TD> p<sub>3</sub></TD></TR>
+</TABLE>
+</table>
+</center>
+
+
+<p>With them, we can find a matrix M to turn equation
+</p>
+
+<center>p' = p  cos  t + a &middot; p   a (1- cos  t) + a &times; p  sin  t
+</center>
+
+<p>into a matrix multiplication, p' = Mp, where
+</p>
+
+<center>
+<table border=0>
+<tr><td>
+M = 
+<td>
+<img src="3drotmat.gif">
+</table>
+</center>
+
+
+<p>It is complicated enough that you don't want to try memorizing it
+or copying it by hand.  Even a widely-used text, <em>Foley</em>, got
+one sign wrong in one edition.  My method:
+</p>
+
+<ol> <li><p>I originally created the matrix with my Maple rotmat
+routines, and wrote it in LaTeX format.  </p></li>
+
+<li><p>I copied the formula from last year's handout, which I'd
+written in LaTeX, into a small LaTeX file.  </p></li>
+
+<li><p>I tried to use latex2html to convert it, but that failed since
+it couldn't find any fonts.  </p></li>
+
+<li><p>So, I ran LaTeX on it, and displayed the result with xdvi.
+</p></li>
+
+<li><p>Finally, I used xv to grab the xdvi window, crop it, and save
+it as a gif file.  </p></li>
+
+<li><p>Moral: Math isn't easy on the web.  
+</p></li>
+
+</ol>
+
+
+
+
+<h2><a name="21"></a>Telling If a Matrix is a Rotation Matrix</h2>
+
+<p>A rotation preserves distances, and therefore preserves angles.
+Thus, if <em>r<sub>i</sub></em> is the i-th row, and <em>c<sub>i</sub></em> is the i-th column, then
+</p>
+
+<center>
+r<sub>i</sub> &middot; r<sub>j</sub> = c<sub>i</sub> &middot; c<sub>j</sub> = delta<sub>ij</sub>
+</center>
+
+<p>(delta<sub>ij</sub>=1 iff i=j.  Else delta<sub>ij</sub>=0.)</p>
+
+<p>Also,
+</p>
+<center>
+det(M) = 1
+</center>
+
+<p>Here is an explanation of these tests for whether a matrix, <em>M</em>, is a
+rotation.
+</p>
+
+<ol>
+
+<li><p> <em>|M|=1</em> since the determinant is how much the volume of a small
+cube scales.</p>
+
+<li> <p>The length of the first column, when treating that as a
+vector, is one, since that is the vector (1,0,0) after the
+transformation.  Ditto the other columns.</p>
+
+<li><p> The columns are perpendicular to each other since the transformed
+axes must still be perpendicular.</p>
+
+</ol>
+
+
+<h2><a name="22"></a>Finding the Axis and Angle of a Rotation Matrix</h2>
+
+<ol>
+<li> <p>The eigenvalues are 1, <em> cos   t  &plusmn; i  sin   t </em>.</p>
+
+<li> <p>If <em> t  = 180&deg;</em>, then the eigenvalues will be 1, -1, -1.</p>
+
+<li> <p>The axis is the eigenvector corresponding to the eigenvalue of 1.</p>
+
+<li> <p>You can get the angle, apart from some ambiguity, from the
+other eigenvalues.</p>
+
+<li> <p>There is a complication because if you invert the axis and also negate
+the angle of rotation, you get the same rotation.  This means that
+you can get two possible axis/angle combos from one matrix. Don't
+worry about that in this course.  </p>
+
+
+<li> <p>Here is another way to find the axis, if <em> t  != 0
+ or  180&deg;</em>.  If <em>M=(m<sub>ij</sub>)</em> is
+the matrix and <em>a</em> is the normalized axis, then <em>2 a  sin  t =
+(m<sub>32</sub>-m<sub>23</sub>,m<sub>13</sub>-m<sub>31</sub>,m<sub>21</sub>-m<sub>12</sub>)</em>.  Therefore,
+<em>(m<sub>32</sub>-m<sub>23</sub>,m<sub>13</sub>-m<sub>31</sub>,m<sub>21</sub>-m<sub>12</sub>)</em> is an unnormalized
+axis, and its length is <em>2  sin  t </em>.
+</p>
+
+<li> <p>Here is another way to find the angle, up to an ambiguous
+sign.  The <em>trace</em> of a matrix, which is the sum of the
+diagonal elements, is independent of the coordinate system
+used, so long as that is orthonormal.  This implies that the trace
+is the sum of the eigenvalues.  Here that is <em>1+ cos   t  + i
+ sin   t  +  cos   t  -  sin   t </em>, or <em> 1 + 2  cos   t </em>.
+Therefore, 
+</p>
+
+<center>
+ t  = arccos( ( m<sub>11</sub>+m<sub>22</sub>+m<sub>33</sub>-1)/2 )
+</center>
+<p> Note that this gives 2 possibilities.</p>
+
+</ol>
+
+
+<h2><a name="23"></a>Noncommutativity</h2>
+
+<p>Generally two rotations do not commute; the order matters.
+Similarly 3-D matrices do not commute.  Some rotations do commute:
+</p>
+<ol>
+<li> 2D rotations.
+<li> 3D rotations about the same axis; that is really 2D.
+<li> Infinitesimal rotations.   Small rotations almost commute.
+<li> If one rotation is <em>180&deg;</em>, then it sometimes commutes with
+other rotations.
+</ol>
+
+<h2><a name="24"></a>Maple Example of Rotations</h2>
+
+<p>Here's an example of using Maple to combine two <em>90&deg;</em> rotations, one
+about the X-axis, the other about the Y-axis.
+</p>
+
+<pre>
+> read `/dept/ecse/graphics/h14/rotation.maple`;
+                                    [dotprod]
+                                   [crossprod]
+Warning: new definition for   norm
+                                     [norm]
+                                   [scalarmul]
+proc(expr) ... end
+
+rotate :=
+    proc(a,t,p)
+    local a2;
+        a2 := normalize(a);
+        evalm(cos(t)*p+(1-cos(t))*dotprod(a2,p)*a2+sin(t)*crossprod(a2,p))
+    end
+
+normalize := proc(a) local l; l := evalf(norm(a,2)); evalm(a/l) end
+
+                                      [ 1  0  0 ]
+                                      [         ]
+                                ii := [ 0  1  0 ]
+                                      [         ]
+                                      [ 0  0  1 ]
+
+rotmat := proc(a,t)
+          local a2;
+              a2 := normalize(a);
+              evalm(cos(t)*ii+extprod(a2,a2)*(1-cos(t))+sin(t)*crossmat(a2))
+          end
+
+rotmat2 := proc()
+           local a,a1,a2,a3,c,s;
+               a[1] := a1;
+               a[2] := a2;
+               a[3] := a3;
+               evalm(c*ii+extprod(a,a)*(1-c)+s*crossmat(a))
+           end
+
+extprod := proc(a,b)
+           local m,i,j;
+               m := array(1 .. 3,1 .. 3);
+               for i to 3 do  for j to 3 do  m[i,j] := a[i]*b[j] od od;
+               op(m)
+           end
+
+crossmat :=
+  proc(a)
+  local m;
+      m := array(1 .. 3,1 .. 3,[[0,-a[3],a[2]],[a[3],0,-a[1]],[-a[2],a[1],0]]);
+      op(m)
+  end
+----------------------------------------------------------------
+Find the rotation matrix for an axis of (1,0,0) and an angle of Pi/2:
+
+> r1:=evalf(rotmat([1,0,0],Pi/2));
+                                    [ 1.   0   0  ]
+                                    [             ]
+                              r1 := [  0   0  -1. ]
+                                    [             ]
+                                    [  0  1.   0  ]
+----------------------------------------------------------------
+> r2:=evalf(rotmat([0,1,0],Pi/2));
+                                    [  0    0  1. ]
+                                    [             ]
+                              r2 := [  0   1.   0 ]
+                                    [             ]
+                                    [ -1.   0   0 ]
+----------------------------------------------------------------
+> r12:=multiply(r1,r2);
+                                     [  0   0  1. ]
+                                     [            ]
+                              r12 := [ 1.   0   0 ]
+                                     [            ]
+                                     [  0  1.   0 ]
+----------------------------------------------------------------
+> r21:=multiply(r2,r1);
+                                    [  0   1.   0  ]
+                                    [              ]
+                             r21 := [  0    0  -1. ]
+                                    [              ]
+                                    [ -1.   0   0  ]
+----------------------------------------------------------------
+> eigenvects(r12);
+
+  [ - .4999999997 - .8660254037 I, 1,
+      {[  - .7382716585 + .3487429165 I, .06711560405 - .8137334705 I,
+          .6711560548 + .4649905518 I ]}                               ],
+      [ - .4999999997 + .8660254037 I, 1,
+          {[  - .7382716585 - .3487429165 I, .06711560405 + .8137334705 I,
+              .6711560548 - .4649905518 I ]}                               ],
+      [1.000000000, 1, {[ -.5773502687, -.5773502691, -.5773502691 ]}]
+
+This represents a 120 degree rotation about the axis 
+[ -.5773502687, -.5773502691, -.5773502691 ] .
+
+----------------------------------------------------------------
+> eigenvects(r21);
+
+   [ - .4999999997 - .8660254037 I, 1,
+       {[ .7382716585 - .3487429165 I,  - .6711560548 - .4649905518 I,
+           .06711560405 - .8137334705 I ]}                             ],
+       [ - .4999999997 + .8660254037 I, 1,
+           {[ .7382716585 + .3487429165 I,  - .6711560548 + .4649905518 I,
+               .06711560405 + .8137334705 I ]}                             ],
+       [1.000000000, 1, {[ .5773502687, .5773502691, -.5773502691 ]}]
+
+This represents a 120 degree rotation about the axis 
+[ .5773502687, .5773502691, -.5773502691 ], which is different, so the
+order does matter.
+</pre>
+
+<h2><a name="25"></a>Paper - <em>Efficient Rotation of an Object</em></h2>
+
+<p>I wrote a paper summarizing rotation methods, ``Efficient Rotation
+of an Object'', <em>IEEE Transactions on Computing</em>, Nov. 1983,
+which I can give to anyone interested.  It is enrichment material,
+and will not be examined.
+</p>
+
+
+<h2><a name="26"></a>Rotations in Various Dimensions (Enrichment)</h2>
+
+<p>To talk about rotations in 4D etc, we need a general definition of
+<em>rotation</em>.   Geometers consider a rotation to be a rigid
+transformation about the origin, but not a reflection.  What does
+this imply?
+</p>
+
+<ol>
+
+<li> <p>All the real eigenvalues must be <em>&plusmn; 1</em> since
+otherwise a line in the direction of the corresponding eigenvector
+would have its length changed, and not  be rigid.
+</p>
+
+<li> <p>Since the eigenvalues are solutions of a polynomial with
+real coefficients, any complex ones must occur in conjugate pairs.
+</p>
+
+<li> <p>Therefore, in 3D, there are 1 or 3 real eigenvalues, all
+<em>&plusmn; 1</em>.  If there are 3, then this transformation is an
+identity or a reflection.  If there is one eigenvalue, then its
+eigenvector represents the axis.  This is a proof that there is,
+in fact, an axis line in 3D.
+</p>
+
+<li> <p>In 4D, there will be 0, 2, or 4, real eigenvalues.  If 0,
+then the rotation moves every point but the origin.  One example
+would be a rotation in the <em>xy</em> plane followed by one in the <em>zt</em>
+plane.  If there are 2 real eigenvalues, then there is a plane of
+fixed points.  If 4, then this is an identity or a reflection.
+There never is just a fixed axis line.
+</p>
+
+</ol>
+
+
+<h2><a name="27"></a>Opengl FAQ on Rotation</h2>
+ 
+<p>From  
+<a href="http://www.3dgamedev.com/resources/openglfaq.txt">http://www.3dgamedev.com/resources/openglfaq.txt</a>
+</p>
+
+<p>Subject 5.04: After calling glRotate() a few times I end up rotating
+     around the wrong axis. Why?
+</p>
+
+<quotation>
+     This problem is commonly referred to as Gimble Lock. It is a
+     problem inherent in using 3 angles to describe an orientation
+     and is mentioned in just about every 3D graphics book in
+     existence. Typical solutions are to use a different representation
+     for orientation. The common ones are; Matrix, Axis/Angle, and
+     Quaternions.
+</quotation>
+
+<p><a href="http://www.3dgamedev.com/articles/eulers_are_evil.htm">http://www.3dgamedev.com/articles/eulers_are_evil.htm</a><br>
+<a href="ftp://ftp.netcom.com/pub/he/hexapod/matrixfaq.html">ftp://ftp.netcom.com/pub/he/hexapod/matrixfaq.html</a>
+</p>
+
+
+
+
+<hr>
+<a href="../26/" target="_top">Previous Class</a>,
+<a href="../28/" target="_top">Next Class</a>,
+<a href="http://www.rpi.edu/dept/ecse/graphics/index.html"
+ target="_top">ECSE-4750 Fall 1999 Home Page</a>
+
+<hr>
+
+<p>Copyright &#169; 1998-9, Wm. Randolph Franklin.  You may use my
+material for non-profit education and research, provided that you
+acknowledge me and preserve this notice. </p>
+
+
+<p>
+<ADDRESS> 
+ <CENTER>
+   Wm. Randolph Franklin,
+   Associate Professor<br>
+   For email address, replace NOSPAM by RPI in the following:
+   wrf@ecse.NOSPAM.edu<br>
+   <A HREF="http://www.ecse.rpi.edu/Homepages/wrf/">
+     http://www.ecse.rpi.edu/Homepages/wrf/</a><br>
+   +1 (518) 276-6077;  Fax: -6261<br>
+   ECSE Dept., 6026 JEC, Rensselaer Polytechnic Inst, Troy NY, 12180 USA<br>
+   (PGP key available)<br>
+ </CENTER>
+</ADDRESS>
+</p>
+
+</font>
+
+<script>
+document.write("<i>Updated:</i> " + document.lastModified + "<br>")
+document.write("<i>URL:</i> " + document.URL + "<br>")
+</script>
+<font size="+1">
+</p>
+
+
+</BODY>
+</HTML>

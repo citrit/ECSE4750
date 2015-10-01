@@ -1,0 +1,83 @@
+# ~/maple/rotation/a  Do 3D rotation things
+# Last modified: Wed Mar 27 16:03:12 EST 1991
+# Wm. Randolph Franklin
+
+# Example: rotmat(linalg[vector]([1,2,1]),evalf(Pi));
+
+
+
+# Libraries
+
+   with(linalg,dotprod);
+   with(linalg,crossprod);
+   with(linalg,norm);          # This gives a warning about redefining
+			       # norm. OK.
+   with(linalg,scalarmul);
+   readlib(evalm);
+
+# ROTATE: Rotate p about axis a by angle t
+
+   rotate:=proc(a,t,p)
+   local a2;
+   a2:=normalize(a);
+   evalm(cos(t)*p + (1-cos(t))*dotprod(a2,p)*a2 + sin(t)*crossprod(a2,p))
+   end;
+
+# NORMALIZE: Normalize a 3-vector and return float.
+
+   normalize:=proc(a)
+      local l;
+      l:= evalf(norm(a,2));
+      evalm(a/l)
+   end;
+
+# Identity matrix since evalm can't handle expressions with identity
+# matrices, like 3*i. 
+
+ii:=array(1..3,1..3,[[1,0,0],[0,1,0],[0,0,1]]);
+
+
+# ROTMAT: Return the matrix that does a rotation about axis a by angle
+# t. A need not be normalized.
+
+   rotmat:= proc(a,t)
+      local a2;
+      a2:=normalize(a);
+      evalm(cos(t)*ii+extprod(a2,a2)*(1-cos(t))+sin(t)*crossmat(a2));
+      end;
+
+
+
+# ROTMAT2: Return the unevaled matrix that does a rotation about axis a by angle
+# t. A must be normalized.  S and C are the sin and cos.
+
+   rotmat2:= proc()
+      local a,a1,a2,a3,c,s;
+      a[1]:=a1;
+      a[2]:=a2;
+      a[3]:=a3;
+      evalm(c*ii+extprod(a,a)*(1-c)+s*crossmat(a));
+      end;
+
+
+# EXTPROD: Return exterior product of 2 3-vectors
+
+   extprod:=proc(a,b)
+      local m,i,j;
+      m:=array(1..3,1..3);
+      for i from 1 to 3 do
+	 for j from 1 to 3 do
+	    m[i,j]:=a[i]*b[j];
+	 od;
+      od;
+      op(m)
+   end;
+
+#CROSSMAT: Return matrix equivalent to cross multiplying by a vector
+
+   crossmat:=proc(a)
+      local m;
+#     linalg[add] can't handle antisymmetric matrices properly. 
+      m:=array(1..3,1..3,[[0,-a[3],a[2]],[a[3],0,-a[1]],[-a[2],a[1],0]]);
+      op(m)
+   end;

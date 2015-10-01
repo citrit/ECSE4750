@@ -1,0 +1,99 @@
+% Remember to use the lgrind style
+
+\File{xexam2.c},{19:46},{Feb 23 1999}
+\L{\LB{\C{}\1\*\* xexam.c   Midterm problem}}
+\L{\LB{Time-stamp: \<\1mab\_home1\1wrf\1cg\1xexam2.c, Tue, 23 Feb 1999, 19:46:33 EST, wrf\CE{}\V{mab}.\V{ecse}.\V{rpi}.\V{edu}\>}}
+\L{\LB{\C{}\*\1\CE{}}}
+\L{\LB{}}
+\L{\LB{\K{\#include}_\<\V{stdio}.\V{h}\>}}
+\L{\LB{\K{\#include}_\<\V{Xm}\1\V{Xm}.\V{h}\>}\Tab{32}{\C{}\1\* Needed by all Motif programs. \*\1\CE{}}}
+\L{\LB{\K{\#include}_\<\V{Xm}\1\V{Label}.\V{h}\>}}
+\L{\LB{\K{\#include}_\<\V{Xm}\1\V{PushB}.\V{h}\>}}
+\L{\LB{\K{\#include}_\<\V{Xm}\1\V{RowColumn}.\V{h}\>}}
+\L{\LB{}}
+\L{\LB{}}
+\L{\LB{\K{char}___\*\V{greek}[4]_=_\{\S{}\"plato\"\SE{},\S{}\"socrates\"\SE{},\S{}\"alex\"\SE{},\S{}\"philip\"\SE{}\};}}
+\L{\LB{}}
+\L{\LB{\V{Widget}__\V{widgets}[4],__\V{quit},_\V{topLevel};}}
+\L{\LB{}}
+\L{\LB{}}
+\L{\LB{\K{void}}}
+\L{\LB{\Proc{Proc}\V{Proc}(\V{Widget}_\V{w},_\V{caddr\_t}_\V{client\_data},_\V{caddr\_t}_\V{call\_data})}}
+\L{\LB{\{}}
+\L{\LB{____\V{Position}_\V{x},_\V{y};}}
+\L{\LB{____\K{int}_____\V{i};}}
+\L{\LB{}}
+\L{\LB{____\V{i}=(\K{int})_\V{client\_data};}}
+\L{\LB{____\V{printf}(\S{}\"Client_data=_\%d\2n\"\SE{},_\V{i});}}
+\L{\LB{}}
+\L{\LB{____\V{XtVaGetValues}(\V{topLevel},_\V{XmNx},_\&\V{x},_\V{XmNy},_\&\V{y},_\V{NULL});}}
+\L{\LB{}}
+\L{\LB{____\K{switch}_(\V{i})_\{}}
+\L{\LB{____\K{case}_0:}}
+\L{\LB{}\Tab{8}{\V{x}_\-=_100;}}
+\L{\LB{____\K{case}_1:}}
+\L{\LB{}\Tab{8}{\V{x}_+=_100;}}
+\L{\LB{}\Tab{8}{\K{break};}}
+\L{\LB{____\K{case}_2:}}
+\L{\LB{}\Tab{8}{\V{y}_\-=_100;}}
+\L{\LB{____\K{case}_3:}}
+\L{\LB{}\Tab{8}{\V{y}_+=_100;}}
+\L{\LB{}\Tab{8}{\K{break};}}
+\L{\LB{____\};}}
+\L{\LB{____\V{XtVaSetValues}(\V{topLevel},_\V{XmNx},_\V{x},_\V{XmNy},_\V{y},_\V{NULL});}}
+\L{\LB{\}}}
+\L{\LB{}}
+\L{\LB{}}
+\L{\LB{\C{}\1\*}}
+\L{\LB{_\* quit button callback function}}
+\L{\LB{_\*\1\CE{}}}
+\L{\LB{\K{void}}}
+\L{\LB{\Proc{Quit}\V{Quit}(\V{w},_\V{client\_data},_\V{call\_data})}}
+\L{\LB{____\V{Widget}__\V{w};}}
+\L{\LB{____\V{caddr\_t}_\V{client\_data},_\V{call\_data};}}
+\L{\LB{\{}}
+\L{\LB{}}
+\L{\LB{\}}}
+\L{\LB{}}
+\L{\LB{}}
+\L{\LB{\Proc{main}\V{main}(\K{int}_\V{argc},_\K{char}_\*\*\V{argv})}}
+\L{\LB{\{}}
+\L{\LB{____\V{XtAppContext}_\V{app\_context};}}
+\L{\LB{____\V{Widget}__\V{box};}}
+\L{\LB{____\K{int}_____\V{i};}}
+\L{\LB{}}
+\L{\LB{____\V{topLevel}_=_\V{XtVaAppInitialize}(\&\V{app\_context},_\S{}\"XExam\"\SE{},}}
+\L{\LB{}\Tab{40}{_\V{NULL},}\Tab{48}{\C{}\1\* options      \*\1\CE{}}}
+\L{\LB{}\Tab{40}{_0,}\Tab{48}{\C{}\1\* num\_options  \*\1\CE{}}}
+\L{\LB{}\Tab{40}{_\&\V{argc},}\Tab{48}{\C{}\1\* num cmd line \*\1\CE{}}}
+\L{\LB{}\Tab{40}{_\V{argv},}\Tab{48}{\C{}\1\* cmd line     \*\1\CE{}}}
+\L{\LB{}\Tab{40}{_\V{NULL},}\Tab{48}{\C{}\1\* fallback     \*\1\CE{}}}
+\L{\LB{}\Tab{40}{_\V{NULL}}\Tab{48}{\C{}\1\* args         \*\1\CE{}}}
+\L{\LB{}\Tab{8}{);}}
+\L{\LB{}}
+\L{\LB{____\V{box}_=_\V{XtVaCreateManagedWidget}(\S{}\"box\"\SE{},}\Tab{48}{\C{}\1\* name     \*\1\CE{}}}
+\L{\LB{}\Tab{32}{_\V{xmRowColumnWidgetClass},}\Tab{64}{\C{}\1\* class    \*\1\CE{}}}
+\L{\LB{}\Tab{32}{_\V{topLevel},}\Tab{48}{\C{}\1\* parent   \*\1\CE{}}}
+\L{\LB{}\Tab{32}{_\V{NULL});}\Tab{40}{\C{}\1\* args     \*\1\CE{}}}
+\L{\LB{}}
+\L{\LB{____\K{for}_(\V{i}_=_0;_\V{i}_\<_4;_\V{i}++)_\{}}
+\L{\LB{}\Tab{8}{\V{widgets}[\V{i}]_=_\V{XtVaCreateManagedWidget}(\V{greek}[\V{i}],_}}
+\L{\LB{}\Tab{40}{_____\V{xmPushButtonWidgetClass},_}}
+\L{\LB{}\Tab{40}{_____\V{box},_\V{NULL});_}}
+\L{\LB{______\}}}
+\L{\LB{}}
+\L{\LB{____\V{quit}_=_\V{XtVaCreateManagedWidget}(}}
+\L{\LB{}\Tab{32}{_\S{}\"quit\"\SE{},}\Tab{48}{\C{}\1\* 12 \*\1\CE{}}}
+\L{\LB{}\Tab{32}{_\V{xmPushButtonWidgetClass},}\Tab{64}{\C{}\1\* 13 \*\1\CE{}}}
+\L{\LB{}\Tab{32}{_\V{box},}\Tab{40}{\C{}\1\* 14 \*\1\CE{}}}
+\L{\LB{}\Tab{32}{_\V{NULL});}\Tab{40}{\C{}\1\* 15 \*\1\CE{}}}
+\L{\LB{}}
+\L{\LB{____\V{XtAddCallback}(\V{quit},_\V{XmNactivateCallback},_\V{Quit},_0);}}
+\L{\LB{}}
+\L{\LB{____\K{for}_(\V{i}_=_0;_\V{i}_\<_4;_\V{i}++)}}
+\L{\LB{}\Tab{8}{\V{XtAddCallback}(\V{widgets}[\V{i}],_\V{XmNactivateCallback},_(\V{XtPointer})_\V{Proc},_(\V{XtPointer})_\V{i});}}
+\L{\LB{}}
+\L{\LB{____\V{XtRealizeWidget}(\V{topLevel});}}
+\L{\LB{}}
+\L{\LB{____\V{XtAppMainLoop}(\V{app\_context});}}
+\L{\LB{\}}}

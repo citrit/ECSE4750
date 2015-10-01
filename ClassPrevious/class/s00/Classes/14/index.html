@@ -1,0 +1,270 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.61C-CCK-MCD Caldera Systems OpenLinux [en] (X11; I; Linux 2.2.10 i586) [Netscape]">
+   <title>ECSE-4750, RPI, Class 14</title>
+<!-- Time-stamp: </home/wrf/cg-f99/Classes/17/index.html, Wed,  3 Nov 1999, 19:14:59 EST, wrf@benvolio.ecse.rpi.edu> -->
+<!-- Changed by: Wm. Randolph Franklin, 13-Jan-1999 -->
+<style TYPE="text/css">
+<!--
+H1 { color: red; }
+
+H2 { color: blue; }
+
+   OL.outline {list-style-type: upper-roman;
+    font: bold italic 18pt sans-serif;}
+
+   OL.outline OL {list-style-type: upper-alpha;
+       font: bold 14pt sans-serif;}
+
+   OL.outline OL OL {list-style-type: decimal;
+	  font: 12pt serif;}
+
+   OL.outline OL OL OL {list-style-type: lower-alpha;
+	     font: 10pt serif;}
+
+   OL.outline OL OL OL OL {list-style-type: lower-roman;
+		font: 10pt sans-serif;}
+   -->
+</style>
+</head>
+<body bgcolor="#FFFFFF">
+
+<center>
+<h1>
+Rensselaer Polytechnic Institute&nbsp;<br>
+ECSE-4750 Computer Graphics, Fall 1999<br>
+Class 14</h1></center>
+
+<hr>
+<h2>
+We will begin working from the textbook.</h2>
+
+<ul>
+<li>
+Sections below will refer to specific textbook chapters.</li>
+</ul>
+
+<h3>
+Creation of a Graphics Library (Ch. 7,8).</h3>
+
+<ul>
+<li>
+For the next part of class we will be working on a re-usable class library
+which will allow us to:</li>
+
+<ul>&nbsp;
+<li>
+Create simple wrapper for our Windowing system.</li>
+
+<li>
+Provide a hook into the event loop to process events.</li>
+
+<li>
+Provide a framework for implementing various algorithms.</li>
+
+<li>
+Provide a way to dynamically add and remove objects from the view.</li>
+
+<li>
+Give the ability to create whole scenes with independant actions.</li>
+
+<li>
+Allow us to extend our system into 3D.</li>
+</ul>
+</ul>
+
+<h3>
+Algorithms we will be Implementing.</h3>
+
+<ul>
+<li>
+Fast raster line and circle drawing. (Ch. 3)</li>
+
+<ul>
+<li>
+Bresenham - Optimized Line Drawing Code &amp; Circle Algorithm</li>
+</ul>
+
+<li>
+Color. (Ch 4)</li>
+
+<li>
+Drawing bitmapped and outlined text.</li>
+
+<li>
+Polygon filling.(Ch 4)</li>
+
+<ul>
+<li>
+Boundary and Flood fill algorithms</li>
+</ul>
+
+<li>
+Clipping points, lines, and polygons. (Ch 6)</li>
+
+<ul>
+<li>
+Cohen-Southerland Line clipping</li>
+
+<li>
+Sutherland-Hodgeman Polygon Clipping</li>
+</ul>
+
+<li>
+Antialiasing/Supersampling.(Ch 4)</li>
+
+<li>
+Geometric transformations in 2D and 3D with homogeneous coordinates. (Ch
+5)</li>
+
+<ul>
+<li>
+Translation, Rotation, and Scaling</li>
+
+<li>
+Matrix Representations and Homogeneous Coordinates</li>
+
+<li>
+Composite Transformations</li>
+</ul>
+
+<li>
+Object hierarchy (Ch 7,8)</li>
+
+<li>
+Visible Surface Determination. (Ch 9)</li>
+
+<li>
+3D Projections and viewing. (Ch 12)</li>
+
+<li>
+OpenGL (OpenGL Reference Guide, available on the SGIs)</li>
+</ul>
+
+<h3>
+First the Window class.</h3>
+
+<ul>
+<li>
+We want to create a wrapper that will be platform independant but give
+the functionality required to perform basic operations.</li>
+
+<li>
+The class will need to provide:</li>
+
+<ul>
+<li>
+Basic window operations, Creating a toplevel, window decorations</li>
+
+<ul>
+<li>
+CGWindow() - Constructor</li>
+
+<li>
+Initialize() - Creates the toplevel widget, sets up the event loop,&nbsp;
+creates the drawing area, menus?</li>
+
+<li>
+MainLoop() - Start up processing of the system window events.</li>
+
+<li>
+SetSize(x, y) - Set the size of the rendering window.</li>
+
+<li>
+SetTitle(char*) - Set the Window title</li>
+</ul>
+
+<li>
+Callbacks for updates, resizes, and input</li>
+
+<ul>
+<li>
+SetDrawCallback(CGDrawingCallback) - After the internal update is complete,
+this function is called.</li>
+
+<li>
+SetKeyCallback(CGKeyCallback, void *) - Key input call back for handling
+user input.</li>
+</ul>
+
+<li>
+Methods to change state: color, line type, etc.</li>
+
+<ul>
+<li>
+SetColor(short r, short g, short b) - Set the current drawing color</li>
+</ul>
+
+<li>
+Methods to draw basic primitives.</li>
+
+<ul>
+<li>
+DrawPoint(int x, int y) - Draw a point on the screen (all you really need
+;-)</li>
+
+<li>
+DrawLine(int x1, int y1, int x2, int y2) - For comparison.</li>
+</ul>
+</ul>
+
+<li>
+This class will be responsible for drawing, clipping, filling, and aliasing
+the basic primitives using the best algorithm for the job.</li>
+
+<li>
+Currently the system consists of the classes:</li>
+
+<br>&nbsp;
+<p>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CGObject: <a href="cgobject.cpp">cgobject.cpp,</a><a href="cgobject.h">cgobject.h</a>
+- Base class to form glue for later collection algorithms.
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CGWindow: <a href="cgwindow.cpp">cgwindow.cpp</a>,
+<a href="cgwindow.h">cgwindow.h</a>
+- Window class to perform window functions.
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CGMSWindow:&nbsp;<a href="cgmswindow.cpp">cgmswindow.cpp</a>,
+<a href="cgmswindow.h">cgmswindow.h</a> - MS&nbsp;Windows versions.
+<p>And the file
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="main.cpp">main.cpp</a>
+- Lets get things rolling.
+<br>&nbsp;
+<br>&nbsp;
+<li>
+We will be using these classes, specifically the Draw callback, in the
+next few homework assignments.</li>
+
+<li>
+We will then extend this class hierarchy to abstract and extract functionality
+into individual objects.</li>
+
+<li>
+These will/may contain these objects:</li>
+
+<ul>
+<li>
+Transforms for manipulating individual objects</li>
+
+<li>
+Scene structures, collection objects, scope rules.</li>
+
+<li>
+Time, for animation purposes.</li>
+</ul>
+</ul>
+
+<hr>
+<p><font size=-2><a href="../16/" target="_top">Previous Class</a>, <a href="../18/" target="_top">Next
+Class</a>, <a href="http://www.rpi.edu/dept/ecse/graphics/index.html" target="_top">ECSE-4750
+Fall 1999 Home Page</a></font>
+<br>
+<hr>
+<center>
+<p><font size=-1>Copyright &copy; 1999-2000, Thomas D. Citriniti, citrit@rpi.edu</font>
+<br><font size=-1>For educational purposes only.</font></center>
+
+</body>
+</html>

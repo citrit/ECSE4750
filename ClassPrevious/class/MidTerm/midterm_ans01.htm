@@ -1,0 +1,451 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="./midterm_ans01_files/filelist.xml">
+<link rel=Edit-Time-Data href="./midterm_ans01_files/editdata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>DataVis - Mid Term Exam</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>CIS RPI</o:Author>
+  <o:LastAuthor>CIS RPI</o:LastAuthor>
+  <o:Revision>7</o:Revision>
+  <o:TotalTime>23</o:TotalTime>
+  <o:Created>2001-03-07T23:02:00Z</o:Created>
+  <o:LastSaved>2001-03-07T23:36:00Z</o:LastSaved>
+  <o:Pages>6</o:Pages>
+  <o:Words>1208</o:Words>
+  <o:Characters>6886</o:Characters>
+  <o:Company>CIS</o:Company>
+  <o:Lines>57</o:Lines>
+  <o:Paragraphs>13</o:Paragraphs>
+  <o:CharactersWithSpaces>8456</o:CharactersWithSpaces>
+  <o:Version>9.4119</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p
+	{margin-right:0in;
+	mso-margin-top-alt:auto;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+pre
+	{margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt;
+	font-size:10.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Courier New";}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+<!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext="edit" spidmax="1027"/>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="1"/>
+ </o:shapelayout></xml><![endif]-->
+</head>
+
+<body bgcolor=white lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p>&nbsp;</p>
+
+<h2>Advanced Computer Graphics and Data Visualization </h2>
+
+<p><strong>ECSE-6800 MidTerm Exam</strong><b><br>
+<strong>March 7, 2001</strong></b></p>
+
+<p>&nbsp;</p>
+
+<p>Name _________________________________________</p>
+
+<p>You have the whole class to finish the exam, take your timeand remember to answer
+the questions you know first. Eachquestion is worth 5 points total with the
+points divided betweenthe various parts. Please feel free to use the back of
+the page.</p>
+
+<p>&nbsp;</p>
+
+<h3>1. OpenGL</h3>
+
+<p style='margin-right:.5in;margin-left:.5in'>a. (1 Pt) What is OpenGL?</p>
+
+<p style='margin-right:1.0in;margin-left:1.0in'>&nbsp;<strong><span
+style='color:blue'>A platform independant, 2D and 3D graphics API. Graphics are
+rasterized and scan converted to the resultant image as thefunction call is
+made using the current state.</span></strong></p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p style='margin-right:.5in;margin-left:.5in'>b. (1 Pt) What is meant by
+immediate mode graphics? </p>
+
+<p style='margin-right:.5in;margin-left:.5in'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p style='margin-left:1.0in'>&nbsp;<strong><span style='color:blue'>As you
+issue OpenGL drawing commands, the specified object is drawn to a display</span></strong></p>
+
+<p>&nbsp;</p>
+
+<p style='margin-right:.5in;margin-left:.5in'>c. (3 Pts) Name and describe each
+of the material color components.</p>
+
+<p style='margin-right:1.0in;margin-left:1.0in'>&nbsp;<strong><span
+style='color:blue'>Emitted light is the simplest, it originates from an object
+and is unaffected by any light sources. </span></strong></p>
+
+<p style='margin-right:1.0in;margin-left:1.0in'><strong><span style='color:
+blue'>The ambient component is the light from that source that's been scattered
+so much by the environment that its direction is impossible to determine. When
+ambient light strikes a surface it is scattered in all directions.</span></strong></p>
+
+<p style='margin-right:1.0in;margin-left:1.0in'><strong><span style='color:
+blue'>Diffuse light comes from one direction, so it is brighter if it comes
+down squarely on the surface rather than at an angle. Any light coming from any
+direction has a diffuse component.</span></strong></p>
+
+<p style='margin-right:.5in;margin-left:1.0in'><strong><span style='color:blue'>Specular
+light comes from a direction and bounces off a surface in a particular
+direction. Shiny metal and plastic have a high specular component and chalk and
+carpet have almost none. You can think of specularity as shininess.</span></strong></p>
+
+<p style='margin-right:.5in;margin-left:.5in'>&nbsp;</p>
+
+<h3>2. OpenGL</h3>
+
+<p style='margin-right:.5in;margin-left:.5in'>a. (2 Pts) Explain why OpenGL
+needs an Aux/GLUT library.</p>
+
+<p style='margin-left:1.0in'>&nbsp;<strong><span style='color:blue'>OpenGL was
+designed as a platform independent API. Therefore it needs an extra level of
+interface to user interfaces/window systems and display hardware. Since there
+is no retained mode we also need higher level data/geometric objects</span></strong><span
+style='color:blue'>.</span></p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p style='margin-right:.5in;margin-left:.5in'>b. (3 Pts) Explain what is
+happening with this OpenGL code snippet, and any possible problems (Assume that
+there are enough values in x,y,z and mat to draw the graphic).</p>
+
+<pre><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>g.begin(GL.POLYGON);<br
+style='mso-special-character:line-break'>
+<![if !supportLineBreakNewLine]><br style='mso-special-character:line-break'>
+<![endif]></pre><pre><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>for (int i=0;i&lt;3;i++) {<br
+style='mso-special-character:line-break'>
+<![if !supportLineBreakNewLine]><br style='mso-special-character:line-break'>
+<![endif]></pre><pre><span style='mso-tab-count:2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>gl.vertex(x[i], y[i], z[i]);<br
+style='mso-special-character:line-break'>
+<![if !supportLineBreakNewLine]><br style='mso-special-character:line-break'>
+<![endif]></pre><pre><span style='mso-tab-count:2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>gl.materialfv(GL.FRONT_AND_BACK, GL.AMBIENT_AND_DIFFUSE,<br
+style='mso-special-character:line-break'>
+<![if !supportLineBreakNewLine]><br style='mso-special-character:line-break'>
+<![endif]></pre><pre><span style='mso-tab-count:4'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>mat[i]);<br
+style='mso-special-character:line-break'>
+<![if !supportLineBreakNewLine]><br style='mso-special-character:line-break'>
+<![endif]></pre><pre><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}<br
+style='mso-special-character:line-break'>
+<![if !supportLineBreakNewLine]><br style='mso-special-character:line-break'>
+<![endif]></pre><pre><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>gl.end();</pre>
+
+<p style='margin-left:1.0in'>&nbsp;<strong><span style='color:blue'>This code
+simply draws a polygon with three vertices. The problem is that the glMaterial
+should be before the glVertex call since OpenGL is a state based drawing
+library and we need to set the color prior to drawing.</span></strong></p>
+
+<p>&nbsp;&nbsp;&nbsp;</p>
+
+<h3>3. Scientific Visualization</h3>
+
+<p style='margin-right:.5in;margin-left:.5in'>a) (2 Pts) What is meant by implicit
+and explicit control of a rendering system? Which does our rendering system
+use?</p>
+
+<p style='margin-left:1.0in'>&nbsp;<strong><span style='color:blue'>Implicit
+control is when each object in the system is aware of its dependant children
+and weather it needs to render at any given time. Control of the rendering
+pipeline is implicit in each object in the pipeline. Our rendering system uses
+this method.<o:p></o:p></span></strong></p>
+
+<p style='margin-left:1.0in'><b><span style='color:blue'>Explicit control
+directly tracks the execution of the network and records changes and then
+directly controls the the execution of the process objects. This method must track
+all objects and changes to any one object in order to renotify any dependant
+objects that a change has occured. The nice aspect of this is that there is a
+single process which tracks the network, this allows us to gather execution
+information for data flow graphs.<o:p></o:p></span></b></p>
+
+<p>&nbsp;</p>
+
+<p style='margin-right:.5in;margin-left:.5in'>b) (3 Pts) We know that Color
+Maps represent the relationship between a continuous range of data values and
+color values. From an OO viewpoint, discuss how iso-surface and data cut plane
+objects would need to interface with a color map object, or what would they
+need to ask for from the color map object.</p>
+
+<p style='margin-left:1.0in'>&nbsp;<strong><span style='color:blue'>Iso-surfaces
+are continuous surfaces of a constant scalar value. They would need to ask the
+colormap object for a single color value that represents the scalar value
+mapped to the surface. Data Cut Planes will need to ask the colormap object for
+many colors which correspond to the various scalar values that will be
+generated as the cut plane slices through the data set. The Color map object
+will need to be supplied with the max and min values for the underlying data
+for both cases above.</span></strong></p>
+
+<p>&nbsp;&nbsp;</p>
+
+<h3>4. Data Storage</h3>
+
+<p style='margin-right:.5in;margin-left:.5in'>a. (3Pts) The choice of data
+representation is important because it effects our ability to interface to
+external data and the performance of the overall visualization system. Name and
+describe 3 of the 5 design criterion for our visualization system described in
+class and in the text.</p>
+
+<p style='margin-right:1.0in;margin-left:1.0in'><strong><span style='color:
+blue'>Compact: Since we know visualization data tends to be very large, we need
+to design our structures to minimize computer memory requirements.</span></strong></p>
+
+<p style='margin-right:1.0in;margin-left:1.0in'><strong><span style='color:
+blue'>Efficient: Visualization data needs to be accessed many times and we
+would like to retrieve and store data in our structures in constant time.</span></strong></p>
+
+<p style='margin-right:1.0in;margin-left:1.0in'><strong><span style='color:
+blue'>Mappable: Data representations need to efficiently map into graphics
+primitives. We must be able to easily convert external data into internal
+visualization data structures.</span></strong></p>
+
+<p style='margin-right:1.0in;margin-left:1.0in'><strong><span style='color:
+blue'>Minimal Coverage: We must create a data representation that minimizes the
+number of data types while covering a large portion of external data types. We
+wish to balance efficiency with the number of data types.</span></strong></p>
+
+<p style='margin-left:1.0in'><strong><span style='color:blue'>Simple: Simple
+algorithms and data sets are easier to implement and also easier to extend.</span></strong></p>
+
+<p>&nbsp;</p>
+
+<p style='margin-right:.5in;margin-left:.5in'>b. (2 Pts) If we group our Actor
+classes and contained Cells as data sets, describe what is meant by structure
+and attributes?</p>
+
+<p style='margin-right:1.0in;margin-left:1.0in'><strong><span style='color:
+blue'>Structure is made of two components:</span></strong></p>
+
+<p style='margin-right:1.5in;margin-left:1.5in'><strong><span style='color:
+blue'>Topology: the information about the structure of the dataset (e.g.
+Triangle).</span></strong><b><span style='color:blue'><br>
+<strong>Geometry: the instantiation of the Topology (the x,y,z's).</strong></span></b></p>
+
+<p style='margin-right:.5in;margin-left:1.0in'><strong><span style='color:blue'>Attributes
+are supplemental information associated with the geometry such as temperature,
+pressure, or density. They consist of scalars, vectors, normals, texture
+coordinates, tensors, and user defined data.</span></strong></p>
+
+<p style='margin-right:.5in;margin-left:.5in'>&nbsp;&nbsp;</p>
+
+<h3>5. Data algorithms</h3>
+
+<p style='margin-right:.5in;margin-left:.5in'>(5 Pts) Based on our discusions
+of marching quads, fill in the GetPoint Java algorithm to extract where a given
+scalar value <strong><span style='font-family:"Courier New"'>val</span></strong>
+will fall between the given points <strong><span style='font-family:"Courier New"'>Pt1</span></strong>
+and <strong><span style='font-family:"Courier New"'>Pt2</span></strong> with
+given scalar range values <strong><span style='font-family:"Courier New"'>Sc1</span></strong>
+and <strong><span style='font-family:"Courier New"'>Sc2</span></strong>. This
+algorithm should assign the calculated x,y,z to <strong><span style='font-family:
+"Courier New"'>res</span></strong> and work for any given <strong><span
+style='font-family:"Courier New"'>val</span></strong> .</p>
+
+<pre style='margin-left:1.5in'>typedef Struct Point {<br style='mso-special-character:
+line-break'>
+<![if !supportLineBreakNewLine]><br style='mso-special-character:line-break'>
+<![endif]></pre><pre style='margin-left:1.5in'><span style='mso-tab-count:2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>float x, y, z;<br
+style='mso-special-character:line-break'>
+<![if !supportLineBreakNewLine]><br style='mso-special-character:line-break'>
+<![endif]></pre><pre style='margin-left:1.5in'>};<br style='mso-special-character:
+line-break'>
+<![if !supportLineBreakNewLine]><br style='mso-special-character:line-break'>
+<![endif]></pre><pre style='margin-left:1.5in'>Point res = new Point(); <br
+style='mso-special-character:line-break'>
+<![if !supportLineBreakNewLine]><br style='mso-special-character:line-break'>
+<![endif]></pre><pre style='margin-left:1.5in'>Point&amp; GetPoint(Point Pt1, Point Pt2,<br
+style='mso-special-character:line-break'>
+<![if !supportLineBreakNewLine]><br style='mso-special-character:line-break'>
+<![endif]></pre><pre style='margin-left:1.5in'><span style='mso-tab-count:2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>float Sc1, float Sc2, float val) {<br
+style='mso-special-character:line-break'>
+<![if !supportLineBreakNewLine]><br style='mso-special-character:line-break'>
+<![endif]></pre><pre style='margin-left:1.5in'><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp; </span>// You fill in the blank.<br
+style='mso-special-character:line-break'>
+<![if !supportLineBreakNewLine]><br style='mso-special-character:line-break'>
+<![endif]></pre><pre style='margin-left:1.5in'><br style='mso-special-character:
+line-break'>
+<![if !supportLineBreakNewLine]><br style='mso-special-character:line-break'>
+<![endif]></pre><pre style='margin-left:1.5in'><span style="mso-spacerun: yes">&nbsp;</span><span
+style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp; </span>return res; <br
+style='mso-special-character:line-break'>
+<![if !supportLineBreakNewLine]><br style='mso-special-character:line-break'>
+<![endif]></pre><pre style='margin-left:1.5in'>}</pre><pre style='margin-left:
+2.5in'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></pre><pre
+style='margin-left:1.5in'><strong><span style='color:blue'>float normv;<o:p></o:p></span></strong></pre><pre
+style='margin-left:1.5in'><strong><span style='color:blue'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></strong></pre><pre
+style='margin-left:1.5in'><strong><span style='color:blue'>if (Sc1 == Sc2)<o:p></o:p></span></strong></pre><pre
+style='margin-left:1.5in'><strong><span style='color:blue'><span
+style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp; </span>return res;<o:p></o:p></span></strong></pre><pre
+style='margin-left:1.5in'><strong><span style='color:blue'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></strong></pre><pre
+style='margin-left:1.5in'><strong><span style='color:blue'>normv = (val - Sc1) / (Sc2 - Sc1); <o:p></o:p></span></strong></pre><pre
+style='margin-left:1.5in'><strong><span style='color:blue'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></strong></pre><pre
+style='margin-left:1.5in'><strong><span style='color:blue'>res.x = ((Pt2.x - Pt1.x)* normv) + Pt1.x; </span></strong><b><span
+style='color:blue'><br style='mso-special-character:line-break'>
+<![if !supportLineBreakNewLine]><br style='mso-special-character:line-break'>
+<![endif]><strong><o:p></o:p></strong></span></b></pre><pre style='margin-left:
+1.5in'><strong><span style='color:blue'>res.y = ((Pt2.y - Pt1.y)* normv) + Pt1.y; </span></strong><b><span
+style='color:blue'><br style='mso-special-character:line-break'>
+<![if !supportLineBreakNewLine]><br style='mso-special-character:line-break'>
+<![endif]><strong><o:p></o:p></strong></span></b></pre><pre style='margin-left:
+1.5in'><strong><span style='color:blue'>res.z = ((Pt2.z - Pt1.z)* normv) + Pt1.z;</span></strong></pre>
+
+<p style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 441.0pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<h3 style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 441.0pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'>6.
+Data algorithms</h3>
+
+<p class=MsoNormal style='margin-right:.5in;mso-margin-top-alt:auto;mso-margin-bottom-alt:
+auto;margin-left:.5in;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 441.0pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'>a.
+(2 Pts) Based on our discussion of OpenInventor and scene graphs, explain how
+properties (materials and geometry) are shared.</p>
+
+<p style='margin-bottom:12.0pt;margin-left:1.0in;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 441.0pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><strong><span
+style='color:blue'>Scene Graphs are hierarchical structures in which materials
+affect nodes later in the graph. Materials are shared by way of their position
+in the graph.</span></strong><br style='mso-special-character:line-break'>
+<![if !supportLineBreakNewLine]><br style='mso-special-character:line-break'>
+<![endif]></p>
+
+<p style='margin-right:1.0in;margin-left:.5in;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 441.0pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'>b.
+(3 Pts) In the Visualization Pipeline section of class we discussed reasons for
+incorporating the Process methods into the Data Object and also extracting the
+process method into its own object. Give reasons for and against both of these
+paradigms.</p>
+
+<p style='margin-right:1.0in;margin-left:1.0in;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 441.0pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><strong><span
+style='color:blue'>Process inside Data Objects:</span></strong></p>
+
+<p style='margin-right:1.5in;margin-left:1.5in;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 441.0pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><strong><span
+style='color:blue'>For: The processes, which are data manipulation algorithms,
+have direct access to the data which makes for fast code.</span></strong></p>
+
+<p style='margin-right:1.5in;margin-left:1.5in;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 441.0pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><strong><span
+style='color:blue'>Against: Users generally think of data algorithms as
+separate objects. Algorithms must be implemented in all objects of any data
+type we may create. Also if we change our contouring algorithm this must be
+changed in each data object that implements this process.</span></strong></p>
+
+<p style='margin-right:1.0in;margin-left:1.0in;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 441.0pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><strong><span
+style='color:blue'>Separate process objects:</span></strong></p>
+
+<p style='margin-right:1.5in;margin-left:1.5in;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 441.0pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><strong><span
+style='color:blue'>For: More intuitive for the user, easier to re-use data
+objects in the Visualization pipeline.</span></strong></p>
+
+<p style='margin-right:1.5in;margin-left:1.5in;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 441.0pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><strong><span
+style='color:blue'>Against: Generalized data algorithms require general data
+objects restricting our base data types. More difficult to implement.</span></strong><br
+style='mso-special-character:line-break'>
+<![if !supportLineBreakNewLine]><br style='mso-special-character:line-break'>
+<![endif]></p>
+
+<h3 style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 441.0pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'>7.
+Data Storage</h3>
+
+<p style='margin-right:.5in;margin-left:.5in;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 441.0pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'>(5
+Pts) Based on our discusions of the Scene Graph structure, fill in the blanks
+below with the position and color of each of the objects.</p>
+
+<p style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 441.0pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><img
+width=719 height=383 id="_x0000_i1025" src=sceneGraph.JPG></p>
+
+<pre>Object<span style='mso-tab-count:1'>&nbsp; </span>Position<span style="mso-spacerun: yes">&nbsp;&nbsp; </span><span
+style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp; </span>Color</pre><pre>1<span
+style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>__<u>2, -3</u>_____<span
+style='mso-tab-count:1'>&nbsp;&nbsp; </span>___<u>Red</u>_______</pre><pre>2<span
+style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>__<u>7, <span style="mso-spacerun: yes">&nbsp;</span>3</u>_____<span
+style='mso-tab-count:1'>&nbsp;&nbsp; </span>___<u>Green</u>_____</pre><pre>3<span
+style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>__<u>2, -3</u>_____<span
+style='mso-tab-count:1'>&nbsp;&nbsp; </span>___<u>Green</u>_____</pre><pre>4<span
+style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>__<u>4,<span style="mso-spacerun: yes">&nbsp; </span>2</u>_____<span
+style='mso-tab-count:1'>&nbsp;&nbsp; </span>___<u>Red</u>_______</pre><pre>5<span
+style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>__<u>7,<span style="mso-spacerun: yes">&nbsp; </span>6</u>_____<span
+style='mso-tab-count:1'>&nbsp;&nbsp; </span>___<u>Blue</u>______</pre><pre>6<span
+style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>__<u>0,<span style="mso-spacerun: yes">&nbsp; </span>0</u>_____<span
+style='mso-tab-count:1'>&nbsp;&nbsp; </span>___<u>Red</u>_______</pre>
+
+<p style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 441.0pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'>&nbsp;</p>
+
+<p style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 441.0pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'>&nbsp;</p>
+
+<p style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 441.0pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><strong>Extra
+credit:</strong><b><br>
+</b>(2 Pts) What does VRML stand for? <strong><span style='color:blue'>Virtual
+Reality Modeling Language</span></strong><br>
+(2 Pts) What are some weaknesses of the Object Rendering system we used for
+class?</p>
+
+<p style='margin-left:.5in;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 441.0pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><b><span
+style='color:blue'>Very dependant on OpenGL like rendering library</span></b>.<br>
+<b><span style='color:blue'>Weak camera model.<br>
+No built in support for Vis pipeline.</span></b></p>
+
+<p style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 441.0pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'>(1
+Pt) What is your quest? What is your favorite color? :-).</p>
+
+</div>
+
+</body>
+
+</html>

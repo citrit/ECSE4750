@@ -1,0 +1,576 @@
+<!-- Time-stamp: </home/wrf/cg-f99/Classes/04/index.html, Wed,  3 Nov 1999, 19:14:50 EST, wrf@benvolio.ecse.rpi.edu> -->
+<html>
+
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage Express 2.0">
+<title>ECSE-4750, RPI, Class 3</title>
+<!-- Changed by: Wm. Randolph Franklin, 13-Jan-1999 -->
+<STYLE TYPE="text/css">
+<!--
+H1 { color: red; }
+
+H2 { color: blue; }
+
+   OL.outline {list-style-type: upper-roman;
+    font: bold italic 18pt sans-serif;}
+
+   OL.outline OL {list-style-type: upper-alpha;
+       font: bold 14pt sans-serif;}
+
+   OL.outline OL OL {list-style-type: decimal;
+	  font: 12pt serif;}
+
+   OL.outline OL OL OL {list-style-type: lower-alpha;
+	     font: 10pt serif;}
+
+   OL.outline OL OL OL OL {list-style-type: lower-roman;
+		font: 10pt sans-serif;}
+   -->
+</STYLE>
+</head>
+
+<body bgcolor="#FFFFFF">
+
+<h1 align="center">Rensselaer Polytechnic Institute <br>
+ECSE-4750 Computer Graphics, Fall 1999<br>
+Class 3, Tues Jan 18</h1>
+
+<h1><a name="01"></a>RCS Programming Notes</h1>
+
+<ol>
+    <li>Many people have modified their .login.profile to search
+        for ACM versions of programs before RCS versions. This is
+        generally nice since the ACM has lots of good programs.
+        However, the ACM version of <b>make</b> is incompatible
+        with the RCS version. If you use the ACM version, then
+        your X programs won't link. There are 2 solutions. </li>
+    <li><ol>
+            <li>Edit your .login.profile to remove the reference
+                to acm, or</li>
+            <li>Say <b>/bin/make xhello</b> (or whatever program)
+                instead of saying <b>make xhello</b>.</li>
+        </ol>
+    </li>
+    <li><a href="demoio.C">demoio.C</a> is a really short program
+        that demonstrates input/output in Unix. It reads in
+        numbers 3-at-a-time, and writes the product.</li>
+    <li>You can use files with it thus:<pre>
+demoio <INFILE> OUTFILE
+</pre>
+    </li>
+</ol>
+
+<h1><a name="02"></a>Meta-Learning</h1>
+
+<p>You should be learning about X on three levels. </p>
+
+<ol>
+    <li>You're learning a mess of facts about a specific
+        important package, X with Motif. (Actually, I'm shielding
+        you from much of the mess.) </li>
+    <li>You're learning about GUIs in general. Visual C etc has
+        things like widgets and callbacks, but the names are
+        different.</li>
+    <li>You're learning how to learn living, complicated, systems
+        in general. The doc is not perfect; things may break if
+        you push them too hard, and you have to modify programs
+        while only partly understanding them.</li>
+</ol>
+
+<h1><a name="03"></a>X Themes</h1>
+
+<ol>
+    <li>Client - server.</li>
+    <li><ol>
+            <li>Client: who does major computation</li>
+            <li>Server: controls display</li>
+            <li>keyboard, mouse, display &lt;-&gt; server
+                &lt;-&gt; client, client, ...</li>
+        </ol>
+    </li>
+    <li>Server functions:</li>
+    <li><ol>
+            <li>provides multi-client access</li>
+            <li>processes client messages and responds</li>
+            <li>draws on display</li>
+            <li>maintains local data structures: backing store,
+                color maps, fonts, graphics context</li>
+        </ol>
+    </li>
+    <li>Security: xhost, cookies, mxconns</li>
+    <li>Window manager functions</li>
+    <li><ol>
+            <li>rules the display</li>
+            <li>does layout, moves windows, iconifies</li>
+            <li>routes input to the window with <b>focus</b> </li>
+            <li>window title bars and their menus</li>
+            <li>You can kill the WM, and with luck, restart it or
+                another one. Make sure that there will be an
+                xterm window on top, or you're dead. If the KB is
+                dead, try cutting-and-pasting the command.
+                Finally, telnet into the workstation, if that's
+                allowed, or call a consultant. </li>
+        </ol>
+    </li>
+    <li>X routine hierarchy</li>
+    <li><ol>
+            <li>Each level has concepts, data types, routines.</li>
+            <li>(Lowest level) X ICCCM protocol: events,
+                requests, replies, errors.</li>
+            <li>Xlib - direct interface</li>
+            <li>Xt - adds OO concepts, like the concept of
+                widgets, but not specific widgets.</li>
+            <li>some widget set: Motif (Xm), Athena (Xaw), etc.</li>
+            <li>(Highest level) User program: calls Xm, Xt, Xlib.</li>
+        </ol>
+    </li>
+</ol>
+
+<h1><a name="04"></a>Grouping Concepts in X</h1>
+
+<p>X groups related concepts or items whenever possible. Here are
+examples:</p>
+
+<ol>
+    <li>Widget instances are grouped into widget classes, such as
+        the label widget class. All the widgets in one class have
+        approximately the same behavior. E.g., the pushbutton
+        class accepts mouse button clicks. This also lets you set
+        a resource for all the widgets of a given class. The
+        following will set the background to green for all label
+        widgets, except for mylabel, which will be red. (Specific
+        settings override general ones.)<pre>
+*Label.background: green
+*mylabel.background: red
+</pre>
+    </li>
+    <li>Related widget classes are grouped into a tree-structured
+        hierarchy extending up to the core widget class. They
+        inherit properties just as in C++.</li>
+    <li>Related programs may be grouped by giving them the same
+        class name in XtVaAppInitialize. This lets you set
+        resources for all the programs in the class at one time. </li>
+    <li>Related resources are grouped into resource classes. This
+        lets you set all the resources in the class at once. </li>
+</ol>
+
+<p>Class names have their first letter capitalized. If that is
+'X', then the first two letters are capitalized. This is not a
+law, but merely a convention.</p>
+
+<h1><a name="05"></a>X Man Pages</h1>
+
+<p>Here are a sampling of man pages. </p>
+
+<ol>
+    <li><a href="XtVaAppInitialize.pdf"><tt>XtVaAppInitialize</tt></a>,
+    </li>
+    <li><a href="XtVaCreateManagedWidget.pdf"><tt>XtVaCreateManagedWidget</tt></a>,
+    </li>
+    <li><a href="XtRealizeWidget.pdf"><tt>XtRealizeWidget</tt></a>,
+    </li>
+    <li><a href="XtAppMainLoop.pdf"><tt>XtAppMainLoop</tt></a>,
+        and. </li>
+    <li><a href="XtAppAddActions.pdf"><tt>XtAppAddActions</tt></a>.
+    </li>
+</ol>
+
+<p>I formatted them like this on my private Sun:</p>
+
+<ol>
+    <li><pre>cd /afs/rpi.edu/campus/X11/R6/core/1.0/sun4c_41/man/
+ptroff -t -man /afs/rpi.edu/campus/X11/R6/core/1.0/sun4c_41/man/man3/-
+	XtVaAppInitialize.3 &gt; /dept/ecse/graphics/XtVaAppInitialize.ps</pre>
+    </li>
+    <li>telnet to rcs.rpi.edu, then run Adobe distill. (Distill
+        is installed only on the telnet machines.) </li>
+</ol>
+
+<p>Notes:</p>
+
+<ol>
+    <li>Unfortunately, ptroff is not on RCS. You can display the
+        man pages on xterm with the man command, after adding the
+        appropriate directories to MANPATH, e.g., <p
+        align="center">MANPATH=$MANPATH:/campus/X11/R6/core/1.0/sun4c_41/man<br>
+        man XtVaAppInitialize </p>
+    </li>
+    <li>The SGIs seem to have a brain-damaged version of the <tt>man</tt>
+        command, which doesn't do the X pages very well. </li>
+    <li>Some of the man pages include other files, which is why I
+        cd'ed to the dir above the dir with the man page to
+        format it.</li>
+    <li>Many routines have alternate versions. To keep things
+        sinple, in this case, I present one version in class, and
+        ignore the others.</li>
+    <li>Nroff/troff implements tables with a preprocessor, which
+        much be run first on man pages with tables. It should be
+        ok to run it even when there are no tables.</li>
+    <li>As usual, the man pages have more info than you need.
+        Part of the fun is skimming thru them to get a sense of
+        their contents, and then to extract what you need.</li>
+</ol>
+
+<h1><a name="06"></a>Adding Translations to Xterm</h1>
+
+<p>Here is an example of using a translation table of event and
+actions to add a few things to <code>xterm</code>. Function keys
+F2 and F6 cause commands to be entered. F2 is especially useful
+inside ftp. If I hold shift down when leaving the window, then
+the font is set smaller (assuming that the default font is
+small), and if I hold shift down when entering, the font is
+restored. <code>string</code> and <code>set-vt-font</code> are
+actions defined inside <code>xterm</code>; see the man page. </p>
+
+<pre>XTerm*VT100.Translations:	      #override \
+   &lt;Key&gt;F2:		      string(&quot;ls -FC&quot;) string(0x0d) \n\
+   &lt;Key&gt;F6:		      string(&quot;date&quot;) string(0x0d) \n\
+   Shift&lt;Enter&gt;:	      set-vt-font(default) \n\
+   Shift&lt;Leave&gt;:	      set-vt-font(1)</pre>
+
+<h1><a name="07"></a>Extra Info on X</h1>
+
+<p>Several people have asked about reading more about X, or about
+buying books on it. All of the following should be in the
+library. </p>
+
+<ol>
+    <li>For reading, see the intro to any X book, such as <ol>
+            <li>Keller, Brian J., A practical guide to X window
+                programming : developing applications with the Xt
+                Intrinsics and OSF/Motif, QA76.76.W56 K45 1990 </li>
+            <li>Young, Douglas A., The X Window system :
+                programming and applications with Xt / Douglas A.
+                Young, QA76.76.W56 Y67 1994 </li>
+            <li>Valerie Quercia and Tim O'Reilly, Definitive
+                guides to the X Window System vol 3: X Window
+                System user's guide, Motif edition, QA76.76.W56
+                D44 1990a v.3 </li>
+            <li>vol 4 of the above series. </li>
+        </ol>
+    </li>
+    <li>I don't recommend that you necessarily buy the above. If
+        you want to buy something, look at volume 6a.</li>
+    <li>While the above commercial books have more examples and
+        explanation, the online docs have more precise info. This
+        is because the online docs were written by the people who
+        implemented X, while the books were generally written
+        from the online docs.</li>
+</ol>
+
+<h1><a name="08"></a>Useful X Programs</h1>
+
+<p>Here are a number of somewhat useful programs, some of which
+I've mentioned before, to determine information about the system.
+See the man pages for a description. E.g., editres displays the
+widget tree of another program that is running, and lets you
+change that program's resources while it runs. </p>
+
+<pre>appres editres viewres xlsclients xlswins xmag xprop</pre>
+
+<h1><a name="09"></a>Xfarewell - Attaching User Defined Actions
+to Events</h1>
+
+<p>The program <a href="xfarewell.c">/dept/ecse/graphics/Classes/04/xfarewell.c</a>
+with its resource file <a href="XFarewell.ad">/dept/ecse/graphics/Classes/04/XFarewell.ad</a>
+illustrate adding a user-defined action to a button or key event
+of a pushbutton widget. It shows this: </p>
+
+<p><img src="xfarewell.gif" width="134" height="51"> </p>
+
+<p>Actions and events are lower-level than callbacks. I.e., they
+are messier but more powerful. Also, only callbacks can be
+attached to higher-level things such as destroying the widget.</p>
+
+<h1><a name="10"></a>Xbox - Resources, Bulletinboard, Compound
+Strings, Popup &amp; Dialog etc.</h1>
+
+<p><a href="xbox.c"><tt>/dept/ecse/graphics/Classes/04/xbox.c</tt></a>
+illustrates these things: </p>
+
+<ol>
+    <li>Setting resources when a widget is created. </li>
+    <li>A bulletinboard widget. You have to specify its kids'
+        locations explicitly, like pinning a note on a real
+        bulletin board. </li>
+    <li>Converting a text string to the Motif compound string
+        format needed when setting a label inside the program. </li>
+    <li>Creating a popup. </li>
+    <li>Creating a Motif convenience popup dialog widget. </li>
+    <li>Putting callbacks on two of its buttons, and </li>
+    <li>Reading the string the user typed in it. </li>
+</ol>
+
+<p>There is no resource file. The top-level window is this:</p>
+
+<p><img src="xbox1.gif" width="171" height="112"></p>
+
+<p>and the popup is this:</p>
+
+<p><img src="xbox2.gif" width="228" height="143"></p>
+
+<p>The popup has no title bar since I use fvwm, and my .fvwmrc is
+set that way.</p>
+
+<h1><a name="11"></a>Children of the Top-Level Widget</h1>
+
+<p>This is relevant to popups, but is messy.</p>
+
+<ol>
+    <li>Widget instances form a hierarchy.</li>
+    <li>Windows form a hierarchy, starting with the root window.</li>
+    <li>A child window is completely contained in its parent.
+        Anything outside is clipped.</li>
+    <li>The widget hierarchy almost completely matches the window
+        hierarchy, with a few exceptions.</li>
+    <li>An unrealized widget has no window.</li>
+    <li>A popup window is the child of the root window; else it
+        would be invisible.</li>
+    <li>It doesn't much matter who the parent of the popup widget
+        is.</li>
+    <li>A toplevel widget can have more than one child widget,
+        but its window can have only one child window.</li>
+    <li>Any widget children past the first must be popup widgets;
+        their windows, when they exist, are children of the root
+        window (or window manager if it exists).</li>
+</ol>
+
+<p>References: </p>
+
+<p><code>/campus/osf/motif/1.2.2/distrib/src/doc/man/Shell.3X</code>)
+says: </p>
+
+<blockquote>
+    <p>``Shell is a top-level widget (with only one managed
+    child) that encapsulates the interaction with the window
+    manager.'' </p>
+</blockquote>
+
+<p><code>/campus/osf/motif/1.2.2/distrib/src/doc/programGuide/ch02.sm</code>
+says: </p>
+
+<blockquote>
+    <p>``(The approach described in class) is to designate one
+    top-level widget the application, enclosed in an
+    ApplicationShell, and make the other TopLevelShells popup
+    children of the ApplicationShell. A popup child is one whose
+    window is a child of the root window and whose geometry is
+    not managed by its parent widget.'' </p>
+</blockquote>
+
+<p>Extra children might be allowed if unmanaged; we'll ignore
+this case. </p>
+
+<h1><a name="12"></a>Font versus FontList</h1>
+
+<p>In general, Athena widget programs use the font resource.
+Motif ones take their fonts from a fontList; their default font
+is the first one on the list. To make <tt>xhello</tt> use a
+different font, add this to <tt>XHello.ad</tt>:<br>
+</p>
+
+<p><code>*fontList:7x13</code> </p>
+
+<p>or cut and paste a font from <tt>xfontsel</tt>. That is,</p>
+
+<ol>
+    <li>Use <tt>xfontsel</tt> to select a nice font.</li>
+    <li>Click on <em>Select</em> to put that font name into the
+        server's X selection buffer. (This is somewhat like a cut
+        buffer.) </li>
+    <li>Use the middle mouse button to paste the selection into
+        the editor. This step may fail, in which case you're out
+        of luck. </li>
+</ol>
+
+<h1><a name="13"></a>C Strings Versus Motif Strings</h1>
+
+<ol>
+    <li>This is relevant since some routines require C strings as
+        arguments, while others require Motif compound strings. </li>
+    <li>C strings are arrays of 8-bit chars. The only structure
+        is that many programs assume that there is a null char at
+        the end. The chars may be ASCII, which uses 7 bits, with
+        the hi bit being 0 or a parity bit. Alternatively, the
+        chars may be 8-bit ISO8859, which allows a single byte to
+        represent an accented char, such as éèêc, and so on.
+        More on this in a later handout.</li>
+    <li>Motif compound strings allow wide (16-bit) chars, like
+        Kanji, and contain embedded font and direction info.</li>
+    <li>C routines like <code>strcpy</code> and <code>strcat</code>
+        do not alloc storage. You must do that. They modify their
+        first arg.</li>
+    <li>Motif routines, like <code>XmStringConcat</code>, do not
+        modify their args. They do alloc space for the answer,
+        and return a pointer to it. You should free the space
+        when you don't need the string any more. However, if you
+        free the space too soon, then unpleasant things may
+        happen.</li>
+</ol>
+
+<h1><a name="14"></a>Xlots.c</h1>
+
+<p>There is no resource file for <a href="xlots.c">/dept/ecse/graphics/h03/xlots.c</a>.
+It illustrates an array of lots of widgets. Grab the corner of
+the window and resize it; watch the row column widget rearrange
+its kids. Here a screendump showing several runs after the window
+has been resized differently.</p>
+
+<p><img src="xlots.gif" width="522" height="333"> </p>
+
+<h1><a name="15"></a>Xmove.c</h1>
+
+<p><a href="xmove.c">/dept/ecse/graphics/Classes/04/xmove.c</a>
+shows moving a widget by getting and setting its position
+resources, and also changing a label dynamically.</p>
+
+<p>Click and the widget and watch it. Then grab and move the
+widget and click again. The amount that the widget moves depends
+on your window manager. </p>
+
+<p>This is the resources file, <a href="XMove.ad">Xmove.ad</a> .</p>
+
+<h1><a name="16"></a><a name="SECTION00030000000000000000">
+Homework 2 -- Due Tues, </a>Jan 25</h1>
+
+<ol>
+    <li>Play with the demo programs on the SGI workstations.
+        Don't hand in anything for this. </li>
+    <li>Use the camera on the SGIs to photograph yourself or your
+        team, print the photo, write your name on it, and hand it
+        in. If you would prefer not to submit your photo, then
+        photo anything else instead. </li>
+    <li>How would you start an xterm window that was 72 columns
+        wide, 34 rows deep, and placed against the lower right
+        corner of the screen. (Read the X man page.) </li>
+    <li>One large application of graphics is in Hollywood. See <i>Linux
+        Helps Bring Titanic to Life</i> in issue 46 of the Linux
+        Journal. <!---
+<a href="http://www.ssc.com/lj/issue46/2494.html">http://www.ssc.com/lj/issue46/2494.html</a>
+--> <a
+        href="http://linux.nuvoli.to.it/varie/titanic/2494.html">here</a>
+        for one example. Now, answer some questions on that.
+        These are to be ``back-of-the-envelope'' calculations;
+        anything within a factor of 5 of the correct answer is
+        ok. In fact, the numbers are so imprecise, that the
+        inherent accuracy is probably only a factor of 2. <dl
+        compact>
+            <dt>(a) </dt>
+            <dd>What HW was used for the graphics animation? Why?
+            </dd>
+            <dt>(b) </dt>
+            <dd>What OS was used? Why? </dd>
+            <dt>(c) </dt>
+            <dd>How many CPU hours were used, approximately,
+                assuming that 105 Alphas were used? </dd>
+            <dt>(d) </dt>
+            <dd>How many frames are in the movie? </dd>
+            <dt>(e) </dt>
+            <dd>How many CPU minutes did the average frame take? </dd>
+            <dt>(f) </dt>
+            <dd>Assuming that one frame has 6,000,000 pixels, and
+                that the Alpha used was about 30 MFLOPS, which
+                was just a wild guess, how many floating point
+                operations did each pixel take? </dd>
+            <dt>(g) </dt>
+            <dd>The URL that I gave is in Italy. Use your
+                favorite search engine (I recommend google) to
+                find a closer URL. </dd>
+        </dl>
+    </li>
+    <li>Browse the man pages mentioned today, and tell me five
+        things that XtVaAppInitialize does. </li>
+    <li>Get the files <tt>Makefile</tt>, <tt>xhello.c</tt>, <tt>xgoodbye.c</tt>,
+        and <tt>XGoodbye.ad</tt> from
+        /dept/ecse/graphics/Classes/02/. Compile and run <tt>xhello</tt>.
+        Run it without recompiling with a different foreground
+        color, and background color, by specifying extra command
+        line arguments. The list of official colors should be in
+        /usr/lib/X11/rgb.txt. </li>
+    <li>Now compile <tt>xgoodbye.c</tt> in the same way as for <tt>xhello</tt>.
+        Run it, click on the window that appears, and observe the
+        message. Modify the message by editing a file <tt>XGoodbye.ad</tt>
+        like the following, but including your name. <p
+        align="center"><tt>*goodbye.labelString: Au Revoir to WRF</tt>
+        </p>
+    </li>
+    <li>Extend <tt>xgoodbye.c</tt> by adding several other
+        pushbutton widgets, like goodbye, but with names that are
+        some top-level options in RPInfo. When it is pressed,
+        they should print a string containing the choices at the
+        next level, and not quit. E.g., there should be a command
+        widget labeled <b>Academics</b> that causes <b>Arch Eng
+        Sci Mgt HSS ROTC</b> to be printed. You do not need to be
+        exhaustive; it's ok to list only two items in each case.
+        Do not do anything like actually calling RPInfo. <p>This
+        will require learning and using a composite rowcolumn
+        widget under toplevel to hold the other widgets. Do it
+        thus: </p>
+        <dl compact>
+            <dt>(a) </dt>
+            <dd>Include <code>RowColumn.h</code> just as <code>Pushb.h</code>
+                . </dd>
+            <dt>(b) </dt>
+            <dd>Instead of the quit widget being under toplevel,
+                create a new widget, called rowcolumn, under
+                toplevel. Make its class <code>xmRowColumnWidgetClass</code>.
+            </dd>
+            <dt>(c) </dt>
+            <dd>Make the quit widget, and your new widget, say
+                called other, under rowcolumn. </dd>
+            <dt>(d) </dt>
+            <dd>Add a new routine, like quit, to be called when
+                other is pressed. </dd>
+            <dt>(e) </dt>
+            <dd>Add a callback to this new routine. </dd>
+            <dt>(f) </dt>
+            <dd>Also add a label widget, like from xhello, under
+                rowcolumn. </dd>
+            <dt>(g) </dt>
+            <dd>If you want to be specific about the string in
+                this label widget, you can specify it in <tt>XGoodbye.ad</tt>
+                as <p><tt>*goodbye.labelString: I'm the goodbye
+                label</tt> </p>
+                <p>assuming the widget's name is goodbye.</p>
+            </dd>
+        </dl>
+    </li>
+    <li>Make sure that your screen contains both xhello and
+        xgoodbye running. Get a screendump and hand it, and the
+        program, in. Don't make too many screendumps since each
+        one takes several minutes to print. </li>
+</ol>
+
+<hr>
+
+<p><a href="./" target="_top">Previous Class</a>, <a
+href="../05/" target="_top">Next Class</a>, <a
+href="http://www.rpi.edu/dept/ecse/graphics/index.html"
+target="_top">ECSE-4750 Fall 1999 Home Page</a> </p>
+
+<hr>
+
+<p>Copyright © 1998-9, Wm. Randolph Franklin. You may use my
+material for non-profit education and research, provided that you
+acknowledge me and preserve this notice. </p>
+<div align="center"><center>
+
+<address>
+    Wm. Randolph Franklin, Associate Professor<br>
+    For email address, replace NOSPAM by RPI in the following:
+    wrf@ecse.NOSPAM.edu<br>
+    <a href="http://www.ecse.rpi.edu/Homepages/wrf/">http://www.ecse.rpi.edu/Homepages/wrf/</a><br>
+    +1 (518) 276-6077; Fax: -6261<br>
+    ECSE Dept., 6026 JEC, Rensselaer Polytechnic Inst, Troy NY,
+    12180 USA<br>
+    (PGP key available)<br>
+    
+</address>
+</center></div><script>
+document.write("<i>Updated:</i> " + document.lastModified + "<br>")
+document.write("<i>URL:</i> " + document.URL + "<br>")
+</script>
+</body>
+</html>

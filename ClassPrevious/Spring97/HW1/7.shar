@@ -1,0 +1,422 @@
+#!/bin/sh
+# This is a shell archive (produced by GNU sharutils 4.2).
+# To extract the files from this archive, save it to some FILE, remove
+# everything before the `!/bin/sh' line above, then type `sh FILE'.
+#
+# Made on 1997-02-06 15:20 EST by <jainh@act3.bme.rpi.edu>.
+# Source directory was `/afs/rpi.edu/home/92/jainh/courses/GraphVis/hw1'.
+#
+# Existing files will *not* be overwritten unless `-c' is specified.
+#
+# This shar contains:
+# length mode       name
+# ------ ---------- ------------------------------------------
+#    323 -rw------- Makefile
+#   8026 -rw------- draw_obj.c
+#
+save_IFS="${IFS}"
+IFS="${IFS}:"
+gettext_dir=FAILED
+locale_dir=FAILED
+first_param="$1"
+for dir in $PATH
+do
+  if test "$gettext_dir" = FAILED && test -f $dir/gettext \
+     && ($dir/gettext --version >/dev/null 2>&1)
+  then
+    set `$dir/gettext --version 2>&1`
+    if test "$3" = GNU
+    then
+      gettext_dir=$dir
+    fi
+  fi
+  if test "$locale_dir" = FAILED && test -f $dir/shar \
+     && ($dir/shar --print-text-domain-dir >/dev/null 2>&1)
+  then
+    locale_dir=`$dir/shar --print-text-domain-dir`
+  fi
+done
+IFS="$save_IFS"
+if test "$locale_dir" = FAILED || test "$gettext_dir" = FAILED
+then
+  echo=echo
+else
+  TEXTDOMAINDIR=$locale_dir
+  export TEXTDOMAINDIR
+  TEXTDOMAIN=sharutils
+  export TEXTDOMAIN
+  echo="$gettext_dir/gettext -s"
+fi
+touch -am 1231235999 $$.touch >/dev/null 2>&1
+if test ! -f 1231235999 && test -f $$.touch; then
+  shar_touch=touch
+else
+  shar_touch=:
+  echo
+  $echo 'WARNING: not restoring timestamps.  Consider getting and'
+  $echo "installing GNU \`touch', distributed in GNU File Utilities..."
+  echo
+fi
+rm -f 1231235999 $$.touch
+#
+if mkdir _sh03879; then
+  $echo 'x -' 'creating lock directory'
+else
+  $echo 'failed to create lock directory'
+  exit 1
+fi
+# ============= Makefile ==============
+if test -f 'Makefile' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'Makefile' '(file already exists)'
+else
+  $echo 'x -' extracting 'Makefile' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'Makefile' &&
+CC=acc
+LDFLAGS= -L/campus/visualization/mesa-ogl/1.2.7/@sys/lib \
+X	-lMesaaux -lglut -lMesatk -lMesaGLU -lMesaGL  \
+X	-L/usr/local/X11/lib -lXmu -lXt -lX11 -lm
+X
+CFLAGS= -g -I/campus/visualization/mesa-ogl/1.2.7/@sys/include
+X
+TARGET=draw_obj
+X
+$(TARGET): $(TARGET).o
+X	$(CC) -o $@ $? $(LIBS) $(LDFLAGS)
+X
+clean:
+X	/bin/rm -f *.o
+X
+SHAR_EOF
+  $shar_touch -am 0206151397 'Makefile' &&
+  chmod 0600 'Makefile' ||
+  $echo 'restore of' 'Makefile' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'Makefile:' 'MD5 check failed'
+da19f4dd2e9bd031984a8e91a8d44f71  Makefile
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'Makefile'`"
+    test 323 -eq "$shar_count" ||
+    $echo 'Makefile:' 'original size' '323,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= draw_obj.c ==============
+if test -f 'draw_obj.c' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'draw_obj.c' '(file already exists)'
+else
+  $echo 'x -' extracting 'draw_obj.c' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'draw_obj.c' &&
+#include <GL/gl.h>
+#include <GL/glut.h>
+X
+X        GLfloat no_mat[] = { 0.0, 0.0, 0.0, 1.0 };
+X        GLfloat mat_ambient[] = { 0.7, 0.7, 0.7, 1.0 };
+X        GLfloat mat_ambient_color[] = { 0.8, 0.8, 0.2, 1.0 };
+X        GLfloat mat_diffuse[] = { 0.1, 0.5, 0.8, 1.0 };
+X        GLfloat mat_specular[] = { 0.7, 0.7, 0.7, 1.0 };
+X        GLfloat no_shininess[] = { 0.0 };
+X        GLfloat low_shininess[] = { 5.0 };
+X        GLfloat high_shininess[] = { 100.0 };
+X        GLfloat mat_emission[] = {0.1, 0.1, 0.1, 1.0};
+X
+static int main_win;
+static int buffer = 2;
+X
+/**
+flags for different states. changed using Menu.
+**/
+static int flag_T = 0, flag_C = 1, flag_S = 0, flag_V = 0; 
+X
+/****
+X Define state as 3-element array. 1st element = X translation,
+X 2nd element = Rotation around x-axis,
+X 3rd element = Rotation around y-axis.
+*****/
+static int Cube_state[] = {0, 0, 0}; 
+static int Sphere_state[] = {+2, 0, 0}; 
+static int Teapot_state[] = {-2, 0, 0}; 
+X
+void display_C(void)
+{
+X        glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, mat_ambient);
+X        glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, no_mat);
+X        glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, mat_specular);
+X        glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, mat_emission);
+X        glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, high_shininess);
+X      glColor3f(1.0, 0.0, 0.0);
+X      glutSolidCube(1.0);
+}
+X
+void display_S(void)
+{
+X        glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, no_mat);
+X        glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mat_diffuse);
+X        glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, no_mat);
+X        glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, no_mat);
+X        glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, no_shininess);
+X      glColor3f(0.0, 0.0, 1.0);
+X      glutSolidSphere(0.75, 25, 25);   
+}
+X
+void display_T(void)
+{
+X        glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, mat_ambient);
+X        glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mat_diffuse);
+X        glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, no_mat);
+X        glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, mat_emission);
+X      glColor3f(1.0, 1.0, 0.0);
+X      glutSolidTeapot(0.7);
+}
+X
+X
+void display(void)
+{
+X        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+X        glEnable(GL_COLOR_MATERIAL);
+X        glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
+X        
+X        glPushMatrix();
+X        glLoadIdentity();
+X        glTranslatef ( (GLfloat) Cube_state[0] , 0.0, 0.0);
+X        glRotatef ( (GLfloat) Cube_state[1] , 1.0, 0.0, 0.0);
+X        glRotatef ( (GLfloat) Cube_state[2] , 0.0, 1.0, 0.0);
+X        display_C();
+X        glPopMatrix();
+X
+X        glPushMatrix();
+X        glLoadIdentity();
+X        glTranslatef ( (GLfloat) Sphere_state[0] , 0.0, 0.0);
+X        glRotatef ( (GLfloat) Sphere_state[1] , 1.0, 0.0, 0.0);
+X        glRotatef ( (GLfloat) Sphere_state[2] , 0.0, 1.0, 0.0);
+X        display_S();
+X        glPopMatrix();
+X
+X        glPushMatrix();
+X        glLoadIdentity();
+X        glTranslatef ( (GLfloat) Teapot_state[0] , 0.0, 0.0);
+X        glRotatef ( (GLfloat) Teapot_state[1] , 1.0, 0.0, 0.0);
+X        glRotatef ( (GLfloat) Teapot_state[2] , 0.0, 1.0, 0.0);
+X        display_T();
+X        glPopMatrix();
+X
+X        glDisable(GL_COLOR_MATERIAL);
+X        
+X     if (buffer == 2)
+X      glutSwapBuffers(); 
+X     else if (buffer == 1)
+X      glFlush();
+}
+X
+/* Initialize shading model */
+void myInit(void)
+{
+X      static float lightPos[4] = {2.0, 4.0, 2.0, 1.0};
+X      static float lightDir[4] = {-2.0, -4.0, -2.0, 1.0};
+X      static float lightAmb[4] = {0.7, 0.7, 0.7, 1.0};
+X      static float lightDiff[4] = {0.8, 0.8, 0.8, 1.0};
+X      static float lightSpec[4] = {0.4, 0.4, 0.4, 1.0};
+X
+X      glClearColor(0.0, 0.0, 0.0, 1.0);
+X      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+X      glShadeModel(GL_FLAT);
+X      glEnable(GL_LIGHTING);
+X      glEnable(GL_LIGHT0);
+X      glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
+X      glLightfv(GL_LIGHT0, GL_AMBIENT, lightAmb);
+X      glLightfv(GL_LIGHT0, GL_DIFFUSE, lightDiff);
+X      glLightfv(GL_LIGHT0, GL_SPECULAR, lightSpec);
+X      glEnable(GL_DEPTH_TEST);
+}
+X
+/*
+X *  Called when the window is first opened and whenever 
+X *  the window is reconfigured (moved or resized).
+X */
+void myReshape(int w, int h)
+{
+X      glViewport (0, 0, w, h);            /*  define the viewport */
+X      glMatrixMode(GL_PROJECTION);
+X      glLoadIdentity();
+X      gluPerspective(45.0, 1.0*(GLfloat)w/(GLfloat)h, 1.0, 10.0);
+X      glTranslatef (0.0, 0.0, -5.0);     /*  viewing transformation      */
+X      glMatrixMode (GL_MODELVIEW);        /* back to modelview matrix  */
+}
+X
+/*
+X * Keyboard handler
+X */
+void
+Key(unsigned char key, int x, int y)
+{
+X
+X    switch (key) {
+X    case 'x':
+X    if (flag_C == 1) 
+X      Cube_state[1] += 10; 
+X    if (flag_S == 1) 
+X      Sphere_state[1] += 10; 
+X    if (flag_T == 1) 
+X      Teapot_state[1] += 10; 
+X    if (flag_V == 1) 
+X      {
+X       glMatrixMode(GL_PROJECTION);
+X       glRotatef(5.0, 1.0, 0.0, 0.0);
+X       glMatrixMode (GL_MODELVIEW);       
+X      }
+X      break;
+X    case 'y':
+X    if (flag_C == 1) 
+X      Cube_state[2] += 10; 
+X    if (flag_S == 1) 
+X      Sphere_state[2] += 10; 
+X    if (flag_T == 1) 
+X      Teapot_state[2] += 10; 
+X    if (flag_V == 1) 
+X      {
+X       glMatrixMode(GL_PROJECTION);
+X       glRotatef(5.0, 0.0, 1.0, 0.0);
+X       glMatrixMode (GL_MODELVIEW);      
+X      }
+X      break;
+X    case 'i':
+X    if (flag_C == 1)
+X      Cube_state[1] -= 10;
+X    if (flag_S == 1)
+X      Sphere_state[1] -= 10;
+X    if (flag_T == 1)
+X      Teapot_state[1] -= 10;
+X    if (flag_V == 1)
+X      {
+X       glMatrixMode(GL_PROJECTION);
+X       glRotatef(-5.0, 1.0, 0.0, 0.0);
+X       glMatrixMode (GL_MODELVIEW);    
+X      }
+X      break;
+X    case 'j':
+X    if (flag_C == 1)
+X      Cube_state[2] -= 10;
+X    if (flag_S == 1)
+X      Sphere_state[2] -= 10;
+X    if (flag_T == 1)
+X      Teapot_state[2] -= 10;
+X    if (flag_V == 1)
+X      {
+X       glMatrixMode(GL_PROJECTION);
+X       glRotatef(-5.0, 0.0, 1.0, 0.0);
+X       glMatrixMode (GL_MODELVIEW);   
+X      }
+X      break;
+/**********
+X To switch between Single and Double buffer.
+X Doesn't seem to work right now!
+**********/
+X    case 'b':
+X        if (buffer == 2) {
+X         buffer = 1;
+X         glutInitDisplayMode (GLUT_SINGLE | GLUT_RGBA);
+X         }
+X        else if (buffer == 1){
+X          buffer = 2;
+X         glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGBA);
+X         }
+X
+X        break;
+X    case 27:           /* Esc will quit */
+X        exit(1);
+X        break;
+X    default:
+X      break;
+X    }
+X    glutPostRedisplay();
+}
+X
+void
+Select(int value)
+{
+X    switch (value) {
+X    case 1:
+X        flag_T = 1;
+X        flag_C = 0;
+X        flag_S = 0;
+X        flag_V = 0;
+X        break;
+X    case 2:
+X        flag_T = 0;
+X        flag_C = 1;
+X        flag_S = 0;
+X        flag_V = 0;
+X        break;
+X    case 3:
+X        flag_T = 0;
+X        flag_C = 0;
+X        flag_S = 1;
+X        flag_V = 0;
+X        break;
+X    case 4:
+X        flag_T = 0;
+X        flag_C = 0;
+X        flag_S = 0;
+X        flag_V = 1;
+X        break;
+X    case 5:
+X        exit(0);
+X        break;
+X    }
+}
+X
+void print_usage()
+{
+X printf("\n\n"
+X        "Use the Right Mouse button for Menu:\n"
+X        "   Select an object or Camera view point.\n"
+X        "Following Keys can be used to manuplate different objects:\n"
+X        "--- 'x' and 'y' to rotate clockwise around these axes.\n"
+X        "--- 'i' and 'j' to rotate anticlockwise.\n"
+X        "--- 'b' to toggle between the buffer modes.\n");
+}
+X
+/*
+X *  Main Loop
+X */
+int main(int argc, char** argv) 
+{
+X      print_usage();
+X      glutInit(&argc, argv);
+X      glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGBA);
+X      main_win = glutCreateWindow (argv[0]);
+X      glutReshapeWindow(400,200);
+X      myInit();
+X      glutKeyboardFunc(Key);
+X      glutReshapeFunc (myReshape);
+X      glutDisplayFunc(display);
+X      glutCreateMenu(Select);
+X      glutAddMenuEntry("TeaPot", 1);
+X      glutAddMenuEntry("Cube", 2);
+X      glutAddMenuEntry("Sphere", 3);
+X      glutAddMenuEntry("Camera", 4);
+X      glutAddMenuEntry("Quit", 5);
+X      glutAttachMenu(GLUT_RIGHT_BUTTON);
+X      glutMainLoop();
+}
+X
+SHAR_EOF
+  $shar_touch -am 0206151697 'draw_obj.c' &&
+  chmod 0600 'draw_obj.c' ||
+  $echo 'restore of' 'draw_obj.c' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'draw_obj.c:' 'MD5 check failed'
+781674460dfb035252f26aebae12fdea  draw_obj.c
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'draw_obj.c'`"
+    test 8026 -eq "$shar_count" ||
+    $echo 'draw_obj.c:' 'original size' '8026,' 'current size' "$shar_count!"
+  fi
+fi
+rm -fr _sh03879
+exit 0
+# From: Hemant Jain <jainh>

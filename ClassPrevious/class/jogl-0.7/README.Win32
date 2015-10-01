@@ -1,0 +1,25 @@
+Win32 Specific Installation and Release Notes
+--------------------------------------------
+
+**
+NOTE:  This readme will contain alot more info in the
+upcoming releases.
+**
+
+Place the jogl directory somewhere that is visible from your 
+CLASSPATH variable.  Next, place the jogl.dll file located
+in jogl-0.5/lib somewhere that your PATH variable can see,
+ie. in c:\winnt\system32
+
+Compiling
+---------
+To be added later
+
+
+Bugs
+----
+Still a few... let me know if you find any :)
+
+Cheers,
+	Adam King
+	adam@opcom.ca

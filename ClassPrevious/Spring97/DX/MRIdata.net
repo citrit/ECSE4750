@@ -1,0 +1,317 @@
+//
+// time: Tue Nov 28 08:28:48 1995
+//
+// version: 2.0.3 (format), 2.1.5 (DX)
+//
+// MODULE main
+// CATEGORY Macros
+// workspace: width = 1000, height = 1000
+// layout: snap = 0, width = 50, height = 50, align = CC
+//
+macro main(
+) -> (
+) {
+    // 
+    // node Import[1]: x = 71, y = 46, inputs = 6, label = Import
+    // input[1]: defaulting = 0, visible = 1, type = 32, value = "MRIdata.general"
+    // input[3]: defaulting = 0, visible = 1, type = 32, value = "general"
+    //
+main_Import_1_out_1 = 
+    Import(
+        main_Import_1_in_1,
+        main_Import_1_in_2,
+        main_Import_1_in_3,
+        main_Import_1_in_4,
+        main_Import_1_in_5,
+        main_Import_1_in_6
+    ) [instance: 1, cache: 1];
+    // 
+    // node Scalar[1]: x = 144, y = 133, inputs = 11, label = Scalar
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "Scalar_1"
+    // input[3]: defaulting = 0, visible = 0, type = 5, value = 225.000 
+    // input[4]: defaulting = 0, visible = 0, type = 3, value = 0
+    // input[5]: defaulting = 1, visible = 0, type = 5, value = 100.0
+    // input[6]: defaulting = 1, visible = 0, type = 5, value = 5000.0
+    // input[7]: defaulting = 1, visible = 0, type = 5, value = 1.0
+    // input[9]: defaulting = 1, visible = 0, type = 1, value = 5
+    // output[1]: visible = 1, type = 5, value = 225.000 
+    //
+    // 
+    // node Compute[2]: x = 65, y = 131, inputs = 2, label = Compute
+    // input[1]: defaulting = 0, visible = 0, type = 32, value = "float($0)"
+    //
+    // expression: value = float(a)
+    // name[2]: value = a
+main_Compute_2_out_1 = 
+    Compute(
+        main_Compute_2_in_1,
+        main_Import_1_out_1
+    ) [instance: 2, cache: 1];
+    // 
+    // node Isosurface[1]: x = 88, y = 258, inputs = 6, label = Isosurface
+    //
+main_Isosurface_1_out_1 = 
+    Isosurface(
+        main_Compute_2_out_1,
+        main_Scalar_1_out_1,
+        main_Isosurface_1_in_3,
+        main_Isosurface_1_in_4,
+        main_Isosurface_1_in_5,
+        main_Isosurface_1_in_6
+    ) [instance: 1, cache: 1];
+    // 
+    // node Image[1]: x = 137, y = 357, inputs = 35, label = Image
+    // input[1]: defaulting = 0, visible = 0, type = 1, value = 2
+    // input[4]: defaulting = 0, visible = 0, type = 8, value = [35.1354 35.0869 17.5916]
+    // input[5]: defaulting = 0, visible = 0, type = 8, value = [-123.083 -13.8253 181.778]
+    // input[6]: defaulting = 0, visible = 0, type = 5, value = 57.1901
+    // input[7]: defaulting = 0, visible = 0, type = 1, value = 354
+    // input[8]: defaulting = 0, visible = 0, type = 5, value = 0.965
+    // input[9]: defaulting = 0, visible = 0, type = 8, value = [0.118412 -0.977068 -0.176967]
+    // input[22]: defaulting = 0, visible = 0, type = 1, value = 0
+    // input[23]: defaulting = 1, visible = 0, type = 5, value = 13.9814
+    // input[24]: defaulting = 0, visible = 0, type = 1, value = 1
+    // input[25]: defaulting = 0, visible = 0, type = 32, value = "none"
+    // input[26]: defaulting = 0, visible = 0, type = 32, value = "none"
+    // input[27]: defaulting = 1, visible = 0, type = 1, value = 1
+    // input[28]: defaulting = 1, visible = 0, type = 1, value = 1
+    // input[29]: defaulting = 0, visible = 0, type = 3, value = 1
+    //
+    // depth: value = 8
+main_Image_1_out_1,
+main_Image_1_out_2 = 
+    Image(
+        main_Image_1_in_1,
+        main_Isosurface_1_out_1,
+        main_Image_1_in_3,
+        main_Image_1_in_4,
+        main_Image_1_in_5,
+        main_Image_1_in_6,
+        main_Image_1_in_7,
+        main_Image_1_in_8,
+        main_Image_1_in_9,
+        main_Image_1_in_10,
+        main_Image_1_in_11,
+        main_Image_1_in_12,
+        main_Image_1_in_13,
+        main_Image_1_in_14,
+        main_Image_1_in_15,
+        main_Image_1_in_16,
+        main_Image_1_in_17,
+        main_Image_1_in_18,
+        main_Image_1_in_19,
+        main_Image_1_in_20,
+        main_Image_1_in_21,
+        main_Image_1_in_22,
+        main_Image_1_in_23,
+        main_Image_1_in_24,
+        main_Image_1_in_25,
+        main_Image_1_in_26,
+        main_Image_1_in_27,
+        main_Image_1_in_28,
+        main_Image_1_in_29,
+        main_Image_1_in_30,
+        main_Image_1_in_31,
+        main_Image_1_in_32,
+        main_Image_1_in_33,
+        main_Image_1_in_34,
+        main_Image_1_in_35
+    ) [instance: 1, cache: 1];
+// network: end of macro body
+}
+main_Import_1_in_1 = "MRIdata.general";
+main_Import_1_in_2 = NULL;
+main_Import_1_in_3 = "general";
+main_Import_1_in_4 = NULL;
+main_Import_1_in_5 = NULL;
+main_Import_1_in_6 = NULL;
+main_Import_1_out_1 = NULL;
+main_Scalar_1_in_1 = "Scalar_1";
+main_Scalar_1_in_2 = NULL;
+main_Scalar_1_in_3 = 225.000 ;
+main_Scalar_1_in_4 = 0;
+main_Scalar_1_in_5 = NULL;
+main_Scalar_1_in_6 = NULL;
+main_Scalar_1_in_7 = NULL;
+main_Scalar_1_in_8 = NULL;
+main_Scalar_1_in_9 = NULL;
+main_Scalar_1_in_10 = NULL;
+main_Scalar_1_in_11 = NULL;
+main_Scalar_1_out_1 = 225.000 ;
+main_Compute_2_in_1 = "float($0)";
+main_Compute_2_out_1 = NULL;
+main_Isosurface_1_in_3 = NULL;
+main_Isosurface_1_in_4 = NULL;
+main_Isosurface_1_in_5 = NULL;
+main_Isosurface_1_in_6 = NULL;
+main_Isosurface_1_out_1 = NULL;
+macro Image(
+        useVector,
+        object,
+        where,
+        to,
+        from,
+        width,
+        resolution,
+        aspect,
+        up,
+        options,
+        AAenable = 1,
+        AAlabels,
+        AAticks,
+        AAcorners,
+        AAframe,
+        AAadjust,
+        AAcursor,
+        RECenable = 1,
+        RECfile,
+        throttle,
+        RECformat,
+        perspective,
+        viewAngle,
+        buttonState = 1,
+        buttonUpApprox = "none",
+        buttonDownApprox = "none",
+        buttonUpDensity = 1,
+        buttonDownDensity = 1,
+        renderMode = 1,
+        backgroundColor,
+        AAgrid,
+        AAcolors,
+        AAannotation,
+        AAlabelscale,
+        AAfont) -> (
+        object,
+        camera)
+{
+    autoCamera =
+        AutoCamera(
+            object,
+            "front",
+            object,
+            resolution,
+            aspect,
+            [0,1,0],
+            perspective,
+            viewAngle,
+            backgroundColor) [instance: 1];
+    realCamera =
+        Camera(
+            to,
+            from,
+            width,
+            resolution,
+            aspect,
+            up,
+            perspective,
+            viewAngle,
+            backgroundColor) [instance: 1];
+    camera = Switch(useVector, autoCamera, realCamera)[instance:1];
+    AAobject =
+        AutoAxes(
+            object,
+            camera,
+            AAlabels,
+            AAticks,
+            AAcorners,
+            AAframe,
+            AAadjust,
+            AAcursor,
+            AAgrid,
+            AAcolors,
+            AAannotation,
+            AAlabelscale,
+            AAfont) [instance: 1];
+    object = Switch(AAenable, object, AAobject)[instance:2];
+    SWapproximation_options =
+        Switch(
+            buttonState,
+            buttonUpApprox,
+            buttonDownApprox) [instance: 3];
+    SWdensity_options =
+        Switch(
+            buttonState,
+            buttonUpDensity,
+            buttonDownDensity) [instance: 4];
+    HWapproximation_options =
+        Format(
+            "%s,%s",
+            buttonDownApprox,
+            buttonUpApprox) [instance: 1];
+    HWdensity_options =
+        Format(
+            "%d,%d",
+            buttonDownDensity,
+            buttonUpDensity) [instance: 1];
+    approximation_options = Switch(renderMode,
+        SWapproximation_options, HWapproximation_options)[instance: 5];
+    density_options = Switch(renderMode,
+        SWdensity_options, HWdensity_options)[instance: 6];
+    renderModeString = Switch(renderMode,
+        "software", "hardware")[instance: 7];
+    annoted_object =
+        Options(
+            object,
+            "send boxes",
+            0,
+            "rendering approximation",
+            approximation_options,
+            "render every",
+            density_options,
+            "rendering mode",
+            renderModeString) [instance: 1];
+    NoRECobject, RECobject = Route(RECenable, annoted_object);
+    Display(
+        NoRECobject,
+        camera,
+        where,
+        throttle) [instance: 1];
+    image =
+        Render(
+            RECobject,
+            camera) [instance: 1];
+    Display(
+        image,
+        NULL,
+        where,
+        throttle) [instance: 2];
+    WriteImage(
+        image,
+        RECfile,
+        RECformat) [instance: 1];
+}
+main_Image_1_in_1 = 2;
+main_Image_1_in_4 = [35.1354 35.0869 17.5916];
+main_Image_1_in_5 = [-123.083 -13.8253 181.778];
+main_Image_1_in_6 = 57.1901;
+main_Image_1_in_7 = 354;
+main_Image_1_in_8 = 0.965;
+main_Image_1_in_9 = [0.118412 -0.977068 -0.176967];
+main_Image_1_in_10 = NULL;
+main_Image_1_in_11 = NULL;
+main_Image_1_in_12 = NULL;
+main_Image_1_in_13 = NULL;
+main_Image_1_in_14 = NULL;
+main_Image_1_in_15 = NULL;
+main_Image_1_in_16 = NULL;
+main_Image_1_in_17 = NULL;
+main_Image_1_in_19 = NULL;
+main_Image_1_in_20 = NULL;
+main_Image_1_in_21 = NULL;
+main_Image_1_in_22 = 0;
+main_Image_1_in_23 = NULL;
+main_Image_1_in_24 = 1;
+main_Image_1_in_25 = "none";
+main_Image_1_in_26 = "none";
+main_Image_1_in_27 = NULL;
+main_Image_1_in_28 = NULL;
+main_Image_1_in_29 = 1;
+main_Image_1_in_30 = NULL;
+main_Image_1_in_31 = NULL;
+main_Image_1_in_32 = NULL;
+main_Image_1_in_33 = NULL;
+main_Image_1_in_34 = NULL;
+main_Image_1_in_35 = NULL;
+Executive("product version 2 1 5");
+$sync;
+main();

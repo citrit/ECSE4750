@@ -1,0 +1,19 @@
+--------------------Configuration: readexample - Java Virtual Machine Debug--------------------
+Begining build with project "D:\class\Java3d\readexample\readexample.dsp", at root.
+Active configuration is Java Virtual Machine Java Project (based on Java Virtual Machine Java Project)
+
+Project's tools are:
+			"Java Compiler" with flags "/g "
+			"Custom Build" with flags ""
+			"<Component 0xa>" with flags ""
+
+Creating temp file "c:\windows\TEMP\RSPA235.TMP" with contents <D:\class\Java3d\readexample\objectReader.java
+D:\class\Java3d\readexample\examp.java>
+Compiling...
+Microsoft (R) Visual J++ Compiler Version 1.01.7022
+Copyright (C) Microsoft Corp 1996. All rights reserved.
+
+
+
+
+readexample - 0 error(s), 0 warning(s)
