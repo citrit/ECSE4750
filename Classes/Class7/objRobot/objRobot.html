@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+        <title>Robot in class challenge</title>
+        <!-- Babylon.js -->
+        <script src="js/hand.minified-1.2.js"></script>
+        <script src="js/cannon.js"></script>
+        <script src="js/oimo.js"></script>
+        <script src="js/babylon.d.js"></script>
+        <script src="js/jquery-2.1.4.min.js"></script>
+        <script src="objRobot.js"></script>
+        <style>
+
+            #renderCanvas {
+                width: 640px;
+                height: 480px;
+                touch-action: none;
+            }
+        </style>
+    </head>
+<body onload="main()">
+   <table style="width:100%">
+    <tr>
+    <td>
+       <canvas id="renderCanvas" height="400px"></canvas>
+    </td>
+    <td>
+        <table style="width:100%">
+            <tr style="width:100%">
+                <td style="width:200px">
+                    <select name="bodypart" id="bodypart" >
+                        <option value="lamont">Robot</option>
+                        <option value="head">Head</option>
+                        <option value="chest">Chest</option>
+                        <option value="rightshoulder">Right Shoulder</option>
+                        <option value="rightelbow">Right Elbow</option>
+                        <option value="rightwrist">Right Wrist</option>
+                        <option value="leftshoulder">Left Shoulder</option>
+                        <option value="leftelbow">Left Elbow</option>
+                        <option value="leftwrist">Left Wrist</option>
+                        <option value="waist">Waist</option>
+                        <option value="righthip">Right Hip</option>
+                        <option value="rightknee">Right Knee</option>
+                        <option value="rightankle">Right Ankle</option>
+                        <option value="lefthip">Left Hip</option>
+                        <option value="leftknee">Left Knee</option>
+                        <option value="leftankle">Left Ankle</option>
+                    </select><br>
+                    Rot X: <input name="rotX" orien="x" type="range" value="0" max="360" min="1"
+                                  oninput="handleScroll(this);"></input><br>
+                    Rot Y: <input name="rotY" orien="y" type="range" value="0" max="360" min="1"
+                                  oninput="handleScroll(this);"></input><br>
+                    Rot Z: <input name="rotZ" orien="z" type="range" value="0" max="360" min="1"
+                                  oninput="handleScroll(this);"></input><br><br>
+                    <button value="Animate" name="animButton">Animate</button>
+                    <button value="Animate" name="stopAnimButton">Stop Animate</button>
+                </td>
+            </tr>
+        </table>
+    </td>
+    </tr>
+    </table>
+</body>
+</html>

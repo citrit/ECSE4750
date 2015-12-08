@@ -1,0 +1,363 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage Express 2.0">
+<title>DataVis - Mid Term Exam Answers</title>
+</head>
+
+<body bgcolor="#FFFFFF">
+
+<h2>Advanced Computer Graphics and Data Visualization </h2>
+
+<p><strong>35-6961 MidTerm Exam<br>
+March 24, 1998</strong></p>
+
+<p>&nbsp;</p>
+
+<p>Name _________________________________________</p>
+
+<p>You have the whole class to finish the exam, take your time
+and remember to answer the questions you know first. Each
+question is worth 5 points total with the points divided between
+the various parts. Please feel free to use the back of the page.</p>
+
+<p>&nbsp;</p>
+
+<h3>1. OpenGL</h3>
+
+<blockquote>
+    <p>a. (1 Pt) What is OpenGL?</p>
+</blockquote>
+
+<blockquote>
+    <blockquote>
+        <p><font color="#0000FF"><strong>A platform independant,
+        2D and 3D graphics API. Graphics are rasterized and scan
+        converted to the resultant image as thefunction call is
+        made using the current state.</strong></font></p>
+    </blockquote>
+</blockquote>
+
+<p>&nbsp;</p>
+
+<blockquote>
+    <p>b. (1 Pt) What is meant by immediate mode graphics? </p>
+</blockquote>
+
+<blockquote>
+    <blockquote>
+        <p><font color="#0000FF"><strong>As you issue OpenGL
+        drawing commands, the specified object is drawn to a
+        display</strong>.</font></p>
+    </blockquote>
+</blockquote>
+
+<p>&nbsp;</p>
+
+<blockquote>
+    <p>c. (3 Pts) Name and describe each of the material color
+    components.<br>
+    </p>
+    <blockquote>
+        <p><font color="#0000FF"><strong>Emitted light is the
+        simplest, it originates from an object and is unaffected
+        by any light sources. </strong></font></p>
+        <p><font color="#0000FF"><strong>The ambient component is
+        the light from that source that's been scattered so much
+        by the environment that its direction is impossible to
+        determine. When ambient light strikes a surface it is
+        scattered in all directions.</strong></font></p>
+        <p><font color="#0000FF"><strong>Diffuse light comes from
+        one direction, so it is brighter if it comes down
+        squarely on the surface rather than at an angle. Any
+        light coming from any direction has a diffuse component.</strong></font></p>
+        <p><font color="#0000FF"><strong>Specular light comes
+        from a direction and bounces off a surface in a
+        particular direction. Shiny metal and plastic have a high
+        specular component and chalk and carpet have almost none.
+        You can think of specularity as shininess.</strong></font></p>
+    </blockquote>
+</blockquote>
+
+<h3>2. OpenGL</h3>
+
+<blockquote>
+    <p>a. (2 Pts) Explain why OpenGL needs an Aux/GLUT library.</p>
+</blockquote>
+
+<blockquote>
+    <blockquote>
+        <p><font color="#0000FF"><strong>OpenGL was designed as a
+        platform independant API. Therefore it needs an extra
+        level of interface to user interfaces/window systems and
+        display hardware. Since there is no retained mode we also
+        need higher level data/geometric objects</strong>.</font></p>
+    </blockquote>
+</blockquote>
+
+<blockquote>
+    <p>b. (3 Pts) Explain what is happening with this OpenGL code
+    snippet, and any possible problems (Assume that there are
+    enough values in x,y,z and pts to draw the graphic).</p>
+</blockquote>
+
+<pre>	gl.begin(GL.POLYGON);
+	for (int i=0;i&lt;3;i++) {
+		gl.vertex(x[i], y[i], z[i]);
+		gl.materialfv(GL.FRONT_AND_BACK, GL.AMBIENT_AND_DIFFUSE,
+				pts[i]);
+	}
+	gl.end();</pre>
+
+<blockquote>
+    <blockquote>
+        <p><font color="#0000FF"><strong>This code simply draws a
+        polygon with three vertices.The problem is that the
+        glMaterial should be before the glVertex call since
+        OpenGL is a state based drawing library and we need to
+        set the color prior to drawing.</strong></font></p>
+    </blockquote>
+</blockquote>
+
+<p>&nbsp;</p>
+
+<h3>3. Scientific Visualization</h3>
+
+<blockquote>
+    <p>a) (2 Pts) Discuss the differences and similarities
+    between contours and iso-surfaces.</p>
+</blockquote>
+
+<blockquote>
+    <blockquote>
+        <p><font color="#0000FF"><strong>Contours and
+        iso-surfaces both represent surfaces of continuity.
+        Contours are 2D representations and iso-surfaces are 3D
+        surfaces.</strong></font></p>
+    </blockquote>
+</blockquote>
+
+<blockquote>
+    <p>b) (3 Pts) We know that Color Maps represent the
+    relationship between a continuous range of data values and
+    color values. From an OO viewpoint, discuss how iso-surface
+    and data cut plane objects would need to interface with a
+    color map object, or what would they need to ask for from the
+    color map object.</p>
+</blockquote>
+
+<blockquote>
+    <blockquote>
+        <p><font color="#0000FF"><strong>Iso-surfaces are
+        continuous surfaces of a constant scalar value. They
+        would need to ask the colormap object for a single color
+        value that represents the scalar value mapped to the
+        surface. Data Cut Planes will need to ask the colormap
+        object for many colors which correspond to the various
+        scalar values that will be generated as the cut plane
+        slices through the data set. The Color map object will
+        need to be supplied with the max and min values for the
+        underlying data for both cases above.</strong></font></p>
+    </blockquote>
+</blockquote>
+
+<h3>4. Data Storage</h3>
+
+<blockquote>
+    <p>a. (3Pts) The choice of data representation is important
+    because it effects our ability to interface to external data
+    and the performance of the overall visualization system. Name
+    and describe 3 of the 5 design criterion for our
+    visualization system described in class and in the text.</p>
+</blockquote>
+
+<blockquote>
+    <blockquote>
+        <p><font color="#0000FF"><strong>Compact: Since we know
+        visualization data tends to be very large, we need to
+        design our structures to minimize computer memory
+        requirements.</strong></font></p>
+        <p><font color="#0000FF"><strong>Efficient: Visualization
+        data needs to be accessed many times and we would like to
+        retrieve and store data in our structures in constant
+        time.</strong></font></p>
+        <p><font color="#0000FF"><strong>Mappable: Data
+        representations need to efficiently map into graphics
+        primitives. We must be able to easily convert external
+        data into internal visualization data structures.</strong></font></p>
+        <p><font color="#0000FF"><strong>Minimal Coverage: We
+        must create a data representation that minimizes the
+        number of data types while covering a large portion of
+        external data types. We wish to balance efficiency with
+        the number of data types.</strong></font></p>
+        <p><font color="#0000FF"><strong>Simple: Simple
+        algorithms and data sets are easier to implement and also
+        easier to extend.</strong></font></p>
+    </blockquote>
+</blockquote>
+
+<blockquote>
+    <p>b. (2 Pts) If we group our Actor classes and contained
+    Cells as data sets, describe what is meant by structure and
+    attributes.</p>
+    <blockquote>
+        <p><font color="#0000FF"><strong>Structure is made of two
+        components:</strong></font></p>
+        <blockquote>
+            <p><font color="#0000FF"><strong>Topology: the
+            information about the structure of the dataset (e.g.
+            Triangle).<br>
+            Geometry: the instantiation of the Topology (the
+            x,y,z's).</strong></font></p>
+        </blockquote>
+        <p><font color="#0000FF"><strong>Attributes are
+        supplemental information associated with the geometry
+        such as temperature, pressure, or density. They consist
+        of scalars, vectors, normals, texture coordinates,
+        tensors, and user defined data.</strong></font></p>
+    </blockquote>
+</blockquote>
+
+<h3>5. Data algorithms</h3>
+
+<blockquote>
+    <p>a. (2 Pts) Based on our discussion of OpenInventor and
+    scene graphs, explain how properties (materials and geometry)
+    are shared.</p>
+</blockquote>
+
+<blockquote>
+    <blockquote>
+        <p><font color="#0000FF" size="3"><strong>Scene Graphs
+        are hierarchical structures in which materials affect
+        nodes later in the graph. Materials are shared by way of
+        their position in the graph.</strong></font></p>
+    </blockquote>
+</blockquote>
+
+<blockquote>
+    <p>b. (3 Pts) In the Visualization Pipeline section of class
+    we discussed reasons for incorporating the Process methods
+    into the Data Object and also extracting the process method
+    into its own object. Give reasons for and against both of
+    these paradigms.</p>
+</blockquote>
+
+<blockquote>
+    <blockquote>
+        <p><font color="#0000FF"><strong>Process inside Data
+        Objects:</strong></font></p>
+        <blockquote>
+            <p><font color="#0000FF"><strong>For: The processes,
+            which are data manipulation algorithms, have direct
+            access to the data which makes for fast code.</strong></font></p>
+        </blockquote>
+        <blockquote>
+            <p><font color="#0000FF"><strong>Against: Users
+            generally think of data algorithms as separate
+            objects. Algorithms must be implemented in all
+            objects of any data type we may create. Also if we
+            change our contouring algorithm this must be changed
+            in each data object that implements this process.</strong></font></p>
+        </blockquote>
+        <p><font color="#0000FF"><strong>Separate process
+        objects:</strong></font></p>
+    </blockquote>
+    <blockquote>
+        <blockquote>
+            <p><font color="#0000FF"><strong>For: More intuitive
+            for the user, easier to re-use data objects in the
+            Visualization pipeline.</strong></font></p>
+        </blockquote>
+    </blockquote>
+    <blockquote>
+        <blockquote>
+            <p><font color="#0000FF"><strong>Against: Generalized
+            data algorithms require general data objects
+            restricting our base data types. More difficult to
+            implement.</strong></font></p>
+        </blockquote>
+    </blockquote>
+</blockquote>
+
+<h3>6. Data Algorithms</h3>
+
+<blockquote>
+    <p>(5 Pts) Based on our discusions of marching quads, fill in
+    the GetPoint Java algorithm to extract where a given scalar
+    value <font face="Courier New"><strong>val</strong></font>
+    will fall between the given points <font face="Courier New"><strong>Pt1</strong></font>
+    and <font face="Courier New"><strong>Pt2</strong></font> with
+    given scalar values <font size="3" face="Courier New"><strong>Sc1</strong></font>
+    and <font face="Courier New"><strong>Sc2</strong></font>.
+    This algorithm should assign the calculated x,y,z to <font
+    face="Courier New"><strong>res</strong></font> and work for
+    any given <font face="Courier New"><strong>val</strong></font>.</p>
+    <blockquote>
+        <blockquote>
+            <blockquote>
+                <blockquote>
+                    <pre>typedef Struct Point {
+	float x, y, z;
+};
+
+Point GetPoint(Point Pt1, Point Pt2,
+		float Sc1, float Sc2, float val) {
+	Point res; // You fill in the blank.
+
+ 	return res; 
+}</pre>
+                </blockquote>
+            </blockquote>
+        </blockquote>
+    </blockquote>
+</blockquote>
+
+<p>&nbsp;</p>
+
+<blockquote>
+    <blockquote>
+        <blockquote>
+            <pre><font color="#0000FF"><strong>float normv;
+
+if (Sc1 == Sc2)
+	return res;
+
+normv = (val - Sc1) / (Sc2 - Sc1); 
+
+res.x = ((Pt2.x - Pt1.x)* normv) + Pt1.x; 
+res.y = ((Pt2.y - Pt1.y)* normv) + Pt1.y; 
+res.z = ((Pt2.z - Pt1.z)* normv) + Pt1.z;</strong></font></pre>
+        </blockquote>
+    </blockquote>
+</blockquote>
+
+<p><strong>Extra credit:<br>
+</strong>(2 Pts) Describe Object Order and Image order Rendering.</p>
+
+<blockquote>
+    <p><font color="#0000FF"><strong>Object Order: Take each
+    element of the volume and map it onto the image<br>
+    Image Order: For each element of the image, compute a color
+    value from the volume.</strong></font></p>
+</blockquote>
+
+<p>(2 Pts) What are some weaknesses of the Object Rendering
+system we used for hw2?</p>
+
+<blockquote>
+    <p><font color="#0000FF"><strong>Tightly bound to OpenGL in
+    begin and end pairs and how it specified drawing.<br>
+    Weak camera model.<br>
+    No caching of graphics in display lists.</strong></font></p>
+</blockquote>
+
+<p>(1 Pt) What is your quest? What is your favorite color? :-).</p>
+
+<blockquote>
+    <p><font color="#0000FF"><strong>Freebie</strong></font></p>
+</blockquote>
+</body>
+</html>

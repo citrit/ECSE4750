@@ -1,104 +1,32 @@
 <html>
 <head>
-    <script type="text/javascript" src="glMatrix.js"></script>
-    <script type="text/javascript" src="webgl-debug.js"></script>
+    <script type="text/javascript" src="OGLRen/glMatrix.js"></script>
+    <script type="text/javascript" src="OGLRen/webgl-debug.js"></script>
 
-    <script type="text/javascript" src="ParentObject.js"></script>
-    <script type="text/javascript" src="Material.js"></script>
-    <script type="text/javascript" src="MaterialSet.js"></script>
-    <script type="text/javascript" src="Cell.js"></script>
-    <script type="text/javascript" src="PointType.js"></script>
-    <script type="text/javascript" src="PointSet.js"></script>
-    <script type="text/javascript" src="PointCell.js"></script>
-    <script type="text/javascript" src="LineCell.js"></script>
-    <script type="text/javascript" src="PolygonCell.js"></script>
-    <script type="text/javascript" src="PolylineCell.js"></script>
-    <script type="text/javascript" src="TriangleCell.js"></script>
-    <script type="text/javascript" src="Light.js"></script>
-    <script type="text/javascript" src="OGLLight.js"></script>
-    <script type="text/javascript" src="Camera.js"></script>
-    <script type="text/javascript" src="OGLCamera.js"></script>
-    <script type="text/javascript" src="Renderer.js"></script>
-    <script type="text/javascript" src="OGLRenderer.js"></script>
-    <script type="text/javascript" src="Actor.js"></script>
-
-    <script id="shader-fs" type="x-shader/x-fragment">
-        precision mediump float;
-
-        void main(void) {
-            gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
-        }
-    </script>
-
-    <script id="shader-vs" type="x-shader/x-vertex">
-        attribute vec3 aVertexPosition;
-
-        uniform mat4 uMVMatrix;
-        uniform mat4 uPMatrix;
-
-        void main(void) {
-            gl_Position = uMVMatrix * vec4(aVertexPosition, 1.0);
-            
-        }
-    </script>
-
+    <script type="text/javascript" src="OGLRen/ParentObject.js"></script>
+    <script type="text/javascript" src="OGLRen/Material.js"></script>
+    <script type="text/javascript" src="OGLRen/MaterialSet.js"></script>
+    <script type="text/javascript" src="OGLRen/Cell.js"></script>
+    <script type="text/javascript" src="OGLRen/PointType.js"></script>
+    <script type="text/javascript" src="OGLRen/PointSet.js"></script>
+    <script type="text/javascript" src="OGLRen/PointCell.js"></script>
+    <script type="text/javascript" src="OGLRen/LineCell.js"></script>
+    <script type="text/javascript" src="OGLRen/PolygonCell.js"></script>
+    <script type="text/javascript" src="OGLRen/PolylineCell.js"></script>
+    <script type="text/javascript" src="OGLRen/TriangleCell.js"></script>
+    <script type="text/javascript" src="OGLRen/Light.js"></script>
+    <script type="text/javascript" src="OGLRen/OGLLight.js"></script>
+    <script type="text/javascript" src="OGLRen/Camera.js"></script>
+    <script type="text/javascript" src="OGLRen/OGLCamera.js"></script>
+    <script type="text/javascript" src="OGLRen/Renderer.js"></script>
+    <script type="text/javascript" src="OGLRen/OGLRenderer.js"></script>
+    <script type="text/javascript" src="OGLRen/Actor.js"></script>
     
+    <script type="text/javascript" src="testHarness.js"></script>
+    <script type="text/javascript" src="example.dat.js"></script>
     
     <script>
-        /*gl_Position = vec4(aVertexPosition, 1.0);
-            uPMatrix * 
-            */
-            
-        function main() {
-            var cell = new OGLRen.Cell();
-            console.log("Time: " + cell.getTime());
-            var pt = new OGLRen.PointType(0.0,0.0,0.0);
-            var pts = new OGLRen.PointSet();
-            console.log("pts Time: " + pts.getTime());
-            pts.addPoint(pt);
-            pt = new OGLRen.PointType(1.0,1.0,0.0);
-            pts.addPoint(pt);
-            pt = new OGLRen.PointType(1.0,0.0,0.0);
-            pts.addPoint(pt);
-            var ptCell = new OGLRen.LineCell();
-            ptCell.setPoints(pts);
-            ptCell.addVal(0);
-            ptCell.addVal(1);
-            
-            console.log("pts Time: " + pts.getTime());
-            console.log("pts Time: " + pts.getTime());
-
-            var mat = new OGLRen.Material();
-            var matSet = new OGLRen.MaterialSet();
-            matSet.addMaterial(mat);
-            ptCell.setMaterials(matSet);
-
-            var plyg = new OGLRen.PolygonCell();
-            var plyl = new OGLRen.PolylineCell();
-            
-            var tric = new OGLRen.TriangleCell();
-            tric.addVal(0);
-            tric.addVal(1);
-            tric.addVal(2);
-            tric.setPoints(pts);
-            tric.setMaterials(matSet);
-            
-            var ptc = new OGLRen.PointCell();
-
-            var act = new OGLRen.Actor();
-            act.addCell(tric);
-            act.translate(-0.5, -0.5, 0.0);
-            act.scale([0.5, 0.5, 0.5]);
-
-            var ren = new OGLRen.OGLRenderer("3d-Canvas","shader-vs","shader-fs");
-            var cam = new OGLRen.OGLCamera(ren);
-            ren.addCamera(cam);
-            //cam.translate(0,0,-7);
-            var lgt = new OGLRen.OGLLight();
-            ren.addLight(lgt);
-            ren.addActor(act);
-            ren.render();
-        }
+       
     </script>
 </head>
 

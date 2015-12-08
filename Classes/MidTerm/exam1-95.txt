@@ -1,0 +1,64 @@
+
+Advanced Computer Graphics and Data Visualization - 35.6961 Exam 1
+
+Page 1 Advanced Computer Graphics and Data Visualization
+
+35-6961   Exam 1
+
+November 7, 1995
+
+Name _________________________________________ You have the whole class to finish the exam, take your time and remember to answer the questionsyou know first. Each question is worth 5 points total with the points divided between the various parts.
+
+1. OpenGL
+
+a. (1 Pt) What is OpenGL?
+
+b. (1 Pt) What is meant by immediate mode graphics? c. (3 Pts) Name and describe each of the material color components.
+
+Advanced Computer Graphics and Data Visualization - 35.6961 Exam 1
+
+Page 2 2. OpenGL
+
+a. (2 Pts) Explain why OpenGL needs an Aux/GLUT library.
+
+b. (3 Pts) Describe Display Lists and discuss why they are important in terms of the graph-ics pipeline and specialized hardware.
+
+Advanced Computer Graphics and Data Visualization - 35.6961 Exam 1
+
+Page 3 3. Data Storage
+
+a. (3Pts)   The choice of data representation is important because it effects our ability tointerface to external data and the performance of the overall visualization system. Name and de
+
+scribe 3 of the 5 design criterion for data representation described in class and in the text
+
+b. (2 Pts) Based on the idea that a DataSet is made up of Cells and associated data values,describe what is meant by the DataSet, and contained Cells, structure and attributes.
+
+Advanced Computer Graphics and Data Visualization - 35.6961 Exam 1
+
+Page 4 4. Data Algorithms(5 PTS) Based on your work with homework 3 and marching quads, write a C++ algorithm to extract where a given scalar value val will fall between the given points Pt1 and Pt2 withscalar values Sc1 and Sc2. This algorithm should assign the calculated x,y,z to res and work for any given val.
+
+Pt1 Pt2 Sc1 Sc2
+
+typedef Struct Point {
+
+float x, y, z; };
+
+Point& GetPoint(Point Pt1, Point Pt2,
+
+float Sc1, float Sc2, float val) {
+
+   Point res; // You fill in the blank.    return res; }
+
+Advanced Computer Graphics and Data Visualization - 35.6961 Exam 1
+
+Page 5 5. Data algorithmsa. (3 Pts) Describe the differences between Volume Rendering and Marching Cubes. Include in your discussion what the final image represents and what type of data is calculated by theunderlying algorithms.
+
+b. (2 Pts) Based on our discussions of the Visualization Pipeline in class, describe the modeof network execution that best fits the visualization system we used in class for homework 2 and 3.
+
+Advanced Computer Graphics and Data Visualization - 35.6961 Exam 1
+
+Page 6 6. Data algorithmsa. (2 Pts) Our StructuredGrid class can implicitly contain the position information or it can refer to an external pointset. For both cases, describe a situation in which we would want to useone over the other.
+
+b. (3 Pts) In the Visualization Pipeline section of class we discussed reasons for incorporat-ing the Process methods into the Data Object and also extracting the process method into its own object. Give reasons for and against both of these paradigms.
+
+Extra credit:(2 Pts) Describe Object Order and Image order Rendering. (2 Pts) What are some weaknesses of the Object Rendering system we used for hw2 and 3?(1 Pt) What is your quest? What is your favorite color? :-).

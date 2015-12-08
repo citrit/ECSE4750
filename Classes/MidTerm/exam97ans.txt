@@ -1,0 +1,129 @@
+
+
+Advanced Computer Graphics and Data Visualization - 35.6961 MidTerm 1
+
+Page 1 Advanced Computer Graphics and Data Visualization
+
+35-6961   MidTerm Exam
+
+March 6, 1997
+
+Name _________________________________________ You have the whole class to finish the exam, take your time and remember to answer the questionsyou know first. Each question is worth 5 points total with the points divided between the various parts. Please feel free to use the back of the page.
+
+1. Scientific Visualization
+
+a) (2 Pts) Discuss the differences and similarities between contours and iso-surfaces.
+
+b) (3 Pts) We know that Color Maps represent the relationship between a continuous rangeof data values and color values. From an OO viewpoint, discuss how iso-surface and data cut plane objects would need to interface with a color map object, or what would they need to ask for fromthe color map object.
+
+Contours and iso-surfaces both represent surfaces of continuity. Contours are 2D representations and iso-surfaces are 3D surfaces.
+
+Iso-surfaces are continuous surfaces of a constant scalar value. They wouldneed to ask the colormap object for a single color value that represents the scalar value mapped to the surface. Data Cut Planes will need to ask the colormap object for many colors whichcorrespond to the various scalar values that will be generated as the cut plane slices through the data set. The Color map object will need the max and min values for the underlyingdata for both cases above.
+
+Advanced Computer Graphics and Data Visualization - 35.6961 MidTerm 1
+
+Page 2 2. OpenGL
+
+a. (1 Pt) What is OpenGL?
+
+b. (1 Pt) What is meant by immediate mode graphics? c. (3 Pts) Name and describe each of the material color components.
+
+A 2D and 3D graphics API. Graphics are rasterized and scan converted to the resultant image as thefunction call is made using the current state. Emitted light is the simplest, it originates from an object and is unaffected by any light sources. The ambient component is the light from that source that's been scattered so much by the  environment  that  its  direction  is  impossible  to  determine.  When  ambient  light strikes a surface it is scattered in all directions.Diffuse
+
+ light comes from one direction, so it is brighter if it comes down squarely on the surface rather than at an angle. Any light coming from any direction has a diffuse component.Specular
+
+ light comes from a direction and bounces off a surface in a particular direction. Shiny metal and plastic have a high specular component and chalk and carpet have almost none. You can think of specularity as shininess.
+
+Advanced Computer Graphics and Data Visualization - 35.6961 MidTerm 1
+
+Page 3 3. OpenGL
+
+a. (2 Pts) Explain what is happening with this OpenGL code snippet, and any possible prob-lems (Assume that there are enough values in x,y,z and pts to draw the graphic).
+
+b. (3 Pts) Describe Display Lists and discuss why they are important in terms of the visu-alization pipeline and specialized hardware.
+
+glBegin(GL_POLYGON);   for (int i=0;i<3;i++) {     glVertex3f(x[i], y[i], z[i]);     glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE,
+
+  (const GLfloat*)&pts[i]);   } glEnd();
+
+This code simply draws a polygon with three vertices.The problem is that the glMaterial should be before the glVertex call since OpenGL is a state based drawing library and we need to set the color prior to drawing.
+
+A display List is a group of OpenGL commands that have been stored for later ex-ecution. When a display list is invoked, the commands in it are executed in the order they were issued. It is helpful in that the underlying API can store the graphics primitive informa-tion is optimized storage arrays and/or move them directly to hardware.
+
+In an object oriented rendering model, special objects can act as display list hold-ers and reference the display list instead of regenerating the geometry from data objects eliminating whole branches of the vis pipeline. Display  Lists  allow  the  API  to  push  the  transformation  calculations  and  datastructures to specialized hardware.
+
+Advanced Computer Graphics and Data Visualization - 35.6961 MidTerm 1
+
+Page 4 4. Data Storage
+
+a. (3Pts)   The choice of data representation is important because it effects our ability tointerface to external data and the performance of the overall visualization system. Name and de
+
+scribe 3 of the 5 design criterion for data representation described in class and in the text
+
+b. (2 Pts) If we group our Actor classes and contained Cells as data sets, describe what ismeant by the DataSets, and contained Cells, structure and attributes. Compact: Since we know visualization data tends to be very large, we need to design our structures to minimize computer memory requirements.Efficient
+
+: Visualization data needs to be accessed many times and we would like to retrieve and store data in our structures in constant time.Mappable
+
+: Data representations need to efficiently map into graphics primitives. We must be able to easily convert external data into internal visualization data structures.Minimal Coverage
+
+: We must create a data representation that minimizes the number of data types while covering a large portion of external data types. We wish to balance efficiency with the number of data types.Simple
+
+: Simple algorithms and data sets are easier to implement and also easier to extend.
+
+Structure is made of two components:Topology
+
+: the information about the structure of the dataset (e.g. Triangle).Geometry
+
+: the instantiation of the Topology (the x,y,z's).
+
+Attributes are supplemental information associated with the geometry such as temperature, pressure, or density. They consist of scalars, vectors, normals, texture coordinates, tensors, and user defined data.
+
+Advanced Computer Graphics and Data Visualization - 35.6961 MidTerm 1
+
+Page 5 5. Data algorithmsa. (3 Pts) Describe the differences between Volume Rendering and Marching Cubes. Include in your discussion what the final image represents and what type of data is calculated by theunderlying algorithms.
+
+b. (2 Pts) Based on our discussions of the Visualization Pipeline in class, describe the modeof network execution that best fits the visualization system we used in class for homework 2. Volume Rendering represents a 3D volume as an accumulation of colors along aview plane perpendicular to the view plane. It generates a 2D image as the final result. Marching cubes uses an interpolation algorithm to generate a surface of continu-ity within a volume. It generates a collection of polygonal surfaces which represent the surface of continuity.
+
+Implicit,  the  Render  method  from  the  Renderer  is  sent  to  all  pipeline  objectswhich in turn check their internal dependencies and any dependent objects and execute if necessary. Two pass execution mode which is implemented using a re-cursive type algorithm.
+
+Advanced Computer Graphics and Data Visualization - 35.6961 MidTerm 1
+
+Page 6 6. Data algorithmsa. (2 Pts) Based on our discussion of OpenInventor and scene graphs, explain how properties (materials and geometry) are shared.
+
+b. (3 Pts) In the Visualization Pipeline section of class we discussed reasons for incorporat-ing the Process methods into the Data Object and also extracting the process method into its own object. Give reasons for and against both of these paradigms.
+
+Process inside Data Objects:For
+
+: The processes, which are data manipulation algorithms, have direct access
+
+to the data which makes for fast code.Against
+
+:Users generally think of data algorithms as separate objects. Algorithms must be implemented in all objects of any data type we may create. Also if we change our contouring algorithm this must be changed in each data object that implements this process.
+
+Separate process objects:For
+
+: More intuitive for the user, easier to re-use data objects in the Visualization
+
+pipeline.Against
+
+: Generalized data algorithms require general data objects restricting our base data types. More difficult to implement.
+
+Scene Graphs are hierarchical structures in which materials affect nodes later in the graph. Materials are shared by way of their position in the graph.
+
+Advanced Computer Graphics and Data Visualization - 35.6961 MidTerm 1
+
+Page 7 7. Data Extraction Algorithmsa) (2 Pts) Based on what Will Schroeder discussed, what is missing from our rendering systems storage classes that would be required to implement decimation.
+
+b) (3 Pts) Using the objects from homework 2, discuss how to include the decimation algo-rithm into the class hierarchy. Specifically, explain where the algorithm would exist (in its own object or attached to some other object) also would there be a need to change the class hierarchy.
+
+Extra credit:(2 Pts) Describe Object Order and Image order Rendering.
+
+Object Order: Take each graphical element and map it onto the imageImage Order: For each pixel of the image, compute a color value from the geometry/data.
+
+(2 Pts) What are some weaknesses of the Object Rendering system we used for hw2 and 3?Renderer too dependent on OpenGL.
+
+No transformation Cells/nodes to move objects.Inefficient Collection object. Its slow because of Mesa, sorry this answer did not count. (1 Pt) What is your quest? What is your favorite color?:-).Freebie.
+
+A way to get all adjoining triangles that use a single vertex. A list that collects all triangle on a per vertex basis.
+
+I was looking to see if you understood the class structure and had a valid way of incorporating the algorithm into the class structure.

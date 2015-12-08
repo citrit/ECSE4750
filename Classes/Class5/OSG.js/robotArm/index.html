@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="UTF-8">
+    <title>Homework 3</title>
+    
+    <script type="text/javascript" src="http://osgjs.org/examples/vendors/Q.js"></script>
+    <script type="text/javascript" src="http://osgjs.org/examples/vendors/Hammer.js"></script>
+    <script type="text/javascript" src="http://osgjs.org/examples/vendors/Leap.js"></script>
+    <script type="text/javascript" src="js/OSG.js"></script>   
+    <script type="text/javascript" src="js/ogre.osg.js"></script>   
+    <script src="js/index.js"></script>
+
+  </head>
+
+  <body>
+
+      <table style="width:100%">
+    <tr>
+    <td>
+        <canvas id="3DView" width="500" height="300">
+        Oops ... your browser doesn't support the HTML5 canvas element
+        </canvas>
+    </td>
+    <td>
+        <table style="width:100%">
+            <tr style="width:100%">
+                <td style="width:200px"> World<br>
+                    Rot X: <input name="Sinbad" orien="x" type="range" value="0" max="360" min="1" oninput="handleScroll(this);"></input><br>
+                    Rot Y: <input name="Sinbad" orien="y" type="range" value="0" max="360" min="1" oninput="handleScroll(this);"></input><br>
+                    Rot Z: <input name="Sinbad" orien="z" type="range" value="0" max="360" min="1" oninput="handleScroll(this);"></input><br><br><br><br>
+                </td>
+                <td style="width:200px">Shoulder<br>
+                    Rot X: <input name="shoulder" orien="x" type="range" value="0" max="360" min="1" oninput="handleScroll(this);"></input><br>
+                    Rot Y: <input name="shoulder" orien="y" type="range" value="0" max="360" min="1" oninput="handleScroll(this);"></input><br>
+                    Rot Z: <input name="shoulder" orien="z" type="range" value="0" max="360" min="1" oninput="handleScroll(this);"></input><br><br><br><br>
+                </td>
+            </tr>
+            <tr style="width:100%">
+                <td style="width:200px">Elbow<br>
+                    Rot X: <input name="elbow" orien="x" type="range" value="0" max="360" min="1" oninput="handleScroll(this);"></input><br>
+                    Rot Y: <input name="elbow" orien="y" type="range" value="0" max="360" min="1" oninput="handleScroll(this);"></input><br>
+                    Rot Z: <input name="elbow" orien="z" type="range" value="0" max="360" min="1" oninput="handleScroll(this);"></input><br><br><br><br>
+                </td>
+                <td style="width:200px">Wrist<br>
+                    Rot X: <input name="wrist" orien="x" type="range" value="0" max="360" min="1" oninput="handleScroll(this);"></input><br>
+                    Rot Y: <input name="wrist" orien="y" type="range" value="0" max="360" min="1" oninput="handleScroll(this);"></input><br>
+                    Rot Z: <input name="wrist" orien="z" type="range" value="0" max="360" min="1" oninput="handleScroll(this);"></input><br><br><br><br>
+                </td>
+            </tr>
+        </table>
+    </td>
+    </tr>
+    </table>
+    <h1>Homework 3</h1>
+    Please leverage this code to finish the assignment. <br><br>
+    Using OSG.js build a robot that includes a body, head, arms (3 segments), and legs (3 segments).<br>
+    Basic segments can be cubes in the OSGjs library<br>
+    Ensure:<br>
+    The hierarchy is correct, moving the body moves everything<br>
+    Each segment is movable on its own.<br>
+    Some UI to manipulate your robot. (Can be one set of sliders that switch between joints.<br>
+    Extra credit:<br>
+    Add hand, feet, fingers, and toes.<br>
+    X-Extra credit<br>
+    Animate the included Ogre<br>
+    <br>
+  </body>
+</html>
